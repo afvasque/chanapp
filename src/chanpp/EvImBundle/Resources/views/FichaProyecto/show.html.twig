@@ -1,0 +1,82 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>FichaProyecto</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Area_accion</th>
+                <td>{{ entity.areaaccion }}</td>
+            </tr>
+            <tr>
+                <th>Linea_accion</th>
+                <td>{{ entity.lineaaccion }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ entity.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Jefe</th>
+                <td>{{ entity.jefe }}</td>
+            </tr>
+            <tr>
+                <th>Durancion</th>
+                <td>{{ entity.durancion }}</td>
+            </tr>
+            <tr>
+                <th>Diagnostico_previo</th>
+                <td>{{ entity.diagnosticoprevio }}</td>
+            </tr>
+            <tr>
+                <th>Obj_general</th>
+                <td>{{ entity.objgeneral }}</td>
+            </tr>
+            <tr>
+                <th>Objs_especificos</th>
+                <td>{{ entity.objsespecificos }}</td>
+            </tr>
+            <tr>
+                <th>Descripcion</th>
+                <td>{{ entity.descripcion }}</td>
+            </tr>
+            <tr>
+                <th>Desc_causales</th>
+                <td>{{ entity.desccausales }}</td>
+            </tr>
+            <tr>
+                <th>Variables_causales</th>
+                <td>{{ entity.variablescausales }}</td>
+            </tr>
+            <tr>
+                <th>Variables_obstaculo</th>
+                <td>{{ entity.variablesobstaculo }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('fichaproyecto') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('fichaproyecto_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('fichaproyecto_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

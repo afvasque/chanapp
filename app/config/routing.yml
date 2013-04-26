@@ -1,0 +1,4 @@
+chanpp_ev_im:
+    resource: "@chanppEvImBundle/Resources/config/routing.yml"
+    prefix:   /
+

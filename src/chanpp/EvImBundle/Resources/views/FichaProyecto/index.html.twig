@@ -1,0 +1,63 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>FichaProyecto list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Area_accion</th>
+                <th>Linea_accion</th>
+                <th>Nombre</th>
+                <th>Jefe</th>
+                <th>Durancion</th>
+                <th>Diagnostico_previo</th>
+                <th>Obj_general</th>
+                <th>Objs_especificos</th>
+                <th>Descripcion</th>
+                <th>Desc_causales</th>
+                <th>Variables_causales</th>
+                <th>Variables_obstaculo</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('fichaproyecto_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.areaaccion }}</td>
+                <td>{{ entity.lineaaccion }}</td>
+                <td>{{ entity.nombre }}</td>
+                <td>{{ entity.jefe }}</td>
+                <td>{{ entity.durancion }}</td>
+                <td>{{ entity.diagnosticoprevio }}</td>
+                <td>{{ entity.objgeneral }}</td>
+                <td>{{ entity.objsespecificos }}</td>
+                <td>{{ entity.descripcion }}</td>
+                <td>{{ entity.desccausales }}</td>
+                <td>{{ entity.variablescausales }}</td>
+                <td>{{ entity.variablesobstaculo }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('fichaproyecto_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('fichaproyecto_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('fichaproyecto_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}
