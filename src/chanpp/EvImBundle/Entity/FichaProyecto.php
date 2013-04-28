@@ -52,9 +52,9 @@ class FichaProyecto
     /**
      * @var string
      *
-     * @ORM\Column(name="durancion", type="string", length=255)
+     * @ORM\Column(name="duracion", type="string", length=255)
      */
-    private $durancion;
+    private $duracion;
 
     /**
      * @var string
@@ -209,26 +209,26 @@ class FichaProyecto
     }
 
     /**
-     * Set durancion
+     * Set duracion
      *
-     * @param string $durancion
+     * @param string $duracion
      * @return FichaProyecto
      */
-    public function setDurancion($durancion)
+    public function setduracion($duracion)
     {
-        $this->durancion = $durancion;
+        $this->duracion = $duracion;
     
         return $this;
     }
 
     /**
-     * Get durancion
+     * Get duracion
      *
      * @return string 
      */
-    public function getDurancion()
+    public function getduracion()
     {
-        return $this->durancion;
+        return $this->duracion;
     }
 
     /**
