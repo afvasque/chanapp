@@ -1,0 +1,54 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>PlanEvaluacion</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Objetivos</th>
+                <td>{{ entity.objetivos }}</td>
+            </tr>
+            <tr>
+                <th>Destinatarios</th>
+                <td>{{ entity.destinatarios }}</td>
+            </tr>
+            <tr>
+                <th>Instanciasnumeroevaluaciones</th>
+                <td>{{ entity.instanciasNumeroEvaluaciones }}</td>
+            </tr>
+            <tr>
+                <th>Instanciasplazo</th>
+                <td>{{ entity.instanciasPlazo }}</td>
+            </tr>
+            <tr>
+                <th>IdFichaProyecto</th>
+                <td>{{ entity.idFichaProyecto }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('planevaluacion') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('planevaluacion_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('planevaluacion_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}
