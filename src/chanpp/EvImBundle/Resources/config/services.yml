@@ -10,3 +10,15 @@ services:
         arguments: [%fos_user.model.user.class%]
         tags:
             - { name: form.type, alias: acme_user_registration }
+
+    acme_user.profile.form.type:
+        class: chanpp\EvImBundle\Form\EditProfileFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: acme_user_profile }
+
+    acme_user.registration:
+        class: chanpp\EvImBundle\EventListener\RegistrationListener
+        arguments: [@router]
+        tags:
+            - { name: kernel.event_subscriber }

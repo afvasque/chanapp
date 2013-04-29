@@ -2,11 +2,11 @@
 
 namespace chanpp\EvImBundle\Form;
 
-use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
+use FOS\UserBundle\Form\Type\ProfileFormType as BaseType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class RegistrationFormType extends BaseType
+class EditProfileFormType extends BaseType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -18,9 +18,10 @@ class RegistrationFormType extends BaseType
                 'type'   => 'choice',
                 'options'  => array(
                     'choices'  => array(
-                    'ROLE_VISITA'    => 'Visita',
-                    'ROLE_EVALUADOR'     => 'Evaluador',
+                    'ROLE_SUPER_ADMIN' => 'Administrador',
                     'ROLE_PLANIFICADOR' => 'Planificador',
+                    'ROLE_EVALUADOR'     => 'Evaluador',
+                    'ROLE_VISITA'    => 'Visita',
                 ),
             ),
         ));
@@ -36,6 +37,6 @@ class RegistrationFormType extends BaseType
 
     public function getName()
     {
-        return 'acme_user_registration';
+        return 'acme_user_profile';
     }
 }

@@ -71,3 +71,6 @@ fos_user:
     registration:
         form:
             type: acme_user_registration
+    profile:
+        form:
+            type: acme_user_profile

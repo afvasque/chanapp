@@ -30,7 +30,6 @@ class User extends BaseUser
     private $nombre;
 
 
-
     /**
      * Get id
      *
@@ -62,6 +61,23 @@ class User extends BaseUser
     public function getNombre()
     {
         return $this->nombre;
+    }
+
+     /**
+     * Get Role
+     *
+     * @return string 
+     */
+    public function getRole()
+    {
+        if($this->roles[0]=="ROLE_SUPER_ADMIN")
+            return "Administrador";
+        elseif ($this->roles[0]=="ROLE_PLANIFICADOR") 
+            return "Planificador";
+        elseif ($this->roles[0]=="ROLE_EVALUADOR") 
+            return 'Evaluador';
+        elseif($this->roles[0]=="ROLE_EVALUADOR")
+            return 'Visita';
     }
 
 }
