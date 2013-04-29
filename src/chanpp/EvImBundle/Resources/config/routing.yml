@@ -1,4 +1,0 @@
-chanpp_ev_im_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: chanppEvImBundle:Default:index }
-
