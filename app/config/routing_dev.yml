@@ -16,3 +16,7 @@ _main:
 FichaProyecto:
     resource: "@chanppEvImBundle/Controller/FichaProyectoController.php"
     type: annotation
+
+PlanEvaluacion:
+    resource: "@chanppEvImBundle/Controller/PlanEvaluacionController.php"
+    type: annotation
