@@ -25,13 +25,54 @@
                 <th>Instanciasplazo</th>
                 <td>{{ entity.instanciasPlazo }}</td>
             </tr>
-            <tr>
-                <th>IdFichaProyecto</th>
-                <td>{{ entity.idFichaProyecto }}</td>
-            </tr>
         </tbody>
     </table>
+        {# Ahora agregamos los recursos #}
+    <h1>Recursos</h1> 
+    <ul>
+        <li>
+            {# app/Resources/views/base.html.twig
+                {% render 'chanppEvI' with { 'entity': entity } %} } #}
 
+            <a href="{{ path('recurso_new') }}">
+                Agregar Recurso
+            </a> 
+        </li>
+    </ul>
+     <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titulo</th>
+                <th>Descripcion</th>
+                <th>Tipo</th>
+                <th>Cantidad</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for recurso in recursos %}
+            <tr>
+                <td><a href="{{ path('recurso_show', { 'id': recurso.id }) }}">{{ recurso.id }}</a></td>
+                <td>{{ recurso.titulo }}</td>
+                <td>{{ recurso.descripcion }}</td>
+                <td>{{ recurso.tipo }}</td>
+                <td>{{ recurso.cantidad }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('recurso_show', { 'id': recurso.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('recurso_edit', { 'id': recurso.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {# Fin recursos #}
         <ul class="record_actions">
     <li>
         <a href="{{ path('planevaluacion') }}">

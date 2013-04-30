@@ -20,3 +20,15 @@ FichaProyecto:
 PlanEvaluacion:
     resource: "@chanppEvImBundle/Controller/PlanEvaluacionController.php"
     type: annotation
+
+Recurso:
+    resource: "@chanppEvImBundle/Controller/RecursoController.php"
+    type: annotation
+
+Evaluacion:
+    resource: "@chanppEvImBundle/Controller/EvaluacionController.php"
+    type: annotation
+
+EvaluacionDirecta:
+    resource: "@chanppEvImBundle/Controller/EvaluacionDirectaController.php"
+    type: annotation
