@@ -7,21 +7,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use chanpp\EvImBundle\Entity\FichaProyecto;
 use chanpp\EvImBundle\Entity\Activity;
-use chanpp\EvImBundle\Form\FichaProyectoType;
+use chanpp\EvImBundle\Form\ActivityType;
 
 /**
- * FichaProyecto controller.
+ * Activity controller.
  *
- * @Route("/fichaproyecto")
+ * @Route("/activity")
  */
-class FichaProyectoController extends Controller
+class ActivityController extends Controller
 {
     /**
-     * Lists all FichaProyecto entities.
+     * Lists all Activity entities.
      *
-     * @Route("/", name="fichaproyecto")
+     * @Route("/", name="activity")
      * @Method("GET")
      * @Template()
      */
@@ -29,7 +28,7 @@ class FichaProyectoController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('chanppEvImBundle:FichaProyecto')->findAll();
+        $entities = $em->getRepository('chanppEvImBundle:Activity')->findAll();
 
         return array(
             'entities' => $entities,
@@ -37,16 +36,16 @@ class FichaProyectoController extends Controller
     }
 
     /**
-     * Creates a new FichaProyecto entity.
+     * Creates a new Activity entity.
      *
-     * @Route("/", name="fichaproyecto_create")
+     * @Route("/", name="activity_create")
      * @Method("POST")
-     * @Template("chanppEvImBundle:FichaProyecto:new.html.twig")
+     * @Template("chanppEvImBundle:Activity:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity  = new FichaProyecto();
-        $form = $this->createForm(new FichaProyectoType(), $entity);
+        $entity  = new Activity();
+        $form = $this->createForm(new ActivityType(), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -54,7 +53,7 @@ class FichaProyectoController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('fichaproyecto_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('activity_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -64,21 +63,16 @@ class FichaProyectoController extends Controller
     }
 
     /**
-     * Displays a form to create a new FichaProyecto entity.
+     * Displays a form to create a new Activity entity.
      *
-     * @Route("/new", name="fichaproyecto_new")
+     * @Route("/new", name="activity_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new FichaProyecto();
-
-        $activity = new Activity();
-        $activity->setNombre("acitividad");
-        $entity->getActivities()->add($activity);
-
-        $form   = $this->createForm(new FichaProyectoType(), $entity);
+        $entity = new Activity();
+        $form   = $this->createForm(new ActivityType(), $entity);
 
         return array(
             'entity' => $entity,
@@ -87,9 +81,9 @@ class FichaProyectoController extends Controller
     }
 
     /**
-     * Finds and displays a FichaProyecto entity.
+     * Finds and displays a Activity entity.
      *
-     * @Route("/{id}", name="fichaproyecto_show")
+     * @Route("/{id}", name="activity_show")
      * @Method("GET")
      * @Template()
      */
@@ -97,10 +91,10 @@ class FichaProyectoController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('chanppEvImBundle:FichaProyecto')->find($id);
+        $entity = $em->getRepository('chanppEvImBundle:Activity')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find FichaProyecto entity.');
+            throw $this->createNotFoundException('Unable to find Activity entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -112,9 +106,9 @@ class FichaProyectoController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing FichaProyecto entity.
+     * Displays a form to edit an existing Activity entity.
      *
-     * @Route("/{id}/edit", name="fichaproyecto_edit")
+     * @Route("/{id}/edit", name="activity_edit")
      * @Method("GET")
      * @Template()
      */
@@ -122,13 +116,13 @@ class FichaProyectoController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('chanppEvImBundle:FichaProyecto')->find($id);
+        $entity = $em->getRepository('chanppEvImBundle:Activity')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find FichaProyecto entity.');
+            throw $this->createNotFoundException('Unable to find Activity entity.');
         }
 
-        $editForm = $this->createForm(new FichaProyectoType(), $entity);
+        $editForm = $this->createForm(new ActivityType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -139,31 +133,31 @@ class FichaProyectoController extends Controller
     }
 
     /**
-     * Edits an existing FichaProyecto entity.
+     * Edits an existing Activity entity.
      *
-     * @Route("/{id}", name="fichaproyecto_update")
+     * @Route("/{id}", name="activity_update")
      * @Method("PUT")
-     * @Template("chanppEvImBundle:FichaProyecto:edit.html.twig")
+     * @Template("chanppEvImBundle:Activity:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('chanppEvImBundle:FichaProyecto')->find($id);
+        $entity = $em->getRepository('chanppEvImBundle:Activity')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find FichaProyecto entity.');
+            throw $this->createNotFoundException('Unable to find Activity entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new FichaProyectoType(), $entity);
+        $editForm = $this->createForm(new ActivityType(), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('fichaproyecto_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('activity_edit', array('id' => $id)));
         }
 
         return array(
@@ -174,9 +168,9 @@ class FichaProyectoController extends Controller
     }
 
     /**
-     * Deletes a FichaProyecto entity.
+     * Deletes a Activity entity.
      *
-     * @Route("/{id}", name="fichaproyecto_delete")
+     * @Route("/{id}", name="activity_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -186,21 +180,21 @@ class FichaProyectoController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('chanppEvImBundle:FichaProyecto')->find($id);
+            $entity = $em->getRepository('chanppEvImBundle:Activity')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find FichaProyecto entity.');
+                throw $this->createNotFoundException('Unable to find Activity entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('fichaproyecto'));
+        return $this->redirect($this->generateUrl('activity'));
     }
 
     /**
-     * Creates a form to delete a FichaProyecto entity by id.
+     * Creates a form to delete a Activity entity by id.
      *
      * @param mixed $id The entity id
      *

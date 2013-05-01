@@ -168,4 +168,17 @@ class PlanEvaluacion
     {
         return $this->idFichaProyecto;
     }
+
+    /**
+     * Set idFichaProyecto
+     *
+     * @param integer $idFichaProyecto
+     * @return PlanEvaluacion
+     */
+    public function setIdFichaProyecto($idFichaProyecto)
+    {
+        $this->idFichaProyecto = $idFichaProyecto;
+    
+        return $this;
+    }
 }

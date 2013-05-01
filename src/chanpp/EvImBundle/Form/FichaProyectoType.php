@@ -15,7 +15,7 @@ class FichaProyectoType extends AbstractType
             ->add('linea_accion')
             ->add('nombre')
             ->add('jefe')
-            ->add('durancion')
+            ->add('duracion')
             ->add('diagnostico_previo')
             ->add('obj_general')
             ->add('objs_especificos')
@@ -24,6 +24,12 @@ class FichaProyectoType extends AbstractType
             ->add('variables_causales')
             ->add('variables_obstaculo')
         ;
+
+        $builder->add('activities', 'collection', array(
+            'type' => new ActivityType(),
+            'allow_add' => true,
+            'by_reference' => false,
+            ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
