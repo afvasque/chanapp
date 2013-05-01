@@ -11,7 +11,6 @@
                 <th>Destinatarios</th>
                 <th>Instanciasnumeroevaluaciones</th>
                 <th>Instanciasplazo</th>
-                <th>IdFichaProyecto</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -23,7 +22,6 @@
                 <td>{{ entity.destinatarios }}</td>
                 <td>{{ entity.instanciasNumeroEvaluaciones }}</td>
                 <td>{{ entity.instanciasPlazo }}</td>
-                <td>{{ entity.idFichaProyecto }}</td>
                 <td>
                 <ul>
                     <li>
@@ -38,7 +36,6 @@
         {% endfor %}
         </tbody>
     </table>
-
         <ul>
         <li>
             <a href="{{ path('planevaluacion_new') }}">

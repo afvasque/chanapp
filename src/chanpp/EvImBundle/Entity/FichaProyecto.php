@@ -3,6 +3,8 @@
 namespace chanpp\EvImBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * FichaProyecto
@@ -12,6 +14,15 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class FichaProyecto
 {
+    /**
+     * @ORM\OneToMany(targetEntity="Activity", mappedBy="ficha_proyecto")
+     */
+    public $activities;
+
+    public function __construct()
+    {
+        $this->activities = new ArrayCollection();
+    }
     /**
      * @var integer
      *
@@ -390,5 +401,38 @@ class FichaProyecto
     public function getVariablesObstaculo()
     {
         return $this->variables_obstaculo;
+    }
+
+    /**
+     * Add activities
+     *
+     * @param \chanpp\EvImBundle\Entity\Activity $activities
+     * @return FichaProyecto
+     */
+    public function addActivitie(\chanpp\EvImBundle\Entity\Activity $activities)
+    {
+        $this->activities[] = $activities;
+    
+        return $this;
+    }
+
+    /**
+     * Remove activities
+     *
+     * @param \chanpp\EvImBundle\Entity\Activity $activities
+     */
+    public function removeActivitie(\chanpp\EvImBundle\Entity\Activity $activities)
+    {
+        $this->activities->removeElement($activities);
+    }
+
+    /**
+     * Get activities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getActivities()
+    {
+        return $this->activities;
     }
 }

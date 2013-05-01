@@ -7,20 +7,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use chanpp\EvImBundle\Entity\PlanEvaluacion;
-use chanpp\EvImBundle\Form\PlanEvaluacionType;
+use chanpp\EvImBundle\Entity\Recurso;
+use chanpp\EvImBundle\Form\RecursoType;
 
 /**
- * PlanEvaluacion controller.
+ * Recurso controller.
  *
- * @Route("/planevaluacion")
+ * @Route("/recurso")
  */
-class PlanEvaluacionController extends Controller
+class RecursoController extends Controller
 {
     /**
-     * Lists all PlanEvaluacion entities.
+     * Lists all Recurso entities.
      *
-     * @Route("/", name="planevaluacion")
+     * @Route("/", name="recurso")
      * @Method("GET")
      * @Template()
      */
@@ -28,23 +28,24 @@ class PlanEvaluacionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('chanppEvImBundle:PlanEvaluacion')->findAll();
+        $entities = $em->getRepository('chanppEvImBundle:Recurso')->findAll();
+
         return array(
             'entities' => $entities,
         );
     }
 
     /**
-     * Creates a new PlanEvaluacion entity.
+     * Creates a new Recurso entity.
      *
-     * @Route("/", name="planevaluacion_create")
+     * @Route("/", name="recurso_create")
      * @Method("POST")
-     * @Template("chanppEvImBundle:PlanEvaluacion:new.html.twig")
+     * @Template("chanppEvImBundle:Recurso:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity  = new PlanEvaluacion();
-        $form = $this->createForm(new PlanEvaluacionType(), $entity);
+        $entity  = new Recurso();
+        $form = $this->createForm(new RecursoType(), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -52,7 +53,7 @@ class PlanEvaluacionController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('planevaluacion_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('recurso_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -62,16 +63,16 @@ class PlanEvaluacionController extends Controller
     }
 
     /**
-     * Displays a form to create a new PlanEvaluacion entity.
+     * Displays a form to create a new Recurso entity.
      *
-     * @Route("/new", name="planevaluacion_new")
+     * @Route("/new", name="recurso_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new PlanEvaluacion();
-        $form   = $this->createForm(new PlanEvaluacionType(), $entity);
+        $entity = new Recurso();
+        $form   = $this->createForm(new RecursoType(), $entity);
 
         return array(
             'entity' => $entity,
@@ -80,9 +81,9 @@ class PlanEvaluacionController extends Controller
     }
 
     /**
-     * Finds and displays a PlanEvaluacion entity.
+     * Finds and displays a Recurso entity.
      *
-     * @Route("/{id}", name="planevaluacion_show")
+     * @Route("/{id}", name="recurso_show")
      * @Method("GET")
      * @Template()
      */
@@ -90,25 +91,24 @@ class PlanEvaluacionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('chanppEvImBundle:PlanEvaluacion')->find($id);
+        $entity = $em->getRepository('chanppEvImBundle:Recurso')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find PlanEvaluacion entity.');
+            throw $this->createNotFoundException('Unable to find Recurso entity.');
         }
-        $recursos =  $entity->getRecursos();
+
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
-            'recursos' => $recursos,
         );
     }
 
     /**
-     * Displays a form to edit an existing PlanEvaluacion entity.
+     * Displays a form to edit an existing Recurso entity.
      *
-     * @Route("/{id}/edit", name="planevaluacion_edit")
+     * @Route("/{id}/edit", name="recurso_edit")
      * @Method("GET")
      * @Template()
      */
@@ -116,13 +116,13 @@ class PlanEvaluacionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('chanppEvImBundle:PlanEvaluacion')->find($id);
+        $entity = $em->getRepository('chanppEvImBundle:Recurso')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find PlanEvaluacion entity.');
+            throw $this->createNotFoundException('Unable to find Recurso entity.');
         }
 
-        $editForm = $this->createForm(new PlanEvaluacionType(), $entity);
+        $editForm = $this->createForm(new RecursoType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -133,31 +133,31 @@ class PlanEvaluacionController extends Controller
     }
 
     /**
-     * Edits an existing PlanEvaluacion entity.
+     * Edits an existing Recurso entity.
      *
-     * @Route("/{id}", name="planevaluacion_update")
+     * @Route("/{id}", name="recurso_update")
      * @Method("PUT")
-     * @Template("chanppEvImBundle:PlanEvaluacion:edit.html.twig")
+     * @Template("chanppEvImBundle:Recurso:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('chanppEvImBundle:PlanEvaluacion')->find($id);
+        $entity = $em->getRepository('chanppEvImBundle:Recurso')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find PlanEvaluacion entity.');
+            throw $this->createNotFoundException('Unable to find Recurso entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new PlanEvaluacionType(), $entity);
+        $editForm = $this->createForm(new RecursoType(), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('planevaluacion_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('recurso_edit', array('id' => $id)));
         }
 
         return array(
@@ -168,9 +168,9 @@ class PlanEvaluacionController extends Controller
     }
 
     /**
-     * Deletes a PlanEvaluacion entity.
+     * Deletes a Recurso entity.
      *
-     * @Route("/{id}", name="planevaluacion_delete")
+     * @Route("/{id}", name="recurso_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -180,21 +180,21 @@ class PlanEvaluacionController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('chanppEvImBundle:PlanEvaluacion')->find($id);
+            $entity = $em->getRepository('chanppEvImBundle:Recurso')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find PlanEvaluacion entity.');
+                throw $this->createNotFoundException('Unable to find Recurso entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('planevaluacion'));
+        return $this->redirect($this->generateUrl('recurso'));
     }
 
     /**
-     * Creates a form to delete a PlanEvaluacion entity by id.
+     * Creates a form to delete a Recurso entity by id.
      *
      * @param mixed $id The entity id
      *

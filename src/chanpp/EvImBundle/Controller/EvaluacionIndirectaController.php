@@ -7,20 +7,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use chanpp\EvImBundle\Entity\PlanEvaluacion;
-use chanpp\EvImBundle\Form\PlanEvaluacionType;
+use chanpp\EvImBundle\Entity\EvaluacionIndirecta;
+use chanpp\EvImBundle\Form\EvaluacionIndirectaType;
 
 /**
- * PlanEvaluacion controller.
+ * EvaluacionIndirecta controller.
  *
- * @Route("/planevaluacion")
+ * @Route("/evaluacionindirecta")
  */
-class PlanEvaluacionController extends Controller
+class EvaluacionIndirectaController extends Controller
 {
     /**
-     * Lists all PlanEvaluacion entities.
+     * Lists all EvaluacionIndirecta entities.
      *
-     * @Route("/", name="planevaluacion")
+     * @Route("/", name="evaluacionindirecta")
      * @Method("GET")
      * @Template()
      */
@@ -28,23 +28,24 @@ class PlanEvaluacionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('chanppEvImBundle:PlanEvaluacion')->findAll();
+        $entities = $em->getRepository('chanppEvImBundle:EvaluacionIndirecta')->findAll();
+
         return array(
             'entities' => $entities,
         );
     }
 
     /**
-     * Creates a new PlanEvaluacion entity.
+     * Creates a new EvaluacionIndirecta entity.
      *
-     * @Route("/", name="planevaluacion_create")
+     * @Route("/", name="evaluacionindirecta_create")
      * @Method("POST")
-     * @Template("chanppEvImBundle:PlanEvaluacion:new.html.twig")
+     * @Template("chanppEvImBundle:EvaluacionIndirecta:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity  = new PlanEvaluacion();
-        $form = $this->createForm(new PlanEvaluacionType(), $entity);
+        $entity  = new EvaluacionIndirecta();
+        $form = $this->createForm(new EvaluacionIndirectaType(), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -52,7 +53,7 @@ class PlanEvaluacionController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('planevaluacion_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('evaluacionindirecta_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -62,16 +63,16 @@ class PlanEvaluacionController extends Controller
     }
 
     /**
-     * Displays a form to create a new PlanEvaluacion entity.
+     * Displays a form to create a new EvaluacionIndirecta entity.
      *
-     * @Route("/new", name="planevaluacion_new")
+     * @Route("/new", name="evaluacionindirecta_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new PlanEvaluacion();
-        $form   = $this->createForm(new PlanEvaluacionType(), $entity);
+        $entity = new EvaluacionIndirecta();
+        $form   = $this->createForm(new EvaluacionIndirectaType(), $entity);
 
         return array(
             'entity' => $entity,
@@ -80,9 +81,9 @@ class PlanEvaluacionController extends Controller
     }
 
     /**
-     * Finds and displays a PlanEvaluacion entity.
+     * Finds and displays a EvaluacionIndirecta entity.
      *
-     * @Route("/{id}", name="planevaluacion_show")
+     * @Route("/{id}", name="evaluacionindirecta_show")
      * @Method("GET")
      * @Template()
      */
@@ -90,25 +91,24 @@ class PlanEvaluacionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('chanppEvImBundle:PlanEvaluacion')->find($id);
+        $entity = $em->getRepository('chanppEvImBundle:EvaluacionIndirecta')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find PlanEvaluacion entity.');
+            throw $this->createNotFoundException('Unable to find EvaluacionIndirecta entity.');
         }
-        $recursos =  $entity->getRecursos();
+
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
-            'recursos' => $recursos,
         );
     }
 
     /**
-     * Displays a form to edit an existing PlanEvaluacion entity.
+     * Displays a form to edit an existing EvaluacionIndirecta entity.
      *
-     * @Route("/{id}/edit", name="planevaluacion_edit")
+     * @Route("/{id}/edit", name="evaluacionindirecta_edit")
      * @Method("GET")
      * @Template()
      */
@@ -116,13 +116,13 @@ class PlanEvaluacionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('chanppEvImBundle:PlanEvaluacion')->find($id);
+        $entity = $em->getRepository('chanppEvImBundle:EvaluacionIndirecta')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find PlanEvaluacion entity.');
+            throw $this->createNotFoundException('Unable to find EvaluacionIndirecta entity.');
         }
 
-        $editForm = $this->createForm(new PlanEvaluacionType(), $entity);
+        $editForm = $this->createForm(new EvaluacionIndirectaType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -133,31 +133,31 @@ class PlanEvaluacionController extends Controller
     }
 
     /**
-     * Edits an existing PlanEvaluacion entity.
+     * Edits an existing EvaluacionIndirecta entity.
      *
-     * @Route("/{id}", name="planevaluacion_update")
+     * @Route("/{id}", name="evaluacionindirecta_update")
      * @Method("PUT")
-     * @Template("chanppEvImBundle:PlanEvaluacion:edit.html.twig")
+     * @Template("chanppEvImBundle:EvaluacionIndirecta:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('chanppEvImBundle:PlanEvaluacion')->find($id);
+        $entity = $em->getRepository('chanppEvImBundle:EvaluacionIndirecta')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find PlanEvaluacion entity.');
+            throw $this->createNotFoundException('Unable to find EvaluacionIndirecta entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new PlanEvaluacionType(), $entity);
+        $editForm = $this->createForm(new EvaluacionIndirectaType(), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('planevaluacion_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('evaluacionindirecta_edit', array('id' => $id)));
         }
 
         return array(
@@ -168,9 +168,9 @@ class PlanEvaluacionController extends Controller
     }
 
     /**
-     * Deletes a PlanEvaluacion entity.
+     * Deletes a EvaluacionIndirecta entity.
      *
-     * @Route("/{id}", name="planevaluacion_delete")
+     * @Route("/{id}", name="evaluacionindirecta_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -180,21 +180,21 @@ class PlanEvaluacionController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('chanppEvImBundle:PlanEvaluacion')->find($id);
+            $entity = $em->getRepository('chanppEvImBundle:EvaluacionIndirecta')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find PlanEvaluacion entity.');
+                throw $this->createNotFoundException('Unable to find EvaluacionIndirecta entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('planevaluacion'));
+        return $this->redirect($this->generateUrl('evaluacionindirecta'));
     }
 
     /**
-     * Creates a form to delete a PlanEvaluacion entity by id.
+     * Creates a form to delete a EvaluacionIndirecta entity by id.
      *
      * @param mixed $id The entity id
      *
