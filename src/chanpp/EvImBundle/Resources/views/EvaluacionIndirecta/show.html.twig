@@ -1,0 +1,54 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>EvaluacionIndirecta</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Ambito</th>
+                <td>{{ entity.ambito }}</td>
+            </tr>
+            <tr>
+                <th>Grupointeres</th>
+                <td>{{ entity.grupoInteres }}</td>
+            </tr>
+            <tr>
+                <th>Ejes</th>
+                <td>{{ entity.ejes }}</td>
+            </tr>
+            <tr>
+                <th>Responsable</th>
+                <td>{{ entity.responsable }}</td>
+            </tr>
+            <tr>
+                <th>Plazo</th>
+                <td>{{ entity.plazo }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('evaluacionindirecta') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('evaluacionindirecta_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('evaluacionindirecta_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

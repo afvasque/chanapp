@@ -1,0 +1,49 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>EvaluacionIndirecta list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Ambito</th>
+                <th>Grupointeres</th>
+                <th>Ejes</th>
+                <th>Responsable</th>
+                <th>Plazo</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('evaluacionindirecta_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.ambito }}</td>
+                <td>{{ entity.grupoInteres }}</td>
+                <td>{{ entity.ejes }}</td>
+                <td>{{ entity.responsable }}</td>
+                <td>{{ entity.plazo }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('evaluacionindirecta_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('evaluacionindirecta_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('evaluacionindirecta_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}
