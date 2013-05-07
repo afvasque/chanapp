@@ -1,14 +1,10 @@
-{% extends '::base.html.twig' %}
+{% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>FichaProyecto</h1>
+    <h1>Ficha Proyecto</h1>
 
-    <table class="record_properties">
+    <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
             <tr>
                 <th>Area_accion</th>
                 <td>{{ entity.areaaccion }}</td>
@@ -52,13 +48,51 @@
             <tr>
                 <th>Variables_causales</th>
                 <td>{{ entity.variablescausales }}</td>
-            </tr>
-            <tr>
-                <th>Variables_obstaculo</th>
-                <td>{{ entity.variablesobstaculo }}</td>
-            </tr>
+            </tr>            
         </tbody>
     </table>
+
+    <h2>Actividades asociadas</h2>
+    <table class="table table-condensed">
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+
+        </tr>
+    {% for actividad in entity.activities %}
+        <tr>
+            <td><a href="{{ path('activity_show', { 'id': actividad.id }) }}"> {{actividad.nombre}} </a></td>
+            <td>{{actividad.descripcion}}</td>
+        </tr>
+    {% endfor %}
+        </table>
+
+    <h2>Indicadores de gestión asociados</h2>        
+    
+        {% for indgest in entity.getIndGestions %}
+    <table class="table table-condensed">
+        <tr>
+            <th>Indicador</th>
+            <th>{{indgest.mesDeadline}} {{indgest.anoDeadline}} </th>
+            <th>Plazos (mes, año) </th>
+        </tr>
+        <tr>
+            <td>
+                {{indgest.nombre}}
+            </td>
+            <td>
+                {% for meta in indgest.metas %}
+                    {{meta.descripcion}}<br />
+                {% endfor %}
+            </td>
+            <td>
+                {% for meta in indgest.metas %}
+                    {{meta.plazoMes}} {{meta.plazoAnio}}<br />
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
+        {% endfor %}
 
         <ul class="record_actions">
     <li>
@@ -68,8 +102,7 @@
     </li>
     <li>
         <a href="{{ path('fichaproyecto_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
+        
     </li>
     <li>
         <form action="{{ path('fichaproyecto_delete', { 'id': entity.id }) }}" method="post">

@@ -24,3 +24,11 @@ fos_user_change_password:
 chanapp_user:
     resource: "@chanppEvImBundle/Controller/UserController.php"
     type: annotation
+
+chanapp_activity:
+    resource: "@chanppEvImBundle/Controller/ActivityController.php"
+    type: annotation
+
+chanapp_ind_gestion:
+    resource: "@chanppEvImBundle/Controller/IndGestionController.php"
+    type: annotation

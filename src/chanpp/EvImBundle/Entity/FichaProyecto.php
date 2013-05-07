@@ -15,13 +15,22 @@ use Doctrine\Common\Collections\ArrayCollection;
 class FichaProyecto
 {
     /**
-     * @ORM\OneToMany(targetEntity="Activity", mappedBy="ficha_proyecto")
+     * @ORM\OneToMany(targetEntity="Activity", mappedBy="ficha_proyecto", cascade={"persist", "remove"})
      */
-    public $activities;
+    protected $activities;
+    /**
+    * @ORM\OneToMany(targetEntity="IndGestion", mappedBy="ficha_proyecto", cascade={"persist", "remove"})
+    */
+    protected $ind_gestions;
 
     public function __construct()
     {
         $this->activities = new ArrayCollection();
+        $this->ind_gestions = new ArrayCollection();
+    }
+
+    public function __toString() {
+        return $this->nombre;
     }
     /**
      * @var integer
@@ -108,13 +117,6 @@ class FichaProyecto
      * @ORM\Column(name="variables_causales", type="text")
      */
     private $variables_causales;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="variables_obstaculo", type="text")
-     */
-    private $variables_obstaculo;
 
 
     /**
@@ -381,29 +383,6 @@ class FichaProyecto
     }
 
     /**
-     * Set variables_obstaculo
-     *
-     * @param string $variablesObstaculo
-     * @return FichaProyecto
-     */
-    public function setVariablesObstaculo($variablesObstaculo)
-    {
-        $this->variables_obstaculo = $variablesObstaculo;
-    
-        return $this;
-    }
-
-    /**
-     * Get variables_obstaculo
-     *
-     * @return string 
-     */
-    public function getVariablesObstaculo()
-    {
-        return $this->variables_obstaculo;
-    }
-
-    /**
      * Add activities
      *
      * @param \chanpp\EvImBundle\Entity\Activity $activities
@@ -434,5 +413,46 @@ class FichaProyecto
     public function getActivities()
     {
         return $this->activities;
+    }
+
+    public function setActivities($activities)
+    {
+        foreach ($activities as $activity) {
+            $activity->setFichaProyecto($this);
+        }
+        $this->activities = $activities;
+    }
+
+    /**
+     * Add ind_gestions
+     *
+     * @param \chanpp\EvImBundle\Entity\IndGestion $indGestions
+     * @return FichaProyecto
+     */
+    public function addIndGestion(\chanpp\EvImBundle\Entity\IndGestion $indGestions)
+    {
+        $this->ind_gestions[] = $indGestions;
+    
+        return $this;
+    }
+
+    /**
+     * Remove ind_gestions
+     *
+     * @param \chanpp\EvImBundle\Entity\IndGestion $indGestions
+     */
+    public function removeIndGestion(\chanpp\EvImBundle\Entity\IndGestion $indGestions)
+    {
+        $this->ind_gestions->removeElement($indGestions);
+    }
+
+    /**
+     * Get ind_gestions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIndGestions()
+    {
+        return $this->ind_gestions;
     }
 }

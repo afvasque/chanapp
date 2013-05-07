@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
     <h1>FichaProyecto edit</h1>
@@ -25,4 +25,19 @@
         </form>
     </li>
 </ul>
+
+{% block javascript %}
+
+    {% javascripts 
+        '@chanppEvImBundle/Resources/public/js/addActividades.js'
+        '@chanppEvImBundle/Resources/public/js/borrar_actividades.js'
+        %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
+
+{% endblock %}
+
+
+
+

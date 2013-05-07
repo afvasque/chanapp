@@ -22,14 +22,15 @@ class FichaProyectoType extends AbstractType
             ->add('descripcion')
             ->add('desc_causales')
             ->add('variables_causales')
-            ->add('variables_obstaculo')
         ;
 
         $builder->add('activities', 'collection', array(
             'type' => new ActivityType(),
             'allow_add' => true,
             'by_reference' => false,
+            'allow_delete' => true,
             ));
+
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

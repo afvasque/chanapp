@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use chanpp\EvImBundle\Entity\FichaProyecto;
 use chanpp\EvImBundle\Entity\Activity;
+use chanpp\EvImBundle\Entity\IndGestion;
 use chanpp\EvImBundle\Form\FichaProyectoType;
 
 /**
@@ -50,11 +51,15 @@ class FichaProyectoController extends Controller
         $form->bind($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            
+            $em = $this->getDoctrine()->getManager();            
             $em->persist($entity);
             $em->flush();
+           
+            return $this->forward('chanppEvImBundle:IndGestion:new',
+                array('ficha_proyecto_id' => $entity->getId()));
 
-            return $this->redirect($this->generateUrl('fichaproyecto_show', array('id' => $entity->getId())));
+            //return $this->redirect($this->generateUrl('fichaproyecto_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -77,6 +82,9 @@ class FichaProyectoController extends Controller
         $activity = new Activity();
         $activity->setNombre("acitividad");
         $entity->getActivities()->add($activity);
+
+        $indGestion = new IndGestion();
+        $entity->getIndGestions()->add($indGestion);
 
         $form   = $this->createForm(new FichaProyectoType(), $entity);
 
@@ -160,6 +168,38 @@ class FichaProyectoController extends Controller
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
+
+            $originalTags = array();
+
+            // Create an array of the current Tag objects in the database
+            foreach ($entity->getActivities() as $tag) {
+                $originalTags[] = $tag;
+            }
+
+
+            // filter $originalTags to contain tags no longer present
+            foreach ($entity->getActivities() as $tag) {
+                foreach ($originalTags as $key => $toDel) {
+                    if ($toDel->getId() === $tag->getId()) {
+                        unset($originalTags[$key]);
+                    }
+                }
+            }
+
+            // remove the relationship between the tag and the Task
+            foreach ($originalTags as $tag) {
+                // remove the Task from the Tag
+                //$tag->getTasks()->removeElement($task);
+
+                // if it were a ManyToOne relationship, remove the relationship like this
+                 $tag->setFichaProyecto(null);
+
+                $em->persist($tag);
+
+                // if you wanted to delete the Tag entirely, you can also do that
+                $em->remove($tag);
+            }
+
             $em->persist($entity);
             $em->flush();
 
@@ -191,6 +231,9 @@ class FichaProyectoController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find FichaProyecto entity.');
             }
+
+            
+
 
             $em->remove($entity);
             $em->flush();

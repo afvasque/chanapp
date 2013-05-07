@@ -2,9 +2,9 @@
 
 {% block body -%}
 
-    <h1>FichaProyecto creation</h1>
+    <h1>IndGestion creation</h1>
 
-    <form action="{{ path('fichaproyecto_create') }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('indgestion_create') }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
 
         <p>
@@ -14,29 +14,28 @@
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('fichaproyecto') }}">
+        <a href="{{ path('indgestion') }}">
             Back to the list
         </a>
     </li>
 </ul>
+
 {% block javascript %}
 
-        <script type="text/javascript">
-            var collectionHolder = $('div#chanpp_evimbundle_fichaproyectotype_activities');
-            var $addTagLink = $('<a href="#" class="add_tag_link">Agregar una actividad</a>');
+     <script type="text/javascript">
+            var collectionHolder = $('div#chanpp_evimbundle_indgestiontype_metas');
+            var $addTagLink = $('<a href="#" class="add_tag_link">Agregar una meta</a>');
             var indexNo = 4;
-            var $newFormDiv = $("<div id=borrar_actividad></div>");
-            var $removeFormA = $('<a href="#">Borrar esta actividad</a>');
+            var $newFormDiv = $("<div id=borrar_meta></div>");
+            var $removeFormA = $('<a href="#">Borrar esta meta</a>');
         </script>
 
     {% javascripts 
         '@chanppEvImBundle/Resources/public/js/addActividades.js'
     %}
+   
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
 
 {% endblock %}
-
-
-
