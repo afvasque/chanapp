@@ -3,7 +3,7 @@
 namespace chanpp\EvImBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Evaluacion
  *
@@ -22,6 +22,13 @@ class Evaluacion
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=255)
+     */
+    private $nombre;
+
+    /**
      * @ORM\OneToOne(targetEntity="EvaluacionDirecta", mappedBy="evaluacion")
      */
     protected $evaluaciondirecta;
@@ -34,9 +41,9 @@ class Evaluacion
     private $alcance;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="duracion", type="integer")
+     * @ORM\Column(name="duracion", type="string", length=255)
      */
     private $duracion;
 
@@ -47,6 +54,21 @@ class Evaluacion
      */
     private $confiabilidad;
 
+    /**
+     * @ORM\OneToMany(targetEntity="EvaluacionIndirecta", mappedBy="evaluacion")
+     */
+    protected $evaluacionesindirectas;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="PlanEvaluacion", inversedBy="evaluaciones")
+     * @ORM\JoinColumn(name="planevaluacion_id", referencedColumnName="id")
+     */
+    protected $planevaluacion;
+    
+    public function __construct()
+    {
+        $this->evaluacionesindirectas = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -148,5 +170,84 @@ class Evaluacion
     public function getEvaluaciondirecta()
     {
         return $this->evaluaciondirecta;
+    }
+
+    /**
+     * Add evaluacionesindirectas
+     *
+     * @param \chanpp\EvImBundle\Entity\EvaluacionIndirecta $evaluacionesindirectas
+     * @return Evaluacion
+     */
+    public function addEvaluacionesindirecta(\chanpp\EvImBundle\Entity\EvaluacionIndirecta $evaluacionesindirectas)
+    {
+        $this->evaluacionesindirectas[] = $evaluacionesindirectas;
+    
+        return $this;
+    }
+
+    /**
+     * Remove evaluacionesindirectas
+     *
+     * @param \chanpp\EvImBundle\Entity\EvaluacionIndirecta $evaluacionesindirectas
+     */
+    public function removeEvaluacionesindirecta(\chanpp\EvImBundle\Entity\EvaluacionIndirecta $evaluacionesindirectas)
+    {
+        $this->evaluacionesindirectas->removeElement($evaluacionesindirectas);
+    }
+
+    /**
+     * Get evaluacionesindirectas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEvaluacionesindirectas()
+    {
+        return $this->evaluacionesindirectas;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     * @return Evaluacion
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+    
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string 
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set planevaluacion
+     *
+     * @param \chanpp\EvImBundle\Entity\PlanEvaluacion $planevaluacion
+     * @return Evaluacion
+     */
+    public function setPlanevaluacion(\chanpp\EvImBundle\Entity\PlanEvaluacion $planevaluacion = null)
+    {
+        $this->planevaluacion = $planevaluacion;
+    
+        return $this;
+    }
+
+    /**
+     * Get planevaluacion
+     *
+     * @return \chanpp\EvImBundle\Entity\PlanEvaluacion 
+     */
+    public function getPlanevaluacion()
+    {
+        return $this->planevaluacion;
     }
 }

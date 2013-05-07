@@ -56,6 +56,11 @@ class EvaluacionIndirecta
      */
     private $plazo;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Evaluacion", inversedBy="evaluacionesindirectas")
+     * @ORM\JoinColumn(name="evaluacion_id", referencedColumnName="id")
+     */
+    protected $evaluacion;
 
     /**
      * Get id
@@ -180,5 +185,28 @@ class EvaluacionIndirecta
     public function getPlazo()
     {
         return $this->plazo;
+    }
+
+    /**
+     * Set evaluacion
+     *
+     * @param \chanpp\EvImBundle\Entity\Evaluacion $evaluacion
+     * @return EvaluacionIndirecta
+     */
+    public function setEvaluacion(\chanpp\EvImBundle\Entity\Evaluacion $evaluacion = null)
+    {
+        $this->evaluacion = $evaluacion;
+    
+        return $this;
+    }
+
+    /**
+     * Get evaluacion
+     *
+     * @return \chanpp\EvImBundle\Entity\Evaluacion 
+     */
+    public function getEvaluacion()
+    {
+        return $this->evaluacion;
     }
 }

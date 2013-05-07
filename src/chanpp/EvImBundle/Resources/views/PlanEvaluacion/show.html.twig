@@ -1,14 +1,22 @@
-{% extends '::base.html.twig' %}
+{% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>PlanEvaluacion</h1>
-
+    <h1>Plan de Evaluacion</h1>
+    {#Opciones de Plan#}
+    <li>
+        <a href="{{ path('planevaluacion_edit', { 'id': entity.id }) }}">
+            Editar
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('planevaluacion_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Eliminar</button>
+        </form>
+    </li>
     <table class="record_properties">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
             <tr>
                 <th>Objetivos</th>
                 <td>{{ entity.objetivos }}</td>
@@ -18,23 +26,25 @@
                 <td>{{ entity.destinatarios }}</td>
             </tr>
             <tr>
-                <th>Instanciasnumeroevaluaciones</th>
-                <td>{{ entity.instanciasNumeroEvaluaciones }}</td>
+                <th>Número de Evaluaciones</th>
+                <td>{{ entity.instanciasNumeroEvaluaciones }} evaluaciones</td>
             </tr>
             <tr>
-                <th>Instanciasplazo</th>
+                <th>Plazo</th>
                 <td>{{ entity.instanciasPlazo }}</td>
             </tr>
         </tbody>
     </table>
+
+    <hr>
         {# Ahora agregamos los recursos #}
-    <h1>Recursos</h1> 
+            <h4>Recursos</h4> 
     <ul>
         <li>
             {# app/Resources/views/base.html.twig
                 {% render 'chanppEvI' with { 'entity': entity } %} } #}
 
-            <a href="{{ path('recurso_new') }}">
+            <a href="{{ path('recurso_new', { 'planevaluacion_id': entity.id }) }}">
                 Agregar Recurso
             </a> 
         </li>
@@ -42,29 +52,38 @@
      <table class="table table-striped">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Titulo</th>
-                <th>Descripcion</th>
+                <th>Título</th>
+                <th>Descripción</th>
                 <th>Tipo</th>
                 <th>Cantidad</th>
-                <th>Actions</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
         {% for recurso in recursos %}
             <tr>
-                <td><a href="{{ path('recurso_show', { 'id': recurso.id }) }}">{{ recurso.id }}</a></td>
                 <td>{{ recurso.titulo }}</td>
                 <td>{{ recurso.descripcion }}</td>
-                <td>{{ recurso.tipo }}</td>
+                {% if recurso.tipo == 1 %}
+                   <td>Monetario</td>
+                {% elseif recurso.tipo == 2 %}
+                    <td>Humano</td>
+                {% elseif recurso.tipo == 3 %}
+                    <td>Tiempo</td>
+                {% elseif recurso.tipo == 4 %}
+                    <td>Capacidad</td>
+                {% elseif recurso.tipo == 5 %}
+                    <td>Otro</td>
+                {% endif %}
+                
                 <td>{{ recurso.cantidad }}</td>
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('recurso_show', { 'id': recurso.id }) }}">show</a>
+                        <a href="{{ path('recurso_show', { 'id': recurso.id }) }}">Ver</a>
                     </li>
                     <li>
-                        <a href="{{ path('recurso_edit', { 'id': recurso.id }) }}">edit</a>
+                        <a href="{{ path('recurso_edit', { 'id': recurso.id }) }}">Editar</a>
                     </li>
                 </ul>
                 </td>
@@ -73,23 +92,54 @@
         </tbody>
     </table>
     {# Fin recursos #}
+    <hr>
+    {# Ahora agregamos las evaluaciones #}
+    <h4>Evaluaciones</h4> 
+    <ul>
+        <li>
+            <a href="{{ path('evaluacion_new', { 'planevaluacion_id': entity.id }) }}">
+                Agregar Evaluación
+            </a> 
+        </li>
+    </ul>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Alcance</th>
+                <th>Duración</th>
+                <th>Confiabilidad</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in evaluaciones %}
+            <tr>
+                <td>{{ entity.nombre }}</td>
+                <td>{{ entity.alcance }}</td>
+                <td>{{ entity.duracion }}</td>
+                <td>{{ entity.confiabilidad }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('evaluacion_show', { 'id': entity.id }) }}">Ver</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('evaluacion_edit', { 'id': entity.id }) }}">Editar</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {# Fin evaluaciones#}
+    <hr>
         <ul class="record_actions">
     <li>
         <a href="{{ path('planevaluacion') }}">
-            Back to the list
+            Volver a la lista de Planes de Evaluación
         </a>
-    </li>
-    <li>
-        <a href="{{ path('planevaluacion_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('planevaluacion_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
     </li>
 </ul>
 {% endblock %}

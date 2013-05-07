@@ -54,10 +54,16 @@ class PlanEvaluacion
      */
     private $instanciasPlazo;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Evaluacion", mappedBy="planevaluacion")
+     */
+    protected $evaluaciones;
+
 
     public function __construct()
     {
         $this->recursos = new ArrayCollection();
+        $this->evaluaciones = new ArrayCollection();
     }
 
     /**
@@ -208,4 +214,37 @@ class PlanEvaluacion
         return $this;
     }
 
+
+    /**
+     * Add evaluaciones
+     *
+     * @param \chanpp\EvImBundle\Entity\Evaluacion $evaluaciones
+     * @return PlanEvaluacion
+     */
+    public function addEvaluacione(\chanpp\EvImBundle\Entity\Evaluacion $evaluaciones)
+    {
+        $this->evaluaciones[] = $evaluaciones;
+    
+        return $this;
+    }
+
+    /**
+     * Remove evaluaciones
+     *
+     * @param \chanpp\EvImBundle\Entity\Evaluacion $evaluaciones
+     */
+    public function removeEvaluacione(\chanpp\EvImBundle\Entity\Evaluacion $evaluaciones)
+    {
+        $this->evaluaciones->removeElement($evaluaciones);
+    }
+
+    /**
+     * Get evaluaciones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEvaluaciones()
+    {
+        return $this->evaluaciones;
+    }
 }

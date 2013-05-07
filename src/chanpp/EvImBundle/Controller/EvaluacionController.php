@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use chanpp\EvImBundle\Entity\Evaluacion;
 use chanpp\EvImBundle\Form\EvaluacionType;
-
+use chanpp\EvImBundle\Entity\PlanEvaluacion;
 /**
  * Evaluacion controller.
  *
@@ -46,10 +46,14 @@ class EvaluacionController extends Controller
     {
         $entity  = new Evaluacion();
         $form = $this->createForm(new EvaluacionType(), $entity);
+        $planevaluacionid =  $request->query->get('planevaluacion_id');
         $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+             #Get the PlanEvaluación and link it
+            $plan  = $em->getRepository('chanppEvImBundle:PlanEvaluacion')->find($planevaluacionid);
+            $entity-> setPlanevaluacion($plan);
             $em->persist($entity);
             $em->flush();
 
@@ -90,18 +94,19 @@ class EvaluacionController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('chanppEvImBundle:Evaluacion')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Evaluacion entity.');
         }
-
+        $evaluaciondirecta =  $entity->getEvaluaciondirecta();
+        $evaluacionesindirectas = $entity->getEvaluacionesindirectas();
         $deleteForm = $this->createDeleteForm($id);
-
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+            'evaluaciondirecta' => $evaluaciondirecta,
+            'evaluacionesindirectas' => $evaluacionesindirectas,
         );
     }
 

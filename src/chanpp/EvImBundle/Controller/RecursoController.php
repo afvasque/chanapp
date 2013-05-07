@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use chanpp\EvImBundle\Entity\Recurso;
 use chanpp\EvImBundle\Form\RecursoType;
-
+use chanpp\EvImBundle\Entity\PlanEvaluacion;
 /**
  * Recurso controller.
  *
@@ -46,10 +46,14 @@ class RecursoController extends Controller
     {
         $entity  = new Recurso();
         $form = $this->createForm(new RecursoType(), $entity);
+        $planevaluacionid =  $request->query->get('planevaluacion_id');
         $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+             #Get the PlanEvaluación and link it
+            $plan  = $em->getRepository('chanppEvImBundle:PlanEvaluacion')->find($planevaluacionid);
+            $entity-> setPlanEvaluacion($plan);
             $em->persist($entity);
             $em->flush();
 

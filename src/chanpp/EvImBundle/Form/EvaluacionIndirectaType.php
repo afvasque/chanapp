@@ -11,11 +11,17 @@ class EvaluacionIndirectaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('ambito')
-            ->add('grupoInteres')
-            ->add('ejes')
-            ->add('responsable')
-            ->add('plazo')
+            ->add('ambito', 'choice', array('choices'   => array('1' => 'Capacitación/Educación', '2' => 'Información/Difusión', '3' => 'Otras Transformaciones de Mercado',),'required'  => true, 'label' => 'Ámbito del objetivo del programa',))
+            ->add('grupoInteres','textarea',array('label'  => 'Grupos de interés de la evaluación',))
+            ->add('ejes', 'choice', array(
+        'expanded' => true,
+        'multiple' => true,
+        'choices'  => array(
+            '1' => 'Presencia',
+            '2'  => 'Valoración',
+            '3'   => 'Capacidad Movilizadora',),))
+            ->add('responsable','text',array('label'  => 'Responsable de la ejecución',))
+            ->add('plazo','text',array('label'  => 'Plazo de la ejecución',))
         ;
     }
 

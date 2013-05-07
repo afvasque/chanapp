@@ -32,3 +32,7 @@ Evaluacion:
 EvaluacionDirecta:
     resource: "@chanppEvImBundle/Controller/EvaluacionDirectaController.php"
     type: annotation
+
+EvaluacionIndirecta:
+    resource: "@chanppEvImBundle/Controller/EvaluacionIndirectaController.php"
+    type: annotation

@@ -1,19 +1,19 @@
-{% extends '::base.html.twig' %}
+{% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>Evaluacion creation</h1>
+    <h1>Creación de Evaluación</h1>
 
-    <form action="{{ path('evaluacion_create') }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('evaluacion_create', { 'planevaluacion_id':app.request.get('planevaluacion_id') }) }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
         <p>
-            <button type="submit">Create</button>
+            <button type="submit">Crear</button>
         </p>
     </form>
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('evaluacion') }}">
-            Back to the list
+      <a href="{{ path('planevaluacion_show', { 'id': app.request.get('planevaluacion_id')}) }}">
+            Volver al plan de evaluación
         </a>
     </li>
 </ul>

@@ -22,7 +22,7 @@ class EvaluacionDirecta
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Evaluacion", inversedBy="evaluaciondirecta")
+     * @ORM\OneToOne(targetEntity="Evaluacion", inversedBy="evaluaciondirecta")
      * @ORM\JoinColumn(name="evaluacion_id", referencedColumnName="id")
      */
     protected $evaluacion;
@@ -119,5 +119,51 @@ class EvaluacionDirecta
     public function getEvaluacion()
     {
         return $this->evaluacion;
+    }
+
+    /**
+     * Get total
+     *
+     * @return float 
+     */
+    public function getTotal()
+    {   
+        //Check the unit and convert accordingly
+        $resultado = $this->resultado;
+        $unidad = $this->unidad;
+        if($unidad == 1) //Fuel Oil
+        {
+            $resultado = $resultado * 12210.99;
+        }
+        else if($unidad == 2) //Diesel
+        {
+           $resultado = $resultado * 10647.99; 
+        }
+        else if($unidad == 3) //Gas Licuado - Liquido
+        {
+           $resultado = $resultado * 7739.45; 
+        }
+        else if($unidad == 4) //Gas Licuado - Gaseoso
+        {
+           $resultado = $resultado * 9720.00; 
+        }
+        else if($unidad == 5)//Gas Natural
+        {
+           $resultado = $resultado * 10.86; 
+        }
+        else if($unidad == 6) //Carbón
+        {
+           $resultado = $resultado * 8140.66; 
+        }
+        else if($unidad == 7)
+        {
+           $resultado = $resultado * 10456.10; 
+        }
+        else{
+            //Nothing, the rest is already in kWh
+        }
+        //From kWh to mWh
+        $resultado = $resultado/1000;
+        return $resultado;
     }
 }

@@ -11,9 +11,10 @@ class EvaluacionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('nombre')
             ->add('alcance')
-            ->add('duracion')
-            ->add('confiabilidad')
+            ->add('duracion','text',array('label'  => 'Meses de evaluación',))
+            ->add('confiabilidad','textarea',array('label'  => 'Nivel de confiabilidad de los resultados que se requiere',))
         ;
     }
 

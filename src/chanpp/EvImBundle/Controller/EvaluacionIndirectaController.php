@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use chanpp\EvImBundle\Entity\EvaluacionIndirecta;
 use chanpp\EvImBundle\Form\EvaluacionIndirectaType;
-
+use chanpp\EvImBundle\Entity\Evaluacion;
 /**
  * EvaluacionIndirecta controller.
  *
@@ -46,10 +46,14 @@ class EvaluacionIndirectaController extends Controller
     {
         $entity  = new EvaluacionIndirecta();
         $form = $this->createForm(new EvaluacionIndirectaType(), $entity);
+        $evaluacionid =  $request->query->get('evaluacion_id');
         $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+             #Get the Evaluación and link it
+            $evaluacion  = $em->getRepository('chanppEvImBundle:Evaluacion')->find($evaluacionid);
+            $entity-> setEvaluacion($evaluacion);
             $em->persist($entity);
             $em->flush();
 

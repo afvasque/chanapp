@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
     <h1>EvaluacionIndirecta list</h1>
@@ -21,7 +21,15 @@
                 <td><a href="{{ path('evaluacionindirecta_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.ambito }}</td>
                 <td>{{ entity.grupoInteres }}</td>
-                <td>{{ entity.ejes }}</td>
+                <td>{% for eje in entity.ejes %}
+                     {% if eje == 1 %}
+                        Presencia 
+                     {% elseif eje == 2 %}
+                        Valoración 
+                     {% elseif eje == 3 %}
+                        Capacidad Movilizadora 
+                {% endif %}
+                {% endfor %}</td>
                 <td>{{ entity.responsable }}</td>
                 <td>{{ entity.plazo }}</td>
                 <td>

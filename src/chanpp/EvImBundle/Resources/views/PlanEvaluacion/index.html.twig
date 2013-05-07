@@ -1,23 +1,27 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>PlanEvaluacion list</h1>
-
+    <h1>Planes de Evaluación</h1>
+    <ul>
+        <li>
+            <a href="{{ path('planevaluacion_new') }}">
+                Crear nuevo plan de evaluación
+            </a>
+        </li>
+    </ul>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Objetivos</th>
                 <th>Destinatarios</th>
-                <th>Instanciasnumeroevaluaciones</th>
-                <th>Instanciasplazo</th>
-                <th>Actions</th>
+                <th>Número de Evaluaciones</th>
+                <th>Plazo</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('planevaluacion_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.objetivos }}</td>
                 <td>{{ entity.destinatarios }}</td>
                 <td>{{ entity.instanciasNumeroEvaluaciones }}</td>
@@ -25,10 +29,10 @@
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('planevaluacion_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('planevaluacion_show', { 'id': entity.id }) }}">Ver</a>
                     </li>
                     <li>
-                        <a href="{{ path('planevaluacion_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('planevaluacion_edit', { 'id': entity.id }) }}">Editar</a>
                     </li>
                 </ul>
                 </td>
@@ -36,11 +40,5 @@
         {% endfor %}
         </tbody>
     </table>
-        <ul>
-        <li>
-            <a href="{{ path('planevaluacion_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+        
     {% endblock %}

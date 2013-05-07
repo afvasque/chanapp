@@ -96,12 +96,14 @@ class PlanEvaluacionController extends Controller
             throw $this->createNotFoundException('Unable to find PlanEvaluacion entity.');
         }
         $recursos =  $entity->getRecursos();
+        $evaluaciones = $entity->getEvaluaciones();
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
             'recursos' => $recursos,
+            'evaluaciones' => $evaluaciones,
         );
     }
 

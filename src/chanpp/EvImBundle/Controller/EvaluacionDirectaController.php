@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use chanpp\EvImBundle\Entity\EvaluacionDirecta;
 use chanpp\EvImBundle\Form\EvaluacionDirectaType;
-
+use chanpp\EvImBundle\Entity\Evaluacion;
 /**
  * EvaluacionDirecta controller.
  *
@@ -46,14 +46,26 @@ class EvaluacionDirectaController extends Controller
     {
         $entity  = new EvaluacionDirecta();
         $form = $this->createForm(new EvaluacionDirectaType(), $entity);
+        $evaluacionid =  $request->query->get('evaluacion_id');
         $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('evaluaciondirecta_show', array('id' => $entity->getId())));
+             #Get the Evaluación and link it
+            $evaluacion  = $em->getRepository('chanppEvImBundle:Evaluacion')->find($evaluacionid);
+            #Check that this evaluación doesn't have any other evaluacióndirecta
+            if($evaluacion->getEvaluaciondirecta())
+            {
+                #Throw error
+                return $this->redirect($this->generateUrl('evaluacion_show', array('id' => $evaluacionid, 'error' => '1')));
+            }
+            else
+            {
+                $entity-> setEvaluacion($evaluacion);
+                $em->persist($entity);
+                $em->flush();
+                return $this->redirect($this->generateUrl('evaluaciondirecta_show', array('id' => $entity->getId())));
+            }  
         }
 
         return array(

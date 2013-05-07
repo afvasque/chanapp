@@ -12,9 +12,9 @@ class PlanEvaluacionType extends AbstractType
     {
         $builder
             ->add('objetivos')
-            ->add('destinatarios')
-            ->add('instanciasNumeroEvaluaciones')
-            ->add('instanciasPlazo')
+            ->add('destinatarios','text',array('label'  => 'Destinatarios de la información',))
+            ->add('instanciasNumeroEvaluaciones','integer',array('label'  => 'Número de evaluaciones','data' => '0'))
+            ->add('instanciasPlazo','text',array('label'  => 'Plazo para las evaluaciones (Ejemplo "12 Meses")',))
         ;
     }
 
