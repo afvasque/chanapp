@@ -11,17 +11,39 @@ class FichaProyectoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('area_accion')
-            ->add('linea_accion')
-            ->add('nombre')
-            ->add('jefe')
-            ->add('duracion')
-            ->add('diagnostico_previo')
-            ->add('obj_general')
-            ->add('objs_especificos')
-            ->add('descripcion')
-            ->add('desc_causales')
-            ->add('variables_causales')
+            ->add('area_accion','text', array(
+                'label_attr' => array(
+                        'class'=>'control-label')))
+            ->add('linea_accion','text', array(
+                'label_attr' => array(
+                        'class'=>'control-label')))
+            ->add('nombre','text', array(
+                'label_attr' => array(
+                        'class'=>'control-label')))
+            ->add('jefe','text', array(
+                'label_attr' => array(
+                        'class'=>'control-label')))
+            ->add('duracion','text', array(
+                'label_attr' => array(
+                        'class'=>'control-label')))
+            ->add('diagnostico_previo','text', array(
+                'label_attr' => array(
+                        'class'=>'control-label')))
+            ->add('obj_general','text', array(
+                'label_attr' => array(
+                        'class'=>'control-label')))
+            ->add('objs_especificos','text', array(
+                'label_attr' => array(
+                        'class'=>'control-label')))
+            ->add('descripcion','textarea', array(
+                'label_attr' => array(
+                        'class'=>'control-label')))
+            ->add('desc_causales','text', array(
+                'label_attr' => array(
+                        'class'=>'control-label')))
+            ->add('variables_causales','text', array(
+                'label_attr' => array(
+                        'class'=>'control-label')))
         ;
 
         $builder->add('activities', 'collection', array(

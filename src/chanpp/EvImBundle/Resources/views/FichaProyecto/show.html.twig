@@ -1,7 +1,7 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>Ficha Proyecto</h1>
+    <h1>Ficha Proyecto {{entity.id}}</h1>
 
     <table class="table">
         <tbody>
@@ -94,22 +94,23 @@
     </table>
         {% endfor %}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('fichaproyecto') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('fichaproyecto_edit', { 'id': entity.id }) }}">
+    <div class="form-actions">
         
-    </li>
-    <li>
-        <form action="{{ path('fichaproyecto_delete', { 'id': entity.id }) }}" method="post">
+        <a href="{{ path('fichaproyecto') }}" class="btn btn-primary">
+            Regresar a Proyectos
+        </a>
+        <a href="{{ path('fichaproyecto_edit', { 'id': entity.id }) }}" class="btn">
+            Editar Ficha Proyecto
+        </a>        
+
+    </div>
+    <form action="{{ path('fichaproyecto_delete', { 'id': entity.id }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <button type="submit" class="btn btn-danger">Borrar Ficha Proyecto</button>
         </form>
-    </li>
-</ul>
+    
+    
+    
+
 {% endblock %}
