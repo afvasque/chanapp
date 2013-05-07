@@ -53,6 +53,7 @@
     </table>
 
     <h2>Actividades asociadas</h2>
+
     <table class="table table-condensed">
         <tr>
             <th>Nombre</th>
@@ -61,8 +62,9 @@
         </tr>
     {% for actividad in entity.activities %}
         <tr>
-            <td><a href="{{ path('activity_show', { 'id': actividad.id }) }}"> {{actividad.nombre}} </a></td>
+            <td> {{actividad.nombre}} </a></td>
             <td>{{actividad.descripcion}}</td>
+            
         </tr>
     {% endfor %}
         </table>

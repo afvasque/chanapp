@@ -1,14 +1,10 @@
-{% extends '::base.html.twig' %}
+{% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>Activity</h1>
+    <h1>Actividad {{entity.nombre}}</h1>
 
-    <table class="record_properties">
+    <table class="table table-condensed">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
             <tr>
                 <th>Nombre</th>
                 <td>{{ entity.nombre }}</td>
@@ -28,23 +24,22 @@
         </tbody>
     </table>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('activity') }}">
-            Back to the list
+    <div class="form-actions">
+        
+        <a href="{{ path('fichaproyecto_show', {'id' : entity.getFichaProyecto.getId}) }}" class="btn btn-primary">
+            Regresar a Ficha Proyecto
         </a>
-    </li>
-    <li>
-        <a href="{{ path('activity_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
+        <a href="{{ path('activity_edit', { 'id': entity.id }) }}" class="btn">
+            Editar Actividad
+        </a>        
+
+    </div>
+    
+    
         <form action="{{ path('activity_delete', { 'id': entity.id }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <button type="submit" class="btn btn-danger">Borrar Actividad</button>
         </form>
-    </li>
-</ul>
+
 {% endblock %}
