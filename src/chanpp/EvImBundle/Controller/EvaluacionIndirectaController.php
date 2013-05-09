@@ -234,7 +234,7 @@ class EvaluacionIndirectaController extends Controller
                #We edit it
                 #NOT WORKING
                 $olddocument = $evaluacion->getDocument();
-                $olddocument->setFile($request->query->get('form[file]'));
+                $olddocument->setFile($document->getFile());
                 $em->persist($olddocument);
                 $em->flush(); 
             }
