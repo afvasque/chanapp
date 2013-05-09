@@ -9,6 +9,7 @@
                 <th>Id</th>
                 <th>Resultado</th>
                 <th>Unidad</th>
+                <th>Descripcion</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -18,6 +19,7 @@
                 <td><a href="{{ path('evaluaciondirecta_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.resultado }}</td>
                 <td>{{ entity.unidad }}</td>
+                <td>{{ entity.descripcion }}</td>
                 <td>
                 <ul>
                     <li>

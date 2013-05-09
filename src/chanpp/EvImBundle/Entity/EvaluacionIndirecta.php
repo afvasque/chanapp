@@ -62,6 +62,11 @@ class EvaluacionIndirecta
      */
     protected $evaluacion;
 
+     /**
+     * @ORM\OneToOne(targetEntity="Document", mappedBy="evaluacionindirecta")
+     */
+    protected $document;
+
     /**
      * Get id
      *
@@ -208,5 +213,28 @@ class EvaluacionIndirecta
     public function getEvaluacion()
     {
         return $this->evaluacion;
+    }
+
+    /**
+     * Set document
+     *
+     * @param \chanpp\EvImBundle\Entity\Document $document
+     * @return EvaluacionIndirecta
+     */
+    public function setDocument(\chanpp\EvImBundle\Entity\Document $document = null)
+    {
+        $this->document = $document;
+    
+        return $this;
+    }
+
+    /**
+     * Get document
+     *
+     * @return \chanpp\EvImBundle\Entity\Document 
+     */
+    public function getDocument()
+    {
+        return $this->document;
     }
 }

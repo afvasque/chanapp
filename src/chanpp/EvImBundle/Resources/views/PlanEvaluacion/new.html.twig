@@ -3,7 +3,7 @@
 {% block body -%}
     <h1>Creando Plan de Evaluación</h1>
 
-    <form action="{{ path('planevaluacion_create') }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('planevaluacion_create', { 'fichaproyecto_id':app.request.get('fichaproyecto_id') }) }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
         <p>
             <button type="submit">Crear</button>

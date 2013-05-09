@@ -41,6 +41,12 @@ class EvaluacionDirecta
      */
     private $unidad;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcion", type="text")
+     */
+    private $descripcion;
 
     /**
      * Get id
@@ -165,5 +171,28 @@ class EvaluacionDirecta
         //From kWh to mWh
         $resultado = $resultado/1000;
         return $resultado;
+    }
+
+    /**
+     * Set descripcion
+     *
+     * @param string $descripcion
+     * @return EvaluacionDirecta
+     */
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+    
+        return $this;
+    }
+
+    /**
+     * Get descripcion
+     *
+     * @return string 
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
     }
 }

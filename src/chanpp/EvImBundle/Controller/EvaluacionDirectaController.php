@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use chanpp\EvImBundle\Entity\EvaluacionDirecta;
 use chanpp\EvImBundle\Form\EvaluacionDirectaType;
 use chanpp\EvImBundle\Entity\Evaluacion;
+use chanpp\EvImBundle\Entity\Document;
 /**
  * EvaluacionDirecta controller.
  *

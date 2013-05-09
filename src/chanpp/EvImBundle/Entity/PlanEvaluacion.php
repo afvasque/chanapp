@@ -59,6 +59,11 @@ class PlanEvaluacion
      */
     protected $evaluaciones;
 
+     /**
+     * @ORM\ManyToOne(targetEntity="FichaProyecto", inversedBy="evaluaciones")
+     * @ORM\JoinColumn(name="fichaproyecto_id", referencedColumnName="id")
+     */
+    protected $fichaproyecto;
 
     public function __construct()
     {
@@ -246,5 +251,28 @@ class PlanEvaluacion
     public function getEvaluaciones()
     {
         return $this->evaluaciones;
+    }
+
+    /**
+     * Set fichaproyecto
+     *
+     * @param \chanpp\EvImBundle\Entity\FichaProyecto $fichaproyecto
+     * @return PlanEvaluacion
+     */
+    public function setFichaproyecto(\chanpp\EvImBundle\Entity\FichaProyecto $fichaproyecto = null)
+    {
+        $this->fichaproyecto = $fichaproyecto;
+    
+        return $this;
+    }
+
+    /**
+     * Get fichaproyecto
+     *
+     * @return \chanpp\EvImBundle\Entity\FichaProyecto 
+     */
+    public function getFichaproyecto()
+    {
+        return $this->fichaproyecto;
     }
 }

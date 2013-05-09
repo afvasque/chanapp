@@ -111,7 +111,47 @@
             {{ form_widget(delete_form) }}
             <button type="submit" class="btn btn-danger">Borrar Ficha Proyecto</button>
         </form>
-    
+   <ul>
+        <li>
+            {# app/Resources/views/base.html.twig
+                {% render 'chanppEvI' with { 'entity': entity } %} } #}
+
+            <a href="{{ path('planevaluacion_new', { 'fichaproyecto_id': entity.id }) }}">
+                Agregar Plan de Evaluación
+            </a> 
+        </li>
+    </ul>
+     <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Objetivos</th>
+                <th>Destinatarios</th>
+                <th>Número de Evaluaciones</th>
+                <th>Plazo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in planevaluaciones %}
+            <tr>
+                <td>{{ entity.objetivos }}</td>
+                <td>{{ entity.destinatarios }}</td>
+                <td>{{ entity.instanciasNumeroEvaluaciones }}</td>
+                <td>{{ entity.instanciasPlazo }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('planevaluacion_show', { 'id': entity.id }) }}">Ver</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('planevaluacion_edit', { 'id': entity.id }) }}">Editar</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
     
     
 

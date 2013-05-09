@@ -22,6 +22,7 @@ class EvaluacionDirectaType extends AbstractType
              '8' => 'Energía Eléctrica Anual [kWh]', 
              '9' => 'Energía Autogenerada [kWh]',  
              '10' => 'Otros [kWh]',),'required'  => true,))
+            ->add('descripcion')
         ;
     }
 

@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use chanpp\EvImBundle\Entity\PlanEvaluacion;
 use chanpp\EvImBundle\Form\PlanEvaluacionType;
-
+use chanpp\EvImBundle\Entity\FichaProyecto;
 /**
  * PlanEvaluacion controller.
  *
@@ -45,10 +45,14 @@ class PlanEvaluacionController extends Controller
     {
         $entity  = new PlanEvaluacion();
         $form = $this->createForm(new PlanEvaluacionType(), $entity);
+        $fichaproyectoid =  $request->query->get('fichaproyecto_id');
         $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+             #Get the FichaProyecto and link it
+            $ficha  = $em->getRepository('chanppEvImBundle:FichaProyecto')->find($fichaproyectoid);
+            $entity-> setFichaproyecto($ficha);
             $em->persist($entity);
             $em->flush();
 

@@ -36,3 +36,11 @@ EvaluacionDirecta:
 EvaluacionIndirecta:
     resource: "@chanppEvImBundle/Controller/EvaluacionIndirectaController.php"
     type: annotation
+
+uploadindirecta:
+    path:      /uploadindirecta
+    defaults:  { _controller: chanppEvImBundle:EvaluacionIndirecta:upload }
+
+uploaddirecta:
+    path:      /uploaddirecta
+    defaults:  { _controller: chanppEvImBundle:EvaluacionDirecta:upload }

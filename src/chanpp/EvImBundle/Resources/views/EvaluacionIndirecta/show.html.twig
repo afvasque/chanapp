@@ -53,6 +53,16 @@
                 <th>Plazo de la ejecución</th>
                 <td>{{ entity.plazo }}</td>
             </tr>
+            <tr>
+                <th>Archivo</th>
+                {% if document %}
+                    <td><a href="{{ asset(document.getWebPath())}}">Descargar Archivo</a> - <a href="{{ path('uploadindirecta', { 'evaluacionindirecta_id': entity.id}) }}">Cambiar Archivo</a></td>
+                {% else %}
+                    <td>No hay archivo - <a href="{{ path('uploadindirecta', { 'evaluacionindirecta_id': entity.id}) }}">Subir Archivo</a></td>
+                {% endif %}
+               
+            </tr>
+
         </tbody>
     </table>
 

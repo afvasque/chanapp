@@ -118,6 +118,10 @@ class FichaProyecto
      */
     private $variables_causales;
 
+    /**
+     * @ORM\OneToMany(targetEntity="PlanEvaluacion", mappedBy="fichaproyecto")
+     */
+    protected $planeevaluaciones;
 
     /**
      * Get id
@@ -454,5 +458,51 @@ class FichaProyecto
     public function getIndGestions()
     {
         return $this->ind_gestions;
+    }
+
+    /**
+     * Add evaluaciones
+     *
+     * @param \chanpp\EvImBundle\Entity\Evaluacion $evaluaciones
+     * @return FichaProyecto
+     */
+    public function addEvaluacione(\chanpp\EvImBundle\Entity\Evaluacion $evaluaciones)
+    {
+        $this->evaluaciones[] = $evaluaciones;
+    
+        return $this;
+    }
+
+    /**
+     * Add planeevaluaciones
+     *
+     * @param \chanpp\EvImBundle\Entity\PlanEvaluacion $planeevaluaciones
+     * @return FichaProyecto
+     */
+    public function addPlaneevaluacione(\chanpp\EvImBundle\Entity\PlanEvaluacion $planeevaluaciones)
+    {
+        $this->planeevaluaciones[] = $planeevaluaciones;
+    
+        return $this;
+    }
+
+    /**
+     * Remove planeevaluaciones
+     *
+     * @param \chanpp\EvImBundle\Entity\PlanEvaluacion $planeevaluaciones
+     */
+    public function removePlaneevaluacione(\chanpp\EvImBundle\Entity\PlanEvaluacion $planeevaluaciones)
+    {
+        $this->planeevaluaciones->removeElement($planeevaluaciones);
+    }
+
+    /**
+     * Get planeevaluaciones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPlaneevaluaciones()
+    {
+        return $this->planeevaluaciones;
     }
 }
