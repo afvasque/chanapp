@@ -60,14 +60,20 @@ class Evaluacion
     protected $evaluacionesindirectas;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PlanEvaluacion", inversedBy="evaluaciones")
+     * @ORM\ManyToOne(targetEntity="PlanEvaluacion")
      * @ORM\JoinColumn(name="planevaluacion_id", referencedColumnName="id")
      */
     protected $planevaluacion;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Activity", mappedBy="evaluaciones")
+     */
+    protected $actividades;
     
     public function __construct()
     {
         $this->evaluacionesindirectas = new ArrayCollection();
+        $this->actividades = new ArrayCollection();
     }
 
     /**
@@ -249,5 +255,39 @@ class Evaluacion
     public function getPlanevaluacion()
     {
         return $this->planevaluacion;
+    }
+
+
+    /**
+     * Add actividades
+     *
+     * @param \chanpp\EvImBundle\Entity\Activity $actividades
+     * @return Evaluacion
+     */
+    public function addActividade(\chanpp\EvImBundle\Entity\Activity $actividades)
+    {
+        $this->actividades[] = $actividades;
+    
+        return $this;
+    }
+
+    /**
+     * Remove actividades
+     *
+     * @param \chanpp\EvImBundle\Entity\Activity $actividades
+     */
+    public function removeActividade(\chanpp\EvImBundle\Entity\Activity $actividades)
+    {
+        $this->actividades->removeElement($actividades);
+    }
+
+    /**
+     * Get actividades
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getActividades()
+    {
+        return $this->actividades;
     }
 }

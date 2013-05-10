@@ -232,7 +232,6 @@ class EvaluacionIndirectaController extends Controller
             if(($evaluacion->getDocument()))
             {
                #We edit it
-                #NOT WORKING
                 $olddocument = $evaluacion->getDocument();
                 $olddocument->setFile($document->getFile());
                 $em->persist($olddocument);

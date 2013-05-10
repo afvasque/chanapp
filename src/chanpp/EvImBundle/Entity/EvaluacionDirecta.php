@@ -48,6 +48,11 @@ class EvaluacionDirecta
      */
     private $descripcion;
 
+     /**
+     * @ORM\OneToOne(targetEntity="DocumentEDirecta", mappedBy="evaluaciondirecta")
+     */
+    protected $document;
+
     /**
      * Get id
      *
@@ -194,5 +199,51 @@ class EvaluacionDirecta
     public function getDescripcion()
     {
         return $this->descripcion;
+    }
+
+    /**
+     * Set document
+     *
+     * @param \chanpp\EvImBundle\Entity\Document $document
+     * @return EvaluacionIndirecta
+     */
+    public function setDocumentEDirecta(\chanpp\EvImBundle\Entity\DocumentEDirecta $document = null)
+    {
+        $this->document = $document;
+    
+        return $this;
+    }
+
+    /**
+     * Get document
+     *
+     * @return \chanpp\EvImBundle\Entity\DocumentEDirecta 
+     */
+    public function getDocumentEDirecta()
+    {
+        return $this->document;
+    }
+
+    /**
+     * Set document
+     *
+     * @param \chanpp\EvImBundle\Entity\DocumentEDirecta $document
+     * @return EvaluacionDirecta
+     */
+    public function setDocument(\chanpp\EvImBundle\Entity\DocumentEDirecta $document = null)
+    {
+        $this->document = $document;
+    
+        return $this;
+    }
+
+    /**
+     * Get document
+     *
+     * @return \chanpp\EvImBundle\Entity\DocumentEDirecta 
+     */
+    public function getDocument()
+    {
+        return $this->document;
     }
 }

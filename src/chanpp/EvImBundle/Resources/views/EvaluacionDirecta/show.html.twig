@@ -52,6 +52,15 @@
                 <th>Descripcion</th>
                 <td>{{ entity.descripcion }}</td>
             </tr>
+             <tr>
+                <th>Archivo</th>
+                {% if document %}
+                    <td><a href="{{ asset(document.getWebPath())}}">Descargar Archivo</a> - <a href="{{ path('uploaddirecta', { 'evaluaciondirecta_id': entity.id}) }}">Cambiar Archivo</a></td>
+                {% else %}
+                    <td>No hay archivo - <a href="{{ path('uploaddirecta', { 'evaluaciondirecta_id': entity.id}) }}">Subir Archivo</a></td>
+                {% endif %}
+               
+            </tr>
         </tbody>
     </table>
         <ul class="record_actions">

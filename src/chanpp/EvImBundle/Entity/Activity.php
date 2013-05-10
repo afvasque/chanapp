@@ -3,6 +3,7 @@
 namespace chanpp\EvImBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Activity
@@ -55,6 +56,16 @@ class Activity
      */
     private $duracion;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Evaluacion")
+     * @ORM\JoinColumn(name="evaluacion_id", referencedColumnName="id")
+     */
+    protected $evaluaciones;
+
+    public function __construct()
+    {
+        $this->evaluaciones = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -179,5 +190,38 @@ class Activity
     public function getFichaProyecto()
     {
         return $this->ficha_proyecto;
+    }
+
+    /**
+     * Add evaluaciones
+     *
+     * @param \chanpp\EvImBundle\Entity\Evaluacion $evaluaciones
+     * @return Activity
+     */
+    public function addEvaluacione(\chanpp\EvImBundle\Entity\Evaluacion $evaluaciones)
+    {
+        $this->evaluaciones[] = $evaluaciones;
+    
+        return $this;
+    }
+
+    /**
+     * Remove evaluaciones
+     *
+     * @param \chanpp\EvImBundle\Entity\Evaluacion $evaluaciones
+     */
+    public function removeEvaluacione(\chanpp\EvImBundle\Entity\Evaluacion $evaluaciones)
+    {
+        $this->evaluaciones->removeElement($evaluaciones);
+    }
+
+    /**
+     * Get evaluaciones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEvaluaciones()
+    {
+        return $this->evaluaciones;
     }
 }

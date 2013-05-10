@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use chanpp\EvImBundle\Entity\EvaluacionDirecta;
 use chanpp\EvImBundle\Form\EvaluacionDirectaType;
 use chanpp\EvImBundle\Entity\Evaluacion;
-use chanpp\EvImBundle\Entity\Document;
+use chanpp\EvImBundle\Entity\DocumentEDirecta;
 /**
  * EvaluacionDirecta controller.
  *
@@ -110,11 +110,13 @@ class EvaluacionDirectaController extends Controller
             throw $this->createNotFoundException('Unable to find EvaluacionDirecta entity.');
         }
 
+        $document  = $entity->getDocumentEDirecta();
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+            'document' => $document,
         );
     }
 
@@ -219,5 +221,43 @@ class EvaluacionDirectaController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+
+    public function uploadAction(Request $request)
+    {
+      
+         $document = new DocumentEDirecta();
+        $form = $this->createFormBuilder($document)
+            ->add('file','file', array('label' => 'Archivo'))
+            ->getForm();
+        $evaluacionid =  $request->query->get('evaluaciondirecta_id');
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+             #Get the Evaluación and link it
+            $evaluacion  = $em->getRepository('chanppEvImBundle:EvaluacionDirecta')->find($evaluacionid);
+             #First we check that the current EvaluacionIndirecta doesn't have any files
+            if(($evaluacion->getDocumentEDirecta()))
+            {
+               #We edit it
+                $olddocument = $evaluacion->getDocumentEDirecta();
+                $olddocument->setFile($document->getFile());
+                $em->persist($olddocument);
+                $em->flush(); 
+            }
+            else
+            {
+               #New one  
+               $document-> setEvaluaciondirecta($evaluacion);
+               $em->persist($document);
+               $em->flush();   
+            }
+
+            return $this->redirect($this->generateUrl('evaluaciondirecta_show', array('id' => $evaluacionid)));
+        }
+        return $this->render(
+    "chanppEvImBundle:EvaluacionDirecta:upload.html.twig",
+        array('form' => $form->createView()) );
     }
 }

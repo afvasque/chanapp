@@ -101,12 +101,14 @@ class EvaluacionController extends Controller
         }
         $evaluaciondirecta =  $entity->getEvaluaciondirecta();
         $evaluacionesindirectas = $entity->getEvaluacionesindirectas();
+        $actividades = $entity->getActividades();
         $deleteForm = $this->createDeleteForm($id);
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
             'evaluaciondirecta' => $evaluaciondirecta,
             'evaluacionesindirectas' => $evaluacionesindirectas,
+            'actividades' => $actividades,
         );
     }
 

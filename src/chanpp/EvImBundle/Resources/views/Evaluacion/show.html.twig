@@ -38,8 +38,53 @@
         </tbody>
     </table>
     <hr>
-    {# Aspectos y Variables a considerar#}
-    <h4>Aspectos y variables a considerar</h4>
+    {# Actividades#}
+    <h4>Actividades</h4>
+    <ul>
+        <li>
+            <a href="{{ path('evaluaciondirecta_new', { 'evaluacion_id': entity.id }) }}">
+                Asociar Actividades
+            </a>
+        </li>
+    </ul>
+    {% if actividades is empty %}
+       No hay actividades
+    {% else %}
+        
+         <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                    <th>Resultadosesperados</th>
+                    <th>Duracion</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entity in actividades %}
+                <tr>
+                    <td>{{ entity.nombre }}</td>
+                    <td>{{ entity.descripcion }}</td>
+                    <td>{{ entity.resultadosEsperados }}</td>
+                    <td>{{ entity.duracion }}</td>
+                    <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('activity_show', { 'id': entity.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('activity_edit', { 'id': entity.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    
+
     {# Fin Aspectos#}
     <hr>
     {#Evaluación Directa#}

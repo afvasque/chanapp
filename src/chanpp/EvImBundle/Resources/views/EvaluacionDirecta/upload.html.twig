@@ -1,0 +1,12 @@
+{% extends 'chanppEvImBundle::layout.html.twig' %}
+
+{% block body -%}
+    <h1>Subir Archivo a Evaluación Directa</h1>
+
+    <form action="{{ path('uploaddirecta' , { 'evaluaciondirecta_id': app.request.get('evaluaciondirecta_id')}) }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <p>
+            <button type="submit">Subir Archivo</button>
+        </p>
+    </form>
+{% endblock %}
