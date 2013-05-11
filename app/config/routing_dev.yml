@@ -44,3 +44,19 @@ uploadindirecta:
 uploaddirecta:
     path:      /uploaddirecta
     defaults:  { _controller: chanppEvImBundle:EvaluacionDirecta:upload }
+
+linkactivity:
+    path:      /linkactivity
+    defaults:  { _controller: chanppEvImBundle:Evaluacion:linkactivity }
+
+Cuestionario:
+    resource: "@chanppEvImBundle/Controller/CuestionarioController.php"
+    type: annotation
+
+PreguntaAlternativa:
+    resource: "@chanppEvImBundle/Controller/PreguntaAlternativaController.php"
+    type: annotation
+
+PreguntaDesarrollo:
+    resource: "@chanppEvImBundle/Controller/PreguntaDesarrolloController.php"
+    type: annotation

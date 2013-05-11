@@ -290,4 +290,16 @@ class Evaluacion
     {
         return $this->actividades;
     }
+
+    /**
+     * Set actividades
+     * @param \chanpp\EvImBundle\Entity\Activity $actividades
+     * @return Evaluacion
+     */
+    public function setActividades(\chanpp\EvImBundle\Entity\Activity $actividades = null)
+    {
+        $this->actividades = $actividades;
+    
+        return $this;
+    }
 }

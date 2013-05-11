@@ -1,0 +1,12 @@
+{% extends 'chanppEvImBundle::layout.html.twig' %}
+
+{% block body -%}
+    <h1>Asociar Actividad a Evaluación</h1>
+
+    <form action="{{ path('linkactivity' , { 'id': $entity.id}) }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <p>
+            <button type="submit">Asociar Actividad</button>
+        </p>
+    </form>
+{% endblock %}

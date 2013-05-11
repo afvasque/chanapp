@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use chanpp\EvImBundle\Entity\Evaluacion;
 use chanpp\EvImBundle\Form\EvaluacionType;
 use chanpp\EvImBundle\Entity\PlanEvaluacion;
+use chanpp\EvImBundle\Entity\Activity;
 /**
  * Evaluacion controller.
  *
@@ -213,5 +214,41 @@ class EvaluacionController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+
+
+    public function linkactivityAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $id = $request->query->get('evaluacion_id');
+        $entity = $em->getRepository('chanppEvImBundle:Evaluacion')->find($id);
+        
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Evaluacion entity.');
+        }
+        #We get all the activities that haven't been added to this
+        #$activities = $entity->getPlanevaluacion()->getFichaproyecto()->getActivities();
+        $form = $this->createFormBuilder($entity)
+            ->getForm();
+        $form->bind($request);
+
+        if ($editForm->isValid()) {
+            #$activityid=  $request->query->get('actividad_id');
+            #Now we get the activity with that id and add it to the evaluacion
+            #$activity = $em->getRepository('chanppEvImBundle:Activity')->find($activityid);
+            #$entity->addActividade($activity);
+            #$em->persist($entity);
+            #$em->flush();
+
+            return $this->redirect($this->generateUrl('evaluacion_show', array('id' => $id)));
+        }
+
+        return $this->render(
+    "chanppEvImBundle:Evaluacion:linkactivity.html.twig",
+        array('form' => $form->createView(),
+            'activities' => $activities,
+             'entity'      => $entity,
+            ) 
+        );
     }
 }
