@@ -1,6 +1,10 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>Valores obtenidos: {{ answer1}}</h1>
-    
+    <h1>{{ answer1}}</h1>
+    <ul>
+                    <li>
+                        <a href="{{ path('cuestionario_answer', { 'id': cuestionario.id }) }}">Volver a cuestionario</a>
+                    </li>
+                </ul>
 {% endblock %}

@@ -284,6 +284,19 @@ class CuestionarioController extends Controller
         $empresa = $answer = $request->get('empresa');
         $mail = $answer = $request->get('mail');
         $telefono = $answer = $request->get('telefono');
+        $respuestacheckemail = $entity->getRespuestas();
+        #Check that the email is not repeated
+         foreach($respuestacheckemail as  &$r)
+        {
+            if(strcmp($r->getMail(), $mail) == 0)
+            {
+                #Email already exists
+                $result = "Error: Ya hay una respuesta con ese email.";
+                return $this->render(
+            "chanppEvImBundle:Cuestionario:save_answers.html.twig",
+                array('answer1' => $result, 'cuestionario'=>$entity));
+            } 
+        }
         $temprespuesta->setNombre($nombre);
         $temprespuesta->setEmpresa($empresa);
         $temprespuesta->setMail($mail);
@@ -296,6 +309,7 @@ class CuestionarioController extends Controller
             $answer = $request->get('respuesta')[$counter];
             if($p->getTipo() == 0)
             {
+
                 $temprespuesta2 = new RespuestaDesarrollo();
                 $temprespuesta2->setRespuesta($answer);
                 $temprespuesta2->setPregunta($p);
@@ -303,34 +317,34 @@ class CuestionarioController extends Controller
                 $em->persist($temprespuesta2);
                 $temprespuesta->getRespuestasdesarrollos()[] = $temprespuesta2;
             }
-            else if($p->getTipo() == 1)
+            else #Any PreguntaAlternativa is saved the same way
             {
-                 #$preguntas[] = $pregunta;
+                #Prevent fake answers
+                if(intval($answer)<0 || ($p->getTipo() == 1 && intval($answer)>=3) || ($p->getTipo() == 2 && intval($answer)>=6))
+                {
+                    $result = "Error: Se ha intentado modificar alguno de los valores del cuestionario. Por favor intente de nuevo.";
+                return $this->render(
+            "chanppEvImBundle:Cuestionario:save_answers.html.twig",
+                array('answer1' => $result, 'cuestionario'=>$entity));
+                }
+                $temprespuesta2 = new RespuestaAlternativa();
+                $temprespuesta2->setRespuesta(intval($answer));
+                $temprespuesta2->setPregunta($p);
+                $temprespuesta2->setRespuestaParent($temprespuesta);
+                $em->persist($temprespuesta2);
+                $temprespuesta->getRespuestasalternativas()[] = $temprespuesta2;
             }
-            else if($p->getTipo() == 2)
-            {
-                 #$preguntas[] = $pregunta;
-            }
-             else if($p->getTipo() == 3)
-            {
-                 #$preguntas[] = $pregunta;
-            }
+            
         }
-        
-        #Create an answer linked to that question with the value x, iterating
-        #We get (yet again) all the questions
-
-        #return array(  'entity' => $entity,  'form'   => $form->createView(), );
-        #return array(  'data' => $data, );
         #Persist EVERYTHING
         $temprespuesta->setCuestionario($entity);
         $em->persist($temprespuesta);
         $entity->getRespuestas()[] = $temprespuesta;
         $em->persist($entity);
         $em->flush();
-        $result = "Todo OK";
+        $result = "El cuestionario ha sido guardado con éxito.";
         return $this->render(
     "chanppEvImBundle:Cuestionario:save_answers.html.twig",
-        array('answer1' => $result) );
+        array('answer1' => $result, 'cuestionario'=>$entity));
     }
 }

@@ -59,7 +59,7 @@ class PreguntaAlternativaController extends Controller
             $cuestionario  = $em->getRepository('chanppEvImBundle:Cuestionario')->find($cuestionarioid);
             $cuestionario->addPreguntasalternativa($entity);
             $entity->setNumeropregunta($preguntanumero);
-            $entity->addCuestionario($cuestionario);
+            $entity->setCuestionario($cuestionario);
             $entity->setTipo($tipo);
             #Now we save the correct alternatives according to the tipo
             if($tipo == 1)
@@ -72,6 +72,9 @@ class PreguntaAlternativaController extends Controller
             }
             else if($tipo == 3)
             {
+                #Get alternatives
+                $alternativas = $request->get('alternativa');
+                $entity->setAlternativas($alternativas);
 
             }
             $em->persist($entity);
@@ -178,6 +181,13 @@ class PreguntaAlternativaController extends Controller
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
+             if($entity->getTipo() == 3)
+            {
+                #Get alternatives
+                $alternativas = $request->get('alternativa');
+                $entity->setAlternativas($alternativas);
+
+            }
             $em->persist($entity);
             $em->flush();
 

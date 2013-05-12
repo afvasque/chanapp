@@ -10,16 +10,44 @@
         <h3> {{numero_pregunta}}) {{ pregunta.getEnunciado() }} :</h3>
         {% if pregunta.getTipo() == 0 %}
             <input type="text" name="respuesta[{{numero_pregunta}}]">
+            <li>
+             <a href="{{ path('preguntadesarrollo_edit', { 'id': pregunta.id }) }}">
+            Editar Pregunta
+              </a>
+             </li>
         {% elseif pregunta.getTipo() == 1 %}
             <input type="radio" name="respuesta[{{numero_pregunta}}]" value="1">Sí<br>
             <input type="radio" name="respuesta[{{numero_pregunta}}]" value="2">No<br>
+             <li>
+            <a href="{{ path('preguntaalternativa_edit', { 'id': pregunta.id }) }}">
+            Editar Pregunta
+            </a>
+             </li>
         {% elseif pregunta.getTipo() == 2 %}
             <input type="radio" name="respuesta[{{numero_pregunta}}]" value="1">1<br>
             <input type="radio" name="respuesta[{{numero_pregunta}}]" value="2">2<br>
             <input type="radio" name="respuesta[{{numero_pregunta}}]" value="3">3<br>
             <input type="radio" name="respuesta[{{numero_pregunta}}]" value="4">4<br>
             <input type="radio" name="respuesta[{{numero_pregunta}}]" value="5">5<br>
+            <li>
+            <a href="{{ path('preguntaalternativa_edit', { 'id': pregunta.id }) }}">
+            Editar Pregunta
+            </a>
+             </li>
+        {% elseif pregunta.getTipo() == 3 %}
+            {% set numero_alternativa = 0 %}
+            {% for alternativa in pregunta.alternativas %} 
+            {% set numero_alternativa = numero_alternativa + 1 %}
+            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="{{numero_alternativa}}"> {{ alternativa }}<br>
+             {% endfor %}
+              <li>
+            <a href="{{ path('preguntaalternativa_edit', { 'id': pregunta.id }) }}">
+            Editar Pregunta
+            </a>
+             </li>
         {% endif %}
     {% endfor %}
+    <br>
+    <br>
     </div>
 {% endblock %}

@@ -6,29 +6,35 @@
     <div id="cuestionario">
     <form action="{{ path('cuestionario_save_answers', {'id': entity.id}) }}" method="post" {{ form_enctype(form) }}>
     <label for="nombre">Nombre:</label> 
-    <input type="text" name="nombre" />
+    <input type="text" name="nombre" required/>
     <label for="empresa">Empresa:</label> 
-    <input type="text" name="empresa" />
+    <input type="text" name="empresa" required/>
     <label for="mail">Mail:</label> 
-    <input type="text" name="mail" />
+    <input type="email" name="mail" required/>
     <label for="telefono">Teléfono:</label> 
-    <input type="text" name="telefono" />
+    <input type="text" name="telefono" required/>
     <hr>
     {% set numero_pregunta = 0 %}
     {% for pregunta in preguntas%}
         {% set numero_pregunta = numero_pregunta + 1 %}
         <h3> {{numero_pregunta}}) {{ pregunta.getEnunciado() }} :</h3>
         {% if pregunta.getTipo() == 0 %}
-            <input type="text" name="respuesta[{{numero_pregunta}}]">
+            <input type="text" name="respuesta[{{numero_pregunta}}]" required>
         {% elseif pregunta.getTipo() == 1 %}
-            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="1">Sí<br>
-            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="2">No<br>
+            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="1" required>Sí<br>
+            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="2" required>No<br>
         {% elseif pregunta.getTipo() == 2 %}
-            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="1">1<br>
-            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="2">2<br>
-            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="3">3<br>
-            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="4">4<br>
-            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="5">5<br>
+            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="1" required>1<br>
+            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="2" required>2<br>
+            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="3" required>3<br>
+            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="4" required>4<br>
+            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="5" required>5<br>
+        {% set numero_alternativa = 0 %}
+        {% elseif pregunta.getTipo() == 3 %}
+            {% for alternativa in pregunta.getAlternativas%}
+            {% set numero_alternativa = numero_alternativa + 1 %}
+            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="{{numero_alternativa}}" required>{{ alternativa}}<br>
+             {% endfor %}
         {% endif %}
     {% endfor %}
     <br>

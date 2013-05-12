@@ -43,6 +43,18 @@
                 Agregar Pregunta Alternativa Escala 1 a 5
             </a>
         </li>
+        <li>
+            <form action="{{ path('preguntaalternativa_new') }}" method="get" {{ form_enctype(delete_form) }}>
+            <input type="hidden" name="cuestionario_id" value="{{ entity.id}}">
+            <input type="hidden" name="pregunta_tipo" value="3">
+            <input type="hidden" name="pregunta_numero" value="{{ pregunta_numero}}">
+            <label for="numero_alternativas">Número de alternativas:</label> 
+            <input type="text" name="numero_alternativas" required>
+            <p>
+            <button type="submit">Agregar Pregunta con alternativas personalizadas</button>
+             </p>
+            </form>
+        </li>
     </ul>
     {# Fin Link#}
     <hr>

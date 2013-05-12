@@ -163,7 +163,7 @@ class Cuestionario
         $preguntasalternativa = $this->getPreguntasalternativa();
         $preguntas = new ArrayCollection();
         $counter = 1;
-        while($question_number != $counter)
+        while($question_number >= $counter)
         {   
             #We check all the questions for the currently needed one
             foreach($preguntasdesarrollo as  &$pregunta)

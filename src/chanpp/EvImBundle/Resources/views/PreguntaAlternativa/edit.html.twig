@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
     <h1>PreguntaAlternativa edit</h1>
@@ -6,6 +6,14 @@
     <form action="{{ path('preguntaalternativa_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
         {{ form_widget(edit_form) }}
+        {% if entity.getTipo() == 3%}
+        <br><label for="alternativas">Alternativas:</label> 
+        {% set numero_alternativa = 0 %}
+        {% for alternativa in entity.getAlternativas() %}
+        {% set numero_alternativa = numero_alternativa + 1 %}
+             {{numero_alternativa}}) <input type="text" name="alternativa[{{numero_alternativa}}]" value="{{alternativa}}"><br>
+        {% endfor %}
+        {% endif %}
         <p>
             <button type="submit">Edit</button>
         </p>
