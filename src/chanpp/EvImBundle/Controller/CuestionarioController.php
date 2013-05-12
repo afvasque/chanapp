@@ -277,21 +277,60 @@ class CuestionarioController extends Controller
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('chanppEvImBundle:Cuestionario')->find($id);
         $preguntas = $entity->getPreguntasSorted();
+        $temprespuesta = new Respuesta();
+
+        #Set values for Respuesta
+        $nombre = $answer = $request->get('nombre');
+        $empresa = $answer = $request->get('empresa');
+        $mail = $answer = $request->get('mail');
+        $telefono = $answer = $request->get('telefono');
+        $temprespuesta->setNombre($nombre);
+        $temprespuesta->setEmpresa($empresa);
+        $temprespuesta->setMail($mail);
+        $temprespuesta->setTelefono($telefono);
+        #For each question, we create the appropiate answer and save it
+        $counter = 0;
          foreach($preguntas as  &$p)
-        {
+        {   
+            $counter++;
+            $answer = $request->get('respuesta')[$counter];
             if($p->getTipo() == 0)
+            {
+                $temprespuesta2 = new RespuestaDesarrollo();
+                $temprespuesta2->setRespuesta($answer);
+                $temprespuesta2->setPregunta($p);
+                $temprespuesta2->setRespuestaParent($temprespuesta);
+                $em->persist($temprespuesta2);
+                $temprespuesta->getRespuestasdesarrollos()[] = $temprespuesta2;
+            }
+            else if($p->getTipo() == 1)
+            {
+                 #$preguntas[] = $pregunta;
+            }
+            else if($p->getTipo() == 2)
+            {
+                 #$preguntas[] = $pregunta;
+            }
+             else if($p->getTipo() == 3)
             {
                  #$preguntas[] = $pregunta;
             }
         }
-        $answer1 = $request->get('respuesta')[1];
+        
         #Create an answer linked to that question with the value x, iterating
         #We get (yet again) all the questions
 
         #return array(  'entity' => $entity,  'form'   => $form->createView(), );
         #return array(  'data' => $data, );
+        #Persist EVERYTHING
+        $temprespuesta->setCuestionario($entity);
+        $em->persist($temprespuesta);
+        $entity->getRespuestas()[] = $temprespuesta;
+        $em->persist($entity);
+        $em->flush();
+        $result = "Todo OK";
         return $this->render(
     "chanppEvImBundle:Cuestionario:save_answers.html.twig",
-        array('answer1' => $answer1) );
+        array('answer1' => $result) );
     }
 }

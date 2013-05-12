@@ -5,14 +5,14 @@
     <hr>
     <div id="cuestionario">
     <form action="{{ path('cuestionario_save_answers', {'id': entity.id}) }}" method="post" {{ form_enctype(form) }}>
-    <label for="firstname">Nombre:</label> 
+    <label for="nombre">Nombre:</label> 
     <input type="text" name="nombre" />
-    <label for="firstname">Empresa:</label> 
+    <label for="empresa">Empresa:</label> 
     <input type="text" name="empresa" />
-    <label for="firstname">Mail:</label> 
+    <label for="mail">Mail:</label> 
     <input type="text" name="mail" />
-    <label for="firstname">Teléfono:</label> 
-    <input type="text" name="teléfono" />
+    <label for="telefono">Teléfono:</label> 
+    <input type="text" name="telefono" />
     <hr>
     {% set numero_pregunta = 0 %}
     {% for pregunta in preguntas%}
