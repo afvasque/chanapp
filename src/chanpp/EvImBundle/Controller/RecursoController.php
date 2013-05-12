@@ -100,7 +100,6 @@ class RecursoController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Recurso entity.');
         }
-
         $deleteForm = $this->createDeleteForm($id);
 
         return array(

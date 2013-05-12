@@ -45,6 +45,13 @@ class Cuestionario
      */
     protected $respuestas;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="done", type="boolean")
+     */
+    private $done;
+
     public function __construct()
     {
         $this->preguntasalternativa = new ArrayCollection();
@@ -219,5 +226,28 @@ class Cuestionario
     public function getRespuestas()
     {
         return $this->respuestas;
+    }
+
+    /**
+     * Set done
+     *
+     * @param boolean $done
+     * @return Cuestionario
+     */
+    public function setDone($done)
+    {
+        $this->done = $done;
+    
+        return $this;
+    }
+
+    /**
+     * Get done
+     *
+     * @return boolean 
+     */
+    public function getDone()
+    {
+        return $this->done;
     }
 }

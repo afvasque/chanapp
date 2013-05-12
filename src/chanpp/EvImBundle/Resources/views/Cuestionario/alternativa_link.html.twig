@@ -1,0 +1,17 @@
+{% extends 'chanppEvImBundle::layout.html.twig' %}
+
+{% block body -%}
+<form action="{{ path('preguntaalternativa_link_save', {'id': entity.id}) }}" method="post" {{ form_enctype(delete_form) }}>
+    <h1>Asociar Pregunta de Alternativas Anterior a Cuestionario</h1>
+    <select name="old_id">
+	{% for pregunta in preguntas%}
+	<option value="{{ pregunta.getId()}}">{{ pregunta.getEnunciado() }}</option>
+	{% endfor %}
+	</select>
+	<p>
+       <button type="submit">Asociar Pregunta</button>
+    </p>
+    </form>
+{% endblock %}
+
+

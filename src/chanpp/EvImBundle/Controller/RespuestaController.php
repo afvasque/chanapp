@@ -96,12 +96,14 @@ class RespuestaController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Respuesta entity.');
         }
-
+        #Get all the answers, order them and return them
+        $respuestas = $entity->getRespuestasSorted();
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+            'respuestas' => $respuestas,
         );
     }
 

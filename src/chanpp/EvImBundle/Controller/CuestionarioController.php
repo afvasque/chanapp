@@ -13,7 +13,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use chanpp\EvImBundle\Entity\Respuesta;
 use chanpp\EvImBundle\Entity\RespuestaDesarrollo;
 use chanpp\EvImBundle\Entity\RespuestaAlternativa;
-
+use chanpp\EvImBundle\Entity\PreguntaAlternativa;
+use chanpp\EvImBundle\Entity\PreguntaDesarrollo;
 /**
  * Cuestionario controller.
  *
@@ -106,12 +107,14 @@ class CuestionarioController extends Controller
         $question_number = count($entity->getPreguntasdesarrollo()) + count($entity->getPreguntasalternativa()) +1;
         $preguntasdesarrollo = $entity->getPreguntasdesarrollo();
         $preguntasalternativa = $entity->getPreguntasalternativa();
+        $respuestas = $entity->getRespuestas();
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
             'pregunta_numero' => $question_number,
             'preguntasdesarrollo' => $preguntasdesarrollo,
             'preguntasalternativa' => $preguntasalternativa,
+            'respuestas' => $respuestas,
         );
     }
 
@@ -382,6 +385,113 @@ class CuestionarioController extends Controller
                 array('error' => "Error: Más de una pregunta tiene el mismo número.", 'cuestionario'=>$entity));
 
         }
+    }
 
+    public function markasdoneAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('chanppEvImBundle:Cuestionario')->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Cuestionario entity.');
+        }
+        $entity->setDone(true);
+        $em->persist($entity);
+        $em->flush();
+        return $this->redirect($this->generateUrl('cuestionario_show', array('id' => $entity->getId())));
+    }
+
+     public function alternativa_linkAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('chanppEvImBundle:Cuestionario')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Cuestionario entity.');
+        }
+
+        $editForm = $this->createForm(new CuestionarioType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+        $preguntas = $em->getRepository('chanppEvImBundle:PreguntaAlternativa')->findByCuestionario(null);
+       return $this->render(
+            "chanppEvImBundle:Cuestionario:alternativa_link.html.twig",
+                array('entity'=>$entity, 'preguntas'=>$preguntas,'delete_form'=>$deleteForm->createView()));
+    }
+    public function alternativa_link_saveAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('chanppEvImBundle:Cuestionario')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Cuestionario entity.');
+        }
+
+        #We get all the PreguntasAlternativas that don't have a Cuestionario set, because these are the ones that can be reapeated
+        #Get the original question, create a new one, copy all the values and then link it
+        $oldpregunta = $em->getRepository('chanppEvImBundle:PreguntaAlternativa')->find($request->get('old_id'));
+        $newpregunta = new PreguntaAlternativa();
+        $newpregunta->setEnunciado($oldpregunta->getEnunciado());
+        $newpregunta->setTipo($oldpregunta->getTipo());
+        $newpregunta->setEje($oldpregunta->getEje());
+        $newpregunta->setNumeropregunta(count($entity->getPreguntasdesarrollo()) + count($entity->getPreguntasalternativa()) +1);
+        $newpregunta->setAlternativas($oldpregunta->getAlternativas());
+        $newpregunta->setCuestionario($entity);
+        #Set the parentquestion as the old one
+        $newpregunta->setPreguntapadre($oldpregunta);
+        $oldpregunta->addPreguntashija($newpregunta);
+        $entity->getPreguntasalternativa($newpregunta);
+        $em->persist($newpregunta);
+        $em->persist($entity);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('cuestionario_show', array('id' => $entity->getId())));
+    }
+
+    public function desarrollo_linkAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('chanppEvImBundle:Cuestionario')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Cuestionario entity.');
+        }
+
+        $editForm = $this->createForm(new CuestionarioType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+        $preguntas = $em->getRepository('chanppEvImBundle:PreguntaDesarrollo')->findByCuestionario(null);
+       return $this->render(
+            "chanppEvImBundle:Cuestionario:desarrollo_link.html.twig",
+                array('entity'=>$entity, 'preguntas'=>$preguntas,'delete_form'=>$deleteForm->createView()));
+    }
+
+    public function desarrollo_link_saveAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('chanppEvImBundle:Cuestionario')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Cuestionario entity.');
+        }
+
+        #We get all the Preguntas that don't have a Cuestionario set, because these are the ones that can be reapeated
+        #Get the original question, create a new one, copy all the values and then link it
+        $oldpregunta = $em->getRepository('chanppEvImBundle:PreguntaDesarrollo')->find($request->get('old_id'));
+        $newpregunta = new PreguntaDesarrollo();
+        $newpregunta->setEnunciado($oldpregunta->getEnunciado());
+        $newpregunta->setTipo($oldpregunta->getTipo());
+        $newpregunta->setEje($oldpregunta->getEje());
+        $newpregunta->setNumeropregunta(count($entity->getPreguntasdesarrollo()) + count($entity->getPreguntasalternativa()) +1);
+        $newpregunta->setCuestionario($entity);
+        #Set the parentquestion as the old one
+        $newpregunta->setPreguntapadre($oldpregunta);
+        $oldpregunta->addPreguntashija($newpregunta);
+        $entity->getPreguntasalternativa($newpregunta);
+        $em->persist($newpregunta);
+        $em->persist($entity);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('cuestionario_show', array('id' => $entity->getId())));
     }
 }

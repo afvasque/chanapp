@@ -60,6 +60,17 @@ class PreguntaDesarrollo
      */
     protected $respuestas;
 
+    /**
+     * @ORM\OneToMany(targetEntity="PreguntaDesarrollo", mappedBy="preguntapadre")
+     */
+    protected $preguntashijas;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="PreguntaDesarrollo")
+     * @ORM\JoinColumn(name="preguntapadre_id", referencedColumnName="id")
+     */
+    protected $preguntapadre;
+    
      public function __construct()
     {
         $this->respuestas = new ArrayCollection();
@@ -221,5 +232,61 @@ class PreguntaDesarrollo
     public function getRespuestas()
     {
         return $this->respuestas;
+    }
+
+    /**
+     * Add preguntashijas
+     *
+     * @param \chanpp\EvImBundle\Entity\PreguntaDesarrollo $preguntashijas
+     * @return PreguntaDesarrollo
+     */
+    public function addPreguntashija(\chanpp\EvImBundle\Entity\PreguntaDesarrollo $preguntashijas)
+    {
+        $this->preguntashijas[] = $preguntashijas;
+    
+        return $this;
+    }
+
+    /**
+     * Remove preguntashijas
+     *
+     * @param \chanpp\EvImBundle\Entity\PreguntaDesarrollo $preguntashijas
+     */
+    public function removePreguntashija(\chanpp\EvImBundle\Entity\PreguntaDesarrollo $preguntashijas)
+    {
+        $this->preguntashijas->removeElement($preguntashijas);
+    }
+
+    /**
+     * Get preguntashijas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPreguntashijas()
+    {
+        return $this->preguntashijas;
+    }
+
+    /**
+     * Set preguntapadre
+     *
+     * @param \chanpp\EvImBundle\Entity\PreguntaDesarrollo $preguntapadre
+     * @return PreguntaDesarrollo
+     */
+    public function setPreguntapadre(\chanpp\EvImBundle\Entity\PreguntaDesarrollo $preguntapadre = null)
+    {
+        $this->preguntapadre = $preguntapadre;
+    
+        return $this;
+    }
+
+    /**
+     * Get preguntapadre
+     *
+     * @return \chanpp\EvImBundle\Entity\PreguntaDesarrollo 
+     */
+    public function getPreguntapadre()
+    {
+        return $this->preguntapadre;
     }
 }

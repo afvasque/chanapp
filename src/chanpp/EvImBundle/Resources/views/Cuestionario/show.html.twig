@@ -2,6 +2,9 @@
 
 {% block body -%}
     <h1>Cuestionario : {{ entity.nombre }}</h1>
+    {% if app.request.get('error') is defined %}
+    <h2>{{ app.request.get('error') }}</h2>
+    {% endif%}
         <ul class="record_actions">
     <li>
         <a href="{{ path('cuestionario') }}">
@@ -35,9 +38,23 @@
             <button type="submit">Delete</button>
         </form>
     </li>
-</ul>  
+    <li>
+        <a href="{{ path('cuestionario_answer', {'id': entity.id}) }}">
+    Link Público
+    </a>
+    </li>
+
+    </ul>  
     {# Links a creación de preguntas #}
+    {% if entity.getDone() %}
+    El cuestionario ha sido cerrado y no se pueden agregar más preguntas.
+    {% else %}
     <ul>
+            <li>
+        <a href="{{ path('cuestionario_markasdone', {'id': entity.id}) }}">
+        Finalizar creación de cuestionario
+        </a>
+        </li>
         <li>
             <a href="{{ path('preguntadesarrollo_new', { 'cuestionario_id': entity.id, 'pregunta_numero': pregunta_numero }) }}">
                 Agregar Pregunta Desarrollo
@@ -65,7 +82,19 @@
              </p>
             </form>
         </li>
+         <li>
+            <a href="{{ path('cuestionario_alternativa_link', { 'id': entity.id}) }}">
+                Asociar Pregunta Alternativa Antigua
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('cuestionario_desarrollo_link', { 'id': entity.id}) }}">
+                 Asociar Pregunta Desarrollo Antigua
+            </a>
+        </li>
     </ul>
+    {% endif %}
+    
     {# Fin Link#}
     <hr>
     {#Preguntas Desarrollo#}
@@ -140,4 +169,35 @@
         </tbody>
     </table>
     {# Fin Preguntas Alternativas#}
+    {# Respuestas#}
+    <h1>Respuesta list</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Empresa</th>
+                <th>Mail</th>
+                <th>Telefono</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in respuestas %}
+            <tr>
+                <td>{{ entity.nombre }}</td>
+                <td>{{ entity.empresa }}</td>
+                <td>{{ entity.mail }}</td>
+                <td>{{ entity.telefono }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('respuesta_show', { 'id': entity.id }) }}">Ver</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {# Fin Respuestas#}
 {% endblock %}

@@ -51,36 +51,73 @@ class PreguntaAlternativaController extends Controller
         #Get parameters
         $cuestionarioid =  $request->query->get('cuestionario_id');
         #Get other variables from GET
-        $preguntanumero=  $request->query->get('pregunta_numero'); 
+        $preguntanumero=  $request->query->get('pregunta_numero');
+
         $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $cuestionario  = $em->getRepository('chanppEvImBundle:Cuestionario')->find($cuestionarioid);
-            $cuestionario->addPreguntasalternativa($entity);
-            $entity->setNumeropregunta($preguntanumero);
-            $entity->setCuestionario($cuestionario);
-            $entity->setTipo($tipo);
-            #Now we save the correct alternatives according to the tipo
-            if($tipo == 1)
+            #Let's check if it's a repeating question: cuestionarioid = 0
+            if($cuestionarioid == 0)
             {
-                $entity->setAlternativas(array('1' => 'Si', '2' => 'No',));
-            }
-            else if($tipo == 2)
-            {
-                $entity->setAlternativas(array('1' => '1', '2' => '2','3' => '3', '4' => '4', '5' => '5',));
-            }
-            else if($tipo == 3)
-            {
-                #Get alternatives
-                $alternativas = $request->get('alternativa');
-                $entity->setAlternativas($alternativas);
+                #We need to create a non-linked question, which is a repeating one
+                $entity->setTipo($tipo);
+                $entity->setNumeropregunta(0);
+                #Now we save the correct alternatives according to the tipo
+                 if($tipo == 1)
+                {
+                    $entity->setAlternativas(array('1' => 'Si', '2' => 'No',));
+                }
+                else if($tipo == 2)
+                {
+                    $entity->setAlternativas(array('1' => '1', '2' => '2','3' => '3', '4' => '4', '5' => '5',));
+                }
+                else if($tipo == 3)
+                {
+                    #Get alternatives
+                    $alternativas = $request->get('alternativa');
+                    $entity->setAlternativas($alternativas);
 
-            }
-            $em->persist($entity);
-            $em->flush();
+                }
+                $em->persist($entity);
+                $em->flush();
+                return $this->redirect($this->generateUrl('preguntaalternativa_show', array('id' => $entity->getId())));
+            } 
+            else
+            {
+               $cuestionario  = $em->getRepository('chanppEvImBundle:Cuestionario')->find($cuestionarioid);
+                if($cuestionario->getDone())
+                {
+                    return $this->redirect($this->generateUrl('cuestionario_show', array('id' => $cuestionarioid, 'error' => "Error : El cuestionario está cerrado y no se pueden agregar más preguntas.",)));
+                }
+                else
+                {
+                    $cuestionario->addPreguntasalternativa($entity);
+                    $entity->setNumeropregunta($preguntanumero);
+                    $entity->setCuestionario($cuestionario);
+                    $entity->setTipo($tipo);
+                    #Now we save the correct alternatives according to the tipo
+                    if($tipo == 1)
+                    {
+                        $entity->setAlternativas(array('1' => 'Si', '2' => 'No',));
+                    }
+                    else if($tipo == 2)
+                    {
+                        $entity->setAlternativas(array('1' => '1', '2' => '2','3' => '3', '4' => '4', '5' => '5',));
+                    }
+                    else if($tipo == 3)
+                    {
+                        #Get alternatives
+                        $alternativas = $request->get('alternativa');
+                        $entity->setAlternativas($alternativas);
 
-            return $this->redirect($this->generateUrl('preguntaalternativa_show', array('id' => $entity->getId())));
+                    }
+                    $em->persist($entity);
+                    $em->flush();
+
+                    return $this->redirect($this->generateUrl('preguntaalternativa_show', array('id' => $entity->getId()))); 
+                }
+            }
         }
 
         return array(

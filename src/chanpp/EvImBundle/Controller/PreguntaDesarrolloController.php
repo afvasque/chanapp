@@ -54,16 +54,38 @@ class PreguntaDesarrolloController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $cuestionario  = $em->getRepository('chanppEvImBundle:Cuestionario')->find($cuestionarioid);
-            $cuestionario->addPreguntasdesarrollo($entity);
-            $entity->setNumeropregunta($preguntanumero);
-            $entity->addCuestionario($cuestionario);
-            $em->persist($cuestionario);
-            $em->persist($entity);
-            $em->flush();
+            if($cuestionarioid == 0)
+            {
+                #We need to create a non-linked question, which is a repeating one
+                $entity->setTipo(0);
+                $entity->setNumeropregunta(0);
+                $em->persist($entity);
+                $em->flush();
+                return $this->redirect($this->generateUrl('preguntadesarrollo_show', array('id' => $entity->getId())));
+            } 
+            else
+            {
 
-            return $this->redirect($this->generateUrl('cuestionario_show', array('id' => $cuestionarioid)));
-        }
+                $cuestionario  = $em->getRepository('chanppEvImBundle:Cuestionario')->find($cuestionarioid);
+                if($cuestionario->getDone())
+                {
+                    return $this->redirect($this->generateUrl('cuestionario_show', array('id' => $cuestionarioid, 'error' => "Error : El cuestionario está cerrado y no se pueden agregar más preguntas.",)));
+                }
+                else
+                {
+                    $cuestionario->addPreguntasdesarrollo($entity);
+                    $entity->setNumeropregunta($preguntanumero);
+                    $entity->addCuestionario($cuestionario);
+                    $em->persist($cuestionario);
+                    $em->persist($entity);
+                    $em->flush();
+                    return $this->redirect($this->generateUrl('cuestionario_show', array('id' => $cuestionarioid)));
+           
+                }
+            }
+
+            
+     }
 
         return array(
             'entity' => $entity,
@@ -82,8 +104,7 @@ class PreguntaDesarrolloController extends Controller
     {
         $entity = new PreguntaDesarrollo();
         $form   = $this->createForm(new PreguntaDesarrolloType(), $entity);
-
-        return array(
+         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
         );

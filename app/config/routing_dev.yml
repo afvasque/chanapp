@@ -76,3 +76,27 @@ cuestionario_save_answers:
 cuestionario_change_order:
     path:      /changeorder/{id}
     defaults:  { _controller: chanppEvImBundle:Cuestionario:change_order }
+
+cuestionario_markasdone:
+    path:      /markasdone/{id}
+    defaults:  { _controller: chanppEvImBundle:Cuestionario:markasdone }
+
+Respuesta:
+    resource: "@chanppEvImBundle/Controller/RespuestaController.php"
+    type: annotation
+
+cuestionario_alternativa_link:
+    path:      /alternativalink/{id}
+    defaults:  { _controller: chanppEvImBundle:Cuestionario:alternativa_link }
+
+preguntaalternativa_link_save:
+    path:      /alternativalinksave/{id}
+    defaults:  { _controller: chanppEvImBundle:Cuestionario:alternativa_link_save }
+
+cuestionario_desarrollo_link:
+    path:      /desarrollolink/{id}
+    defaults:  { _controller: chanppEvImBundle:Cuestionario:desarrollo_link }
+
+preguntadesarrollo_link_save:
+    path:      /desarrollolinksave/{id}
+    defaults:  { _controller: chanppEvImBundle:Cuestionario:desarrollo_link_save }

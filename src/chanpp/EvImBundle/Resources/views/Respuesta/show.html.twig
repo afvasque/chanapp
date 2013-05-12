@@ -1,14 +1,10 @@
-{% extends '::base.html.twig' %}
+{% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>Respuesta</h1>
+    <h1>Viendo respuesta específica</h1>
 
-    <table class="record_properties">
+    <table class="table table-striped">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
             <tr>
                 <th>Nombre</th>
                 <td>{{ entity.nombre }}</td>
@@ -28,23 +24,42 @@
         </tbody>
     </table>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('respuesta') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('respuesta_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('respuesta_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+    <h1>Respuestas a Preguntas</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Número</th>
+                <th>Pregunta</th>
+                <th>Respuesta</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for respuesta in respuestas %}
+            <tr>
+                <td>{{ respuesta.getPregunta().getNumeropregunta() }}</td>
+                <td>{{ respuesta.getPregunta().getEnunciado() }}</td>
+                 {% if respuesta.getPregunta().getTipo() == 0 %}
+                 <td>{{ respuesta.getRespuesta() }}</td>
+                 {% elseif respuesta.getPregunta().getTipo() == 1 %}
+                     {% if respuesta.getRespuesta() == 1 %}
+                     <td>Si</td>
+                     {% else %}
+                     <td>No</td>
+                     {% endif %}
+                 {% elseif respuesta.getPregunta().getTipo() == 2 %}
+                 <td>{{ respuesta.getRespuesta() }}</td>
+                 {% elseif respuesta.getPregunta().getTipo() == 3 %}
+                 <td>{{ respuesta.getRespuesta() }}</td>
+                 {% endif %}
+                
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul class="record_actions">
+     <li>
+        <a href="{{ path('cuestionario_show', { 'id': entity.getCuestionario().id }) }}">Volver a cuestionario</a>
+     </li>
+    </ul>
 {% endblock %}

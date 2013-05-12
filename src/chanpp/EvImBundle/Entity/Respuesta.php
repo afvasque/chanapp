@@ -261,4 +261,39 @@ class Respuesta
     {
         return $this->respuestasdesarrollos;
     }
+
+    /**
+     * Get all respuestas, sorted
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRespuestasSorted()
+    {
+        $respuesta_number = count($this->getRespuestasdesarrollos()) + count($this->getRespuestasalternativas());
+        $respuestasdesarrollo = $this->getRespuestasdesarrollos();
+        $respuestasalternativa = $this->getRespuestasalternativas();
+        $respuestas = new ArrayCollection();
+        $counter = 1;
+        while($respuesta_number >= $counter)
+        {   
+            #We check all the respuestas for the currently needed one
+            foreach($respuestasdesarrollo as  &$respuesta)
+            {
+                if($respuesta->getPregunta()->getNumeropregunta() == $counter)
+                {
+                     $respuestas[] = $respuesta;
+                }
+            }
+            foreach($respuestasalternativa as  &$respuesta)
+            {
+                if($respuesta->getPregunta()->getNumeropregunta() == $counter)
+                {
+                     $respuestas[] = $respuesta;
+                }
+            }
+            $counter++;
+        }
+
+        return $respuestas;
+    }
 }
