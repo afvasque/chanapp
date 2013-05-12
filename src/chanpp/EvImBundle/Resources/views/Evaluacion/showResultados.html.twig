@@ -1,0 +1,53 @@
+{% extends 'chanppEvImBundle::layout.html.twig' %}
+
+{% block body -%}
+    {# Errors go here#}
+    <h1>Resultados evaluación {{ entity.nombre }}</h1>
+
+    <h2> Datos evaluación </h2>
+
+    <p>Área: {{proyecto.getAreaAccion}}</p>
+    <p>Programa: {{proyecto.getNombre}}</p>
+
+    <h2>Impacto directo</h2>
+    {% if entity.getEvaluaciondirecta %}
+    <table>
+        <thead>
+            <th>Resultado</th>
+            <th>Descripcion</th>
+        </thead>
+        <tr>
+            <td>{{entity.getEvaluaciondirecta.getResultado}} {{entity.getEvaluaciondirecta.getUnidad}}</td>
+            <td>{{entity.getEvaluaciondirecta.getDescripcion}}</td>
+        </tr>
+    </table>
+    {% else %}
+    <p>No hay evaluación directa ingresada </p>
+    {% endif %}
+
+    <h2>Impacto indirecto</h2>
+    <table class="table table-striped">
+        <theader>            
+            <th>GI</th>
+            <th>Presencia</th>
+            <th>Valorización</th>
+            <th>Capacidad movilizadora</th>
+        </theader>
+        {% for ev in entity.getEvaluacionesindirectas%}
+        <tr>
+            <td>{{ev.getGrupoInteres}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        <tr>
+        {% endfor %}
+    </table>
+
+    
+    <div class="form-actions">
+        <a href="{{ path('evaluacion_show', { 'id': entity.id}) }}" class="btn btn-main">
+            Volver a la evaluación
+        </a>
+    </div>
+
+{% endblock %}

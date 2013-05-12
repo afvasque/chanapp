@@ -99,7 +99,7 @@
     <div class="form-actions">
         
         <a href="{{ path('fichaproyecto') }}" class="btn btn-primary">
-            Regresar a Proyectos
+            Volver a Proyectos
         </a>
         <a href="{{ path('fichaproyecto_edit', { 'id': entity.id }) }}" class="btn">
             Editar Ficha Proyecto
@@ -109,7 +109,7 @@
     <form action="{{ path('fichaproyecto_delete', { 'id': entity.id }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
-            <button type="submit" class="btn btn-danger">Borrar Ficha Proyecto</button>
+            <button type="submit" class="btn btn-danger">Eliminar Ficha Proyecto</button>
         </form>
    <ul>
         <li>

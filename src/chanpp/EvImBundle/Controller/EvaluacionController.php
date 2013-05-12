@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use chanpp\EvImBundle\Entity\Evaluacion;
 use chanpp\EvImBundle\Form\EvaluacionType;
 use chanpp\EvImBundle\Entity\PlanEvaluacion;
+use chanpp\EvImBundle\Entity\FichaProyecto;
 use chanpp\EvImBundle\Entity\Activity;
 /**
  * Evaluacion controller.
@@ -250,5 +251,33 @@ class EvaluacionController extends Controller
              'entity'      => $entity,
             ) 
         );
+    }
+
+    /**
+     * Finds and displays a Evaluacion entity.
+     *
+     * @Route("/{id}/resultados", name="evaluacion_resultados_show")
+     * @Method("GET")
+     * @Template()
+     */
+    public function showResultadosAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('chanppEvImBundle:Evaluacion')->find($id);
+        $id_proyecto = $entity->getPlanevaluacion()->getFichaproyecto()->getId();
+        $proyecto = $em->getRepository('chanppEvImBundle:FichaProyecto')->find($id_proyecto);
+        
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Evaluacion entity.');
+        }
+
+        # Computar resultados varios
+
+        # Desplegar resultados
+        return array(
+            'entity'      => $entity,
+            'proyecto'  => $proyecto,
+        );
+
     }
 }

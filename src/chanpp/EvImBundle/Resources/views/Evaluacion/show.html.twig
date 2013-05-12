@@ -2,21 +2,8 @@
 
 {% block body -%}
     {# Errors go here#}
-    <h1>Evaluación : {{ entity.nombre }}</h1>
-    <ul class="record_actions">
-    <li>
-        <a href="{{ path('evaluacion_edit', { 'id': entity.id }) }}">
-            Editar
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('evaluacion_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Eliminar</button>
-        </form>
-    </li>
-</ul>
+    <h1>Evaluación - {{ entity.nombre }}</h1>
+
     <table class="table table-striped">
         <tbody>
              <tr>
@@ -185,12 +172,25 @@
         </tbody>
     </table>
     {#Fin Evaluaciones Indirectas#}
-    <hr>
-    <ul class="record_actions">
-    <li>
-       <a href="{{ path('planevaluacion_show', { 'id': entity.getPlanevaluacion().id}) }}">
-            Volver al plan de evaluación
+
+    {# Poner if hay resultados #}
+    <a href="{{ path('evaluacion_resultados_show', { 'id': entity.id}) }}" class="btn btn-primary">
+        Ver Resultados
+    </a>
+    
+    <div class="form-actions">
+        <a href="{{ path('planevaluacion_show', { 'id': entity.getPlanevaluacion().id}) }}" class="btn">
+            Volver al Plan de Evaluación
         </a>
-    </li>
-</ul>
+        <a href="{{ path('evaluacion_edit', { 'id': entity.id }) }}" class="btn">
+            Editar Evaluación
+        </a>
+    </div>
+        <form action="{{ path('evaluacion_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit" class="btn btn-danger">Eliminar Evaluación</button>
+        </form>
+
+
 {% endblock %}
