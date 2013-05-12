@@ -239,10 +239,13 @@ class CuestionarioController extends Controller
         $preguntas = $entity->getPreguntasSorted();
         $deleteForm = $this->createDeleteForm($id);
         #We get the current question number (which means, the number the next question will have)
+        #Error
+        $error = "";
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
             'preguntas' => $preguntas,
+            'error' => $error
         );
     }
 
@@ -346,5 +349,39 @@ class CuestionarioController extends Controller
         return $this->render(
     "chanppEvImBundle:Cuestionario:save_answers.html.twig",
         array('answer1' => $result, 'cuestionario'=>$entity));
+    }
+
+     public function change_orderAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('chanppEvImBundle:Cuestionario')->find($id);
+        $preguntas = $entity->getPreguntasSorted();
+        #Check that there are no duplicate values
+        $orden = $request->get('orden');
+        if(count($orden) == count(array_unique($orden)))
+        {
+            #No dupes
+            $counter = 0;
+            foreach($preguntas as  $p)
+            {
+                $counter++;
+                $p->setNumeropregunta($orden[$counter]);
+                $em->persist($p);
+            }
+            $em->persist($entity);
+            $em->flush();
+            return $this->render(
+            "chanppEvImBundle:Cuestionario:preview.html.twig",
+                array('error' => "Orden de preguntas actualizado con éxito", 'cuestionario'=>$entity));
+        }   
+        else
+        {
+            #Dupes
+            return $this->render(
+            "chanppEvImBundle:Cuestionario:preview.html.twig",
+                array('error' => "Error: Más de una pregunta tiene el mismo número.", 'cuestionario'=>$entity));
+
+        }
+
     }
 }

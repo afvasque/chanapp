@@ -1,7 +1,39 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
+    <h3>{{ error}}</h3>
+    {% if app.request.get('editoption') == 1%}
     <h1>Vista previa de cuestionario : {{ entity.nombre }}</h1>
+    <hr>
+    <div id="cuestionario">
+    {% set numero_pregunta = 0 %}
+    {% for pregunta in preguntas%}
+        {% set numero_pregunta = numero_pregunta + 1 %}
+        <h3> {{numero_pregunta}}) {{ pregunta.getEnunciado() }} :</h3>
+        {% if pregunta.getTipo() == 0 %}
+            <input type="text" name="respuesta[{{numero_pregunta}}]">
+        {% elseif pregunta.getTipo() == 1 %}
+            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="1">Sí<br>
+            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="2">No<br>
+        {% elseif pregunta.getTipo() == 2 %}
+            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="1">1<br>
+            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="2">2<br>
+            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="3">3<br>
+            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="4">4<br>
+            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="5">5<br>
+        {% elseif pregunta.getTipo() == 3 %}
+            {% set numero_alternativa = 0 %}
+            {% for alternativa in pregunta.alternativas %} 
+            {% set numero_alternativa = numero_alternativa + 1 %}
+            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="{{numero_alternativa}}"> {{ alternativa }}<br>
+             {% endfor %}
+        {% endif %}
+    {% endfor %}
+    <br>
+    <br>
+    </div>
+    {% elseif app.request.get('editoption') == 2%}
+    <h1>Editar preguntas de cuestionario : {{ entity.nombre }}</h1>
     <hr>
     <div id="cuestionario">
     {% set numero_pregunta = 0 %}
@@ -50,4 +82,34 @@
     <br>
     <br>
     </div>
+    {% elseif app.request.get('editoption') == 3%}
+    <h1>Cambiar orden de preguntas de cuestionario : {{ entity.nombre }}</h1>
+    <hr>
+    <form action="{{ path('cuestionario_change_order', {'id': entity.id}) }}" method="post" {{ form_enctype(delete_form) }}>
+    <div id="cuestionario">
+    {% set numero_pregunta = 0 %}
+    {% for pregunta in preguntas%}
+        {% set numero_pregunta = numero_pregunta + 1 %}
+        <h3><select name="orden[{{numero_pregunta}}]">
+        {% set orden_pregunta = 0 %}
+        {% for p in preguntas%}
+        {% set orden_pregunta = orden_pregunta + 1 %}
+        {% if pregunta.getNumeropregunta() == orden_pregunta%}
+        <option value="{{orden_pregunta}}" selected="true">{{orden_pregunta}}</option>
+        {% else%}
+        <option value="{{orden_pregunta}}">{{orden_pregunta}}</option>
+        {% endif %}
+        {% endfor %}
+    </select> ){{ pregunta.getEnunciado() }} :</h3>
+    {% endfor %}
+    <br>
+    <br>
+    </div>
+    <br>
+    <p>
+       <button type="submit">Guardar Nuevo Orden</button>
+    </p>
+    </form>
+    {% endif %}
+    
 {% endblock %}

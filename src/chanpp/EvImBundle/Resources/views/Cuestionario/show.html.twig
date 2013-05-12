@@ -9,9 +9,19 @@
         </a>
     </li>
     <li>
-        <a href="{{ path('cuestionario_preview', {'id': entity.id}) }}">
-  Preview
-</a>
+        <a href="{{ path('cuestionario_preview', {'id': entity.id, 'editoption': 1}) }}">
+    Preview
+    </a>
+    </li>
+     <li>
+        <a href="{{ path('cuestionario_preview', {'id': entity.id, 'editoption': 2}) }}">
+    Ver y editar preguntas
+    </a>
+    </li>
+     <li>
+        <a href="{{ path('cuestionario_preview', {'id': entity.id, 'editoption': 3}) }}">
+    Cambiar orden de las preguntas
+    </a>
     </li>
     <li>
         <a href="{{ path('cuestionario_edit', { 'id': entity.id }) }}">

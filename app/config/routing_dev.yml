@@ -72,3 +72,7 @@ cuestionario_answer:
 cuestionario_save_answers:
     path:      /saveanswer/{id}
     defaults:  { _controller: chanppEvImBundle:Cuestionario:save_answers }
+
+cuestionario_change_order:
+    path:      /changeorder/{id}
+    defaults:  { _controller: chanppEvImBundle:Cuestionario:change_order }
