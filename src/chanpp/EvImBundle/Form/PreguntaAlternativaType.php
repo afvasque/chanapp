@@ -9,13 +9,16 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class PreguntaAlternativaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
+    {   
+            $builder
             ->add('enunciado')
-            ->add('tipo')
-            ->add('eje')
-            ->add('numeropregunta')
-        ;
+           ->add('eje', 'choice', array(
+        'expanded' => true,
+        'choices'  => array(
+            '1' => 'Presencia',
+            '2'  => 'Valoración',
+            '3'   => 'Capacidad Movilizadora',),));
+        
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

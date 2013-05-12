@@ -1,19 +1,29 @@
-{% extends '::base.html.twig' %}
+{% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>PreguntaAlternativa creation</h1>
+    <h1>Creando Pregunta de Alternativas con respuestas Sí o No</h1>
 
-    <form action="{{ path('preguntaalternativa_create') }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('preguntaalternativa_create', { 'cuestionario_id': app.request.get('cuestionario_id'), 'pregunta_numero': app.request.get('pregunta_numero'), 'pregunta_tipo': app.request.get('pregunta_tipo') }) }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
         <p>
             <button type="submit">Create</button>
         </p>
     </form>
-
+        {% if app.request.get('pregunta_tipo') == 1%}
+            
+            <div style="background-color: grey;"><h3>Ejemplo:</h3>
+            <h4><b>¿Está de acuerdo con esta afirmación?</b></h4>
+            <input type="radio" name="ejemplosino" value="1">Sí<br>
+            <input type="radio" name="ejemplosino" value="2">No<br></div>
+        {% elseif app.request.get('pregunta_tipo') == 2%}
+         <h3> Creando Pregunta de Alternativas con Valoración de 1 a 5</h3>
+        {% elseif app.request.get('pregunta_tipo') == 3%}
+        <h3> Creando Pregunta de Alternativas con alternativas personalizadas</h3>
+        {% endif %}
         <ul class="record_actions">
     <li>
-        <a href="{{ path('preguntaalternativa') }}">
-            Back to the list
+       <a href="{{ path('cuestionario_show', { 'id': app.request.get('cuestionario_id')}) }}">
+            Volver a cuestionario
         </a>
     </li>
 </ul>

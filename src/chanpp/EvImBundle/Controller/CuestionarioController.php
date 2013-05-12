@@ -9,6 +9,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use chanpp\EvImBundle\Entity\Cuestionario;
 use chanpp\EvImBundle\Form\CuestionarioType;
+use Doctrine\Common\Collections\ArrayCollection;
+use chanpp\EvImBundle\Entity\Respuesta;
+use chanpp\EvImBundle\Entity\RespuestaDesarrollo;
+use chanpp\EvImBundle\Entity\RespuestaAlternativa;
 
 /**
  * Cuestionario controller.
@@ -98,10 +102,16 @@ class CuestionarioController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-
+        #We get the current question number (which means, the number the next question will have)
+        $question_number = count($entity->getPreguntasdesarrollo()) + count($entity->getPreguntasalternativa()) +1;
+        $preguntasdesarrollo = $entity->getPreguntasdesarrollo();
+        $preguntasalternativa = $entity->getPreguntasalternativa();
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+            'pregunta_numero' => $question_number,
+            'preguntasdesarrollo' => $preguntasdesarrollo,
+            'preguntasalternativa' => $preguntasalternativa,
         );
     }
 
@@ -206,5 +216,82 @@ class CuestionarioController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+
+
+    /**
+     * Displays the preview of a Cuestionario.
+     *
+     * @Route("/{id}", name="cuestionario_preview")
+     * @Method("GET")
+     * @Template()
+     */
+    public function  previewAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('chanppEvImBundle:Cuestionario')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Cuestionario entity.');
+        }
+        #We get all the questions
+        $preguntas = $entity->getPreguntasSorted();
+        $deleteForm = $this->createDeleteForm($id);
+        #We get the current question number (which means, the number the next question will have)
+        return array(
+            'entity'      => $entity,
+            'delete_form' => $deleteForm->createView(),
+            'preguntas' => $preguntas,
+        );
+    }
+
+    /**
+     * Displays the form to answer a Cuestionario.
+     *
+     * @Route("/{id}", name="cuestionario_answer")
+     * @Method("GET")
+     * @Template()
+     */
+    public function  answerAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('chanppEvImBundle:Cuestionario')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Cuestionario entity.');
+        }
+        #We get all the questions
+        $preguntas = $entity->getPreguntasSorted();
+        $deleteForm = $this->createDeleteForm($id);
+        return array(
+            'entity'      => $entity,
+            'form' => $deleteForm->createView(),
+            'preguntas' => $preguntas,
+        );
+    }
+
+     public function save_answersAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('chanppEvImBundle:Cuestionario')->find($id);
+        $preguntas = $entity->getPreguntasSorted();
+         foreach($preguntas as  &$p)
+        {
+            if($p->getTipo() == 0)
+            {
+                 #$preguntas[] = $pregunta;
+            }
+        }
+        $answer1 = $request->get('respuesta')[1];
+        #Create an answer linked to that question with the value x, iterating
+        #We get (yet again) all the questions
+
+        #return array(  'entity' => $entity,  'form'   => $form->createView(), );
+        #return array(  'data' => $data, );
+        return $this->render(
+    "chanppEvImBundle:Cuestionario:save_answers.html.twig",
+        array('answer1' => $answer1) );
     }
 }

@@ -199,58 +199,35 @@ class PreguntaAlternativa
     }
 
     /**
-     * Set cuestionario
+     * Add cuestionarios
      *
-     * @param \chanpp\EvImBundle\Entity\Cuestionario $cuestionario
+     * @param \chanpp\EvImBundle\Entity\Cuestionario $cuestionarios
      * @return PreguntaAlternativa
      */
-    public function setCuestionario(\chanpp\EvImBundle\Entity\Cuestionario $cuestionario = null)
+    public function addCuestionario(\chanpp\EvImBundle\Entity\Cuestionario $cuestionarios)
     {
-        $this->cuestionario = $cuestionario;
+        $this->cuestionarios[] = $cuestionarios;
     
         return $this;
     }
 
     /**
-     * Get cuestionario
+     * Remove cuestionarios
      *
-     * @return \chanpp\EvImBundle\Entity\Cuestionario 
+     * @param \chanpp\EvImBundle\Entity\Cuestionario $cuestionarios
      */
-    public function getCuestionario()
+    public function removeCuestionario(\chanpp\EvImBundle\Entity\Cuestionario $cuestionarios)
     {
-        return $this->cuestionario;
+        $this->cuestionarios->removeElement($cuestionarios);
     }
 
     /**
-     * Add respuestas
-     *
-     * @param \chanpp\EvImBundle\Entity\RespuestaAlternativa $respuestas
-     * @return PreguntaAlternativa
-     */
-    public function addRespuesta(\chanpp\EvImBundle\Entity\RespuestaAlternativa $respuestas)
-    {
-        $this->respuestas[] = $respuestas;
-    
-        return $this;
-    }
-
-    /**
-     * Remove respuestas
-     *
-     * @param \chanpp\EvImBundle\Entity\RespuestaAlternativa $respuestas
-     */
-    public function removeRespuesta(\chanpp\EvImBundle\Entity\RespuestaAlternativa $respuestas)
-    {
-        $this->respuestas->removeElement($respuestas);
-    }
-
-    /**
-     * Get respuestas
+     * Get cuestionarios
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getRespuestas()
+    public function getCuestionarios()
     {
-        return $this->respuestas;
+        return $this->cuestionarios;
     }
 }

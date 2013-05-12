@@ -1,9 +1,9 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>PreguntaDesarrollo creation</h1>
+    <h1>Crear Pregunta de Desarrollo</h1>
 
-    <form action="{{ path('preguntadesarrollo_create') }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('preguntadesarrollo_create', { 'cuestionario_id': app.request.get('cuestionario_id'), 'pregunta_numero': app.request.get('pregunta_numero') }) }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
         <p>
             <button type="submit">Create</button>
@@ -12,8 +12,8 @@
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('preguntadesarrollo') }}">
-            Back to the list
+        <a href="{{ path('cuestionario_show', { 'id': app.request.get('cuestionario_id') }) }}">
+            Volver al cuestionario
         </a>
     </li>
 </ul>

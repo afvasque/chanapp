@@ -45,11 +45,35 @@ class PreguntaAlternativaController extends Controller
     public function createAction(Request $request)
     {
         $entity  = new PreguntaAlternativa();
+        $tipo = $request->query->get('pregunta_tipo');
         $form = $this->createForm(new PreguntaAlternativaType(), $entity);
+        #$form = $this->createForm(new PreguntaAlternativaType(), $entity, array('attr' => array('tipo' => $tipo)));
+        #Get parameters
+        $cuestionarioid =  $request->query->get('cuestionario_id');
+        #Get other variables from GET
+        $preguntanumero=  $request->query->get('pregunta_numero'); 
         $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $cuestionario  = $em->getRepository('chanppEvImBundle:Cuestionario')->find($cuestionarioid);
+            $cuestionario->addPreguntasalternativa($entity);
+            $entity->setNumeropregunta($preguntanumero);
+            $entity->addCuestionario($cuestionario);
+            $entity->setTipo($tipo);
+            #Now we save the correct alternatives according to the tipo
+            if($tipo == 1)
+            {
+                $entity->setAlternativas(array('1' => 'Si', '2' => 'No',));
+            }
+            else if($tipo == 2)
+            {
+                $entity->setAlternativas(array('1' => '1', '2' => '2','3' => '3', '4' => '4', '5' => '5',));
+            }
+            else if($tipo == 3)
+            {
+
+            }
             $em->persist($entity);
             $em->flush();
 

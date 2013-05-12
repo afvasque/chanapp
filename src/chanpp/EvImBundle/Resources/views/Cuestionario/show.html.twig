@@ -1,26 +1,17 @@
-{% extends '::base.html.twig' %}
+{% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>Cuestionario</h1>
-
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Nombre</th>
-                <td>{{ entity.nombre }}</td>
-            </tr>
-        </tbody>
-    </table>
-
+    <h1>Cuestionario : {{ entity.nombre }}</h1>
         <ul class="record_actions">
     <li>
         <a href="{{ path('cuestionario') }}">
             Back to the list
         </a>
+    </li>
+    <li>
+        <a href="{{ path('cuestionario_preview', {'id': entity.id}) }}">
+  Preview
+</a>
     </li>
     <li>
         <a href="{{ path('cuestionario_edit', { 'id': entity.id }) }}">
@@ -34,5 +25,97 @@
             <button type="submit">Delete</button>
         </form>
     </li>
-</ul>
+</ul>  
+    {# Links a creación de preguntas #}
+    <ul>
+        <li>
+            <a href="{{ path('preguntadesarrollo_new', { 'cuestionario_id': entity.id, 'pregunta_numero': pregunta_numero }) }}">
+                Agregar Pregunta Desarrollo
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('preguntaalternativa_new', { 'cuestionario_id': entity.id, 'pregunta_tipo': 1 , 'pregunta_numero': pregunta_numero}) }}">
+                Agregar Pregunta Alternativa Sí o No
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('preguntaalternativa_new', { 'cuestionario_id': entity.id, 'pregunta_tipo': 2 , 'pregunta_numero': pregunta_numero}) }}">
+                Agregar Pregunta Alternativa Escala 1 a 5
+            </a>
+        </li>
+    </ul>
+    {# Fin Link#}
+    <hr>
+    {#Preguntas Desarrollo#}
+    <h3>Preguntas Desarrollo</h3>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Numeropregunta</th>
+                <th>Enunciado</th>
+                <th>Eje</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in preguntasdesarrollo %}
+            <tr>
+                <td>{{ entity.numeropregunta }}</td>
+                <td>{{ entity.enunciado }}</td>
+                <td>{{ entity.eje }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('preguntadesarrollo_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('preguntadesarrollo_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+    {#Fin Fin Preguntas Desarrollo#}
+    {# Preguntas Alternativas#}
+    <h3>Preguntas Alternativa</h3>
+
+     <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Enunciado</th>
+                <th>Tipo</th>
+                <th>Eje</th>
+                <th>Numeropregunta</th>
+                <th>Alternativas</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in preguntasalternativa %}
+            <tr>
+                <td>{{ entity.enunciado }}</td>
+                <td>{{ entity.tipo }}</td>
+                <td>{{ entity.eje }}</td>
+                 <td>{{ entity.numeropregunta }}</td>
+                <td>{% for alternativa in entity.alternativas %}
+                     {{ alternativa }}
+                {% endfor %}</td> 
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('preguntaalternativa_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('preguntaalternativa_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {# Fin Preguntas Alternativas#}
 {% endblock %}

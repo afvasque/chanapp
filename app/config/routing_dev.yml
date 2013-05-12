@@ -60,3 +60,15 @@ PreguntaAlternativa:
 PreguntaDesarrollo:
     resource: "@chanppEvImBundle/Controller/PreguntaDesarrolloController.php"
     type: annotation
+
+cuestionario_preview:
+    path:      /preview/{id}
+    defaults:  { _controller: chanppEvImBundle:Cuestionario:preview }
+
+cuestionario_answer:
+    path:      /answer/{id}
+    defaults:  { _controller: chanppEvImBundle:Cuestionario:answer }
+
+cuestionario_save_answers:
+    path:      /saveanswer/{id}
+    defaults:  { _controller: chanppEvImBundle:Cuestionario:save_answers }

@@ -7,20 +7,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use chanpp\EvImBundle\Entity\PreguntaDesarrollo;
-use chanpp\EvImBundle\Form\PreguntaDesarrolloType;
+use chanpp\EvImBundle\Entity\RespuestaDesarrollo;
+use chanpp\EvImBundle\Form\RespuestaDesarrolloType;
 
 /**
- * PreguntaDesarrollo controller.
+ * RespuestaDesarrollo controller.
  *
- * @Route("/preguntadesarrollo")
+ * @Route("/respuestadesarrollo")
  */
-class PreguntaDesarrolloController extends Controller
+class RespuestaDesarrolloController extends Controller
 {
     /**
-     * Lists all PreguntaDesarrollo entities.
+     * Lists all RespuestaDesarrollo entities.
      *
-     * @Route("/", name="preguntadesarrollo")
+     * @Route("/", name="respuestadesarrollo")
      * @Method("GET")
      * @Template()
      */
@@ -28,7 +28,7 @@ class PreguntaDesarrolloController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('chanppEvImBundle:PreguntaDesarrollo')->findAll();
+        $entities = $em->getRepository('chanppEvImBundle:RespuestaDesarrollo')->findAll();
 
         return array(
             'entities' => $entities,
@@ -36,33 +36,24 @@ class PreguntaDesarrolloController extends Controller
     }
 
     /**
-     * Creates a new PreguntaDesarrollo entity.
+     * Creates a new RespuestaDesarrollo entity.
      *
-     * @Route("/", name="preguntadesarrollo_create")
+     * @Route("/", name="respuestadesarrollo_create")
      * @Method("POST")
-     * @Template("chanppEvImBundle:PreguntaDesarrollo:new.html.twig")
+     * @Template("chanppEvImBundle:RespuestaDesarrollo:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity  = new PreguntaDesarrollo();
-        $form = $this->createForm(new PreguntaDesarrolloType(), $entity);
-        #Get the cuestionario id
-        $cuestionarioid =  $request->query->get('cuestionario_id');
-        #Get other variables from GET
-        $preguntanumero=  $request->query->get('pregunta_numero');
+        $entity  = new RespuestaDesarrollo();
+        $form = $this->createForm(new RespuestaDesarrolloType(), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $cuestionario  = $em->getRepository('chanppEvImBundle:Cuestionario')->find($cuestionarioid);
-            $cuestionario->addPreguntasdesarrollo($entity);
-            $entity->setNumeropregunta($preguntanumero);
-            $entity->addCuestionario($cuestionario);
-            $em->persist($cuestionario);
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('cuestionario_show', array('id' => $cuestionarioid)));
+            return $this->redirect($this->generateUrl('respuestadesarrollo_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -72,16 +63,16 @@ class PreguntaDesarrolloController extends Controller
     }
 
     /**
-     * Displays a form to create a new PreguntaDesarrollo entity.
+     * Displays a form to create a new RespuestaDesarrollo entity.
      *
-     * @Route("/new", name="preguntadesarrollo_new")
+     * @Route("/new", name="respuestadesarrollo_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new PreguntaDesarrollo();
-        $form   = $this->createForm(new PreguntaDesarrolloType(), $entity);
+        $entity = new RespuestaDesarrollo();
+        $form   = $this->createForm(new RespuestaDesarrolloType(), $entity);
 
         return array(
             'entity' => $entity,
@@ -90,9 +81,9 @@ class PreguntaDesarrolloController extends Controller
     }
 
     /**
-     * Finds and displays a PreguntaDesarrollo entity.
+     * Finds and displays a RespuestaDesarrollo entity.
      *
-     * @Route("/{id}", name="preguntadesarrollo_show")
+     * @Route("/{id}", name="respuestadesarrollo_show")
      * @Method("GET")
      * @Template()
      */
@@ -100,10 +91,10 @@ class PreguntaDesarrolloController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('chanppEvImBundle:PreguntaDesarrollo')->find($id);
+        $entity = $em->getRepository('chanppEvImBundle:RespuestaDesarrollo')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find PreguntaDesarrollo entity.');
+            throw $this->createNotFoundException('Unable to find RespuestaDesarrollo entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -115,9 +106,9 @@ class PreguntaDesarrolloController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing PreguntaDesarrollo entity.
+     * Displays a form to edit an existing RespuestaDesarrollo entity.
      *
-     * @Route("/{id}/edit", name="preguntadesarrollo_edit")
+     * @Route("/{id}/edit", name="respuestadesarrollo_edit")
      * @Method("GET")
      * @Template()
      */
@@ -125,13 +116,13 @@ class PreguntaDesarrolloController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('chanppEvImBundle:PreguntaDesarrollo')->find($id);
+        $entity = $em->getRepository('chanppEvImBundle:RespuestaDesarrollo')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find PreguntaDesarrollo entity.');
+            throw $this->createNotFoundException('Unable to find RespuestaDesarrollo entity.');
         }
 
-        $editForm = $this->createForm(new PreguntaDesarrolloType(), $entity);
+        $editForm = $this->createForm(new RespuestaDesarrolloType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -142,31 +133,31 @@ class PreguntaDesarrolloController extends Controller
     }
 
     /**
-     * Edits an existing PreguntaDesarrollo entity.
+     * Edits an existing RespuestaDesarrollo entity.
      *
-     * @Route("/{id}", name="preguntadesarrollo_update")
+     * @Route("/{id}", name="respuestadesarrollo_update")
      * @Method("PUT")
-     * @Template("chanppEvImBundle:PreguntaDesarrollo:edit.html.twig")
+     * @Template("chanppEvImBundle:RespuestaDesarrollo:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('chanppEvImBundle:PreguntaDesarrollo')->find($id);
+        $entity = $em->getRepository('chanppEvImBundle:RespuestaDesarrollo')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find PreguntaDesarrollo entity.');
+            throw $this->createNotFoundException('Unable to find RespuestaDesarrollo entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new PreguntaDesarrolloType(), $entity);
+        $editForm = $this->createForm(new RespuestaDesarrolloType(), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('preguntadesarrollo_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('respuestadesarrollo_edit', array('id' => $id)));
         }
 
         return array(
@@ -177,9 +168,9 @@ class PreguntaDesarrolloController extends Controller
     }
 
     /**
-     * Deletes a PreguntaDesarrollo entity.
+     * Deletes a RespuestaDesarrollo entity.
      *
-     * @Route("/{id}", name="preguntadesarrollo_delete")
+     * @Route("/{id}", name="respuestadesarrollo_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -189,21 +180,21 @@ class PreguntaDesarrolloController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('chanppEvImBundle:PreguntaDesarrollo')->find($id);
+            $entity = $em->getRepository('chanppEvImBundle:RespuestaDesarrollo')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find PreguntaDesarrollo entity.');
+                throw $this->createNotFoundException('Unable to find RespuestaDesarrollo entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('preguntadesarrollo'));
+        return $this->redirect($this->generateUrl('respuestadesarrollo'));
     }
 
     /**
-     * Creates a form to delete a PreguntaDesarrollo entity by id.
+     * Creates a form to delete a RespuestaDesarrollo entity by id.
      *
      * @param mixed $id The entity id
      *
