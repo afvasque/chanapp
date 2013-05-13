@@ -66,6 +66,11 @@ class IndGestionController extends Controller
 
             return $this->redirect($this->generateUrl('fichaproyecto_show', array('id' => $ficha_proyecto->getId())));
         }
+        else
+        {
+            //DEBUG ONLI
+            //return $form->getErrorsAsString();
+        }
 
         return array(
             'entity' => $entity,

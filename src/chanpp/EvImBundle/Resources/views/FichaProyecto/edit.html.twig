@@ -17,8 +17,10 @@
         {{ form_row(edit_form.descripcion) }}
         {{ form_row(edit_form.desc_causales) }}
         {{ form_row(edit_form.variables_causales) }}
-        {{ form_row(edit_form.nombre_editor) }}
-        {{ form_row(edit_form.activities) }}   
+
+        {{ form_row(edit_form.activities) }}
+
+        {{ form_rest(edit_form) }}   
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Editar Ficha de Proyecto</button>
@@ -27,12 +29,13 @@
             Regresar a Fichas de Proyectos
         </a>
     </div>
-        <form action="{{ path('fichaproyecto_delete', { 'id': entity.id }) }}" method="post">
+    </form>
+
+    <form action="{{ path('fichaproyecto_delete', { 'id': entity.id }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
-            <button type="submit" class="btn btn-danger">Delete</button>
+            <button type="submit" class="btn btn-danger">Borrar Ficha Proyecto</button>
         </form>
-    </form>
 
 
 {% block javascript %}

@@ -46,9 +46,6 @@ class FichaProyectoType extends AbstractType
             ->add('variables_causales','text', array(
                 'label_attr' => array(
                         'class'=>'control-label')))
-            ->add('nombre_editor','text', array(
-                'label_attr' => array(
-                        'class'=>'control-label')))
         ;
 
         $builder->add('activities', 'collection', array(

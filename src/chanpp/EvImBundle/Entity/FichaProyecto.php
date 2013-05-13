@@ -62,7 +62,7 @@ class FichaProyecto
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre_editor", type="string", length=255)
+     * @ORM\Column(name="nombre_editor", type="string", length=255, nullable=true)
      */
     private $nombre_editor;
 
@@ -136,6 +136,31 @@ class FichaProyecto
      */
     private $variables_causales;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $created_at;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $modified_at;
+
+    /**
+     * Now we tell doctrine that before we persist or update we call the updatedTimestamps() function.
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updatedTimestamps()
+    {
+        $this->setModifiedAt(new \DateTime(date('Y-m-d H:i:s')));
+
+        if($this->getCreatedAt() == null)
+        {
+            $this->setCreatedAt(new \DateTime(date('Y-m-d H:i:s')));
+        }
+    }
 
     /**
      * Get id
@@ -554,5 +579,51 @@ class FichaProyecto
     public function getNombreEditor()
     {
         return $this->nombre_editor;
+    }
+
+    /**
+     * Set created_at
+     *
+     * @param \DateTime $createdAt
+     * @return FichaProyecto
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->created_at = $createdAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get created_at
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * Set modified_at
+     *
+     * @param \DateTime $modifiedAt
+     * @return FichaProyecto
+     */
+    public function setModifiedAt($modifiedAt)
+    {
+        $this->modified_at = $modifiedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get modified_at
+     *
+     * @return \DateTime 
+     */
+    public function getModifiedAt()
+    {
+        return $this->modified_at;
     }
 }

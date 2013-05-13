@@ -121,6 +121,8 @@
             </a> 
         </li>
     </ul>
+
+    <h2>Planes de Evaluación</h2>
      <table class="table table-striped">
         <thead>
             <tr>
@@ -153,6 +155,8 @@
         </tbody>
     </table>
     
-    
+    {% if entity.getNombreEditor %}
+    <p><i>Editado por {{entity.getNombreEditor}}</i></p>
+    {% endif %}
 
 {% endblock %}

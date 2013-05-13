@@ -60,12 +60,21 @@ class FichaProyectoController extends Controller
                 array('ficha_proyecto_id' => $entity->getId()));
 
             //return $this->redirect($this->generateUrl('fichaproyecto_show', array('id' => $entity->getId())));
+        } else        {
+            /**
+             * @var \Symfony\Component\Form\FormError $error
+             */
+            foreach ($form->getErrors() as $key => $error) {
+                $errors[] = $error->getMessage();
+            }
         }
 
-        return array(
+        return $errors;
+
+       /* return array(
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
+        );*/
     }
 
     /**
@@ -170,7 +179,7 @@ class FichaProyectoController extends Controller
 
         if ($editForm->isValid()) {
 
-            $originalTags = array();
+           $originalTags = array();
 
             // Create an array of the current Tag objects in the database
             foreach ($entity->getActivities() as $tag) {
@@ -201,10 +210,15 @@ class FichaProyectoController extends Controller
                 $em->remove($tag);
             }
 
+            $entity->setNombreEditor($this->container->get('security.context')->getToken()->getUser());
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('fichaproyecto_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('fichaproyecto_show', array('id' => $id)));
+        }
+        else
+        {
+            return $form->getErrorsAsString();
         }
 
         return array(
