@@ -31,7 +31,7 @@ class MetodoRecoleccion
 
     /**
      * @var ArrayCollection $evaluacionesindirectas
-     * @ORM\ManyToMany(targetEntity="EvaluacionIndirecta", mappedBy="metodosrecoleccion", cascade={"all"})
+     * @ORM\ManyToMany(targetEntity="EvaluacionIndirecta", mappedBy="metodosrecoleccion", cascade={"persist"})
      */
     private $evaluacionesindirectas;
     

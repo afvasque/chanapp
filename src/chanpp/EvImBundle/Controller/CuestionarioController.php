@@ -183,7 +183,7 @@ class CuestionarioController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('cuestionario_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('cuestionario_show', array('id' => $id)));
         }
 
         return array(
@@ -203,7 +203,7 @@ class CuestionarioController extends Controller
     {
         $form = $this->createDeleteForm($id);
         $form->bind($request);
-
+        $evaluacionid;
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('chanppEvImBundle:Cuestionario')->find($id);
@@ -211,12 +211,12 @@ class CuestionarioController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Cuestionario entity.');
             }
-
+            $evaluacionid = $entity->getEvaluacionindirecta()->getId();
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('cuestionario'));
+        return $this->redirect($this->generateUrl('evaluacionindirecta_show', array('id' => $evaluacionid)));
     }
 
     /**

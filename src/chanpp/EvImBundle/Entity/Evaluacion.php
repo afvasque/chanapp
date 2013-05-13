@@ -61,13 +61,19 @@ class Evaluacion
 
     /**
      * @ORM\ManyToOne(targetEntity="PlanEvaluacion", inversedBy="evaluaciones")
-     * @ORM\JoinColumn(name="planevaluacion_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="planevaluacion_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $planeevaluacion;
 
+  
    /**
      * @var ArrayCollection $actividades
-     * @ORM\ManyToMany(targetEntity="Activity", mappedBy="evaluaciones", cascade={"all"})
+     * @ORM\ManyToMany(targetEntity="Activity", inversedBy="evaluaciones", cascade={"persist"})
+     * @ORM\JoinTable(
+     *      name="activity_evaluacion",
+     *      joinColumns={@ORM\JoinColumn(name="evaluacion_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="actividad_id", referencedColumnName="id")}
+     * )
      */
     protected $actividades;
     

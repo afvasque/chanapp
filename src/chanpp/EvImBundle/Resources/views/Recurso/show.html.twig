@@ -2,20 +2,17 @@
 
 {% block body -%}
     <h1>Recurso: {{ entity.titulo }}</h1>
-    <ul class="record_actions">
-    <li>
-        <a href="{{ path('recurso_edit', { 'id': entity.id }) }}">
+     <a href="{{ path('planevaluacion_show', { 'id': entity.getPlanevaluacion().id}) }}" class="btn">
+            Volver al plan de evaluación
+     </a>
+        <a href="{{ path('recurso_edit', { 'id': entity.id }) }}" class="btn btn-warning">
             Editar
-        </a>
-    </li>
-    <li>
+        </a><br><br>
         <form action="{{ path('recurso_delete', { 'id': entity.id }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
-            <button type="submit">Eliminar</button>
+            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminar?')">Eliminar</button>
         </form>
-    </li>
-    </ul>
     <table class="table table-striped">
         <tbody>
             <tr>
@@ -39,9 +36,7 @@
 
         <ul class="record_actions">
     <li>
-      <a href="{{ path('planevaluacion_show', { 'id': entity.getPlanevaluacion().id}) }}">
-            Volver al plan de evaluación
-        </a>
+     
     </li>
 </ul>
 

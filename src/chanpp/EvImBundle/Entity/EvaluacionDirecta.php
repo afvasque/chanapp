@@ -23,7 +23,7 @@ class EvaluacionDirecta
 
     /**
      * @ORM\OneToOne(targetEntity="Evaluacion", inversedBy="evaluaciondirecta")
-     * @ORM\JoinColumn(name="evaluacion_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="evaluacion_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $evaluacion;
     

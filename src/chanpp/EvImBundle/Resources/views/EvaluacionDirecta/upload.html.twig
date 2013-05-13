@@ -2,11 +2,11 @@
 
 {% block body -%}
     <h1>Subir Archivo a Evaluación Directa</h1>
-
+<div id="hidestupiderrors">
     <form action="{{ path('uploaddirecta' , { 'evaluaciondirecta_id': app.request.get('evaluaciondirecta_id')}) }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
         <p>
-            <button type="submit">Subir Archivo</button>
+            <button type="submit" class="btn btn-success">Subir Archivo</button>
         </p>
-    </form>
+    </form></div>
 {% endblock %}

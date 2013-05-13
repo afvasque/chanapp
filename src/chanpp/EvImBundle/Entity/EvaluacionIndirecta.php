@@ -74,7 +74,7 @@ class EvaluacionIndirecta
 
     /**
      * @var ArrayCollection $metodosrecoleccion
-     * @ORM\ManyToMany(targetEntity="MetodoRecoleccion", inversedBy="evaluacionesindirectas", cascade={"all"})
+     * @ORM\ManyToMany(targetEntity="MetodoRecoleccion", inversedBy="evaluacionesindirectas", cascade={"persist"})
      * @ORM\JoinTable(
      *      name="evaluacionindirecta_metodorecoleccion",
      *      joinColumns={@ORM\JoinColumn(name="evaluacionindirecta_id", referencedColumnName="id")},
@@ -373,9 +373,9 @@ class EvaluacionIndirecta
         $nombre = "";
         foreach ($m as $m1) {
             $nombre =  $m1->getNombre();
-        }
-        if ( (strpos($nombre, "Encuesta") !== FALSE) || (strpos($nombre, "Entrevista") !== FALSE))
+            if ( (strpos($nombre, "Encuesta") !== FALSE) || (strpos($nombre, "Entrevista") !== FALSE))
                 return true;
+        }
         return false;
     }
 }

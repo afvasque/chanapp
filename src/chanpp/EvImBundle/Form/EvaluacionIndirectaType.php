@@ -27,6 +27,7 @@ class EvaluacionIndirectaType extends AbstractType
 'expanded' => true,
 'class'    => 'chanppEvImBundle:MetodoRecoleccion',
 'property' => 'nombre',
+'label'  => 'Métodos de Recolección'
 ));
   }
     public function setDefaultOptions(OptionsResolverInterface $resolver)

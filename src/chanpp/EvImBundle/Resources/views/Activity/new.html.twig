@@ -1,20 +1,14 @@
-{% extends '::base.html.twig' %}
+{% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>Activity creation</h1>
-
+    <h1>Creación de Actividad</h1>
+      <a href="{{ path('activity') }}" class="btn">
+            Volver a la lista de actividades
+        </a>
     <form action="{{ path('activity_create') }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
         <p>
-            <button type="submit">Create</button>
+            <button type="submit" class="btn btn-success">Crear</button>
         </p>
     </form>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('activity') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
 {% endblock %}

@@ -54,3 +54,17 @@ ul, li
     margin-bottom: 65px;
     margin-top: 65px;
 }
+
+#hidestupiderrors ul, li{
+    visibility:hidden;
+}
+
+input[type='checkbox'] { 
+float:left;
+margin-right: 3px;
+ }
+
+ input[type='radio'] { 
+float:left;
+margin-right: 3px;
+ }

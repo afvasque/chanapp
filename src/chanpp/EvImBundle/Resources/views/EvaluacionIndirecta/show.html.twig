@@ -1,7 +1,7 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>Evaluación Indirecta</h1>
+    <h1>Sub-Evaluación Indirecta</h1>
     {% if entity.getEvaluacion().getDone() == false %}
     <ul class="record_actions">
         <a href="{{ path('evaluacion_show', { 'id': entity.getEvaluacion().id}) }}" class="btn">
@@ -13,7 +13,7 @@
         <br><br><form action="{{ path('evaluacionindirecta_delete', { 'id': entity.id }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
-            <button type="submit" class="btn btn-danger">Eliminar</button>
+            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminar?')">Eliminar</button>
         </form>
 </ul>{% endif %}
     <table class="table table-striped">
@@ -56,9 +56,9 @@
             <tr>
                 <th>Archivo</th>
                 {% if document %}
-                    <td><a href="{{ asset(document.getWebPath())}}">Descargar Archivo</a>{% if entity.getEvaluacion().getDone() == false %} - <a href="{{ path('uploadindirecta', { 'evaluacionindirecta_id': entity.id}) }}">Cambiar Archivo</a>{% endif %}</td>
+                    <td><a href="{{ asset(document.getWebPath())}}" class="btn btn-primary">Descargar Archivo</a>{% if entity.getEvaluacion().getDone() == false %}  <a href="{{ path('uploadindirecta', { 'evaluacionindirecta_id': entity.id}) }}" class="btn btn-warning">Cambiar Archivo</a>{% endif %}</td>
                 {% else %}
-                    <td>No hay archivo{% if entity.getEvaluacion().getDone() == false %} - <a href="{{ path('uploadindirecta', { 'evaluacionindirecta_id': entity.id}) }}">Subir Archivo</a>{% endif %}</td>
+                    <td>No hay archivo{% if entity.getEvaluacion().getDone() == false %}  <a href="{{ path('uploadindirecta', { 'evaluacionindirecta_id': entity.id}) }}" class="btn btn-warning">Subir Archivo</a>{% endif %}</td>
                 {% endif %}     
             </tr>
             <tr>
