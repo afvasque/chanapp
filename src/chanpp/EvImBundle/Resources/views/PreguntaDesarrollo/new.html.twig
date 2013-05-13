@@ -2,19 +2,13 @@
 
 {% block body -%}
     <h1>Crear Pregunta de Desarrollo</h1>
-
+    <a href="{{ path('cuestionario_show', { 'id': app.request.get('cuestionario_id') }) }}" class="btn" >
+            Volver al cuestionario
+        </a><br><br>
     <form action="{{ path('preguntadesarrollo_create', { 'cuestionario_id': app.request.get('cuestionario_id'), 'pregunta_numero': app.request.get('pregunta_numero') }) }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
+        {{ form_widget(form) }}<br>
         <p>
-            <button type="submit">Create</button>
+            <button type="submit" class="btn btn-success">Crear</button>
         </p>
     </form>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('cuestionario_show', { 'id': app.request.get('cuestionario_id') }) }}">
-            Volver al cuestionario
-        </a>
-    </li>
-</ul>
 {% endblock %}

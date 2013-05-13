@@ -8,13 +8,15 @@
     {% elseif app.request.get('pregunta_tipo') == 3%}
     <h1>Creando Pregunta de Alternativas con alternativas personalizadas</h1>
     {% endif %}
+    <a href="{{ path('cuestionario_show', { 'id': app.request.get('cuestionario_id')}) }}" class="btn">
+            Volver a cuestionario
+    </a><br><br>
     <form action="{{ path('preguntaalternativa_create', { 'cuestionario_id': app.request.get('cuestionario_id'), 'pregunta_numero': app.request.get('pregunta_numero'), 'pregunta_tipo': app.request.get('pregunta_tipo') }) }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
-        
-    
+        <br>
         {% if app.request.get('pregunta_tipo') == 1%}
             <p>
-            <button type="submit">Create</button>
+            <button type="submit" class="btn btn-success">Crear</button>
         </p>
             <div style="background-color: grey;"><h3>Ejemplo:</h3>
             <h4><b>¿Está de acuerdo con esta afirmación?</b></h4>
@@ -22,23 +24,30 @@
             <input type="radio" name="ejemplosino" value="2">No<br></div>
         {% elseif app.request.get('pregunta_tipo') == 2%}
         <p>
-            <button type="submit">Create</button>
+            <button type="submit" class="btn btn-success">Crear</button>
         </p>
+            <div style="background-color: grey;"><h3>Ejemplo:</h3>
+            <h4><b>¿En una escala de 1 a 5 (Siendo 5 muy de acuerdo y 1 muy en desacuerdo), qué tan de acuerdo está con esta afirmación?</b></h4>
+            <input type="radio" name="ejemplosino" value="1">1<br>
+            <input type="radio" name="ejemplosino" value="2">2<br>
+            <input type="radio" name="ejemplosino" value="3">3<br>
+            <input type="radio" name="ejemplosino" value="4">4<br>
+            <input type="radio" name="ejemplosino" value="5">5<br></div>
         {% elseif app.request.get('pregunta_tipo') == 3%} 
         <br><label for="alternativas">Alternativas:</label> 
         {% for i in 1..app.request.get('numero_alternativas') %}
              {{i}}) <input type="text" name="alternativa[{{i}}]"><br>
         {% endfor %}
         <p>
-            <button type="submit">Create</button>
+            <button type="submit" class="btn btn-success">Crear</button>
         </p>
+        <div style="background-color: grey;"><h3>Ejemplo:</h3>
+            <h4><b>¿Enunciado especial?</b></h4>
+            <input type="radio" name="ejemplosino" value="1">Alternativa 1<br>
+            <input type="radio" name="ejemplosino" value="2">Alternativa 2<br>
+            <input type="radio" name="ejemplosino" value="3">Alternativa 3<br>
+            <input type="radio" name="ejemplosino" value="4">Alternativa 4<br>
+            <input type="radio" name="ejemplosino" value="5">Alternativa 5<br></div>
         {% endif %}
     </form>
-        <ul class="record_actions">
-    <li>
-       <a href="{{ path('cuestionario_show', { 'id': app.request.get('cuestionario_id')}) }}">
-            Volver a cuestionario
-        </a>
-    </li>
-</ul>
 {% endblock %}

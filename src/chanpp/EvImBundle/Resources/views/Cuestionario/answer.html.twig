@@ -2,7 +2,7 @@
 
 {% block body -%}
     {% if entity.getEvaluacionindirecta().getEvaluacion().getDone() == false%}
-    {% if entity.getDone() == false%}
+    {% if entity.getDone()%}
     <h1>Respondiendo Cuestionario : {{ entity.nombre }}</h1>
     <hr>
     <div id="cuestionario">
