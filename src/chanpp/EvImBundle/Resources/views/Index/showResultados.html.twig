@@ -9,6 +9,7 @@
     <h2>Tabla comparativa</h2>
     <table class="table table-striped" id="demontable">
         <thead>
+            <td></td>
             <th>Área</th>
             <th>Programa</th>
             <th>Año</th>    
@@ -22,6 +23,8 @@
             {% for pev in fc.getPlaneevaluaciones%}
                 {% for ev in pev.getEvaluaciones%}
                     <tr>
+                        <td><a href="{{ path('fichaproyecto_show', { 'id': fc.id }) }}">
+                            <i class="icon-folder-close"></i></a></td>
                         <td>{{fc.getAreaAccion}}</td>
                         <td>{{fc.getNombre}}</td>
                         <td></td>
@@ -34,6 +37,7 @@
                         {% for ev_in in ev.getEvaluacionesindirectas %}
                             {% if loop.index > 1%}
                                 <tr>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
