@@ -325,7 +325,8 @@ class CuestionarioController extends Controller
          foreach($preguntas as  &$p)
         {   
             $counter++;
-            $answer = $request->get('respuesta')[$counter];
+            $temp =  $request->get('respuesta');
+            $answer = $temp[$counter];
             if($p->getTipo() == 0)
             {
 
@@ -334,7 +335,7 @@ class CuestionarioController extends Controller
                 $temprespuesta2->setPregunta($p);
                 $temprespuesta2->setRespuestaParent($temprespuesta);
                 $em->persist($temprespuesta2);
-                $temprespuesta->getRespuestasdesarrollos()[] = $temprespuesta2;
+                $temprespuesta->addRespuestasdesarrollo($temprespuesta2);
             }
             else #Any PreguntaAlternativa is saved the same way
             {
@@ -351,14 +352,14 @@ class CuestionarioController extends Controller
                 $temprespuesta2->setPregunta($p);
                 $temprespuesta2->setRespuestaParent($temprespuesta);
                 $em->persist($temprespuesta2);
-                $temprespuesta->getRespuestasalternativas()[] = $temprespuesta2;
+                $temprespuesta->addRespuestasalternativas($temprespuesta2);
             }
             
         }
         #Persist EVERYTHING
         $temprespuesta->setCuestionario($entity);
         $em->persist($temprespuesta);
-        $entity->getRespuestas()[] = $temprespuesta;
+        $entity->addRespuestas($temprespuesta);
         $em->persist($entity);
         $em->flush();
         $result = "El cuestionario ha sido guardado con éxito.";
