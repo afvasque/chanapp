@@ -259,6 +259,8 @@ class PreguntaAlternativaController extends Controller
             $entity->getCuestionario()->removePreguntasalternativa($entity);
             $em->remove($entity);
             $em->flush();
+            return $this->redirect($this->generateUrl('fixpreguntasnumbers' , array('id' => $entity->getCuestionario()->getId()) ));
+ 
         }
 
         return $this->redirect($this->generateUrl('preguntaalternativa'));
