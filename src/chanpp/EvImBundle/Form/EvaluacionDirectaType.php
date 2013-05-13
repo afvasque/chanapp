@@ -11,7 +11,7 @@ class EvaluacionDirectaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('resultado')
+            ->add('resultado', 'text', array('required'  => true,))
             ->add('unidad', 'choice', array('choices'   => array('1' => 'Fuel Oil [ton]',
              '2' => 'Diesel [m3]', 
              '3' => 'Gas Licuado (estado líquido) [m3]', 

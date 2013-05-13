@@ -2,19 +2,14 @@
 
 {% block body -%}
     <h1>Creación de Recurso</h1>
-
-    <form action="{{ path('recurso_create', { 'planevaluacion_id':app.request.get('planevaluacion_id') }) }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
-            <button type="submit">Crear</button>
-        </p>
-    </form>
-
-        <ul class="record_actions">
-    <li>
-      <a href="{{ path('planevaluacion_show', { 'id': app.request.get('planevaluacion_id')}) }}">
+    <a href="{{ path('planevaluacion_show', { 'id': app.request.get('planevaluacion_id')}) }}" class="btn">
             Volver al plan de evaluación
         </a>
-    </li>
-</ul>
+    <form action="{{ path('recurso_create', { 'planevaluacion_id':app.request.get('planevaluacion_id') }) }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <br>
+        <p>
+            <button type="submit" class="btn btn-success">Crear</button>
+        </p>
+    </form>
 {% endblock %}

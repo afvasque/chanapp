@@ -71,3 +71,10 @@ margin-right: 3px;
 float:left;
 margin-right: 3px;
  }
+
+ .label-actividad
+{
+    height: 1px;
+    text-indent: -9999999px;
+    border-bottom: 1px #414042 solid;
+}

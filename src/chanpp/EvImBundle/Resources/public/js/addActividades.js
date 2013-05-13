@@ -6,9 +6,8 @@ jQuery(document).ready(function() {
     });*/
 
     // add the "add a tag" anchor and li to the tags ul
-
         collectionHolder.append($addTagLink);
-
+        
         // count the current form inputs we have (e.g. 2), use that as the new
         // index when inserting a new item (e.g. 2)
         collectionHolder.data('index', (collectionHolder.find(':input').length)/indexNo);
@@ -20,10 +19,9 @@ jQuery(document).ready(function() {
             // add a new tag form (see next code block)
             addTagForm(collectionHolder,$addTagLink);
         });
-
-    
-
-   
+        
+        // Borramos el índice de la actividad
+        collectionHolder.find('div label.required').first().css('display','none');
 });
 
 function addTagForm(collectionHolder, $addTagLink) {
@@ -36,6 +34,7 @@ function addTagForm(collectionHolder, $addTagLink) {
     // Replace '__name__' in the prototype's HTML to
     // instead be a number based on how many items we have
     var newForm = prototype.replace(/__name__label__/g, index);
+    
     //var $newFormDiv = $("<div id=borrar_actividad></div>");
     $newFormDiv.append(newForm);
     // increase the index with one for the next item
@@ -44,6 +43,11 @@ function addTagForm(collectionHolder, $addTagLink) {
 
      // add a delete link to the new form
     addTagFormDeleteLink($newFormDiv);
+    
+    // Borramos el índice de la actividad
+    $newFormDiv.children('div').each(function(){
+        jQuery(this).find('label.required').first().addClass('label-actividad');
+    });
 }
 
 function addTagFormDeleteLink($tagFormLi) {
