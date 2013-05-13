@@ -1,41 +1,30 @@
-{% extends '::base.html.twig' %}
+{% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>MetodoRecoleccion list</h1>
-
-    <table class="records_list">
+    <h1>Métodos de Recolección</h1>
+     <a href="{{ path('metodorecoleccion_new') }}" class="btn btn-success">
+                Crear Nuevo Método
+    </a>
+    <table class="table table-striped">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nombre</th>
-                <th>Actions</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('metodorecoleccion_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.nombre }}</td>
                 <td>
                 <ul>
-                    <li>
-                        <a href="{{ path('metodorecoleccion_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('metodorecoleccion_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
+                 <a href="{{ path('metodorecoleccion_show', { 'id': entity.id }) }}" class="btn btn-primary">Ver</a>
+                 <a href="{{ path('metodorecoleccion_edit', { 'id': entity.id }) }}" class="btn btn-warning">Editar</a>
                 </ul>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('metodorecoleccion_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+           
     {% endblock %}

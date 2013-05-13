@@ -5,6 +5,7 @@
 
     <form action="{{ path('evaluacionindirecta_create', { 'evaluacion_id':app.request.get('evaluacion_id') }) }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
+        {# Métodos de recoleccion#}
         <p>
             <button type="submit">Crear</button>
         </p>

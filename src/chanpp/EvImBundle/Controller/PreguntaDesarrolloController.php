@@ -75,7 +75,8 @@ class PreguntaDesarrolloController extends Controller
                 {
                     $cuestionario->addPreguntasdesarrollo($entity);
                     $entity->setNumeropregunta($preguntanumero);
-                    $entity->addCuestionario($cuestionario);
+                    $entity->setCuestionario($cuestionario);
+                    $entity->setTipo(0);
                     $em->persist($cuestionario);
                     $em->persist($entity);
                     $em->flush();
@@ -215,9 +216,11 @@ class PreguntaDesarrolloController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find PreguntaDesarrollo entity.');
             }
-
+            self::fixPreguntasNumbers($entity->getCuestionario()->getId());
+            $entity->getCuestionario()->removePreguntasdesarrollo($entity);
             $em->remove($entity);
             $em->flush();
+            return $this->redirect($this->generateUrl('cuestionario_show', array('id'=> $entity->getCuestionario()->getId() ) ));
         }
 
         return $this->redirect($this->generateUrl('preguntadesarrollo'));
@@ -236,5 +239,75 @@ class PreguntaDesarrolloController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+
+
+    public function fixPreguntasNumbers($id)
+    {
+
+         $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('chanppEvImBundle:Cuestionario')->find($id);
+        $question_number = count($entity->getPreguntasdesarrollo()) + count($entity->getPreguntasalternativa());
+        $preguntasdesarrollo = $entity->getPreguntasdesarrollo();
+        $preguntasalternativa = $entity->getPreguntasalternativa();
+        $counter = 1;
+        $found = false;
+        while($question_number >= $counter)
+        {   
+            $found = false;
+            #We check all the questions for the currently needed one
+            foreach($preguntasdesarrollo as  &$pregunta)
+            {
+                if($pregunta->getNumeropregunta() == $counter)
+                {
+                    $found = true;
+                }
+            }
+            foreach($preguntasalternativa as  &$pregunta)
+            {
+                if($pregunta->getNumeropregunta() == $counter)
+                {
+                     $found = true;
+                }
+            }
+            if($found)
+            {
+                $counter++;
+            }
+            else
+            {
+                #We're missing a question number, let's search for the next one, checking if it isn't the last one
+                if($counter == $question_number)
+                {
+                    #We do nothing, we're just missing the last one
+                }
+                else
+                {
+                    $newcounter = $counter+1;
+                    foreach($preguntasdesarrollo as  $pregunta)
+                    {
+                        if($pregunta->getNumeropregunta() == $newcounter)
+                        {
+                            $found = true;
+                             $pregunta->setNumeropregunta($counter);
+                             $em->persist($pregunta);
+                        }
+                    }
+                    foreach($preguntasalternativa as  $pregunta)
+                    {
+                        if($pregunta->getNumeropregunta() == $newcounter)
+                        {
+                             $found = true;
+                             $pregunta->setNumeropregunta($counter);
+                             $em->persist($pregunta);
+                        }
+                    }
+                }
+                 $counter++;
+            }
+            $em->persist($entity);
+            $em->flush();
+        }
     }
 }

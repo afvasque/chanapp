@@ -115,7 +115,7 @@ class PreguntaAlternativaController extends Controller
                     $em->persist($entity);
                     $em->flush();
 
-                    return $this->redirect($this->generateUrl('preguntaalternativa_show', array('id' => $entity->getId()))); 
+                     return $this->redirect($this->generateUrl('cuestionario_show', array('id' => $cuestionarioid))); 
                 }
             }
         }
@@ -256,7 +256,7 @@ class PreguntaAlternativaController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find PreguntaAlternativa entity.');
             }
-
+            $entity->getCuestionario()->removePreguntasalternativa($entity);
             $em->remove($entity);
             $em->flush();
         }

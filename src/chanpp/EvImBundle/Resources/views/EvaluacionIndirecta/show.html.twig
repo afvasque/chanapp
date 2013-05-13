@@ -61,9 +61,16 @@
                     <td>No hay archivo{% if entity.getEvaluacion().getDone() == false %} - <a href="{{ path('uploadindirecta', { 'evaluacionindirecta_id': entity.id}) }}">Subir Archivo</a>{% endif %}</td>
                 {% endif %}     
             </tr>
-
+            <tr>
+                <th>Métodos de recolección de datos a usar</th>
+                <td>{% if metodos%}
+                    {% for m in metodos %}
+                    {{ m.getNombre() }}
+                    {% endfor %}{% endif %}</td>
+            </tr>
         </tbody>
     </table>
+    {% if entity.hasCuestionarioOnMetodo() %}
     {% if entity.getCuestionario() %}
     <h3>Cuestionario Asociado</h3>
     <table class="table table-striped">
@@ -93,4 +100,5 @@
     <h3>No hay cuestionario asociado</h3>
     <a href="{{ path('cuestionario_new', { 'evaluacion_id': entity.getId() }) }}" class="btn btn-primary">Crear Cuestionario</a>
     {% endif %}
+    {% endif%}
 {% endblock %}

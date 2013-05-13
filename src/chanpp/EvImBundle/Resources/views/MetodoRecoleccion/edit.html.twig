@@ -1,28 +1,23 @@
-{% extends '::base.html.twig' %}
+{% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>MetodoRecoleccion edit</h1>
-
+    <h1>Editar Método de Recolección</h1>
+    <a href="{{ path('metodorecoleccion') }}" class="btn">
+            Volver a lista de métodos de recolección
+        </a>
     <form action="{{ path('metodorecoleccion_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
         {{ form_widget(edit_form) }}
         <p>
-            <button type="submit">Edit</button>
+            <button type="submit" class="btn btn-success">Guardar Cambios</button>
         </p>
     </form>
 
         <ul class="record_actions">
-    <li>
-        <a href="{{ path('metodorecoleccion') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
         <form action="{{ path('metodorecoleccion_delete', { 'id': entity.id }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <button type="submit" onclick="return confirm('¿Seguro que desea eliminar?')" class="btn btn-danger">Eliminar</button>
         </form>
-    </li>
 </ul>
 {% endblock %}

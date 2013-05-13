@@ -157,7 +157,7 @@ class MetodoRecoleccionController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('metodorecoleccion_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('metodorecoleccion'));
         }
 
         return array(
@@ -185,7 +185,15 @@ class MetodoRecoleccionController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find MetodoRecoleccion entity.');
             }
-
+            #Clear the EvaluacionesIndirectas
+            $eindi = $entity->getEvaluacionesindirectas();
+            if($eindi)
+            {
+               foreach($eindi as $e) {
+                $entity->removeEvaluacionesindirecta($e);
+                 } 
+            }
+            
             $em->remove($entity);
             $em->flush();
         }

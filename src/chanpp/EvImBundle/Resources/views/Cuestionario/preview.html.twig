@@ -37,6 +37,7 @@
     {% if entity.getEvaluacionindirecta().getEvaluacion().getDone() == false%}
         {% if entity.getDone() == false%}
             <h1>Editar preguntas de cuestionario : {{ entity.nombre }}</h1>
+            <a href="{{ path('cuestionario_show', { 'id': entity.id }) }}" >Volver al cuestionario</a>
             <hr>
             <div id="cuestionario">
             {% set numero_pregunta = 0 %}
@@ -95,6 +96,7 @@
         {% if entity.getEvaluacionindirecta().getEvaluacion().getDone() == false%}
             {% if entity.getDone() == false%}
             <h1>Cambiar orden de preguntas de cuestionario : {{ entity.nombre }}</h1>
+            <a href="{{ path('cuestionario_show', { 'id': entity.id }) }}" >Volver al cuestionario</a>
             <hr>
             <form action="{{ path('cuestionario_change_order', {'id': entity.id}) }}" method="post" {{ form_enctype(delete_form) }}>
             <div id="cuestionario">

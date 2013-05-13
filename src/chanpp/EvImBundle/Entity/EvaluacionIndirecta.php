@@ -71,6 +71,21 @@ class EvaluacionIndirecta
      * @ORM\OneToOne(targetEntity="Cuestionario", mappedBy="evaluacionindirecta")
      */
     protected $cuestionario;
+
+    /**
+     * @var ArrayCollection $metodosrecoleccion
+     * @ORM\ManyToMany(targetEntity="MetodoRecoleccion", inversedBy="evaluacionesindirectas", cascade={"all"})
+     * @ORM\JoinTable(
+     *      name="evaluacionindirecta_metodorecoleccion",
+     *      joinColumns={@ORM\JoinColumn(name="evaluacionindirecta_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="metodorecoleccion_id", referencedColumnName="id")}
+     * )
+     */
+    private $metodosrecoleccion;
+
+    public function __construct() {
+      $this->metodosrecoleccion= new ArrayCollection();
+    }
     /**
      * Get id
      *
@@ -316,5 +331,51 @@ class EvaluacionIndirecta
     public function getCuestionario()
     {
         return $this->cuestionario;
+    }
+
+    
+    /**
+     * Add metodosrecoleccion
+     *
+     * @param \chanpp\EvImBundle\Entity\MetodoRecoleccion $metodosrecoleccion
+     * @return EvaluacionIndirecta
+     */
+    public function addMetodosrecoleccion(\chanpp\EvImBundle\Entity\MetodoRecoleccion $metodosrecoleccion)
+    {
+        $this->metodosrecoleccion[] = $metodosrecoleccion;
+    
+        return $this;
+    }
+
+    /**
+     * Remove metodosrecoleccion
+     *
+     * @param \chanpp\EvImBundle\Entity\MetodoRecoleccion $metodosrecoleccion
+     */
+    public function removeMetodosrecoleccion(\chanpp\EvImBundle\Entity\MetodoRecoleccion $metodosrecoleccion)
+    {
+        $this->metodosrecoleccion->removeElement($metodosrecoleccion);
+    }
+
+    /**
+     * Get metodosrecoleccion
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMetodosrecoleccion()
+    {
+        return $this->metodosrecoleccion;
+    }
+
+    public function hasCuestionarioOnMetodo()
+    {
+        $m = $this->getMetodosrecoleccion();
+        $nombre = "";
+        foreach ($m as $m1) {
+            $nombre =  $m1->getNombre();
+        }
+        if ( (strpos($nombre, "Encuesta") !== FALSE) || (strpos($nombre, "Entrevista") !== FALSE))
+                return true;
+        return false;
     }
 }

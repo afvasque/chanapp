@@ -65,8 +65,9 @@ class Evaluacion
      */
     protected $planevaluacion;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Activity", mappedBy="evaluaciones")
+   /**
+     * @var ArrayCollection $actividades
+     * @ORM\ManyToMany(targetEntity="Activity", mappedBy="evaluaciones", cascade={"all"})
      */
     protected $actividades;
     

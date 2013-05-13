@@ -22,9 +22,13 @@ class EvaluacionIndirectaType extends AbstractType
             '3'   => 'Capacidad Movilizadora',),))
             ->add('responsable','text',array('label'  => 'Responsable de la ejecución',))
             ->add('plazo','text',array('label'  => 'Plazo de la ejecución',))
-        ;
-    }
-
+            ->add('metodosrecoleccion', 'entity', array(
+'multiple' => true,
+'expanded' => true,
+'class'    => 'chanppEvImBundle:MetodoRecoleccion',
+'property' => 'nombre',
+));
+  }
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(

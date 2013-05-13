@@ -15,7 +15,12 @@ class EvaluacionType extends AbstractType
             ->add('alcance')
             ->add('duracion','text',array('label'  => 'Meses de evaluación',))
             ->add('confiabilidad','textarea',array('label'  => 'Nivel de confiabilidad de los resultados que se requiere',))
-        ;
+            ->add('actividades', 'entity', array(
+'multiple' => true,
+'expanded' => true,
+'class'    => 'chanppEvImBundle:Activity',
+'property' => 'nombre',
+));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

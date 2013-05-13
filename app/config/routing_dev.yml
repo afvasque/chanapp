@@ -108,3 +108,7 @@ evaluacion_mark_done:
 chanpp_index:
     path:      /
     defaults:  { _controller: chanppEvImBundle:Index:index }
+
+MetodoRecoleccion:
+    resource: "@chanppEvImBundle/Controller/MetodoRecoleccionController.php"
+    type: annotation

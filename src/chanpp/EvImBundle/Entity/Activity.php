@@ -57,8 +57,13 @@ class Activity
     private $duracion;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Evaluacion")
-     * @ORM\JoinColumn(name="evaluacion_id", referencedColumnName="id")
+     * @var ArrayCollection $evaluaciones
+     * @ORM\ManyToMany(targetEntity="Evaluacion", inversedBy="actividades", cascade={"all"})
+     * @ORM\JoinTable(
+     *      name="activity_evaluacion",
+     *      joinColumns={@ORM\JoinColumn(name="actividad_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="evaluacion_id", referencedColumnName="id")}
+     * )
      */
     protected $evaluaciones;
 

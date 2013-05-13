@@ -54,11 +54,12 @@ class EvaluacionIndirectaController extends Controller
             $em = $this->getDoctrine()->getManager();
              #Get the Evaluación and link it
             $evaluacion  = $em->getRepository('chanppEvImBundle:Evaluacion')->find($evaluacionid);
-            if($evaluacion->getDone)
+            if($evaluacion->getDone())
             {
                  return $this->redirect($this->generateUrl('evaluacion_show', array('id' => $evaluacionid, 'error' => 'La evaluación padre ya ha sido cerrada, por lo que no se pueden agregar sub-evaluaciones.')));
             }
             $entity-> setEvaluacion($evaluacion);
+
             $em->persist($entity);
             $em->flush();
 
@@ -82,6 +83,7 @@ class EvaluacionIndirectaController extends Controller
     {
         $entity = new EvaluacionIndirecta();
         $form   = $this->createForm(new EvaluacionIndirectaType(), $entity);
+        $em = $this->getDoctrine()->getManager();
 
         return array(
             'entity' => $entity,
@@ -107,11 +109,12 @@ class EvaluacionIndirectaController extends Controller
         }
         $document  = $entity->getDocument();
         $deleteForm = $this->createDeleteForm($id);
-
+        $metodos = $entity->getMetodosrecoleccion();
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
             'document' => $document,
+            'metodos' => $metodos,
         );
     }
 
@@ -164,14 +167,15 @@ class EvaluacionIndirectaController extends Controller
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
-            if($entity->getEvaluacion()->getDone)
+            if($entity->getEvaluacion()->getDone())
             {
                  return $this->redirect($this->generateUrl('evaluacion_show', array('id' => $entity->getEvaluacion()->getId(), 'error' => 'La evaluación padre ya ha sido cerrada, por lo que no se pueden agregar sub-evaluaciones.')));
             }
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('evaluacionindirecta_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('evaluacion_show', array('id' => $entity->getEvaluacion()->getId() )));
+
         }
 
         return array(
@@ -199,7 +203,7 @@ class EvaluacionIndirectaController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find EvaluacionIndirecta entity.');
             }
-            if($entity->getEvaluacion()->getDone)
+            if($entity->getEvaluacion()->getDone())
             {
                  return $this->redirect($this->generateUrl('evaluacion_show', array('id' => $entity->getEvaluacion()->getId(), 'error' => 'La evaluación padre ya ha sido cerrada, por lo que no se pueden agregar sub-evaluaciones.')));
             }
@@ -240,7 +244,7 @@ class EvaluacionIndirectaController extends Controller
              #Get the Evaluación and link it
             $evaluacion  = $em->getRepository('chanppEvImBundle:EvaluacionIndirecta')->find($evaluacionid);
              #Donecheck
-            if($evaluacion->getEvaluacion()->getDone)
+            if($evaluacion->getEvaluacion()->getDone())
             {
                  return $this->redirect($this->generateUrl('evaluacion_show', array('id' => $entity->getEvaluacion()->getId(), 'error' => 'La evaluación padre ya ha sido cerrada, por lo que no se pueden agregar sub-evaluaciones.')));
             }

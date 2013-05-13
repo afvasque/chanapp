@@ -1,20 +1,15 @@
-{% extends '::base.html.twig' %}
+{% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>MetodoRecoleccion creation</h1>
-
+    <h1>Crear Método de Recolección</h1>
+     <a href="{{ path('metodorecoleccion') }}" class="btn">
+            Volver a lista de métodos de recolección
+    </a>
     <form action="{{ path('metodorecoleccion_create') }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
         <p>
-            <button type="submit">Create</button>
+            <button type="submit" class="btn btn-success">Crear</button>
         </p>
     </form>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('metodorecoleccion') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
 {% endblock %}

@@ -57,7 +57,7 @@ class RecursoController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('recurso_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('planevaluacion_show', array('id' => $planevaluacionid)));
         }
 
         return array(
