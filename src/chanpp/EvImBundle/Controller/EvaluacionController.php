@@ -56,6 +56,7 @@ class EvaluacionController extends Controller
              #Get the PlanEvaluación and link it
             $plan  = $em->getRepository('chanppEvImBundle:PlanEvaluacion')->find($planevaluacionid);
             $entity-> setPlanevaluacion($plan);
+            $entity->setDone(false);
             $em->persist($entity);
             $em->flush();
 

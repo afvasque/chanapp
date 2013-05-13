@@ -319,7 +319,7 @@ class Evaluacion
     public function setDone($done)
     {
         $this->done = $done;
-        if($this->done)
+        if($this->getDone())
         {
             #Set as done everything else that depends on this
             $evaluacionesindirectas = $this->getEvaluacionesindirectas();
