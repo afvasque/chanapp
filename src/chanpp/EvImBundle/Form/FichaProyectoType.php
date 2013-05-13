@@ -5,13 +5,15 @@ namespace chanpp\EvImBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use chanpp\EvImBundle\Entity\FichaProyecto;
 
 class FichaProyectoType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('area_accion','text', array(
+            ->add('area_accion','choice', array(
+                'choices' => FichaProyecto::getAreasAccion(),
                 'label_attr' => array(
                         'class'=>'control-label')))
             ->add('linea_accion','text', array(
@@ -44,6 +46,9 @@ class FichaProyectoType extends AbstractType
             ->add('variables_causales','text', array(
                 'label_attr' => array(
                         'class'=>'control-label')))
+            ->add('nombre_editor','text', array(
+                'label_attr' => array(
+                        'class'=>'control-label')))
         ;
 
         $builder->add('activities', 'collection', array(
@@ -66,4 +71,5 @@ class FichaProyectoType extends AbstractType
     {
         return 'chanpp_evimbundle_fichaproyectotype';
     }
+
 }

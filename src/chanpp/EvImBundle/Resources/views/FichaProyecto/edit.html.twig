@@ -5,10 +5,24 @@
 
     <form action="{{ path('fichaproyecto_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
-        {{ form_widget(edit_form) }}    
+        
+        {{ form_row(edit_form.area_accion) }}
+        {{ form_row(edit_form.linea_accion) }}
+        {{ form_row(edit_form.nombre) }}
+        {{ form_row(edit_form.jefe) }}
+        {{ form_row(edit_form.duracion) }}
+        {{ form_row(edit_form.diagnostico_previo) }}
+        {{ form_row(edit_form.obj_general) }}
+        {{ form_row(edit_form.objs_especificos) }}
+        {{ form_row(edit_form.descripcion) }}
+        {{ form_row(edit_form.desc_causales) }}
+        {{ form_row(edit_form.variables_causales) }}
+        {{ form_row(edit_form.nombre_editor) }}
+        {{ form_row(edit_form.activities) }}   
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Editar Ficha de Proyecto</button>
+
         <a href="{{ path('fichaproyecto') }}" class="btn">
             Regresar a Fichas de Proyectos
         </a>

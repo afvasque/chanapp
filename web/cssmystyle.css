@@ -1,0 +1,50 @@
+var less = require('less');
+var sys  = require(process.binding('natives').util ? 'util' : 'sys');
+
+new(less.Parser)({"paths":["\/opt\/lampp\/htdocs\/Symfony\/app\/..\/vendor\/twitter\/bootstrap\/less"],"filename":"bootstrap.less"}).parse("\/*!\n * Bootstrap v2.3.1\n *\n * Copyright 2012 Twitter, Inc\n * Licensed under the Apache License v2.0\n * http:\/\/www.apache.org\/licenses\/LICENSE-2.0\n *\n * Designed and built with all the love in the world @twitter by @mdo and @fat.\n *\/\n\n\/\/ Core variables and mixins\n@import ../../\"variables.less\"; \/\/ Modify this for custom colors, font-sizes, etc\n@import ../../\"mixins.less\";\n\n\/\/ CSS Reset\n@import ../../\"reset.less\";\n\n\/\/ Grid system and page structure\n@import ../../\"scaffolding.less\";\n@import ../../\"grid.less\";\n@import ../../\"layouts.less\";\n\n\/\/ Base CSS\n@import ../../\"type.less\";\n@import ../../\"code.less\";\n@import ../../\"forms.less\";\n@import ../../\"tables.less\";\n\n\/\/ Components: common\n@import ../../\"sprites.less\";\n@import ../../\"dropdowns.less\";\n@import ../../\"wells.less\";\n@import ../../\"component-animations.less\";\n@import ../../\"close.less\";\n\n\/\/ Components: Buttons & Alerts\n@import ../../\"buttons.less\";\n@import ../../\"button-groups.less\";\n@import ../../\"alerts.less\"; \/\/ Note: alerts share common CSS with buttons and thus have styles in buttons.less\n\n\/\/ Components: Nav\n@import ../../\"navs.less\";\n@import ../../\"navbar.less\";\n@import ../../\"breadcrumbs.less\";\n@import ../../\"pagination.less\";\n@import ../../\"pager.less\";\n\n\/\/ Components: Popovers\n@import ../../\"modals.less\";\n@import ../../\"tooltip.less\";\n@import ../../\"popovers.less\";\n\n\/\/ Components: Misc\n@import ../../\"thumbnails.less\";\n@import ../../\"media.less\";\n@import ../../\"labels-badges.less\";\n@import ../../\"progress-bars.less\";\n@import ../../\"accordion.less\";\n@import ../../\"carousel.less\";\n@import ../../\"hero-unit.less\";\n\n\/\/ Utility classes\n@import ../../\"utilities.less\"; \/\/ Has to be last to override when necessary\n", function(e, tree) {
+    if (e) {
+        less.writeError(e);
+        process.exit(2);
+    }
+
+    try {
+        sys.print(tree.toCSS([]));
+    } catch (e) {
+        less.writeError(e);
+        process.exit(3);
+    }
+});
+
+var less = require('less');
+var sys  = require(process.binding('natives').util ? 'util' : 'sys');
+
+new(less.Parser)({"paths":["\/opt\/lampp\/htdocs\/Symfony\/app\/..\/vendor\/twitter\/bootstrap\/less"],"filename":"responsive.less"}).parse("\/*!\n * Bootstrap Responsive v2.3.1\n *\n * Copyright 2012 Twitter, Inc\n * Licensed under the Apache License v2.0\n * http:\/\/www.apache.org\/licenses\/LICENSE-2.0\n *\n * Designed and built with all the love in the world @twitter by @mdo and @fat.\n *\/\n\n\n\/\/ Responsive.less\n\/\/ For phone and tablet devices\n\/\/ -------------------------------------------------------------\n\n\n\/\/ REPEAT VARIABLES & MIXINS\n\/\/ -------------------------\n\/\/ Required since we compile the responsive stuff separately\n\n@import ../../\"variables.less\"; \/\/ Modify this for custom colors, font-sizes, etc\n@import ../../\"mixins.less\";\n\n\n\/\/ RESPONSIVE CLASSES\n\/\/ ------------------\n\n@import ../../\"responsive-utilities.less\";\n\n\n\/\/ MEDIA QUERIES\n\/\/ ------------------\n\n\/\/ Large desktops\n@import ../../\"responsive-1200px-min.less\";\n\n\/\/ Tablets to regular desktops\n@import ../../\"responsive-768px-979px.less\";\n\n\/\/ Phones to portrait tablets and narrow desktops\n@import ../../\"responsive-767px-max.less\";\n\n\n\/\/ RESPONSIVE NAVBAR\n\/\/ ------------------\n\n\/\/ From 979px and below, show a button to toggle navbar contents\n@import ../../\"responsive-navbar.less\";\n", function(e, tree) {
+    if (e) {
+        less.writeError(e);
+        process.exit(2);
+    }
+
+    try {
+        sys.print(tree.toCSS([]));
+    } catch (e) {
+        less.writeError(e);
+        process.exit(3);
+    }
+});
+
+var less = require('less');
+var sys  = require(process.binding('natives').util ? 'util' : 'sys');
+
+new(less.Parser)({"paths":["\/opt\/lampp\/htdocs\/Symfony\/app\/..\/vendor\/twitter\/bootstrap\/less"],"filename":"responsive.less"}).parse("\/*!\n * Bootstrap Responsive v2.3.1\n *\n * Copyright 2012 Twitter, Inc\n * Licensed under the Apache License v2.0\n * http:\/\/www.apache.org\/licenses\/LICENSE-2.0\n *\n * Designed and built with all the love in the world @twitter by @mdo and @fat.\n *\/\n\n\n\/\/ Responsive.less\n\/\/ For phone and tablet devices\n\/\/ -------------------------------------------------------------\n\n\n\/\/ REPEAT VARIABLES & MIXINS\n\/\/ -------------------------\n\/\/ Required since we compile the responsive stuff separately\n\n@import ../../\"variables.less\"; \/\/ Modify this for custom colors, font-sizes, etc\n@import ../../\"mixins.less\";\n\n\n\/\/ RESPONSIVE CLASSES\n\/\/ ------------------\n\n@import ../../\"responsive-utilities.less\";\n\n\n\/\/ MEDIA QUERIES\n\/\/ ------------------\n\n\/\/ Large desktops\n@import ../../\"responsive-1200px-min.less\";\n\n\/\/ Tablets to regular desktops\n@import ../../\"responsive-768px-979px.less\";\n\n\/\/ Phones to portrait tablets and narrow desktops\n@import ../../\"responsive-767px-max.less\";\n\n\n\/\/ RESPONSIVE NAVBAR\n\/\/ ------------------\n\n\/\/ From 979px and below, show a button to toggle navbar contents\n@import ../../\"responsive-navbar.less\";\n", function(e, tree) {
+    if (e) {
+        less.writeError(e);
+        process.exit(2);
+    }
+
+    try {
+        sys.print(tree.toCSS([]));
+    } catch (e) {
+        less.writeError(e);
+        process.exit(3);
+    }
+});

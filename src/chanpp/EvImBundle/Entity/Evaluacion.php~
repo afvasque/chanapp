@@ -60,10 +60,10 @@ class Evaluacion
     protected $evaluacionesindirectas;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PlanEvaluacion", inversedBy="evaluaciones")
+     * @ORM\ManyToOne(targetEntity="PlanEvaluacion")
      * @ORM\JoinColumn(name="planevaluacion_id", referencedColumnName="id")
      */
-    protected $planeevaluacion;
+    protected $planevaluacion;
 
    /**
      * @var ArrayCollection $actividades

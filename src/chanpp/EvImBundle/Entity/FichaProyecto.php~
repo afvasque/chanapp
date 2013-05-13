@@ -29,11 +29,6 @@ class FichaProyecto
     */
     protected $ind_gestions;
 
-    /**
-     * @ORM\OneToMany(targetEntity="PlanEvaluacion", mappedBy="fichaproyecto")
-     */
-    protected $planeevaluaciones;
-    
     public function __construct()
     {
         $this->activities = new ArrayCollection();
@@ -136,6 +131,10 @@ class FichaProyecto
      */
     private $variables_causales;
 
+    /**
+     * @ORM\OneToMany(targetEntity="PlanEvaluacion", mappedBy="fichaproyecto")
+     */
+    protected $planeevaluaciones;
 
     /**
      * Get id
@@ -532,27 +531,4 @@ class FichaProyecto
             );
     }
 
-
-    /**
-     * Set nombre_editor
-     *
-     * @param string $nombreEditor
-     * @return FichaProyecto
-     */
-    public function setNombreEditor($nombreEditor)
-    {
-        $this->nombre_editor = $nombreEditor;
-    
-        return $this;
-    }
-
-    /**
-     * Get nombre_editor
-     *
-     * @return string 
-     */
-    public function getNombreEditor()
-    {
-        return $this->nombre_editor;
-    }
 }

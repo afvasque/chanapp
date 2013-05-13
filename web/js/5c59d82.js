@@ -35,7 +35,7 @@ function addTagForm(collectionHolder, $addTagLink) {
 
     // Replace '__name__' in the prototype's HTML to
     // instead be a number based on how many items we have
-    var newForm = prototype.replace(/__name__label__/g, index);
+    var newForm = prototype.replace(/__name__/g, index);
     //var $newFormDiv = $("<div id=borrar_actividad></div>");
     $newFormDiv.append(newForm);
     // increase the index with one for the next item

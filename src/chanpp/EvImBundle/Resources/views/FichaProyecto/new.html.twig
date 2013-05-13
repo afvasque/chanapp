@@ -5,7 +5,18 @@
     <h1>Crear Ficha de Proyecto</h1>
 
     <form action="{{ path('fichaproyecto_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
+        {{ form_row(form.area_accion) }}
+        {{ form_row(form.linea_accion) }}
+        {{ form_row(form.nombre) }}
+        {{ form_row(form.jefe) }}
+        {{ form_row(form.duracion) }}
+        {{ form_row(form.diagnostico_previo) }}
+        {{ form_row(form.obj_general) }}
+        {{ form_row(form.objs_especificos) }}
+        {{ form_row(form.descripcion) }}
+        {{ form_row(form.desc_causales) }}
+        {{ form_row(form.variables_causales) }}
+        {{ form_row(form.activities) }}
 
         <p>
             <button type="submit">Create</button>
