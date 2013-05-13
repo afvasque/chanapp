@@ -4,11 +4,40 @@
 
 <h1> Página de inicio </h1>
 
-    <a href="{{ path('fichaproyecto_new') }}" class="btn btn-primary">
-        Crear Ficha de Proyecto
+	{% if app.user %}
+    <a href="{{ path('fos_user_security_logout') }}" class="btn btn-primary">
+        Cerrar Sesión
     </a>
+    {% else %}
+    <a href="{{ path('fos_user_security_login') }}" class="btn btn-primary">
+        Iniciar Sesión
+    </a>
+    {% endif %}
 
     <a href="{{ path('resultados_all_show') }}" class="btn btn-primary">
         Ver Resultados Evaluaciones
     </a>
- {% endblock %}
+
+    {% if is_granted("ROLE_ADMIN") %}
+    <h2> Área de administración </h2>
+    <a href="{{ path('fos_user_registration_register') }}" class="btn btn-primary">
+        Agregar Usuario
+    </a>
+	{% endif %}
+
+
+ 	{% if is_granted("ROLE_ADMIN") or is_granted("ROLE_PLANIFICADOR") %}
+ 	<h2> Área de Planificación </h2>
+ 	<a href="{{ path('fichaproyecto_new') }}" class="btn btn-primary">
+        Crear Ficha de Proyecto
+    </a>
+    {% endif %}
+
+ 	{% if is_granted("ROLE_ADMIN") or is_granted("ROLE_PLANIFICADOR") or is_granted("ROLE_EVALUADOR") or is_granted("ROLE_PLANIFICADOR")%}
+     <h2> Área de Evaluación </h2>
+ 	<a href="{{ path('fichaproyecto') }}" class="btn btn-primary">
+        Ver Fichas de Proyecto
+    </a>
+    {% endif %}
+
+{% endblock %}

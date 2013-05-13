@@ -32,7 +32,7 @@ class RegistrationListener implements EventSubscriberInterface
 
     public function onRegistrationSuccess(FilterUserResponseEvent $event)
     {
-        $url = $this->router->generate('/');
+        $url = $this->router->generate('index_show');
         $event->setResponse(new RedirectResponse($url));
     }
 

@@ -46,35 +46,42 @@ class FichaProyectoController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity  = new FichaProyecto();
-        $form = $this->createForm(new FichaProyectoType(), $entity);
-        $form->bind($request);
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        if($user->getRoles()[0] == "ROLE_ADMIN" or $user->getRoles()[0] == "ROLE_PLANIFICADOR")
+        {
+            $entity  = new FichaProyecto();
+            $form = $this->createForm(new FichaProyectoType(), $entity);
+            $form->bind($request);
 
-        if ($form->isValid()) {
-            
-            $em = $this->getDoctrine()->getManager();            
-            $em->persist($entity);
-            $em->flush();
-           
-            return $this->forward('chanppEvImBundle:IndGestion:new',
-                array('ficha_proyecto_id' => $entity->getId()));
+            if ($form->isValid()) {
+                
+                $em = $this->getDoctrine()->getManager();            
+                $em->persist($entity);
+                $em->flush();
+               
+                return $this->forward('chanppEvImBundle:IndGestion:new',
+                    array('ficha_proyecto_id' => $entity->getId()));
 
-            //return $this->redirect($this->generateUrl('fichaproyecto_show', array('id' => $entity->getId())));
-        } else        {
-            /**
-             * @var \Symfony\Component\Form\FormError $error
-             */
-            foreach ($form->getErrors() as $key => $error) {
-                $errors[] = $error->getMessage();
+                //return $this->redirect($this->generateUrl('fichaproyecto_show', array('id' => $entity->getId())));
+            } else        {
+                /**
+                 * @var \Symfony\Component\Form\FormError $error
+                 */
+                foreach ($form->getErrors() as $key => $error) {
+                    $errors[] = $error->getMessage();
+                }
             }
-        }
-
-        return $errors;
-
-       /* return array(
+        } else
+        {
+            return $this->redirect($this->generateUrl('fichaproyecto'));
+        }            
+        
+    
+        return array(
             'entity' => $entity,
             'form'   => $form->createView(),
-        );*/
+        );
+
     }
 
     /**
@@ -86,17 +93,27 @@ class FichaProyectoController extends Controller
      */
     public function newAction()
     {
-        $entity = new FichaProyecto();
+        $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $activity = new Activity();
-        $activity->setNombre("acitividad");
-        $entity->getActivities()->add($activity);
+        if($user->getRoles()[0] == "ROLE_ADMIN" or $user->getRoles()[0] == "ROLE_PLANIFICADOR")
+        {
+            $entity = new FichaProyecto();
 
-        $indGestion = new IndGestion();
-        $entity->getIndGestions()->add($indGestion);
+            $activity = new Activity();
+            $activity->setNombre("acitividad");
+            $entity->getActivities()->add($activity);
 
-        $form   = $this->createForm(new FichaProyectoType(), $entity);
+            $indGestion = new IndGestion();
+            $entity->getIndGestions()->add($indGestion);
 
+            $form   = $this->createForm(new FichaProyectoType(), $entity);
+        }
+        else
+        {
+            return $this->redirect($this->generateUrl('fichaproyecto'));
+        }
+
+    
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
@@ -138,22 +155,29 @@ class FichaProyectoController extends Controller
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        if($user->getRoles()[0] == "ROLE_ADMIN")
+        {
+            $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('chanppEvImBundle:FichaProyecto')->find($id);
+            $entity = $em->getRepository('chanppEvImBundle:FichaProyecto')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find FichaProyecto entity.');
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find FichaProyecto entity.');
+            }
+
+            $editForm = $this->createForm(new FichaProyectoType(), $entity);
+            $deleteForm = $this->createDeleteForm($id);
+
+            return array(
+                'entity'      => $entity,
+                'edit_form'   => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+            );
+        } else
+        {
+            return $this->redirect($this->generateUrl('fichaproyecto_show', array('id' => $id)));
         }
-
-        $editForm = $this->createForm(new FichaProyectoType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
     }
 
     /**
