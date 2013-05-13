@@ -280,4 +280,18 @@ class EvaluacionController extends Controller
         );
 
     }
+
+    public function doneAction($id){
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('chanppEvImBundle:Evaluacion')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Evaluacion entity.');
+        }
+
+        $entity->setDone(true);
+         $em->persist($entity);
+         $em->flush();
+        return $this->redirect($this->generateUrl('evaluacion_show', array('id' => $id)));
+    }
 }

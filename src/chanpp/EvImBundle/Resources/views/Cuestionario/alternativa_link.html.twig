@@ -1,6 +1,7 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
+{% if entity.getDone() == false%}
 <form action="{{ path('preguntaalternativa_link_save', {'id': entity.id}) }}" method="post" {{ form_enctype(delete_form) }}>
     <h1>Asociar Pregunta de Alternativas Anterior a Cuestionario</h1>
     <select name="old_id">
@@ -12,6 +13,9 @@
        <button type="submit">Asociar Pregunta</button>
     </p>
     </form>
+{% else %}
+<h1>El cuestionario ha sido cerrado, por lo que no se pueden agregar más preguntas.</h1>
+{% endif %}
 {% endblock %}
 
 

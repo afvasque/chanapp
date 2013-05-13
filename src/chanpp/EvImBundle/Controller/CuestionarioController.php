@@ -15,6 +15,7 @@ use chanpp\EvImBundle\Entity\RespuestaDesarrollo;
 use chanpp\EvImBundle\Entity\RespuestaAlternativa;
 use chanpp\EvImBundle\Entity\PreguntaAlternativa;
 use chanpp\EvImBundle\Entity\PreguntaDesarrollo;
+use chanpp\EvImBundle\Entity\EvaluacionIndirecta;
 /**
  * Cuestionario controller.
  *
@@ -55,6 +56,18 @@ class CuestionarioController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            #Get Evaluación Indirecta
+            $evaluacionid =  $request->query->get('evaluacion_id');
+            $evaluacion  = $em->getRepository('chanppEvImBundle:EvaluacionIndirecta')->find($evaluacionid);
+            if($evaluacion->getCuestionario())
+            {
+                #Evaluación already has a cuestionario
+                return $this->redirect($this->generateUrl('evaluacionindirecta_show', array('id' => $evaluacion->getId())));
+            }
+            $entity->setEvaluacionindirecta($evaluacion);
+            $evaluacion->setCuestionario($entity);
+            $entity->setDone(false);
+            $em->persist($evaluacion);
             $em->persist($entity);
             $em->flush();
 

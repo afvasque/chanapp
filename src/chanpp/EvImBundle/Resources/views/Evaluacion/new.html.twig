@@ -2,19 +2,13 @@
 
 {% block body -%}
     <h1>Creación de Evaluación</h1>
-
+    <a href="{{ path('planevaluacion_show', { 'id': app.request.get('planevaluacion_id')}) }}" class="btn">
+         Volver al plan de evaluación
+    </a>
     <form action="{{ path('evaluacion_create', { 'planevaluacion_id':app.request.get('planevaluacion_id') }) }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
         <p>
-            <button type="submit">Crear</button>
+            <button type="submit" class="btn btn-success">Crear</button>
         </p>
     </form>
-
-        <ul class="record_actions">
-    <li>
-      <a href="{{ path('planevaluacion_show', { 'id': app.request.get('planevaluacion_id')}) }}">
-            Volver al plan de evaluación
-        </a>
-    </li>
-</ul>
 {% endblock %}

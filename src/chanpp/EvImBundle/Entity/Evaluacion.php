@@ -70,6 +70,13 @@ class Evaluacion
      */
     protected $actividades;
     
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="done", type="boolean")
+     */
+    private $done;
+    
     public function __construct()
     {
         $this->evaluacionesindirectas = new ArrayCollection();
@@ -301,5 +308,39 @@ class Evaluacion
         $this->actividades = $actividades;
     
         return $this;
+    }
+
+    /**
+     * Set done
+     *
+     * @param boolean $done
+     * @return Evaluacion
+     */
+    public function setDone($done)
+    {
+        $this->done = $done;
+        if($this->done)
+        {
+            #Set as done everything else that depends on this
+            $evaluacionesindirectas = $this->getEvaluacionesindirectas();
+            foreach ($evaluacionesindirectas as $eindirecta) {
+                $cuestionario = $eindirecta->getCuestionario();
+                if($cuestionario)
+                {
+                    $cuestionario->setDone(true);
+                }
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * Get done
+     *
+     * @return boolean 
+     */
+    public function getDone()
+    {
+        return $this->done;
     }
 }

@@ -1,9 +1,36 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
+ <h1>Evaluación "{{ entity.nombre }}"</h1>
     {# Errors go here#}
-    <h1>Evaluación - {{ entity.nombre }}</h1>
-
+    {% if app.request.get('error') is defined %}
+    <h2>{{ app.request.get('error') }}</h2>
+    {% endif%}
+     <a href="{{ path('planevaluacion_show', { 'id': entity.getPlanevaluacion().id}) }}" class="btn">
+         Volver al Plan de Evaluación
+    </a>
+    {# Poner if hay resultados #}
+    <a href="{{ path('evaluacion_resultados_show', { 'id': entity.id}) }}" class="btn btn-primary">
+        Ver Resultados
+    </a>
+   <br><br>
+    {% if entity.getDone() == false%}
+    <a href="{{ path('evaluacion_edit', { 'id': entity.id }) }}" class="btn btn-warning">
+        Editar Evaluación
+    </a>
+    {% endif %}
+    
+    {% if entity.getDone() == false%}
+    <a href="{{ path('evaluacion_mark_done', { 'id': entity.id }) }}" class="btn btn-warning">
+     Marcar como lista
+    </a><br><br>{% if entity.getDone() == false%}
+        <form action="{{ path('evaluacion_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit" class="btn btn-danger">Eliminar Evaluación</button>
+        </form>
+     {% endif %}
+    {% endif %}
     <table class="table table-striped">
         <tbody>
              <tr>
@@ -27,13 +54,11 @@
     <hr>
     {# Actividades#}
     <h4>Actividades</h4>
-    <ul>
-        <li>
-            <a href="{{ path('linkactivity', { 'evaluacion_id': entity.id }) }}">
+    {% if entity.getDone() == false%}
+            <a href="{{ path('linkactivity', { 'evaluacion_id': entity.id }) }}" class="btn btn-success">
                 Asociar Actividades
             </a>
-        </li>
-    </ul>
+    {% endif %}
     {% if actividades is empty %}
        No hay actividades
     {% else %}
@@ -49,21 +74,15 @@
                 </tr>
             </thead>
             <tbody>
-            {% for entity in actividades %}
+            {% for entity2 in actividades %}
                 <tr>
-                    <td>{{ entity.nombre }}</td>
-                    <td>{{ entity.descripcion }}</td>
-                    <td>{{ entity.resultadosEsperados }}</td>
-                    <td>{{ entity.duracion }}</td>
+                    <td>{{ entity2.nombre }}</td>
+                    <td>{{ entity2.descripcion }}</td>
+                    <td>{{ entity2.resultadosEsperados }}</td>
+                    <td>{{ entity2.duracion }}</td>
                     <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('activity_show', { 'id': entity.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('activity_edit', { 'id': entity.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                            <a href="{{ path('activity_show', { 'id': entity2.id }) }}">Ver</a>
+                            <a href="{{ path('activity_edit', { 'id': entity2.id }) }}">Editar</a>
                     </td>
                 </tr>
             {% endfor %}
@@ -90,38 +109,30 @@
                 <td>{{ evaluaciondirecta.getTotal() }} MW/h</td>
                  <td>{{ evaluaciondirecta.descripcion }}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('evaluaciondirecta_show', { 'id': evaluaciondirecta.id }) }}">Ver</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('evaluaciondirecta_edit', { 'id': evaluaciondirecta.id }) }}">Editar</a>
-                    </li>
-                </ul>
+                        <a href="{{ path('evaluaciondirecta_show', { 'id': evaluaciondirecta.id }) }}" class="btn btn-primary">Ver</a>
+                    {% if entity.getDone() == false%}
+                        <a href="{{ path('evaluaciondirecta_edit', { 'id': evaluaciondirecta.id }) }}" class="btn btn-warning">Editar</a>
+                    {% endif %}
                 </td>
             </tr>
         </tbody>
     </table>
     {% else %}
-        <ul>
-        <li>
-            <a href="{{ path('evaluaciondirecta_new', { 'evaluacion_id': entity.id }) }}">
+        {% if entity.getDone() == false%}
+            <a href="{{ path('evaluaciondirecta_new', { 'evaluacion_id': entity.id }) }}" class="btn btn-success">
                 Crear Evaluación Directa
             </a>
-        </li>
-    </ul>
+    {% endif %}
     {% endif %}
     {#Fin Evaluación Directa#}
     <hr>
     {#Evaluaciones Indirectas#}
     <h4>Evaluaciones Indirectas</h4>
-     <ul>
-        <li>
-            <a href="{{ path('evaluacionindirecta_new', { 'evaluacion_id': entity.id }) }}">
-                Crear Evaluación Indirecta
-            </a>
-        </li>
-    </ul>
+    {% if entity.getDone() == false%}
+    <a href="{{ path('evaluacionindirecta_new', { 'evaluacion_id': entity.id }) }}" class="btn btn-success">
+     Crear Evaluación Indirecta
+    </a>
+    {% endif %}
     <table class="table table-striped">
         <thead>
             <tr>
@@ -134,37 +145,35 @@
             </tr>
         </thead>
         <tbody>
-        {% for entity in evaluacionesindirectas %}
+        {% for entity2 in evaluacionesindirectas %}
             <tr>
-                {% if entity.ambito == 1 %}
+                {% if entity2.ambito == 1 %}
                    <td>Capacitación/Educación</td>
-                {% elseif entity.ambito == 2 %}
+                {% elseif entity2.ambito == 2 %}
                     <td>Información/Difusión</td>
-                {% elseif entity.ambito == 3 %}
+                {% elseif entity2.ambito == 3 %}
                     <td>Otras Transformaciones de Mercado</td>
                 {% endif %}
-                <td>{{ entity.grupoInteres }}</td>
+                <td>{{ entity2.grupoInteres }}</td>
                 <td>
-                {% for eje in entity.ejes %}
+                {% for eje in entity2.ejes %}
                      {% if eje == 1 %}
-                        Presencia 
+                        Presencia<br> 
                      {% elseif eje == 2 %}
-                        Valoración 
+                        Valoración<br>
                      {% elseif eje == 3 %}
-                        Capacidad Movilizadora 
+                        Capacidad Movilizadora<br>
                 {% endif %}
                 {% endfor %}
                 </td>
-                <td>{{ entity.responsable }}</td>
-                <td>{{ entity.plazo }}</td>
+                <td>{{ entity2.responsable }}</td>
+                <td>{{ entity2.plazo }}</td>
                 <td>
                 <ul>
-                    <li>
-                        <a href="{{ path('evaluacionindirecta_show', { 'id': entity.id }) }}">Ver</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('evaluacionindirecta_edit', { 'id': entity.id }) }}">Editar</a>
-                    </li>
+                <a href="{{ path('evaluacionindirecta_show', { 'id': entity2.id }) }}" class="btn btn-primary">Ver</a> 
+                {% if entity.getDone() == false %}
+                <a href="{{ path('evaluacionindirecta_edit', { 'id': entity2.id }) }}" class="btn btn-warning">Editar</a>
+                {% endif %}
                 </ul>
                 </td>
             </tr>
@@ -172,25 +181,4 @@
         </tbody>
     </table>
     {#Fin Evaluaciones Indirectas#}
-
-    {# Poner if hay resultados #}
-    <a href="{{ path('evaluacion_resultados_show', { 'id': entity.id}) }}" class="btn btn-primary">
-        Ver Resultados
-    </a>
-    
-    <div class="form-actions">
-        <a href="{{ path('planevaluacion_show', { 'id': entity.getPlanevaluacion().id}) }}" class="btn">
-            Volver al Plan de Evaluación
-        </a>
-        <a href="{{ path('evaluacion_edit', { 'id': entity.id }) }}" class="btn">
-            Editar Evaluación
-        </a>
-    </div>
-        <form action="{{ path('evaluacion_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit" class="btn btn-danger">Eliminar Evaluación</button>
-        </form>
-
-
 {% endblock %}

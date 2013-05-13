@@ -52,6 +52,12 @@ class Cuestionario
      */
     private $done;
 
+    /**
+     * @ORM\OneToOne(targetEntity="EvaluacionIndirecta", inversedBy="cuestionario")
+     * @ORM\JoinColumn(name="evaluacionindirecta_id", referencedColumnName="id")
+     */
+    protected $evaluacionindirecta;
+
     public function __construct()
     {
         $this->preguntasalternativa = new ArrayCollection();
@@ -249,5 +255,28 @@ class Cuestionario
     public function getDone()
     {
         return $this->done;
+    }
+
+    /**
+     * Set evaluacionindirecta
+     *
+     * @param \chanpp\EvImBundle\Entity\EvaluacionIndirecta $evaluacionindirecta
+     * @return Cuestionario
+     */
+    public function setEvaluacionindirecta(\chanpp\EvImBundle\Entity\EvaluacionIndirecta $evaluacionindirecta = null)
+    {
+        $this->evaluacionindirecta = $evaluacionindirecta;
+    
+        return $this;
+    }
+
+    /**
+     * Get evaluacionindirecta
+     *
+     * @return \chanpp\EvImBundle\Entity\EvaluacionIndirecta 
+     */
+    public function getEvaluacionindirecta()
+    {
+        return $this->evaluacionindirecta;
     }
 }

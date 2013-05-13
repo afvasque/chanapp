@@ -1,6 +1,7 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
+    {% if entity.getEvaluacion().getDone() == false %}
     <h1>Editar Evaluación Indirecta</h1>
        <ul class="record_actions">
     <li>
@@ -26,4 +27,14 @@
         </a>
     </li>
 </ul>
+{% else %}
+<h1>Error, la evaluación padre ({{entity.getEvaluacion.getNombre()}}) ha sido cerrada y sus sub-evaluaciones no pueden ser editadas.</h1>
+<ul class="record_actions">
+    <li>
+         <a href="{{ path('evaluacion_show', { 'id': entity.getEvaluacion().id}) }}">
+            Volver a Evaluación
+        </a>
+    </li>
+</ul>
+{% endif %}
 {% endblock %}

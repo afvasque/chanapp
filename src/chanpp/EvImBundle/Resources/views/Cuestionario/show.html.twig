@@ -6,71 +6,63 @@
     <h2>{{ app.request.get('error') }}</h2>
     {% endif%}
         <ul class="record_actions">
-    <li>
-        <a href="{{ path('cuestionario') }}">
-            Back to the list
+        <a href="{{ path('evaluacionindirecta_show', {'id' : entity.getEvaluacionindirecta().getEvaluacion().getId() }) }}" class="btn">
+            Volver a evaluación indirecta
         </a>
-    </li>
-    <li>
-        <a href="{{ path('cuestionario_preview', {'id': entity.id, 'editoption': 1}) }}">
-    Preview
+        <a href="{{ path('cuestionario_preview', {'id': entity.id, 'editoption': 1}) }}" class="btn btn-primary">
+    Vista Previa
     </a>
-    </li>
-     <li>
-        <a href="{{ path('cuestionario_preview', {'id': entity.id, 'editoption': 2}) }}">
+         {% if entity.getDone() == false%}<a href="{{ path('cuestionario_answer', {'id': entity.id}) }}" class="btn btn-primary">
+    Link Público
+    </a>{% endif %}
+    {% if entity.getEvaluacionindirecta().getEvaluacion().getDone() == false%}
+        <br><br><a href="{{ path('cuestionario_preview', {'id': entity.id, 'editoption': 2}) }}" class="btn btn-warning">
     Ver y editar preguntas
     </a>
-    </li>
-     <li>
-        <a href="{{ path('cuestionario_preview', {'id': entity.id, 'editoption': 3}) }}">
+        <a href="{{ path('cuestionario_preview', {'id': entity.id, 'editoption': 3}) }}" class="btn btn-warning">
     Cambiar orden de las preguntas
     </a>
-    </li>
-    <li>
-        <a href="{{ path('cuestionario_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('cuestionario_delete', { 'id': entity.id }) }}" method="post">
+        {% if entity.getDone() == false%}
+            <a href="{{ path('cuestionario_edit', { 'id': entity.id }) }}" class="btn btn-warning">
+                Cambiar Nombre Cuestionario
+            </a>
+        <br><br><form action="{{ path('cuestionario_delete', { 'id': entity.id }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <button type="submit" class="btn btn-danger">Eliminar</button>
         </form>
-    </li>
-    <li>
-        <a href="{{ path('cuestionario_answer', {'id': entity.id}) }}">
-    Link Público
-    </a>
-    </li>
-
+        {% endif %}
+    {% endif %}
     </ul>  
     {# Links a creación de preguntas #}
+    {% if entity.getEvaluacionindirecta().getEvaluacion().getDone()%}
+    <h3>La evaluación padre del cuestionario ha sido cerrada, por lo que el cuestionario no puede seguir siendo editado ni respondido.</h3>
+    {% endif %}
     {% if entity.getDone() %}
-    El cuestionario ha sido cerrado y no se pueden agregar más preguntas.
+    <h3>El cuestionario ha sido cerrado y no se pueden agregar más preguntas.</h3>
     {% else %}
+    <hr>
+    <h3>Agregar Preguntas</h3>
     <ul>
-            <li>
-        <a href="{{ path('cuestionario_markasdone', {'id': entity.id}) }}">
+        <a href="{{ path('cuestionario_markasdone', {'id': entity.id}) }}" class="btn btn-warning">
         Finalizar creación de cuestionario
         </a>
-        </li>
-        <li>
-            <a href="{{ path('preguntadesarrollo_new', { 'cuestionario_id': entity.id, 'pregunta_numero': pregunta_numero }) }}">
+            <a href="{{ path('preguntadesarrollo_new', { 'cuestionario_id': entity.id, 'pregunta_numero': pregunta_numero }) }}" class="btn btn-success">
                 Agregar Pregunta Desarrollo
             </a>
-        </li>
-        <li>
-            <a href="{{ path('preguntaalternativa_new', { 'cuestionario_id': entity.id, 'pregunta_tipo': 1 , 'pregunta_numero': pregunta_numero}) }}">
+            <a href="{{ path('preguntaalternativa_new', { 'cuestionario_id': entity.id, 'pregunta_tipo': 1 , 'pregunta_numero': pregunta_numero}) }}" class="btn btn-success">
                 Agregar Pregunta Alternativa Sí o No
             </a>
-        </li>
-        <li>
-            <a href="{{ path('preguntaalternativa_new', { 'cuestionario_id': entity.id, 'pregunta_tipo': 2 , 'pregunta_numero': pregunta_numero}) }}">
+            <a href="{{ path('preguntaalternativa_new', { 'cuestionario_id': entity.id, 'pregunta_tipo': 2 , 'pregunta_numero': pregunta_numero}) }}" class="btn btn-success">
                 Agregar Pregunta Alternativa Escala 1 a 5
+            </a><br><br>
+            <a href="{{ path('cuestionario_alternativa_link', { 'id': entity.id}) }}" class="btn btn-success">
+                Asociar Pregunta Alternativa Anterior
             </a>
-        </li>
-        <li>
+            <a href="{{ path('cuestionario_desarrollo_link', { 'id': entity.id}) }}" class="btn btn-success">
+                 Asociar Pregunta Desarrollo Anterior
+            </a>
+            <hr>
             <form action="{{ path('preguntaalternativa_new') }}" method="get" {{ form_enctype(delete_form) }}>
             <input type="hidden" name="cuestionario_id" value="{{ entity.id}}">
             <input type="hidden" name="pregunta_tipo" value="3">
@@ -78,99 +70,17 @@
             <label for="numero_alternativas">Número de alternativas:</label> 
             <input type="text" name="numero_alternativas" required>
             <p>
-            <button type="submit">Agregar Pregunta con alternativas personalizadas</button>
+            <button type="submit" class="btn btn-success">Agregar Pregunta con alternativas personalizadas</button>
              </p>
             </form>
-        </li>
-         <li>
-            <a href="{{ path('cuestionario_alternativa_link', { 'id': entity.id}) }}">
-                Asociar Pregunta Alternativa Antigua
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('cuestionario_desarrollo_link', { 'id': entity.id}) }}">
-                 Asociar Pregunta Desarrollo Antigua
-            </a>
-        </li>
     </ul>
+    <hr>
     {% endif %}
-    
     {# Fin Link#}
     <hr>
-    {#Preguntas Desarrollo#}
-    <h3>Preguntas Desarrollo</h3>
-
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Numeropregunta</th>
-                <th>Enunciado</th>
-                <th>Eje</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in preguntasdesarrollo %}
-            <tr>
-                <td>{{ entity.numeropregunta }}</td>
-                <td>{{ entity.enunciado }}</td>
-                <td>{{ entity.eje }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('preguntadesarrollo_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('preguntadesarrollo_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-        </table>
-    {#Fin Fin Preguntas Desarrollo#}
-    {# Preguntas Alternativas#}
-    <h3>Preguntas Alternativa</h3>
-
-     <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Enunciado</th>
-                <th>Tipo</th>
-                <th>Eje</th>
-                <th>Numeropregunta</th>
-                <th>Alternativas</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in preguntasalternativa %}
-            <tr>
-                <td>{{ entity.enunciado }}</td>
-                <td>{{ entity.tipo }}</td>
-                <td>{{ entity.eje }}</td>
-                 <td>{{ entity.numeropregunta }}</td>
-                <td>{% for alternativa in entity.alternativas %}
-                     {{ alternativa }}
-                {% endfor %}</td> 
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('preguntaalternativa_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('preguntaalternativa_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    {# Fin Preguntas Alternativas#}
     {# Respuestas#}
-    <h1>Respuesta list</h1>
+    <h2>Respuestas</h2>
+    {% if respuestas|length >0 %}
     <table class="table table-striped">
         <thead>
             <tr>
@@ -178,7 +88,7 @@
                 <th>Empresa</th>
                 <th>Mail</th>
                 <th>Telefono</th>
-                <th>Acciones</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -191,7 +101,7 @@
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('respuesta_show', { 'id': entity.id }) }}">Ver</a>
+                        <a href="{{ path('respuesta_show', { 'id': entity.id }) }}">Ver Respuesta</a>
                     </li>
                 </ul>
                 </td>
@@ -199,5 +109,8 @@
         {% endfor %}
         </tbody>
     </table>
+    {% else %}
+    <h3>No hay respuestas</h3>
+    {% endif %}
     {# Fin Respuestas#}
 {% endblock %}

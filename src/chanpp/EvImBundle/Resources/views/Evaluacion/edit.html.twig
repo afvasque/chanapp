@@ -1,6 +1,7 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
+    {% if entity.done == false%}
     <h1>Editar Evaluación : {{entity.nombre}}</h1>
      <ul class="record_actions">
         <li>
@@ -26,4 +27,14 @@
         </a>
     </li>
 </ul>
+{% else %}
+<h1>Error, la evaluación {{entity.nombre}} ha sido cerrada y no puede ser editada.</h1>
+<ul class="record_actions">
+    <li>
+         <a href="{{ path('evaluacion_show', { 'id': entity.id }) }}">
+            Volver a Evaluación
+        </a>
+    </li>
+</ul>
+{% endif %}
 {% endblock %}

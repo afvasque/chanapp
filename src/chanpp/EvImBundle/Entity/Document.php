@@ -36,6 +36,7 @@ class Document
      * @ORM\JoinColumn(name="evaluacionindirecta_id", referencedColumnName="id")
      */
     protected $evaluacionindirecta;
+    
    /**
      * Sets file.
      *

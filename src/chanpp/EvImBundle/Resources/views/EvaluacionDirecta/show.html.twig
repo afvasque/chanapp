@@ -2,6 +2,7 @@
 
 {% block body -%}
     <h1>Evaluación Directa</h1>
+    {% if entity.getEvaluacion().getDone() == false %}
         <ul class="record_actions">
     <li>
         <a href="{{ path('evaluaciondirecta_edit', { 'id': entity.id }) }}">
@@ -15,7 +16,7 @@
             <button type="submit">Eliminar</button>
         </form>
     </li>
-</ul>
+</ul>{% endif %}
     <table class="table table-striped">
         <tbody>
             <tr>
@@ -55,9 +56,13 @@
              <tr>
                 <th>Archivo</th>
                 {% if document %}
-                    <td><a href="{{ asset(document.getWebPath())}}">Descargar Archivo</a> - <a href="{{ path('uploaddirecta', { 'evaluaciondirecta_id': entity.id}) }}">Cambiar Archivo</a></td>
+                    <td><a href="{{ asset(document.getWebPath())}}">Descargar Archivo</a>
+                    {% if entity.getEvaluacion().getDone() == false %}
+                     - <a href="{{ path('uploaddirecta', { 'evaluaciondirecta_id': entity.id}) }}">Cambiar Archivo</a>{% endif %}</td>
                 {% else %}
-                    <td>No hay archivo - <a href="{{ path('uploaddirecta', { 'evaluaciondirecta_id': entity.id}) }}">Subir Archivo</a></td>
+                    <td>No hay archivo
+                    {% if entity.getEvaluacion().getDone() == false %}
+                     - <a href="{{ path('uploaddirecta', { 'evaluaciondirecta_id': entity.id}) }}">Subir Archivo</a>{% endif %}</td>
                 {% endif %}
                
             </tr>

@@ -100,3 +100,11 @@ cuestionario_desarrollo_link:
 preguntadesarrollo_link_save:
     path:      /desarrollolinksave/{id}
     defaults:  { _controller: chanppEvImBundle:Cuestionario:desarrollo_link_save }
+
+evaluacion_mark_done:
+    path:      /evaluacionmarcardone/{id}
+    defaults:  { _controller: chanppEvImBundle:Evaluacion:done }
+
+chanpp_index:
+    path:      /
+    defaults:  { _controller: chanppEvImBundle:Index:index }

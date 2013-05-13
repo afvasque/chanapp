@@ -4,6 +4,7 @@
     <h3>{{ error}}</h3>
     {% if app.request.get('editoption') == 1%}
     <h1>Vista previa de cuestionario : {{ entity.nombre }}</h1>
+    <a href="{{ path('cuestionario_show', { 'id': entity.id }) }}" >Volver al cuestionario</a>
     <hr>
     <div id="cuestionario">
     {% set numero_pregunta = 0 %}
@@ -33,85 +34,100 @@
     <br>
     </div>
     {% elseif app.request.get('editoption') == 2%}
-    <h1>Editar preguntas de cuestionario : {{ entity.nombre }}</h1>
-    <hr>
-    <div id="cuestionario">
-    {% set numero_pregunta = 0 %}
-    {% for pregunta in preguntas%}
-        {% set numero_pregunta = numero_pregunta + 1 %}
-        <h3> {{numero_pregunta}}) {{ pregunta.getEnunciado() }} :</h3>
-        {% if pregunta.getTipo() == 0 %}
-            <input type="text" name="respuesta[{{numero_pregunta}}]">
-            <li>
-             <a href="{{ path('preguntadesarrollo_edit', { 'id': pregunta.id }) }}">
-            Editar Pregunta
-              </a>
-             </li>
-        {% elseif pregunta.getTipo() == 1 %}
-            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="1">Sí<br>
-            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="2">No<br>
-             <li>
-            <a href="{{ path('preguntaalternativa_edit', { 'id': pregunta.id }) }}">
-            Editar Pregunta
-            </a>
-             </li>
-        {% elseif pregunta.getTipo() == 2 %}
-            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="1">1<br>
-            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="2">2<br>
-            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="3">3<br>
-            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="4">4<br>
-            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="5">5<br>
-            <li>
-            <a href="{{ path('preguntaalternativa_edit', { 'id': pregunta.id }) }}">
-            Editar Pregunta
-            </a>
-             </li>
-        {% elseif pregunta.getTipo() == 3 %}
-            {% set numero_alternativa = 0 %}
-            {% for alternativa in pregunta.alternativas %} 
-            {% set numero_alternativa = numero_alternativa + 1 %}
-            <input type="radio" name="respuesta[{{numero_pregunta}}]" value="{{numero_alternativa}}"> {{ alternativa }}<br>
-             {% endfor %}
-              <li>
-            <a href="{{ path('preguntaalternativa_edit', { 'id': pregunta.id }) }}">
-            Editar Pregunta
-            </a>
-             </li>
-        {% endif %}
-    {% endfor %}
-    <br>
-    <br>
-    </div>
+    {% if entity.getEvaluacionindirecta().getEvaluacion().getDone() == false%}
+        {% if entity.getDone() == false%}
+            <h1>Editar preguntas de cuestionario : {{ entity.nombre }}</h1>
+            <hr>
+            <div id="cuestionario">
+            {% set numero_pregunta = 0 %}
+            {% for pregunta in preguntas%}
+                {% set numero_pregunta = numero_pregunta + 1 %}
+                <h3> {{numero_pregunta}}) {{ pregunta.getEnunciado() }} :</h3>
+                {% if pregunta.getTipo() == 0 %}
+                    <input type="text" name="respuesta[{{numero_pregunta}}]">
+                    <li>
+                     <a href="{{ path('preguntadesarrollo_edit', { 'id': pregunta.id }) }}">
+                    Editar Pregunta
+                      </a>
+                     </li>
+                {% elseif pregunta.getTipo() == 1 %}
+                    <input type="radio" name="respuesta[{{numero_pregunta}}]" value="1">Sí<br>
+                    <input type="radio" name="respuesta[{{numero_pregunta}}]" value="2">No<br>
+                     <li>
+                    <a href="{{ path('preguntaalternativa_edit', { 'id': pregunta.id }) }}">
+                    Editar Pregunta
+                    </a>
+                     </li>
+                {% elseif pregunta.getTipo() == 2 %}
+                    <input type="radio" name="respuesta[{{numero_pregunta}}]" value="1">1<br>
+                    <input type="radio" name="respuesta[{{numero_pregunta}}]" value="2">2<br>
+                    <input type="radio" name="respuesta[{{numero_pregunta}}]" value="3">3<br>
+                    <input type="radio" name="respuesta[{{numero_pregunta}}]" value="4">4<br>
+                    <input type="radio" name="respuesta[{{numero_pregunta}}]" value="5">5<br>
+                    <li>
+                    <a href="{{ path('preguntaalternativa_edit', { 'id': pregunta.id }) }}">
+                    Editar Pregunta
+                    </a>
+                     </li>
+                {% elseif pregunta.getTipo() == 3 %}
+                    {% set numero_alternativa = 0 %}
+                    {% for alternativa in pregunta.alternativas %} 
+                    {% set numero_alternativa = numero_alternativa + 1 %}
+                    <input type="radio" name="respuesta[{{numero_pregunta}}]" value="{{numero_alternativa}}"> {{ alternativa }}<br>
+                     {% endfor %}
+                      <li>
+                    <a href="{{ path('preguntaalternativa_edit', { 'id': pregunta.id }) }}">
+                    Editar Pregunta
+                    </a>
+                     </li>
+                {% endif %}
+            {% endfor %}
+            <br>
+            <br>
+            </div>
+            {% else %}
+            <h1>El cuestionario se ha finalizado, por lo que no se puede editar.</h1>
+            {% endif %}
+    {% else %}
+         <h1>La evaluación padre del cuestionario ha sido cerrada, por lo que el cuestionario no puede seguir siendo editado.</h1>
+    {% endif %}
     {% elseif app.request.get('editoption') == 3%}
-    <h1>Cambiar orden de preguntas de cuestionario : {{ entity.nombre }}</h1>
-    <hr>
-    <form action="{{ path('cuestionario_change_order', {'id': entity.id}) }}" method="post" {{ form_enctype(delete_form) }}>
-    <div id="cuestionario">
-    {% set numero_pregunta = 0 %}
-    {% for pregunta in preguntas%}
-        {% set numero_pregunta = numero_pregunta + 1 %}
-        <h3><select name="orden[{{numero_pregunta}}]">
-        {% set orden_pregunta = 0 %}
-        {% for p in preguntas%}
-        {% set orden_pregunta = orden_pregunta + 1 %}
-        {% if pregunta.getNumeropregunta() == orden_pregunta%}
-        <option value="{{orden_pregunta}}" selected="true">{{orden_pregunta}}</option>
-        {% else%}
-        <option value="{{orden_pregunta}}">{{orden_pregunta}}</option>
+        {% if entity.getEvaluacionindirecta().getEvaluacion().getDone() == false%}
+            {% if entity.getDone() == false%}
+            <h1>Cambiar orden de preguntas de cuestionario : {{ entity.nombre }}</h1>
+            <hr>
+            <form action="{{ path('cuestionario_change_order', {'id': entity.id}) }}" method="post" {{ form_enctype(delete_form) }}>
+            <div id="cuestionario">
+            {% set numero_pregunta = 0 %}
+            {% for pregunta in preguntas%}
+                {% set numero_pregunta = numero_pregunta + 1 %}
+                <h3><select name="orden[{{numero_pregunta}}]">
+                {% set orden_pregunta = 0 %}
+                {% for p in preguntas%}
+                {% set orden_pregunta = orden_pregunta + 1 %}
+                {% if pregunta.getNumeropregunta() == orden_pregunta%}
+                <option value="{{orden_pregunta}}" selected="true">{{orden_pregunta}}</option>
+                {% else%}
+                <option value="{{orden_pregunta}}">{{orden_pregunta}}</option>
+                {% endif %}
+                {% endfor %}
+            </select> ){{ pregunta.getEnunciado() }} :</h3>
+            {% endfor %}
+            <br>
+            <br>
+            </div>
+            <br>
+            {% if preguntas|length != 0%}
+            <p>
+               <button type="submit">Guardar Nuevo Orden</button>
+            </p>
+            {% endif %}
+            </form>
+            {% else %}
+            <h1>El cuestionario se ha finalizado, por lo que no se puede editar.</h1>
+            {% endif %}
+        {% else %}
+            <h1>La evaluación padre del cuestionario ha sido cerrada, por lo que el cuestionario no puede seguir siendo editado.</h1>
         {% endif %}
-        {% endfor %}
-    </select> ){{ pregunta.getEnunciado() }} :</h3>
-    {% endfor %}
-    <br>
-    <br>
-    </div>
-    <br>
-    {% if preguntas|length != 0%}
-    <p>
-       <button type="submit">Guardar Nuevo Orden</button>
-    </p>
-    {% endif %}
-    </form>
-    {% endif %}
-    
+    {% endif %}   
 {% endblock %}

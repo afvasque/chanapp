@@ -1,6 +1,8 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
+    {% if entity.getEvaluacionindirecta().getEvaluacion().getDone() == false%}
+    {% if entity.getDone() == false%}
     <h1>Respondiendo Cuestionario : {{ entity.nombre }}</h1>
     <hr>
     <div id="cuestionario">
@@ -39,8 +41,14 @@
     {% endfor %}
     <br>
     <p>
-       <button type="submit">Finalizar Cuestionario</button>
+       <button type="submit">Guardar Respuestas</button>
     </p>
     </form>
     </div>
+        {% else %}
+        <h1>El cuestionario no se ha finalizado, por lo que no se puede responder.</h1>
+        {% endif %}
+    {% else %}
+    <h1>La evaluación padre asociada a este cuestionario ha sido cerrada, por lo que no se puede responder.</h1>
+    {% endif %}
 {% endblock %}

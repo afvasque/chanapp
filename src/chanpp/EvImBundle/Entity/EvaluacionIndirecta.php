@@ -3,7 +3,7 @@
 namespace chanpp\EvImBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * EvaluacionIndirecta
  *
@@ -67,6 +67,10 @@ class EvaluacionIndirecta
      */
     protected $document;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Cuestionario", mappedBy="evaluacionindirecta")
+     */
+    protected $cuestionario;
     /**
      * Get id
      *
@@ -236,5 +240,81 @@ class EvaluacionIndirecta
     public function getDocument()
     {
         return $this->document;
+    }
+
+    /**
+     * Get impactosejes
+     *
+     * @return array 
+     */
+    public function getImpactosejes()
+    {
+        #It's time to calculate all the impacts
+        $impactosejes = new ArrayCollection(); 
+        #We get all the questions from the Cuestionario
+        $preguntasalternativas = $this->cuestionario->getPreguntasalternativa();
+        #Now, for each eje
+        for ($i = 1; $i <= 3; $i++) {
+            #Check all the questions
+            $total = 0;
+            $impacted = 0;
+            $counter = 0;
+            foreach ($preguntasalternativas as &$pregunta) {
+                if($pregunta->getEje() == $i)
+                {
+                    #We obtain all the answers linked to this question
+                    $respuestas = $pregunta->getRespuestas();
+                    $total += count($respuestas);
+                    $numeropregunta = $pregunta->getNumeropregunta();
+                    #We check the answers
+                    foreach ($respuestas as &$respuesta) {
+                        if($pregunta->getTipo() == 1)
+                        {
+                            if($respuesta->getRespuesta() == 1)
+                            {
+                                #Increase counter
+                                $impacted++;
+                            } 
+                        }
+                        else if($pregunta->getTipo() == 2)
+                        {
+                            if(($respuesta->getRespuesta() == 4) || ($respuesta->getRespuesta() == 5))
+                            {
+                                #Increase counter
+                                $impacted++;
+                            } 
+                        }
+                    }
+                }
+                $counter++;
+            }
+            #Calculate result, store it on the array
+            $impactosejes[] = $impacted/$total;
+        }
+
+        return $impactosejes;
+    }
+
+    /**
+     * Set cuestionario
+     *
+     * @param \chanpp\EvImBundle\Entity\Cuestionario $cuestionario
+     * @return EvaluacionIndirecta
+     */
+    public function setCuestionario(\chanpp\EvImBundle\Entity\Cuestionario $cuestionario = null)
+    {
+        $this->cuestionario = $cuestionario;
+    
+        return $this;
+    }
+
+    /**
+     * Get cuestionario
+     *
+     * @return \chanpp\EvImBundle\Entity\Cuestionario 
+     */
+    public function getCuestionario()
+    {
+        return $this->cuestionario;
     }
 }
