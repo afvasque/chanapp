@@ -55,12 +55,12 @@ class PlanEvaluacion
     private $instanciasPlazo;
 
     /**
-     * @ORM\OneToMany(targetEntity="Evaluacion", mappedBy="planeevaluacion")
+     * @ORM\OneToMany(targetEntity="Evaluacion", mappedBy="planevaluacion")
      */
     protected $evaluaciones;
 
      /**
-     * @ORM\ManyToOne(targetEntity="FichaProyecto", inversedBy="planeevaluaciones")
+     * @ORM\ManyToOne(targetEntity="FichaProyecto", inversedBy="planevaluaciones")
      * @ORM\JoinColumn(name="fichaproyecto_id", referencedColumnName="id")
      */
     protected $fichaproyecto;
