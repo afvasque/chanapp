@@ -137,7 +137,7 @@ class FichaProyecto
     private $variables_causales;
 
     /**
-     * @ORM\Column(type="datetime", nullable="true")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $created_at;
 
