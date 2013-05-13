@@ -119,7 +119,7 @@ class FichaProyectoController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find FichaProyecto entity.');
         }
-        $planevaluaciones =  $entity->getPlaneevaluaciones();
+        $planevaluaciones =  $entity->getPlanevaluaciones();
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
