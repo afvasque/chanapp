@@ -134,6 +134,12 @@
         </tbody>
     </table>
     {# Fin evaluaciones#}
+
+    {# Poner if hay resultados #}
+    <a href="{{ path('planevaluacion_resultados_show', { 'id': entity.id}) }}" class="btn btn-primary">
+        Ver Resultados
+    </a>
+
     <hr>
         <ul class="record_actions">
     <li>

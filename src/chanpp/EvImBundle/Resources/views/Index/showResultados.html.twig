@@ -1,0 +1,78 @@
+{% extends 'chanppEvImBundle::layout.html.twig' %}
+
+{% block body -%}
+
+    {# Errors go here#}
+    <h1>Resultados evaluaciones</h1>
+
+
+    <h2>Tabla comparativa</h2>
+    <table class="table table-striped" id="demontable">
+        <thead>
+            <th>Área</th>
+            <th>Programa</th>
+            <th>Año</th>    
+            <th>Impacto Indirecto</th>            
+            <th>GI</th>
+            <th>Presencia</th>
+            <th>Valorización</th>
+            <th>Capacidad movilizadora</th>
+        </thead>
+        {% for fc in ficha_proyectos%}
+            {% for pev in fc.getPlaneevaluaciones%}
+                {% for ev in pev.getEvaluaciones%}
+                    <tr>
+                        <td>{{fc.getAreaAccion}}</td>
+                        <td>{{fc.getNombre}}</td>
+                        <td></td>
+                        {% if ev.getEvaluaciondirecta %}
+                            <td>{{ev.getEvaluaciondirecta.getTotal}} mW/h</td>
+                        {% else %}
+                            <td>N/A</td>
+                        {% endif %}
+
+                        {% for ev_in in ev.getEvaluacionesindirectas %}
+                            {% if loop.index > 1%}
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                            {% endif %}
+                                    <td>{{ev_in.getGrupoInteres}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                            {% if loop.index > 0 %}
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                    <tr>
+                    {% endfor %}
+        {% endfor %}
+    </table>
+
+    
+    <div class="form-actions">
+        <a href="{{ path('index_show')}}" class="btn btn-main">
+            Volver a la página de inicio
+        </a>
+    </div>
+
+{% block javascript %}
+
+    {% javascripts 
+        '@chanppEvImBundle/Resources/public/js/picnet.table.filter.min.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#demotable').tableFilter();
+            });
+        </script>
+    {% endjavascripts %}
+{% endblock %}
+
+
+{% endblock %}

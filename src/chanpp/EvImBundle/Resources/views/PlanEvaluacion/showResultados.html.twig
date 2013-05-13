@@ -1,0 +1,71 @@
+{% extends 'chanppEvImBundle::layout.html.twig' %}
+
+{% block body -%}
+
+    {# Errors go here#}
+    <h1>Resultados evaluaciones</h1>
+
+    <h2> Datos evaluación </h2>
+
+    <p>Área: {{proyecto.getAreaAccion}}</p>
+    <p>Programa: {{proyecto.getNombre}}</p>
+
+    <h2>Tabla comparativa</h2>
+    <table class="table table-striped" id="demontable">
+        <thead>
+            <th>Nombre</th>
+            <th>Impacto Indirecto</th>            
+            <th>GI</th>
+            <th>Presencia</th>
+            <th>Valorización</th>
+            <th>Capacidad movilizadora</th>
+        </thead>
+        {% for ev in entity.getEvaluaciones%}
+        <tr>
+            <td>{{ev.getNombre}}</td>
+            {% if ev.getEvaluaciondirecta %}
+                <td>{{ev.getEvaluaciondirecta.getTotal}} mW/h</td>
+            {% else %}
+                <td> N/A </td>
+            {% endif %}
+            {% for ev_in in ev.getEvaluacionesindirectas %}
+                {% if loop.index > 1%}
+                    <tr>
+                        <td></td>
+                        <td></td>
+                {% endif %}
+                <td>{{ev_in.getGrupoInteres}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                {% if loop.index > 0%}
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        <tr>
+        {% endfor %}
+    </table>
+
+    
+    <div class="form-actions">
+        <a href="{{ path('evaluacion_show', { 'id': entity.id}) }}" class="btn btn-main">
+            Volver a la evaluación
+        </a>
+    </div>
+
+{% block javascript %}
+
+    {% javascripts 
+        '@chanppEvImBundle/Resources/public/js/picnet.table.filter.min.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#demotable').tableFilter();
+            });
+        </script>
+    {% endjavascripts %}
+{% endblock %}
+
+
+{% endblock %}

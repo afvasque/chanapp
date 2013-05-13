@@ -2,6 +2,10 @@ chanpp_ev_im:
     resource: "@chanppEvImBundle/Resources/config/routing.yml"
     prefix:   /
 
+chanpp_index:
+    resource: "@chanppEvImBundle/Controller/IndexController.php"
+    type: annotation
+
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 

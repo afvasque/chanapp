@@ -213,4 +213,30 @@ class PlanEvaluacionController extends Controller
             ->getForm()
         ;
     }
+
+    /**
+     * Muestra tabla comparativa de resultados de todas las evauaciones de este plan.
+     *
+     * @Route("/{id}/resultados", name="planevaluacion_resultados_show")
+     * @Method("GET")
+     * @Template()
+     */
+    public function showResultadosAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('chanppEvImBundle:PlanEvaluacion')->find($id);
+               
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Evaluacion entity.');
+        }
+
+        # Computar resultados varios
+
+        # Desplegar resultados
+        return array(
+            'entity'      => $entity,
+            'proyecto' => $entity->getFichaproyecto(),
+        );
+
+    }
 }
