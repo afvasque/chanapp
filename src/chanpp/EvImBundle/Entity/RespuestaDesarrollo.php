@@ -30,13 +30,13 @@ class RespuestaDesarrollo
 
      /**
      * @ORM\ManyToOne(targetEntity="Respuesta")
-     * @ORM\JoinColumn(name="respuesta_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="respuesta_id", referencedColumnName="id",onDelete="CASCADE")
      */
     protected $respuesta_parent;
 
     /**
      * @ORM\ManyToOne(targetEntity="PreguntaDesarrollo")
-     * @ORM\JoinColumn(name="pregunta_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="pregunta_id", referencedColumnName="id",onDelete="CASCADE")
      */
     protected $pregunta;
 

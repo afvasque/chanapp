@@ -12,7 +12,7 @@ class RecursoType extends AbstractType
     {
         $builder
             ->add('titulo')
-            ->add('descripcion')
+            ->add('descripcion','textarea',array('label'  => 'Descripción',))
             ->add('tipo', 'choice', array('choices'   => array('1' => 'Monetario', '2' => 'Humano', '3' => 'Tiempo', '4' => 'Capacidad', '5' => 'Otro',),'required'  => true,))
             ->add('cantidad')
         ;

@@ -54,23 +54,17 @@
     <hr>
     {# Actividades#}
     <h4>Actividades</h4>
-    {% if entity.getDone() == false%}
-            <a href="{{ path('linkactivity', { 'evaluacion_id': entity.id }) }}" class="btn btn-success">
-                Asociar Actividades
-            </a>
-    {% endif %}
-    {% if actividades is empty %}
-       No hay actividades
-    {% else %}
-        
+        {% if actividades is empty%}
+        <br>No hay actividades
+          {% else %}
          <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Nombre</th>
                     <th>Descripcion</th>
-                    <th>Resultadosesperados</th>
+                    <th>Resultados Esperados</th>
                     <th>Duracion</th>
-                    <th>Actions</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -81,8 +75,8 @@
                     <td>{{ entity2.resultadosEsperados }}</td>
                     <td>{{ entity2.duracion }}</td>
                     <td>
-                            <a href="{{ path('activity_show', { 'id': entity2.id }) }}">Ver</a>
-                            <a href="{{ path('activity_edit', { 'id': entity2.id }) }}">Editar</a>
+                            <a href="{{ path('activity_show', { 'id': entity2.id }) }}" class="btn btn-primary">Ver</a>
+                            <a href="{{ path('activity_edit', { 'id': entity2.id }) }}" class="btn btn-warning">Editar</a>
                     </td>
                 </tr>
             {% endfor %}
@@ -101,7 +95,7 @@
             <tr>
                 <th>Resultado</th>
                 <th>Descripción</th>
-                <th>Acciones</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -127,12 +121,13 @@
     {#Fin Evaluación Directa#}
     <hr>
     {#Evaluaciones Indirectas#}
-    <h4>Evaluaciones Indirectas</h4>
+    <h4>Sub-Evaluaciones Indirectas</h4>
     {% if entity.getDone() == false%}
     <a href="{{ path('evaluacionindirecta_new', { 'evaluacion_id': entity.id }) }}" class="btn btn-success">
      Crear Evaluación Indirecta
     </a>
     {% endif %}
+    {% if evaluacionesindirectas %}
     <table class="table table-striped">
         <thead>
             <tr>
@@ -141,7 +136,7 @@
                 <th>Ejes</th>
                 <th>Responsable</th>
                 <th>Plazo</th>
-                <th>Acciones</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -180,5 +175,6 @@
         {% endfor %}
         </tbody>
     </table>
+    {% endif %}
     {#Fin Evaluaciones Indirectas#}
 {% endblock %}

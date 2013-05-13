@@ -2,39 +2,23 @@
 
 {% block body -%}
     {% if entity.getEvaluacion().getDone() == false %}
-    <h1>Editar Evaluación Indirecta</h1>
-       <ul class="record_actions">
-    <li>
+    <h1>Editar Sub-Evaluación Indirecta</h1>
+     <a href="{{ path('evaluacion_show', { 'id': entity.getEvaluacion().id}) }}" class="btn">
+            Volver a evaluación
+        </a>
         <form action="{{ path('evaluacionindirecta_delete', { 'id': entity.id }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
-            <button type="submit">Eliminar</button>
+            <button type="submit" onclick="return confirm('¿Seguro que desea eliminar?')" class="btn btn-danger">Eliminar</button>
         </form>
-    </li>
-</ul>
     <form action="{{ path('evaluacionindirecta_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
         {{ form_widget(edit_form) }}
         <p>
-            <button type="submit">Guardar Cambios</button>
+            <button type="submit" class="btn btn-success">Guardar Cambios</button>
         </p>
     </form>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('evaluacion_show', { 'id': entity.getEvaluacion().id}) }}">
-            Volver a evaluación
-        </a>
-    </li>
-</ul>
 {% else %}
 <h1>Error, la evaluación padre ({{entity.getEvaluacion.getNombre()}}) ha sido cerrada y sus sub-evaluaciones no pueden ser editadas.</h1>
-<ul class="record_actions">
-    <li>
-         <a href="{{ path('evaluacion_show', { 'id': entity.getEvaluacion().id}) }}">
-            Volver a Evaluación
-        </a>
-    </li>
-</ul>
 {% endif %}
 {% endblock %}

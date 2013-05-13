@@ -179,7 +179,7 @@ class EvaluacionDirectaController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('evaluaciondirecta_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('evaluaciondirecta_show', array('id' => $id)));
         }
 
         return array(
@@ -244,6 +244,7 @@ class EvaluacionDirectaController extends Controller
     {
       
         $document = new DocumentEDirecta();
+
         $form = $this->createFormBuilder($document)
             ->add('file','file', array('label' => 'Archivo'))
             ->getForm();

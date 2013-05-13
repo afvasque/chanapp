@@ -1,21 +1,14 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>Creación de Evaluación Indirecta</h1>
-
+    <h1>Creación de Sub-Evaluación Indirecta</h1>
+     <a href="{{ path('evaluacion_show', { 'id': app.request.get('evaluacion_id')}) }}" class="btn">
+            Volver a evaluación
+    </a><br><br>
     <form action="{{ path('evaluacionindirecta_create', { 'evaluacion_id':app.request.get('evaluacion_id') }) }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
-        {# Métodos de recoleccion#}
         <p>
-            <button type="submit">Crear</button>
+            <button type="submit" class="btn btn-success">Crear</button>
         </p>
     </form>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('evaluacion_show', { 'id': app.request.get('evaluacion_id')}) }}">
-            Volver a evaluación
-        </a>
-    </li>
-</ul>
 {% endblock %}

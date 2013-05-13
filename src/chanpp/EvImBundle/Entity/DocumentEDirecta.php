@@ -33,7 +33,7 @@ class DocumentEDirecta
 
     /**
      * @ORM\OneToOne(targetEntity="EvaluacionDirecta", inversedBy="document")
-     * @ORM\JoinColumn(name="evaluaciondirecta_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="evaluaciondirecta_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $evaluaciondirecta;
    /**

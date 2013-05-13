@@ -54,7 +54,7 @@ class Cuestionario
 
     /**
      * @ORM\OneToOne(targetEntity="EvaluacionIndirecta", inversedBy="cuestionario")
-     * @ORM\JoinColumn(name="evaluacionindirecta_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="evaluacionindirecta_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $evaluacionindirecta;
 

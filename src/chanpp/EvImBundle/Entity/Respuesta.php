@@ -51,7 +51,7 @@ class Respuesta
 
     /**
      * @ORM\ManyToOne(targetEntity="Cuestionario")
-     * @ORM\JoinColumn(name="cuestionario_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="cuestionario_id", referencedColumnName="id",onDelete="CASCADE")
      */
     protected $cuestionario;
 

@@ -2,25 +2,26 @@
 
 {% block body -%}
     <h1>Editar Recurso : {{entity.titulo}}</h1>
+    <a href="{{ path('planevaluacion_show', { 'id': entity.getPlanevaluacion().id}) }}" class="btn">
+            Volver al plan de evaluación
+    </a><br><br>
      <ul class="record_actions"><li>
         <form action="{{ path('recurso_delete', { 'id': entity.id }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
-            <button type="submit">Eliminar</button>
+            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminar?')">Eliminar</button>
         </form>
     </li></ul>
     <form action="{{ path('recurso_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
         {{ form_widget(edit_form) }}
         <p>
-            <button type="submit">Guardar Cambios</button>
+            <button type="submit" class="btn btn-success">Guardar Cambios</button>
         </p>
     </form>
         <ul class="record_actions">
    <li>
-      <a href="{{ path('planevaluacion_show', { 'id': entity.getPlanevaluacion().id}) }}">
-            Volver al plan de evaluación
-        </a>
+      
     </li>
 </ul>
 {% endblock %}
