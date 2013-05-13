@@ -55,10 +55,13 @@ ul, li
     margin-top: 65px;
 }
 
-#hidestupiderrors ul, li{
+#hidestupiderrors ul{
     visibility:hidden;
 }
 
+#hidestupiderrors li{
+    visibility:hidden;
+}
 input[type='checkbox'] { 
 float:left;
 margin-right: 3px;

@@ -8,6 +8,9 @@
     <a href="{{ path('planevaluacion_resultados_show', { 'id': entity.id}) }}" class="btn btn-primary">
         Ver Resultados
     </a>
+    <a href="{{ path('cambiosplanevaluacion_show', { 'id': entity.id}) }}" class="btn btn-primary">
+        Ver Cambios
+    </a>
     {#Opciones de Plan#}
         <a href="{{ path('planevaluacion_edit', { 'id': entity.id }) }}" class="btn btn-warning">
             Editar

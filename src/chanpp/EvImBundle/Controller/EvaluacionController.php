@@ -105,6 +105,7 @@ class EvaluacionController extends Controller
         $evaluaciondirecta =  $entity->getEvaluaciondirecta();
         $evaluacionesindirectas = $entity->getEvaluacionesindirectas();
         $actividades = $entity->getActividades();
+        $planevaluacion = $entity->getPlanevaluacion();
         $deleteForm = $this->createDeleteForm($id);
         return array(
             'entity'      => $entity,
@@ -112,6 +113,7 @@ class EvaluacionController extends Controller
             'evaluaciondirecta' => $evaluaciondirecta,
             'evaluacionesindirectas' => $evaluacionesindirectas,
             'actividades' => $actividades,
+            'planevaluacion' => $planevaluacion,
         );
     }
 
@@ -273,7 +275,6 @@ class EvaluacionController extends Controller
         }
 
         # Computar resultados varios
-
         # Desplegar resultados
         return array(
             'entity'      => $entity,

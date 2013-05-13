@@ -29,6 +29,11 @@ class FichaProyecto
     */
     protected $ind_gestions;
 
+    /**
+     * @ORM\OneToMany(targetEntity="PlanEvaluacion", mappedBy="fichaproyecto")
+     */
+    protected $planevaluaciones;
+    
     public function __construct()
     {
         $this->activities = new ArrayCollection();
@@ -57,7 +62,7 @@ class FichaProyecto
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre_editor", type="string", length=255)
+     * @ORM\Column(name="nombre_editor", type="string", length=255, nullable=true)
      */
     private $nombre_editor;
 
@@ -132,9 +137,30 @@ class FichaProyecto
     private $variables_causales;
 
     /**
-     * @ORM\OneToMany(targetEntity="PlanEvaluacion", mappedBy="fichaproyecto")
+     * @ORM\Column(type="datetime")
      */
-    protected $planeevaluaciones;
+    protected $created_at;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $modified_at;
+
+    /**
+     * Now we tell doctrine that before we persist or update we call the updatedTimestamps() function.
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updatedTimestamps()
+    {
+        $this->setModifiedAt(new \DateTime(date('Y-m-d H:i:s')));
+
+        if($this->getCreatedAt() == null)
+        {
+            $this->setCreatedAt(new \DateTime(date('Y-m-d H:i:s')));
+        }
+    }
 
     /**
      * Get id
@@ -236,29 +262,6 @@ class FichaProyecto
     public function getJefe()
     {
         return $this->jefe;
-    }
-
-    /**
-     * Set duracion
-     *
-     * @param string $duracion
-     * @return FichaProyecto
-     */
-    public function setduracion($duracion)
-    {
-        $this->duracion = $duracion;
-    
-        return $this;
-    }
-
-    /**
-     * Get duracion
-     *
-     * @return string 
-     */
-    public function getduracion()
-    {
-        return $this->duracion;
     }
 
     /**
@@ -486,39 +489,6 @@ class FichaProyecto
         return $this;
     }
 
-    /**
-     * Add planeevaluaciones
-     *
-     * @param \chanpp\EvImBundle\Entity\PlanEvaluacion $planeevaluaciones
-     * @return FichaProyecto
-     */
-    public function addPlaneevaluacione(\chanpp\EvImBundle\Entity\PlanEvaluacion $planeevaluaciones)
-    {
-        $this->planeevaluaciones[] = $planeevaluaciones;
-    
-        return $this;
-    }
-
-    /**
-     * Remove planeevaluaciones
-     *
-     * @param \chanpp\EvImBundle\Entity\PlanEvaluacion $planeevaluaciones
-     */
-    public function removePlaneevaluacione(\chanpp\EvImBundle\Entity\PlanEvaluacion $planeevaluaciones)
-    {
-        $this->planeevaluaciones->removeElement($planeevaluaciones);
-    }
-
-    /**
-     * Get planeevaluaciones
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPlaneevaluaciones()
-    {
-        return $this->planeevaluaciones;
-    }
-
     public static function getAreasAccion()
     {
         return array(
@@ -531,4 +501,152 @@ class FichaProyecto
             );
     }
 
+
+    /**
+     * Set nombre_editor
+     *
+     * @param string $nombreEditor
+     * @return FichaProyecto
+     */
+    public function setNombreEditor($nombreEditor)
+    {
+        $this->nombre_editor = $nombreEditor;
+    
+        return $this;
+    }
+
+    /**
+     * Get nombre_editor
+     *
+     * @return string 
+     */
+    public function getNombreEditor()
+    {
+        return $this->nombre_editor;
+    }
+
+    /**
+     * Set created_at
+     *
+     * @param \DateTime $createdAt
+     * @return FichaProyecto
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->created_at = $createdAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get created_at
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * Set modified_at
+     *
+     * @param \DateTime $modifiedAt
+     * @return FichaProyecto
+     */
+    public function setModifiedAt($modifiedAt)
+    {
+        $this->modified_at = $modifiedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get modified_at
+     *
+     * @return \DateTime 
+     */
+    public function getModifiedAt()
+    {
+        return $this->modified_at;
+    }
+
+    /**
+     * Set duracion
+     *
+     * @param string $duracion
+     * @return FichaProyecto
+     */
+    public function setDuracion($duracion)
+    {
+        $this->duracion = $duracion;
+
+        return $this;
+    }
+
+    /**
+     * Get duracion
+     *
+     * @return string 
+     */
+    public function getDuracion()
+    {
+        return $this->duracion;
+    }
+
+    /**
+     * Add activities
+     *
+     * @param \chanpp\EvImBundle\Entity\Activity $activities
+     * @return FichaProyecto
+     */
+    public function addActivity(\chanpp\EvImBundle\Entity\Activity $activities)
+    {
+        $this->activities[] = $activities;
+
+        return $this;
+    }
+
+    /**
+     * Remove activities
+     *
+     * @param \chanpp\EvImBundle\Entity\Activity $activities
+     */
+    public function removeActivity(\chanpp\EvImBundle\Entity\Activity $activities)
+    {
+        $this->activities->removeElement($activities);
+    }
+
+    /**
+     * Add planevaluaciones
+     *
+     * @param \chanpp\EvImBundle\Entity\PlanEvaluacion $planevaluaciones
+     * @return FichaProyecto
+     */
+    public function addPlanevaluacione(\chanpp\EvImBundle\Entity\PlanEvaluacion $planevaluaciones)
+    {
+        $this->planevaluaciones[] = $planevaluaciones;
+
+        return $this;
+    }
+
+    /**
+     * Remove planevaluaciones
+     *
+     * @param \chanpp\EvImBundle\Entity\PlanEvaluacion $planevaluaciones
+     */
+    public function removePlanevaluacione(\chanpp\EvImBundle\Entity\PlanEvaluacion $planevaluaciones)
+    {
+        $this->planevaluaciones->removeElement($planevaluaciones);
+    }
+
+    /**
+     * Get planevaluaciones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPlanevaluaciones()
+    {
+        return $this->planevaluaciones;
+    }
 }

@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use chanpp\EvImBundle\Entity\PlanEvaluacion;
 use chanpp\EvImBundle\Form\PlanEvaluacionType;
 use chanpp\EvImBundle\Entity\FichaProyecto;
+use chanpp\EvImBundle\Entity\CambiosPlanEvaluacion;
 /**
  * PlanEvaluacion controller.
  *
@@ -160,6 +161,17 @@ class PlanEvaluacionController extends Controller
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
+            #We store the changes made
+            $comentario = $request->get('comentarioedit');
+            $cambio = new CambiosPlanEvaluacion();
+            $cambio->setComentario($comentario);
+            $cambio->setPlanevaluacion($entity);
+            #$usr= $this->get('security.context')->getToken()->getUser();
+            #$name = $usr->getUsername();
+            $name = "";
+            $cambio->setUsername($name);
+            $entity->addCambio($cambio);
+            $em->persist($cambio);
             $em->persist($entity);
             $em->flush();
 

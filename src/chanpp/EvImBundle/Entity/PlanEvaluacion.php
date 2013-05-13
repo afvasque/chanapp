@@ -55,15 +55,20 @@ class PlanEvaluacion
     private $instanciasPlazo;
 
     /**
-     * @ORM\OneToMany(targetEntity="Evaluacion", mappedBy="planeevaluacion")
+     * @ORM\OneToMany(targetEntity="Evaluacion", mappedBy="planevaluacion")
      */
     protected $evaluaciones;
 
      /**
-     * @ORM\ManyToOne(targetEntity="FichaProyecto", inversedBy="planeevaluaciones")
+     * @ORM\ManyToOne(targetEntity="FichaProyecto", inversedBy="planevaluaciones")
      * @ORM\JoinColumn(name="fichaproyecto_id", referencedColumnName="id")
      */
     protected $fichaproyecto;
+
+    /**
+     * @ORM\OneToMany(targetEntity="CambiosPlanEvaluacion", mappedBy="planevaluacion")
+     */
+    protected $cambios;
 
     public function __construct()
     {
@@ -274,5 +279,38 @@ class PlanEvaluacion
     public function getFichaproyecto()
     {
         return $this->fichaproyecto;
+    }
+
+    /**
+     * Add cambios
+     *
+     * @param \chanpp\EvImBundle\Entity\CambiosPlanEvaluacion $cambios
+     * @return PlanEvaluacion
+     */
+    public function addCambio(\chanpp\EvImBundle\Entity\CambiosPlanEvaluacion $cambios)
+    {
+        $this->cambios[] = $cambios;
+
+        return $this;
+    }
+
+    /**
+     * Remove cambios
+     *
+     * @param \chanpp\EvImBundle\Entity\CambiosPlanEvaluacion $cambios
+     */
+    public function removeCambio(\chanpp\EvImBundle\Entity\CambiosPlanEvaluacion $cambios)
+    {
+        $this->cambios->removeElement($cambios);
+    }
+
+    /**
+     * Get cambios
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCambios()
+    {
+        return $this->cambios;
     }
 }

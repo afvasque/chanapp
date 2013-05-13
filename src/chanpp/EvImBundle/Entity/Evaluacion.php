@@ -63,7 +63,7 @@ class Evaluacion
      * @ORM\ManyToOne(targetEntity="PlanEvaluacion", inversedBy="evaluaciones")
      * @ORM\JoinColumn(name="planevaluacion_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    protected $planeevaluacion;
+    protected $planevaluacion;
 
   
    /**
@@ -349,28 +349,5 @@ class Evaluacion
     public function getDone()
     {
         return $this->done;
-    }
-
-    /**
-     * Set planeevaluacion
-     *
-     * @param \chanpp\EvImBundle\Entity\PlanEvaluacion $planeevaluacion
-     * @return Evaluacion
-     */
-    public function setPlaneevaluacion(\chanpp\EvImBundle\Entity\PlanEvaluacion $planeevaluacion = null)
-    {
-        $this->planeevaluacion = $planeevaluacion;
-    
-        return $this;
-    }
-
-    /**
-     * Get planeevaluacion
-     *
-     * @return \chanpp\EvImBundle\Entity\PlanEvaluacion 
-     */
-    public function getPlaneevaluacion()
-    {
-        return $this->planeevaluacion;
     }
 }

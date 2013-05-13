@@ -32,7 +32,7 @@ class FichaProyecto
     /**
      * @ORM\OneToMany(targetEntity="PlanEvaluacion", mappedBy="fichaproyecto")
      */
-    protected $planeevaluaciones;
+    protected $planevaluaciones;
     
     public function __construct()
     {
@@ -265,29 +265,6 @@ class FichaProyecto
     }
 
     /**
-     * Set duracion
-     *
-     * @param string $duracion
-     * @return FichaProyecto
-     */
-    public function setduracion($duracion)
-    {
-        $this->duracion = $duracion;
-    
-        return $this;
-    }
-
-    /**
-     * Get duracion
-     *
-     * @return string 
-     */
-    public function getduracion()
-    {
-        return $this->duracion;
-    }
-
-    /**
      * Set diagnostico_previo
      *
      * @param string $diagnosticoPrevio
@@ -512,39 +489,6 @@ class FichaProyecto
         return $this;
     }
 
-    /**
-     * Add planeevaluaciones
-     *
-     * @param \chanpp\EvImBundle\Entity\PlanEvaluacion $planeevaluaciones
-     * @return FichaProyecto
-     */
-    public function addPlaneevaluacione(\chanpp\EvImBundle\Entity\PlanEvaluacion $planeevaluaciones)
-    {
-        $this->planeevaluaciones[] = $planeevaluaciones;
-    
-        return $this;
-    }
-
-    /**
-     * Remove planeevaluaciones
-     *
-     * @param \chanpp\EvImBundle\Entity\PlanEvaluacion $planeevaluaciones
-     */
-    public function removePlaneevaluacione(\chanpp\EvImBundle\Entity\PlanEvaluacion $planeevaluaciones)
-    {
-        $this->planeevaluaciones->removeElement($planeevaluaciones);
-    }
-
-    /**
-     * Get planeevaluaciones
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPlaneevaluaciones()
-    {
-        return $this->planeevaluaciones;
-    }
-
     public static function getAreasAccion()
     {
         return array(
@@ -625,5 +569,84 @@ class FichaProyecto
     public function getModifiedAt()
     {
         return $this->modified_at;
+    }
+
+    /**
+     * Set duracion
+     *
+     * @param string $duracion
+     * @return FichaProyecto
+     */
+    public function setDuracion($duracion)
+    {
+        $this->duracion = $duracion;
+
+        return $this;
+    }
+
+    /**
+     * Get duracion
+     *
+     * @return string 
+     */
+    public function getDuracion()
+    {
+        return $this->duracion;
+    }
+
+    /**
+     * Add activities
+     *
+     * @param \chanpp\EvImBundle\Entity\Activity $activities
+     * @return FichaProyecto
+     */
+    public function addActivity(\chanpp\EvImBundle\Entity\Activity $activities)
+    {
+        $this->activities[] = $activities;
+
+        return $this;
+    }
+
+    /**
+     * Remove activities
+     *
+     * @param \chanpp\EvImBundle\Entity\Activity $activities
+     */
+    public function removeActivity(\chanpp\EvImBundle\Entity\Activity $activities)
+    {
+        $this->activities->removeElement($activities);
+    }
+
+    /**
+     * Add planevaluaciones
+     *
+     * @param \chanpp\EvImBundle\Entity\PlanEvaluacion $planevaluaciones
+     * @return FichaProyecto
+     */
+    public function addPlanevaluacione(\chanpp\EvImBundle\Entity\PlanEvaluacion $planevaluaciones)
+    {
+        $this->planevaluaciones[] = $planevaluaciones;
+
+        return $this;
+    }
+
+    /**
+     * Remove planevaluaciones
+     *
+     * @param \chanpp\EvImBundle\Entity\PlanEvaluacion $planevaluaciones
+     */
+    public function removePlanevaluacione(\chanpp\EvImBundle\Entity\PlanEvaluacion $planevaluaciones)
+    {
+        $this->planevaluaciones->removeElement($planevaluaciones);
+    }
+
+    /**
+     * Get planevaluaciones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPlanevaluaciones()
+    {
+        return $this->planevaluaciones;
     }
 }

@@ -112,3 +112,11 @@ chanpp_index:
 MetodoRecoleccion:
     resource: "@chanppEvImBundle/Controller/MetodoRecoleccionController.php"
     type: annotation
+
+CambiosPlanEvaluacion:
+    resource: "@chanppEvImBundle/Controller/CambiosPlanEvaluacionController.php"
+    type: annotation
+
+fixpreguntasnumbers:
+    path:      /fixpreguntasnumbers/{id}
+    defaults:  { _controller: chanppEvImBundle:PreguntaDesarrollo:fixPreguntasNumbers }

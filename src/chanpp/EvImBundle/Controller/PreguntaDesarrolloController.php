@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use chanpp\EvImBundle\Entity\PreguntaDesarrollo;
 use chanpp\EvImBundle\Form\PreguntaDesarrolloType;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * PreguntaDesarrollo controller.
  *
@@ -216,11 +216,10 @@ class PreguntaDesarrolloController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find PreguntaDesarrollo entity.');
             }
-            self::fixPreguntasNumbers($entity->getCuestionario()->getId());
             $entity->getCuestionario()->removePreguntasdesarrollo($entity);
             $em->remove($entity);
             $em->flush();
-            return $this->redirect($this->generateUrl('cuestionario_show', array('id'=> $entity->getCuestionario()->getId() ) ));
+            return $this->redirect($this->generateUrl('fixpreguntasnumbers' , array('id' => $entity->getCuestionario()->getId()) ));
         }
 
         return $this->redirect($this->generateUrl('preguntadesarrollo'));
@@ -242,72 +241,47 @@ class PreguntaDesarrolloController extends Controller
     }
 
 
-    public function fixPreguntasNumbers($id)
+    public function fixPreguntasNumbersAction($id)
     {
 
-         $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('chanppEvImBundle:Cuestionario')->find($id);
         $question_number = count($entity->getPreguntasdesarrollo()) + count($entity->getPreguntasalternativa());
         $preguntasdesarrollo = $entity->getPreguntasdesarrollo();
         $preguntasalternativa = $entity->getPreguntasalternativa();
         $counter = 1;
-        $found = false;
+        $kindasorted = new ArrayCollection();
         while($question_number >= $counter)
         {   
-            $found = false;
-            #We check all the questions for the currently needed one
-            foreach($preguntasdesarrollo as  &$pregunta)
-            {
-                if($pregunta->getNumeropregunta() == $counter)
+
+                foreach($preguntasdesarrollo as  $pregunta)
                 {
-                    $found = true;
-                }
-            }
-            foreach($preguntasalternativa as  &$pregunta)
-            {
-                if($pregunta->getNumeropregunta() == $counter)
-                {
-                     $found = true;
-                }
-            }
-            if($found)
-            {
-                $counter++;
-            }
-            else
-            {
-                #We're missing a question number, let's search for the next one, checking if it isn't the last one
-                if($counter == $question_number)
-                {
-                    #We do nothing, we're just missing the last one
-                }
-                else
-                {
-                    $newcounter = $counter+1;
-                    foreach($preguntasdesarrollo as  $pregunta)
+                    if($pregunta->getNumeropregunta() == $counter)
                     {
-                        if($pregunta->getNumeropregunta() == $newcounter)
-                        {
-                            $found = true;
-                             $pregunta->setNumeropregunta($counter);
-                             $em->persist($pregunta);
-                        }
-                    }
-                    foreach($preguntasalternativa as  $pregunta)
-                    {
-                        if($pregunta->getNumeropregunta() == $newcounter)
-                        {
-                             $found = true;
-                             $pregunta->setNumeropregunta($counter);
-                             $em->persist($pregunta);
-                        }
+                        $kindasorted[] = $pregunta;
                     }
                 }
-                 $counter++;
-            }
-            $em->persist($entity);
-            $em->flush();
+                foreach($preguntasalternativa as  $pregunta)
+                {
+                    if($pregunta->getNumeropregunta() == $counter)
+                    {
+                          $kindasorted[] = $pregunta;
+                    }
+                }
+            $counter++;
         }
+        $counter = 1;
+        #Now we iterate through the "sorted" array and fix the numbers using the counter
+        foreach($kindasorted as  $p)
+        {
+            $p->setNumeropregunta($counter);
+            $counter++;
+        }
+        
+        $em->persist($entity);
+        $em->flush();
+        return $this->redirect($this->generateUrl('cuestionario_show', array('id'=> $entity->getId() ) ));
+
     }
 }
