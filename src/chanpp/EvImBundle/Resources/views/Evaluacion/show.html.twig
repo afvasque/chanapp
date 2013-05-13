@@ -6,7 +6,7 @@
     {% if app.request.get('error') is defined %}
     <h2>{{ app.request.get('error') }}</h2>
     {% endif%}
-     <a href="{{ path('planevaluacion_show', { 'id': entity.getPlanevaluacion().id}) }}" class="btn">
+     <a href="{{ path('planevaluacion_show', { 'id': planevaluacion.getId()}) }}" class="btn">
          Volver al Plan de Evaluación
     </a>
     {# Poner if hay resultados #}
@@ -124,10 +124,11 @@
     <h4>Sub-Evaluaciones Indirectas</h4>
     {% if entity.getDone() == false%}
     <a href="{{ path('evaluacionindirecta_new', { 'evaluacion_id': entity.id }) }}" class="btn btn-success">
-     Crear Evaluación Indirecta
+     Crear Sub-Evaluación Indirecta
     </a>
     {% endif %}
-    {% if evaluacionesindirectas %}
+    {% if evaluacionesindirectas is empty%}
+    {% else %}
     <table class="table table-striped">
         <thead>
             <tr>

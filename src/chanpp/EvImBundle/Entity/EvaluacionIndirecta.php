@@ -267,28 +267,36 @@ class EvaluacionIndirecta
         #It's time to calculate all the impacts
         $impactosejes = new ArrayCollection(); 
         #We get all the questions from the Cuestionario
-        $preguntasalternativas = $this->cuestionario->getPreguntasalternativa();
+        if($this->getCuestionario())
+        {
+            $preguntasalternativas = $this->getCuestionario()->getPreguntasalternativa();
         #Now, for each eje
         for ($i = 1; $i <= 3; $i++) {
             #Check all the questions
-            $total = 0;
-            $impacted = 0;
+            $percetagebottom = 0;
+            $percetagetop = 0;
+
             $counter = 0;
+
+            $cantidadpreguntaseje = 0;
+            $totalpercentage = 0;
             foreach ($preguntasalternativas as &$pregunta) {
                 if($pregunta->getEje() == $i)
                 {
                     #We obtain all the answers linked to this question
                     $respuestas = $pregunta->getRespuestas();
-                    $total += count($respuestas);
-                    $numeropregunta = $pregunta->getNumeropregunta();
-                    #We check the answers
+                    #We need to calculate the percentage of questions that responded Sí or 4 or 5
+                    $cantidadpreguntaseje++;
+
+                    #We check the answers and calculate the percentages
                     foreach ($respuestas as &$respuesta) {
+                        $percetagebottom++;
                         if($pregunta->getTipo() == 1)
                         {
                             if($respuesta->getRespuesta() == 1)
                             {
                                 #Increase counter
-                                $impacted++;
+                                $percetagetop++;
                             } 
                         }
                         else if($pregunta->getTipo() == 2)
@@ -296,18 +304,63 @@ class EvaluacionIndirecta
                             if(($respuesta->getRespuesta() == 4) || ($respuesta->getRespuesta() == 5))
                             {
                                 #Increase counter
-                                $impacted++;
+                                $percetagetop++;
                             } 
                         }
                     }
+                    #Add to totalpercentage
+                    if($percetagebottom == 0)
+                    {
+                         $totalpercentage += 0; 
+                    }
+                    else
+                    {
+                         $totalpercentage += ($percetagetop/$percetagebottom); 
+                    }
+                                      
+
                 }
-                $counter++;
             }
-            #Calculate result, store it on the array
-            $impactosejes[] = $impacted/$total;
+            if($cantidadpreguntaseje == 0)
+            {
+                $impactoeje = 0;
+            }
+            else
+            {
+                $impactoeje = ($totalpercentage*100)/$cantidadpreguntaseje;
+            }
+            
+            if($impactoeje == 0)
+            {
+                 $impactosejes[] = "N/A";
+            }
+            else if($impactoeje<= 40)
+            {
+                #Bajo   
+                 $impactosejes[] = "Bajo";
+            }
+            else if( $impactoeje >40 && $impactoeje <= 69)
+            {
+                #Medio
+                 $impactosejes[] = "Medio";
+            }
+            else
+            {
+                #Alto
+                 $impactosejes[] = "Alto";
+            }
         }
 
         return $impactosejes;
+        }
+        else
+        {
+            $impactosejes[] = "N/A";
+            $impactosejes[] = "N/A";
+            $impactosejes[] = "N/A";
+            return $impactosejes;
+        }
+        
     }
 
     /**

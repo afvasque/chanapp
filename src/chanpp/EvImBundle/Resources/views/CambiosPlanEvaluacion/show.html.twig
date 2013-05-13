@@ -1,0 +1,24 @@
+{% extends 'chanppEvImBundle::layout.html.twig' %}
+{% block title %}Cambios Plan Evaluación{% endblock title %}
+{% block body -%}
+    <h1>Viendo cambios para Plan de Evaluación #{{ entity.getId()}}</h1>
+     <a href="{{ path('planevaluacion_show', { 'id': entity.id }) }}" class="btn" >
+            Volver a Plan de Evaluación
+    </a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Usuario</th>
+                <th>Comentario</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cambio in cambios %}
+            <tr>
+                <td></td>
+                <td>{{ cambio.getComentario() }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

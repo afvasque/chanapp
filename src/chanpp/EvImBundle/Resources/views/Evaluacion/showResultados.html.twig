@@ -36,9 +36,9 @@
         {% for ev in entity.getEvaluacionesindirectas%}
         <tr>
             <td>{{ev.getGrupoInteres}}</td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>{{ev.getImpactosejes()[0]}}</td>
+            <td>{{ev.getImpactosejes()[1]}}</td>
+            <td>{{ev.getImpactosejes()[2]}}</td>
         <tr>
         {% endfor %}
     </table>
