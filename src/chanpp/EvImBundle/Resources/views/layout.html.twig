@@ -5,6 +5,7 @@
 filter='cssrewrite' debug=false 
 'css/bootstrap.css'
 'css/bootstrap-responsive.css'
+'css/general.css'
  -%}
  	<link href="{{asset_url}}" rel="stylesheet" type="text/css"/>
  {% endstylesheets %}
@@ -12,12 +13,11 @@ filter='cssrewrite' debug=false
 
  {% block body -%}
  {% endblock %}
-
  {% block javascripts %}
  {% javascripts
 'js/bootstrap.js'
  -%}
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
  	<script src="{{asset_url}}"></script>
  {% endjavascripts %}
  {% endblock %}

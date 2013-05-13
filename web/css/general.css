@@ -1,0 +1,56 @@
+/* 
+    Document   : general
+    Created on : 13-05-2013, 01:34:10 AM
+    Author     : Cristián
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+h1
+{
+    font-size: 27px;
+    font-weight: bold;
+    /*border-bottom: 2px #F68F1E solid;*/
+    color: #F68F1E;
+}
+
+h2, label
+{
+    font-size: 15px;
+    font-weight: bold;
+    color: #414042;
+}
+
+ul, li
+{
+    list-style-type: none;
+    margin: 0px;
+}
+
+#header
+{
+    font-size: 30px;
+    text-align: center;
+    color: #414042;
+    border-bottom: 1px #414042 solid;
+    padding: 20px;
+    background-color: white;
+}
+
+#footer
+{
+    text-align: center;
+    padding: 5px;
+    border-top: 1px #414042 solid;
+    background-color: white;
+}
+
+.content
+{
+    margin-bottom: 40px;
+    margin-top: 65px;
+}

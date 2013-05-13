@@ -9,7 +9,20 @@
     </head>
     <body>
         <div class="container">
+            {% block header %}
+                <div id="header" class="navbar navbar-fixed-top">
+                    <strong>Sistema de evaluación de programas AChEE</strong>
+                </div>
+            {% endblock %}
+                <div class="content">
             {% block body %}{% endblock %}
+                </div>
+            {% block footer %}
+                <div id="footer" class="navbar navbar-fixed-bottom">
+                    <strong>Agencia Chilena de Eficiencia Energética (AChEE)</strong>
+                    <p>Monseñor Sótero Sanz n.°221. Providencia. Santiago - Chile. Email: <a href="mailto:info@acee.cl">info@acee.cl</a> / Teléfono: (56 2) 2571 2200</p>
+                </div>
+             {% endblock %}
             {% block javascripts %}{% endblock %}
         </div>
     </body>
