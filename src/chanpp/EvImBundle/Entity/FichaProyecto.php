@@ -142,7 +142,7 @@ class FichaProyecto
     protected $created_at;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $modified_at;
 
@@ -571,28 +571,6 @@ class FichaProyecto
         return $this->modified_at;
     }
 
-    /**
-     * Set duracion
-     *
-     * @param string $duracion
-     * @return FichaProyecto
-     */
-    public function setDuracion($duracion)
-    {
-        $this->duracion = $duracion;
-
-        return $this;
-    }
-
-    /**
-     * Get duracion
-     *
-     * @return string 
-     */
-    public function getDuracion()
-    {
-        return $this->duracion;
-    }
 
     /**
      * Add activities
@@ -648,5 +626,28 @@ class FichaProyecto
     public function getPlanevaluaciones()
     {
         return $this->planevaluaciones;
+    }
+
+    /**
+     * Set duracion
+     *
+     * @param string $duracion
+     * @return FichaProyecto
+     */
+    public function setDuracion($duracion)
+    {
+        $this->duracion = $duracion;
+
+        return $this;
+    }
+
+    /**
+     * Get duracion
+     *
+     * @return string 
+     */
+    public function getDuracion()
+    {
+        return $this->duracion;
     }
 }

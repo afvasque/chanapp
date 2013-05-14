@@ -1,5 +1,4 @@
-{% extends '::base.html.twig' %}
-
+{% extends 'chanppEvImBundle::layout.html.twig' %}
 {% block body -%}
     <h1>IndGestion list</h1>
 
@@ -35,11 +34,4 @@
         </tbody>
     </table>
 
-        <ul>
-        <li>
-            <a href="{{ path('indgestion_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
     {% endblock %}

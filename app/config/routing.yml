@@ -36,3 +36,7 @@ chanapp_activity:
 chanapp_ind_gestion:
     resource: "@chanppEvImBundle/Controller/IndGestionController.php"
     type: annotation
+
+chanapp_meta:
+    resource: "@chanppEvImBundle/Controller/MetaController.php"
+    type: annotation

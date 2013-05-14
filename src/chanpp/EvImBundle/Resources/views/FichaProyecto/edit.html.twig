@@ -22,6 +22,31 @@
 
         {{ form_rest(edit_form) }}   
 
+        {% if entity.getIndGestions|length>0 %}
+        <h2> Indicadores de gestión </h2>
+            <table class="table table-condensed">
+                <tr>
+                    <th>Nombre</th>
+                    <th></th>
+                </tr>
+                <tr>
+        {% for ind in entity.getIndGestions %}
+                    <tr>
+                        <td>{{ind.getNombre}}</td>
+                        <td><a href="{{ path('indgestion_edit',{'id' : ind.getId}) }}"> 
+                            Editar </a><br />
+                            <a href="{{ path('indgestion_delete',{'id' : ind.getId}) }}"> 
+                            Eliminar </a>
+                        </td>
+                    </tr>
+        {% endfor %}
+                </tr>
+            </table>
+        {% endif %}
+        <a href="{{ path('indgestion_new',{ 'ficha_proyecto_id': entity.id }) }}">
+                Agregar Indicador de gestión
+        </a>
+
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Editar Ficha de Proyecto</button>
 

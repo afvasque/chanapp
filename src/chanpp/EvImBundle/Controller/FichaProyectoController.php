@@ -47,7 +47,7 @@ class FichaProyectoController extends Controller
     public function createAction(Request $request)
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
-        if($user->getRoles()[0] == "ROLE_ADMIN" or $user->getRoles()[0] == "ROLE_PLANIFICADOR")
+        if($user->getRoles()[0] == "ROLE_SUPER_ADMIN" or $user->getRoles()[0] == "ROLE_PLANIFICADOR")
         {
             $entity  = new FichaProyecto();
             $form = $this->createForm(new FichaProyectoType(), $entity);
@@ -95,7 +95,7 @@ class FichaProyectoController extends Controller
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        if($user->getRoles()[0] == "ROLE_ADMIN" or $user->getRoles()[0] == "ROLE_PLANIFICADOR")
+        if($user->getRoles()[0] == "ROLE_SUPER_ADMIN" or $user->getRoles()[0] == "ROLE_PLANIFICADOR")
         {
             $entity = new FichaProyecto();
 
@@ -156,7 +156,7 @@ class FichaProyectoController extends Controller
     public function editAction($id)
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
-        if($user->getRoles()[0] == "ROLE_ADMIN")
+        if($user->getRoles()[0] == "ROLE_SUPER_ADMIN")
         {
             $em = $this->getDoctrine()->getManager();
 
@@ -176,9 +176,11 @@ class FichaProyectoController extends Controller
             );
         } else
         {
-            return $this->redirect($this->generateUrl('fichaproyecto_show', array('id' => $id)));
+            return $user->getRoles()[0];
+            //return $this->redirect($this->generateUrl('fichaproyecto_show', array('id' => $id)));
         }
     }
+
 
     /**
      * Edits an existing FichaProyecto entity.
@@ -295,4 +297,6 @@ class FichaProyectoController extends Controller
             ->getForm()
         ;
     }
+
+    
 }

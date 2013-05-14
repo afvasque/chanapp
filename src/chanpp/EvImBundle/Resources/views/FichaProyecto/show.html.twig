@@ -80,7 +80,7 @@
         </tr>
         <tr>
             <td>
-                {{indgest.nombre}}
+                <a href="{{ path('indgestion_show', { 'id': indgest.id }) }}">{{indgest.nombre}}</a>
             </td>
             <td>
                 {% for meta in indgest.metas %}
