@@ -53,6 +53,11 @@ class PlanEvaluacionController extends Controller
             $em = $this->getDoctrine()->getManager();
              #Get the FichaProyecto and link it
             $ficha  = $em->getRepository('chanppEvImBundle:FichaProyecto')->find($fichaproyectoid);
+            #If the ficha already has a PlanEvaluación, redirect to showficha
+            if($ficha->getPlanevaluaciones())
+            {
+                return $this->redirect($this->generateUrl('fichaproyecto_show', array('id' => $ficha->getId())));
+            }
             $entity-> setFichaproyecto($ficha);
             $em->persist($entity);
             $em->flush();
@@ -77,7 +82,6 @@ class PlanEvaluacionController extends Controller
     {
         $entity = new PlanEvaluacion();
         $form   = $this->createForm(new PlanEvaluacionType(), $entity);
-
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
@@ -166,10 +170,9 @@ class PlanEvaluacionController extends Controller
             $cambio = new CambiosPlanEvaluacion();
             $cambio->setComentario($comentario);
             $cambio->setPlanevaluacion($entity);
-            #$usr= $this->get('security.context')->getToken()->getUser();
-            #$name = $usr->getUsername();
-            $name = "";
+            $name = $this->container->get('security.context')->getToken()->getUser();
             $cambio->setUsername($name);
+            $cambio->setFechahoracambio(new \DateTime(date('Y-m-d H:i:s')));
             $entity->addCambio($cambio);
             $em->persist($cambio);
             $em->persist($entity);

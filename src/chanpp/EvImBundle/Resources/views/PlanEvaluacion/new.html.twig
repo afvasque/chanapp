@@ -2,19 +2,13 @@
 
 {% block body -%}
     <h1>Creando Plan de Evaluación</h1>
-
+     <a href="{{ path('fichaproyecto_show', {'id':app.request.get('fichaproyecto_id')} ) }}" class="btn">
+            Volver a la Ficha de Proyecto
+    </a>    
     <form action="{{ path('planevaluacion_create', { 'fichaproyecto_id':app.request.get('fichaproyecto_id') }) }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
         <p>
-            <button type="submit">Crear</button>
+            <button type="submit" class="btn btn-success">Crear</button>
         </p>
     </form>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('planevaluacion') }}">
-            Volver a la lista
-        </a>
-    </li>
-</ul>
 {% endblock %}

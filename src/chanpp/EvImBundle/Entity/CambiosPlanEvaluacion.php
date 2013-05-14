@@ -42,6 +42,11 @@ class CambiosPlanEvaluacion
     private $username;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $fechahoracambio;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -118,5 +123,28 @@ class CambiosPlanEvaluacion
     public function getUsername()
     {
         return $this->username;
+    }
+
+    /**
+     * Set fechahoracambio
+     *
+     * @param \DateTime $fechahoracambio
+     * @return CambiosPlanEvaluacion
+     */
+    public function setFechahoracambio($fechahoracambio)
+    {
+        $this->fechahoracambio = $fechahoracambio;
+
+        return $this;
+    }
+
+    /**
+     * Get fechahoracambio
+     *
+     * @return \DateTime 
+     */
+    public function getFechahoracambio()
+    {
+        return $this->fechahoracambio;
     }
 }

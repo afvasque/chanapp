@@ -2,10 +2,10 @@
 
 {% block body -%}
     <h1>Crear Método de Recolección</h1>
-     <a href="{{ path('metodorecoleccion') }}" class="btn">
-            Volver a lista de métodos de recolección
-    </a>
-    <form action="{{ path('metodorecoleccion_create') }}" method="post" {{ form_enctype(form) }}>
+     <a href="{{ path('metodorecoleccion' , { 'original_redirect': app.request.get('original_redirect') , 'original_id': app.request.get('original_id')} ) }}" class="btn">
+            Volver a lista de métodos de recolección de datos
+        </a>
+    <form action="{{ path('metodorecoleccion_create', {'original_redirect': app.request.get('original_redirect') , 'original_id': app.request.get('original_id')}) }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
         <p>
             <button type="submit" class="btn btn-success">Crear</button>

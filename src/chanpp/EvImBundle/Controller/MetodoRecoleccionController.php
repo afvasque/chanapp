@@ -52,8 +52,9 @@ class MetodoRecoleccionController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('metodorecoleccion_show', array('id' => $entity->getId())));
+            $original_redirect=  $request->query->get('original_redirect');
+            $original_id=  $request->query->get('original_id');
+            return $this->redirect($this->generateUrl('metodorecoleccion', array('original_redirect' => $original_redirect, 'original_id' => $original_id)));
         }
 
         return array(
@@ -157,7 +158,10 @@ class MetodoRecoleccionController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('metodorecoleccion'));
+            $original_redirect=  $request->query->get('original_redirect');
+            $original_id=  $request->query->get('original_id');
+            return $this->redirect($this->generateUrl('metodorecoleccion', array('original_redirect' => $original_redirect, 'original_id' => $original_id)));
+        
         }
 
         return array(
@@ -175,6 +179,7 @@ class MetodoRecoleccionController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
+        return $this->redirect($this->generateUrl('chanpp_index'));
         $form = $this->createDeleteForm($id);
         $form->bind($request);
 

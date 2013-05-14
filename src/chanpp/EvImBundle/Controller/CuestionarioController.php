@@ -389,14 +389,14 @@ class CuestionarioController extends Controller
             $em->flush();
             return $this->render(
             "chanppEvImBundle:Cuestionario:preview.html.twig",
-                array('error' => "Orden de preguntas actualizado con éxito", 'cuestionario'=>$entity));
+                array('error' => "Orden de preguntas actualizado con éxito", 'entity'=>$entity));
         }   
         else
         {
             #Dupes
             return $this->render(
             "chanppEvImBundle:Cuestionario:preview.html.twig",
-                array('error' => "Error: Más de una pregunta tiene el mismo número.", 'cuestionario'=>$entity));
+                array('error' => "Error: Más de una pregunta tiene el mismo número.", 'entity'=>$entity));
 
         }
     }

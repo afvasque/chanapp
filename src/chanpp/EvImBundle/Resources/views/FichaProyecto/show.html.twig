@@ -106,11 +106,9 @@
     </table>
         {% endfor %}
         <hr>
-    <h4>Planes de Evaluación</h4>
-     <a href="{{ path('planevaluacion_new', { 'fichaproyecto_id': entity.id }) }}" class="btn btn-success">
-                Agregar Plan de Evaluación
-            </a>
-     <table class="table table-striped">
+    <h4>Plan de Evaluación</h4>
+    {% if planevaluaciones|length > 0 %}
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Objetivos</th>
@@ -138,7 +136,11 @@ class="btn btn-primary">Ver</a>
         {% endfor %}
         </tbody>
     </table>
-    
+    {% else %}
+    <a href="{{ path('planevaluacion_new', { 'fichaproyecto_id': entity.id }) }}" class="btn btn-success">
+                Agregar Plan de Evaluación
+    </a>
+    {% endif %}
     {% if entity.getNombreEditor %}
     <p><i>Editado por {{entity.getNombreEditor}}</i></p>
     {% endif %}

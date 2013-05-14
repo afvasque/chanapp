@@ -1,10 +1,19 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>Métodos de Recolección</h1>
-     <a href="{{ path('metodorecoleccion_new') }}" class="btn btn-success">
+    <h1>Métodos de Recolección de Datos</h1>
+    <a href="{{ path('metodorecoleccion_new', {'original_redirect' : app.request.get('original_redirect') , 'original_id': app.request.get('original_id')}) }}" class="btn btn-success">
                 Crear Nuevo Método
     </a>
+    {% if app.request.get('original_redirect') == 1 %}
+        <a href="{{ path('evaluacionindirecta_new', { 'evaluacion_id': app.request.get('original_id') }) }}" class="btn">
+            Volver a creación de Sub-Evaluación Indirecta
+        </a>
+    {% elseif app.request.get('original_redirect') == 2 %}
+        <a href="{{ path('evaluacionindirecta_edit', { 'id': app.request.get('original_id') }) }}" class="btn">
+            Volver a edición de Sub-Evaluación Indirecta
+        </a>
+    {% endif %}
     <table class="table table-striped">
         <thead>
             <tr>
@@ -18,8 +27,7 @@
                 <td>{{ entity.nombre }}</td>
                 <td>
                 <ul>
-                 <a href="{{ path('metodorecoleccion_show', { 'id': entity.id }) }}" class="btn btn-primary">Ver</a>
-                 <a href="{{ path('metodorecoleccion_edit', { 'id': entity.id }) }}" class="btn btn-warning">Editar</a>
+                 <a href="{{ path('metodorecoleccion_edit', { 'id': entity.id , 'original_redirect' : app.request.get('original_redirect') , 'original_id': app.request.get('original_id')}) }}" class="btn btn-warning">Editar</a>
                 </ul>
                 </td>
             </tr>

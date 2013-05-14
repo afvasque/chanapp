@@ -50,6 +50,11 @@
                      <a href="{{ path('preguntadesarrollo_edit', { 'id': pregunta.id }) }}" class="btn btn-warning">
                     Editar Pregunta
                       </a>
+                        <form action="{{ path('preguntadesarrollo_delete', { 'id': pregunta.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminar la pregunta?')">Eliminar</button>
+        </form>
                      </li>
                 {% elseif pregunta.getTipo() == 1 %}
                     <input type="radio" name="respuesta[{{numero_pregunta}}]" value="1">Sí<br>
@@ -58,6 +63,11 @@
                     <a href="{{ path('preguntaalternativa_edit', { 'id': pregunta.id }) }}" class="btn btn-warning">
                     Editar Pregunta
                     </a>
+                        <form action="{{ path('preguntaalternativa_delete', { 'id': pregunta.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminar la pregunta?')">Eliminar</button>
+        </form>
                      </li>
                 {% elseif pregunta.getTipo() == 2 %}
                     <input type="radio" name="respuesta[{{numero_pregunta}}]" value="1">1<br>
@@ -69,6 +79,11 @@
                     <a href="{{ path('preguntaalternativa_edit', { 'id': pregunta.id }) }}" class="btn btn-warning">
                     Editar Pregunta
                     </a>
+                    <form action="{{ path('preguntaalternativa_delete', { 'id': pregunta.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminar la pregunta?')">Eliminar</button>
+        </form>
                      </li>
                 {% elseif pregunta.getTipo() == 3 %}
                     {% set numero_alternativa = 0 %}
@@ -80,6 +95,11 @@
                     <a href="{{ path('preguntaalternativa_edit', { 'id': pregunta.id }) }}" class="btn btn-warning">
                     Editar Pregunta
                     </a>
+                    <form action="{{ path('preguntaalternativa_delete', { 'id': pregunta.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminar la pregunta?')">Eliminar</button>
+        </form>
                      </li>
                 {% endif %}
             {% endfor %}
@@ -131,5 +151,7 @@
         {% else %}
             <h1>La evaluación padre del cuestionario ha sido cerrada, por lo que el cuestionario no puede seguir siendo editado.</h1>
         {% endif %}
+    {% else %}
+        <a href="{{ path('cuestionario_show', { 'id': entity.id }) }}" class="btn">Volver al cuestionario</a>
     {% endif %}   
 {% endblock %}
