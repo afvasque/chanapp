@@ -1,30 +1,31 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>FichaProyecto list</h1>
-
+    <h1>Viendo Fichas de Proyectos</h1>
+    <a href="{{ path('index_show')}}" class="btn">
+            Volver a la página de inicio
+        </a><a href="{{ path('fichaproyecto_new') }}" class="btn btn-success">
+                Crear Ficha Proyecto
+    </a>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Area_accion</th>
-                <th>Linea_accion</th>
+                <th>Área de acción</th>
+                <th>Línea de acción</th>
                 <th>Nombre</th>
                 <th>Jefe</th>
-                <th>Duracion</th>
-                <th>Diagnostico_previo</th>
-                <th>Obj_general</th>
-                <th>Objs_especificos</th>
-                <th>Descripcion</th>
-                <th>Desc_causales</th>
-                <th>Variables_causales</th>
-                <th>Actions</th>
+                <th>Duración</th>
+                <th>Diágnostico previo</th>
+                <th>Objetivo general</th>
+                <th>Objetivos específicos</th>
+                <th>Descripción</th>
+                <th>Descripción de las relaciones causales</th>
+                <th>Variables relevantes de las relaciones causales</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('fichaproyecto_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.areaaccion }}</td>
                 <td>{{ entity.lineaaccion }}</td>
                 <td>{{ entity.nombre }}</td>
@@ -38,24 +39,12 @@
                 <td>{{ entity.variablescausales }}</td>
                 <td>
                 <ul>
-                    <li>
-                        <a href="{{ path('fichaproyecto_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('fichaproyecto_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
+                        <a href="{{ path('fichaproyecto_show', { 'id': entity.id }) }}" class="btn btn-primary"  >Ver</a><br><br>
+                        <a href="{{ path('fichaproyecto_edit', { 'id': entity.id }) }}" class="btn btn-warning">Editar</a>
                 </ul>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('fichaproyecto_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
     {% endblock %}

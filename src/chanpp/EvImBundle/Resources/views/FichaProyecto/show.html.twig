@@ -2,15 +2,25 @@
 
 {% block body -%}
     <h1>Ficha Proyecto {{entity.id}}</h1>
-
+    <a href="{{ path('fichaproyecto') }}" class="btn" >
+            Volver a Fichas de Proyectos
+    </a>
+    <a href="{{ path('fichaproyecto_edit', { 'id': entity.id }) }}" class="btn btn-warning">
+            Editar Ficha Proyecto
+    </a><br><br>       
+    <form action="{{ path('fichaproyecto_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminar?')">Eliminar</button>
+        </form>
     <table class="table">
         <tbody>
             <tr>
-                <th>Area_accion</th>
+                <th>Área de acción</th>
                 <td>{{ entity.areaaccion }}</td>
             </tr>
             <tr>
-                <th>Linea_accion</th>
+                <th>Línea de acción</th>
                 <td>{{ entity.lineaaccion }}</td>
             </tr>
             <tr>
@@ -22,37 +32,37 @@
                 <td>{{ entity.jefe }}</td>
             </tr>
             <tr>
-                <th>Duracion</th>
+                <th>Duración</th>
                 <td>{{ entity.duracion }}</td>
             </tr>
             <tr>
-                <th>Diagnostico_previo</th>
+                <th>Diágnostico previo</th>
                 <td>{{ entity.diagnosticoprevio }}</td>
             </tr>
             <tr>
-                <th>Obj_general</th>
+                <th>Objetivo general</th>
                 <td>{{ entity.objgeneral }}</td>
             </tr>
             <tr>
-                <th>Objs_especificos</th>
+                <th>Objetivos específicos</th>
                 <td>{{ entity.objsespecificos }}</td>
             </tr>
             <tr>
-                <th>Descripcion</th>
+                <th>Descripción</th>
                 <td>{{ entity.descripcion }}</td>
             </tr>
             <tr>
-                <th>Desc_causales</th>
+                <th>Descripción de las relaciones causales</th>
                 <td>{{ entity.desccausales }}</td>
             </tr>
             <tr>
-                <th>Variables_causales</th>
+                <th>Variables relevantes de las relaciones causales</th>
                 <td>{{ entity.variablescausales }}</td>
             </tr>            
         </tbody>
     </table>
 
-    <h2>Actividades asociadas</h2>
+    <h4>Actividades asociadas</h4>
 
     <table class="table table-condensed">
         <tr>
@@ -69,10 +79,10 @@
     {% endfor %}
         </table>
 
-    <h2>Indicadores de gestión asociados</h2>        
+    <h4>Indicadores de gestión asociados</h4>        
     
         {% for indgest in entity.getIndGestions %}
-    <table class="table table-condensed">
+    <table class="table table-striped">
         <tr>
             <th>Indicador</th>
             <th>{{indgest.mesDeadline}} {{indgest.anoDeadline}} </th>
@@ -95,34 +105,11 @@
         </tr>
     </table>
         {% endfor %}
-
-    <div class="form-actions">
-        
-        <a href="{{ path('fichaproyecto') }}" class="btn btn-primary">
-            Volver a Proyectos
-        </a>
-        <a href="{{ path('fichaproyecto_edit', { 'id': entity.id }) }}" class="btn">
-            Editar Ficha Proyecto
-        </a>        
-
-    </div>
-    <form action="{{ path('fichaproyecto_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit" class="btn btn-danger">Eliminar Ficha Proyecto</button>
-        </form>
-   <ul>
-        <li>
-            {# app/Resources/views/base.html.twig
-                {% render 'chanppEvI' with { 'entity': entity } %} } #}
-
-            <a href="{{ path('planevaluacion_new', { 'fichaproyecto_id': entity.id }) }}">
+        <hr>
+    <h4>Planes de Evaluación</h4>
+     <a href="{{ path('planevaluacion_new', { 'fichaproyecto_id': entity.id }) }}" class="btn btn-success">
                 Agregar Plan de Evaluación
-            </a> 
-        </li>
-    </ul>
-
-    <h2>Planes de Evaluación</h2>
+            </a>
      <table class="table table-striped">
         <thead>
             <tr>
@@ -142,12 +129,9 @@
                 <td>{{ entity.instanciasPlazo }}</td>
                 <td>
                 <ul>
-                    <li>
-                        <a href="{{ path('planevaluacion_show', { 'id': entity.id }) }}">Ver</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('planevaluacion_edit', { 'id': entity.id }) }}">Editar</a>
-                    </li>
+                    <a href="{{ path('planevaluacion_show', { 'id': entity.id }) }}" 
+class="btn btn-primary">Ver</a>
+                     <a href="{{ path('planevaluacion_edit', { 'id': entity.id }) }}" class="btn btn-warning">Editar</a>
                 </ul>
                 </td>
             </tr>

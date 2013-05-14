@@ -27,7 +27,7 @@
         <form action="{{ path('evaluacion_delete', { 'id': entity.id }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
-            <button type="submit" class="btn btn-danger">Eliminar Evaluación</button>
+            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminar?')">Eliminar Evaluación</button>
         </form>
      {% endif %}
     {% endif %}
