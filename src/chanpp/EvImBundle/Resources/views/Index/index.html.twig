@@ -2,25 +2,37 @@
 
 {% block body -%}
 
-<h1> Página de inicio </h1>
-
-	{% if app.user %}
+    <h2> Bienvenido(a) a la Plataforma de Gestión de la Metodología para la medición y evaluación de impacto de programas de la AChEE </h2>
+    <p>
+        Esta plataforma permite:
+    </p>
+    <ul class="lista-plataforma">
+        <li>Efectuar el seguimiento de programas de la AChEE.</li>
+        <li>Facilitar la evaluación de los programas de la AChEE.</li>
+    </ul>
+    <h2>Funcionamiento de la plataforma</h2>
+    <p>El sistema se compone de 3 etapas principales para la evaluación del impacto de los programas de Eficiencia Energética:</p>
+    <ul class="lista-plataforma">
+        <li>Ficha del programa</li>
+        <li>Plan de Evaluación</li>
+        <li>Resultados </li> 
+    </ul>
+    {% if app.user %}
+    <a href="{{ path('fichaproyecto') }}" class="btn btn-primary">
+        Ver Fichas de Proyectos
+    </a>
+    <a href="{{ path('resultados_all_show') }}" class="btn btn-primary">
+        Ver Resultados Evaluaciones
+    </a>
     <a href="{{ path('fos_user_security_logout') }}" class="btn btn-primary">
         Cerrar Sesión
     </a>
     {% else %}
+    <p>Puede ingresar a éstos módulos registrándose a continuación:</p>
     <a href="{{ path('fos_user_security_login') }}" class="btn btn-primary">
         Iniciar Sesión
     </a>
     {% endif %}
-
-    <a href="{{ path('fichaproyecto') }}" class="btn btn-primary">
-        Ver Fichas de Proyectos
-    </a>
-
-    <a href="{{ path('resultados_all_show') }}" class="btn btn-primary">
-        Ver Resultados Evaluaciones
-    </a>
 
 
     {% if is_granted("ROLE_ADMIN") %}
