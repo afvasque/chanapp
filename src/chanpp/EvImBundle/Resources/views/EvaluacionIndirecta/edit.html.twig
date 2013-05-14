@@ -5,7 +5,7 @@
     <h1>Editar Sub-Evaluación Indirecta</h1>
      <a href="{{ path('evaluacion_show', { 'id': entity.getEvaluacion().id}) }}" class="btn">
             Volver a evaluación
-        </a>
+        </a><br><br>
         <form action="{{ path('evaluacionindirecta_delete', { 'id': entity.id }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
