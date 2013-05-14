@@ -224,11 +224,12 @@ class PreguntaDesarrolloController extends Controller
             if($entity->getCuestionario())
             {
                 $entity->getCuestionario()->removePreguntasdesarrollo($entity);
-            $em->remove($entity);
-            $em->flush();
-            return $this->redirect($this->generateUrl('fixpreguntasnumbers' , array('id' => $entity->getCuestionario()->getId()) ));
+                $em->remove($entity);
+                $em->flush();
+                return $this->redirect($this->generateUrl('fixpreguntasnumbers' , array('id' => $entity->getCuestionario()->getId()) ));
             }
-            else{
+            else
+            {
                 $cuestionario_redirect = $request->query->get('cuestionario_redirect_id');
                 $hijas = $entity->getPreguntashijas();
                 foreach($hijas as  $h)
@@ -267,16 +268,31 @@ class PreguntaDesarrolloController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('chanppEvImBundle:Cuestionario')->find($id);
         $question_number = count($entity->getPreguntasdesarrollo()) + count($entity->getPreguntasalternativa());
         $preguntasdesarrollo = $entity->getPreguntasdesarrollo();
         $preguntasalternativa = $entity->getPreguntasalternativa();
+        
         $counter = 1;
-        $kindasorted = new ArrayCollection();
-        while($question_number >= $counter)
+        $kindasorted = array();
+        
+        //Preguntas de desarrollo
+        foreach($preguntasdesarrollo as  $pregunta)
+        {
+            $kindasorted[$pregunta->getNumeropregunta()] = $pregunta;
+        }
+        
+        //Preguntas de alternativas
+        foreach($preguntasalternativa as  $pregunta)
+        {
+            $kindasorted[$pregunta->getNumeropregunta()] = $pregunta;
+        }
+        
+        //Las ordenamos por su indice
+        ksort($kindasorted);
+        
+        /*while($question_number >= $counter)
         {   
-
                 foreach($preguntasdesarrollo as  $pregunta)
                 {
                     if($pregunta->getNumeropregunta() == $counter)
@@ -293,12 +309,15 @@ class PreguntaDesarrolloController extends Controller
                 }
             $counter++;
         }
-        $counter = 1;
+        */
+        
+        $nuevoindice = 1;
         #Now we iterate through the "sorted" array and fix the numbers using the counter
         foreach($kindasorted as  $p)
         {
-            $p->setNumeropregunta($counter);
-            $counter++;
+            $p->setNumeropregunta($nuevoindice);
+            $em->persist($p);
+            $nuevoindice++;
         }
         
         $em->persist($entity);
