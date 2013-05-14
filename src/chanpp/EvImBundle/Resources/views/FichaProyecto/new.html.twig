@@ -3,7 +3,9 @@
 {% block body -%}
 
     <h1>Crear Ficha de Proyecto</h1>
-
+    <a href="{{ path('fichaproyecto') }}" class="btn">
+            Volver a Fichas de Proyectos
+    </a>
     <form action="{{ path('fichaproyecto_create') }}" method="post" {{ form_enctype(form) }}>
         {{ form_row(form.area_accion) }}
         {{ form_row(form.linea_accion) }}
@@ -21,25 +23,17 @@
         {{ form_rest(form) }}   
 
         <p>
-            <button type="submit">Create</button>
+            <button type="submit" class="btn btn-success">Crear</button>
         </p>
     </form>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('fichaproyecto') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
 {% block javascript %}
 
         <script type="text/javascript">
             var collectionHolder = $('div#chanpp_evimbundle_fichaproyectotype_activities');
-            var $addTagLink = $('<a href="#" class="add_tag_link">Agregar una actividad</a>');
+            var $addTagLink = $('<a href="#" class="add_tag_link" class="btn btn-success">Agregar una actividad</a>');
             var indexNo = 4;
             var $newFormDiv = $("<div id=borrar_actividad></div>");
-            var $removeFormA = $('<a href="#">Borrar esta actividad</a>');
+            var $removeFormA = $('<a href="#" class="btn btn-success">Borrar esta actividad</a>');
         </script>
 
     {% javascripts 

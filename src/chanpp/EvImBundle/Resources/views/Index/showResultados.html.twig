@@ -20,7 +20,7 @@
             <th>Capacidad movilizadora</th>
         </thead>
         {% for fc in ficha_proyectos%}
-            {% for pev in fc.getPlaneevaluaciones%}
+            {% for pev in fc.getPlanevaluaciones%}
                 {% for ev in pev.getEvaluaciones%}
                     <tr>
                         <td><a href="{{ path('fichaproyecto_show', { 'id': fc.id }) }}">
