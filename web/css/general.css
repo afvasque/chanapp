@@ -125,3 +125,30 @@ p
 {
     margin: 1em 0em;
 }
+
+.login-centered
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: 350px;
+}
+
+.login-centered label[for=remember_me]
+{ 
+    display: inline-block;
+}
+
+.login-centered input[type='password'] 
+{ 
+    display: block;
+}
+.login-centered input[type='checkbox'] 
+{ 
+    float: none;
+    margin: 0px;
+}
+.login-centered #_submit 
+{ 
+    display: block;
+    float: none;
+}

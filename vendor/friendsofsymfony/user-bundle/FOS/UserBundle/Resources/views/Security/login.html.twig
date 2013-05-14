@@ -2,45 +2,23 @@
 
 {% trans_default_domain 'FOSUserBundle' %}
 
+{% block fos_user_content %}
+{% if error %}
+    <div>{{ error|trans }}</div>
+{% endif %}
 
-	{% block fos_user_content %}
+<form action="{{ path("fos_user_security_check") }}" method="post">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
-	<div class="row">
-        <div class="span12 offset3">
-        <h1>Inciar sesión</h1>
+    <label for="username">{{ 'security.login.username'|trans }}</label>
+    <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
 
-	{% if error %}
-	    <div>{{ error|trans }}</div>
-	{% endif %}
+    <label for="password">{{ 'security.login.password'|trans }}</label>
+    <input type="password" id="password" name="_password" required="required" />
 
-			<form action="{{ path("fos_user_security_check") }}" method="post" class="form-horizontal">
-				<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-				    
-			    <div class="control-group">
-				    <label for="username" class="control-label">{{ 'security.login.username'|trans }}</label>
-				    <div class="controls">
-				    	<input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
-				    </div>
-				</div>
-				<div class="control-group">
-				    <label for="password" class="control-label">{{ 'security.login.password'|trans }}</label>
-				    <div class="controls">
-				    	<input type="password" id="password" name="_password" required="required" />
-				    </div>
-				</div>
-				<div class="control-group">
-				    <div class="controls">
-				    	<label for="remember_me" class="checkbox">{{ 'security.login.remember_me'|trans }}
-				    	<input type="checkbox" id="remember_me" name="_remember_me" value="on" /></label>
-				    </div>
-				</div>
+    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+    <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
 
-				<div class="control-group">
-				    <div class="controls">
-				    	<input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
-				    </div>
-				</div>
-			</form>
-		</div>
-	</div>
-	{% endblock fos_user_content %}
+    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+</form>
+{% endblock fos_user_content %}
