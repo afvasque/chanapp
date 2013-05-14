@@ -21,7 +21,8 @@
     {% endif %}
     
     {% if entity.getDone() == false%}
-    <a href="{{ path('evaluacion_mark_done', { 'id': entity.id }) }}" class="btn btn-warning">
+    <a href="{{ path('evaluacion_mark_done', { 'id': entity.id }) }}" class="btn btn-warning" 
+onclick="return confirm('¿Seguro que desea marcar la evaluación como lista? Esta acción es irreversible.')">
      Marcar como lista
     </a><br><br>{% if entity.getDone() == false%}
         <form action="{{ path('evaluacion_delete', { 'id': entity.id }) }}" method="post">

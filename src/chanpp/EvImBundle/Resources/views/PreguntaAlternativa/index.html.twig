@@ -1,34 +1,64 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>PreguntaAlternativa list</h1>
-
+    <h1>Preguntas Sugeridas</h1>
+    <a href="{{ path('cuestionario_show', { 'id': app.request.get('cuestionario_redirect_id') }) }}" class="btn">Volver al Cuestionario</a>
+    <a href="{{ path('preguntadesarrollo_new', { 'cuestionario_id': 0, 'pregunta_numero': 0,  'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id') }) }}" class="btn btn-success">
+                Agregar Pregunta Desarrollo a las Sugeridas
+            </a>
+            <a href="{{ path('preguntaalternativa_new', { 'cuestionario_id': 0, 'pregunta_tipo': 1 , 'pregunta_numero': 0, 'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id')}) }}" class="btn btn-success">
+                Agregar Pregunta Alternativa Sí o No a las Sugeridas
+            </a><br><br>
+            <a href="{{ path('preguntaalternativa_new', { 'cuestionario_id': 0, 'pregunta_tipo': 2 , 'pregunta_numero': 0, 'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id')}) }}" class="btn btn-success">
+                Agregar Pregunta Alternativa Escala 1 a 5 a las Sugeridas
+            </a>
+            <hr>
+            <form action="{{ path('preguntaalternativa_new') }}" method="get">
+            <input type="hidden" name="cuestionario_id" value="{{ 0}}">
+            <input type="hidden" name="pregunta_tipo" value="3">
+            <input type="hidden" name="pregunta_numero" value="{{ 0}}">
+            <input type="hidden" name="cuestionario_redirect_id" value="{{app.request.get('cuestionario_redirect_id')}}">
+            <label for="numero_alternativas">Número de alternativas:</label> 
+            <input type="text" name="numero_alternativas" required>
+            <p>
+            <button type="submit" class="btn btn-success">Agregar Pregunta con alternativas personalizadas a las Sugeridas</button>
+             </p>
+            </form>            
+            <hr>
+    <h3>Preguntas Alternativas Sugeridas</h3>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Enunciado</th>
                 <th>Tipo</th>
                 <th>Eje</th>
-                <th>Numeropregunta</th>
-                <th>Actions</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('preguntaalternativa_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.enunciado }}</td>
-                <td>{{ entity.tipo }}</td>
-                <td>{{ entity.eje }}</td>
-                <td>{{ entity.numeropregunta }}</td>
+                <td>
+                {% if entity.getTipo() == 1 %}
+                Alternativa Sí o No
+                {% elseif entity.getTipo() == 2 %} 
+                Alternativa Evaluación 1 a 5
+                {% elseif entity.getTipo() == 3 %}
+                Alternativa con alternativas personalizadas
+                {% endif %}</td>
+                <td>
+                {% if entity.eje == 1 %}
+                Presencia
+                {% elseif entity.eje == 2 %} 
+                Valoración
+                {% elseif entity.eje == 3 %}
+                Capacidad Movilizadora
+                {% endif %}</td>
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('preguntaalternativa_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('preguntaalternativa_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('preguntaalternativa_edit', { 'id': entity.id, 'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id') }) }}" class="btn btn-warning">Editar</a>
                     </li>
                 </ul>
                 </td>
@@ -36,12 +66,41 @@
         {% endfor %}
         </tbody>
     </table>
-
+    <br>
+    <h3>Preguntas Desarrollo Sugeridas</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Enunciado</th>
+                <th>Eje</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in desarrollo %}
+            <tr>
+                <td>{{ entity.enunciado }}</td>
+                <td>{% if entity.eje == 1 %}
+                Presencia
+                {% elseif entity.eje == 2 %} 
+                Valoración
+                {% elseif entity.eje == 3 %}
+                Capacidad Movilizadora
+                {% endif %}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('preguntadesarrollo_edit', { 'id': entity.id, 'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id') }) }}" class="btn btn-warning">Editar</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
         <ul>
         <li>
-            <a href="{{ path('preguntaalternativa_new') }}">
-                Create a new entry
-            </a>
+            
         </li>
     </ul>
     {% endblock %}

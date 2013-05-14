@@ -11,7 +11,10 @@
         <div class="container">
             {% block header %}
                 <div id="header" class="navbar navbar-fixed-top">
-                    <strong>Sistema de evaluación de programas AChEE</strong>
+                    <div class="container">
+                        <a href="http://www.acee.cl"><img id="logo-achee" src="{{ asset('img/logo.png') }}" alt="logo"/></a>
+                        <a href="{{ app.request.getBaseURL() }}"><h1>Sistema de evaluación de programas AChEE</h1></a>
+                    </div>
                 </div>
             {% endblock %}
                 <div class="content">

@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use chanpp\EvImBundle\Entity\PreguntaDesarrollo;
+use chanpp\EvImBundle\Entity\PreguntaAlternativa;
 use chanpp\EvImBundle\Form\PreguntaDesarrolloType;
 use Doctrine\Common\Collections\ArrayCollection;
 /**
@@ -50,18 +51,20 @@ class PreguntaDesarrolloController extends Controller
         $cuestionarioid =  $request->query->get('cuestionario_id');
         #Get other variables from GET
         $preguntanumero=  $request->query->get('pregunta_numero');
+
         $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             if($cuestionarioid == 0)
             {
+                $cuestionario_redirect = $request->query->get('cuestionario_redirect_id');
                 #We need to create a non-linked question, which is a repeating one
                 $entity->setTipo(0);
                 $entity->setNumeropregunta(0);
                 $em->persist($entity);
                 $em->flush();
-                return $this->redirect($this->generateUrl('preguntadesarrollo_show', array('id' => $entity->getId())));
+                 return $this->redirect($this->generateUrl('preguntaalternativa', array('cuestionario_redirect_id' => $cuestionario_redirect)));
             } 
             else
             {
@@ -80,8 +83,7 @@ class PreguntaDesarrolloController extends Controller
                     $em->persist($cuestionario);
                     $em->persist($entity);
                     $em->flush();
-                    return $this->redirect($this->generateUrl('cuestionario_show', array('id' => $cuestionarioid)));
-           
+                    return $this->redirect($this->generateUrl('cuestionario_preview', array('id' => $cuestionarioid,'editoption' => 1 ))); 
                 }
             }
 
@@ -173,7 +175,7 @@ class PreguntaDesarrolloController extends Controller
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-
+         $cuestionario_redirect = $request->query->get('cuestionario_redirect_id');
         $entity = $em->getRepository('chanppEvImBundle:PreguntaDesarrollo')->find($id);
 
         if (!$entity) {
@@ -187,8 +189,11 @@ class PreguntaDesarrolloController extends Controller
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('preguntadesarrollo_edit', array('id' => $id)));
+            if($cuestionario_redirect)
+            {
+                return $this->redirect($this->generateUrl('preguntaalternativa', array('cuestionario_redirect_id' => $cuestionario_redirect)));
+            }
+            return $this->redirect($this->generateUrl('preguntadesarrollo_show', array('id' => $id)));
         }
 
         return array(
@@ -216,11 +221,28 @@ class PreguntaDesarrolloController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find PreguntaDesarrollo entity.');
             }
-            $entity->getCuestionario()->removePreguntasdesarrollo($entity);
+            if($entity->getCuestionario())
+            {
+                $entity->getCuestionario()->removePreguntasdesarrollo($entity);
             $em->remove($entity);
             $em->flush();
             return $this->redirect($this->generateUrl('fixpreguntasnumbers' , array('id' => $entity->getCuestionario()->getId()) ));
-        }
+            }
+            else{
+                $cuestionario_redirect = $request->query->get('cuestionario_redirect_id');
+                $hijas = $entity->getPreguntashijas();
+                foreach($hijas as  $h)
+                {
+                    $h->setPreguntapadre(null);
+                    $entity->removePreguntashija($h);
+                    $em->persist($h);
+                }
+                 $em->remove($entity);
+                 $em->flush();
+                 return $this->redirect($this->generateUrl('preguntaalternativa', array('cuestionario_redirect_id' => $cuestionario_redirect)));
+            
+            }
+          }
 
         return $this->redirect($this->generateUrl('preguntadesarrollo'));
     }
@@ -281,7 +303,6 @@ class PreguntaDesarrolloController extends Controller
         
         $em->persist($entity);
         $em->flush();
-        return $this->redirect($this->generateUrl('cuestionario_show', array('id'=> $entity->getId() ) ));
-
-    }
+        return $this->redirect($this->generateUrl('cuestionario_preview', array('id'=> $entity->getId() ,'editoption' => 1) ));
+    }   
 }

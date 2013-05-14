@@ -459,7 +459,8 @@ class CuestionarioController extends Controller
         $em->persist($entity);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('cuestionario_show', array('id' => $entity->getId())));
+        return $this->redirect($this->generateUrl('cuestionario_preview', array('id' => $entity->getId(),'editoption' => 1 )));
+               
     }
 
     public function desarrollo_linkAction($id)
@@ -506,6 +507,6 @@ class CuestionarioController extends Controller
         $em->persist($entity);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('cuestionario_show', array('id' => $entity->getId())));
-    }
+        return $this->redirect($this->generateUrl('cuestionario_preview', array('id' => $entity->getId(),'editoption' => 1 )));
+        }
 }

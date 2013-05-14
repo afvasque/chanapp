@@ -67,7 +67,7 @@ class PreguntaDesarrollo
 
     /**
      * @ORM\ManyToOne(targetEntity="PreguntaDesarrollo")
-     * @ORM\JoinColumn(name="preguntapadre_id", referencedColumnName="id",onDelete="CASCADE")
+     * @ORM\JoinColumn(name="preguntapadre_id", referencedColumnName="id")
      */
     protected $preguntapadre;
     

@@ -14,8 +14,7 @@ h1
 {
     font-size: 27px;
     font-weight: bold;
-    /*border-bottom: 2px #F68F1E solid;*/
-    color: #F68F1E;
+    color: #414042;
 }
 
 h2, label
@@ -37,8 +36,26 @@ ul, li
     text-align: center;
     color: #414042;
     border-bottom: 1px #414042 solid;
-    padding: 20px;
+    padding: 10px;
     background-color: white;
+}
+
+#header a:hover
+{
+    text-decoration: none;
+    color: #F68F1E;
+}
+
+#header h1
+{
+    color: #F68F1E;
+    margin-left: 130px;
+}
+
+#logo-achee
+{
+    height: 60px;
+    float: right;
 }
 
 #footer
@@ -52,7 +69,7 @@ ul, li
 .content
 {
     margin-bottom: 65px;
-    margin-top: 65px;
+    margin-top: 80px;
 }
 
 #hidestupiderrors ul{

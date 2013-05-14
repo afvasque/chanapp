@@ -2,15 +2,25 @@
 
 {% block body -%}
     <h1>Editar Pregunta de Desarrollo</h1>
+    {% if entity.getCuestionario()%}
     <a href="{{ path('cuestionario_show' , {'id' : entity.getCuestionario().getId() }) }}" class="btn">
             Volver a cuestionario
         </a>
-    <form action="{{ path('preguntadesarrollo_delete', { 'id': entity.id }) }}" method="post">
+    {% else %}
+     <a href="{{ path('preguntaalternativa', {'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id') }) }}" class="btn" class="btn">
+            Volver a Preguntas Sugeridas
+    </a>
+    {% endif %}
+    <form action="{{ path('preguntadesarrollo_delete', { 'id': entity.id,'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id') }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
             <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminar?')">Eliminar</button>
         </form>
-    <form action="{{ path('preguntadesarrollo_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+          {% if entity.getCuestionario()%}
+           <form action="{{ path('preguntadesarrollo_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+          {% else %}
+    <form action="{{ path('preguntadesarrollo_update', { 'id': entity.id, 'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id') }) }}" method="post" {{ form_enctype(edit_form) }}>
+        {% endif%}
         <input type="hidden" name="_method" value="PUT" />
         {{ form_widget(edit_form) }}
         <p>

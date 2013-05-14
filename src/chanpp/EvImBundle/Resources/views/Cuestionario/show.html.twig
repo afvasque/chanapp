@@ -6,7 +6,7 @@
     <h2>{{ app.request.get('error') }}</h2>
     {% endif%}
         <ul class="record_actions">
-        <a href="{{ path('evaluacionindirecta_show', {'id' : entity.getEvaluacionindirecta().getEvaluacion().getId() }) }}" class="btn">
+        <a href="{{ path('evaluacionindirecta_show', {'id' : entity.getEvaluacionindirecta().getId() }) }}" class="btn">
             Volver a evaluación indirecta
         </a>
         <a href="{{ path('cuestionario_preview', {'id': entity.id, 'editoption': 1}) }}" class="btn btn-primary">
@@ -44,7 +44,7 @@
     <hr>
     <h3>Agregar Preguntas</h3>
     <ul>
-        <a href="{{ path('cuestionario_markasdone', {'id': entity.id}) }}" class="btn btn-warning">
+        <a href="{{ path('cuestionario_markasdone', {'id': entity.id}) }}" class="btn btn-warning" onclick="return confirm('¿Seguro que finalizar la creación del cuestionario? No podrán agregarse más preguntas.')">
         Finalizar creación de cuestionario
         </a>
             <a href="{{ path('preguntadesarrollo_new', { 'cuestionario_id': entity.id, 'pregunta_numero': pregunta_numero }) }}" class="btn btn-success">
@@ -56,11 +56,14 @@
             <a href="{{ path('preguntaalternativa_new', { 'cuestionario_id': entity.id, 'pregunta_tipo': 2 , 'pregunta_numero': pregunta_numero}) }}" class="btn btn-success">
                 Agregar Pregunta Alternativa Escala 1 a 5
             </a><br><br>
+            <a href="{{ path('preguntaalternativa', { 'cuestionario_redirect_id': entity.id} ) }}" class="btn btn-primary">
+        Ver y Agregar Preguntas al Set de Preguntas Sugeridas
+    </a>
             <a href="{{ path('cuestionario_alternativa_link', { 'id': entity.id}) }}" class="btn btn-success">
-                Asociar Pregunta Alternativa Anterior
+                Asociar Pregunta Alternativa Sugerida
             </a>
             <a href="{{ path('cuestionario_desarrollo_link', { 'id': entity.id}) }}" class="btn btn-success">
-                 Asociar Pregunta Desarrollo Anterior
+                 Asociar Pregunta Desarrollo Sugerida
             </a>
             <hr>
             <form action="{{ path('preguntaalternativa_new') }}" method="get" {{ form_enctype(delete_form) }}>
