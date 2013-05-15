@@ -81,7 +81,7 @@ class IndGestionController extends Controller
     /**
      * Displays a form to create a new IndGestion entity.
      *
-     * @Route("/new", name="indgestion_new")
+     * @Route("/new/{ficha_proyecto_id}", name="indgestion_new")
      * @Method("GET")
      * @Template()
      */

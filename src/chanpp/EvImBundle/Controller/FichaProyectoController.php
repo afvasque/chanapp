@@ -48,7 +48,7 @@ class FichaProyectoController extends Controller
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
 		$roles = $user->getRoles();
-        if($roles[0] == "ROLE_SUPER_ADMIN" or $roles[0] == "ROLE_PLANIFICADOR")
+        if($roles[0] == "ROLE_SUPER_ADMIN" or $roles[0] == "ROLE_ADMIN" or $roles[0] == "ROLE_PLANIFICADOR")
         {
             $entity  = new FichaProyecto();
             $form = $this->createForm(new FichaProyectoType(), $entity);
@@ -96,7 +96,7 @@ class FichaProyectoController extends Controller
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
         $roles = $user->getRoles();
-        if($roles[0] == "ROLE_SUPER_ADMIN" or $roles[0] == "ROLE_PLANIFICADOR")
+        if($roles[0] == "ROLE_SUPER_ADMIN" or $roles[0] == "ROLE_ADMIN" or $roles[0] == "ROLE_PLANIFICADOR")
         {
             $entity = new FichaProyecto();
 
@@ -158,7 +158,7 @@ class FichaProyectoController extends Controller
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
 		$roles = $user->getRoles();
-        if($roles[0] == "ROLE_SUPER_ADMIN")
+        if($roles[0] == "ROLE_SUPER_ADMIN" or $roles[0] == "ROLE_ADMIN" or $roles[0] == "ROLE_ADMIN")
         {
             $em = $this->getDoctrine()->getManager();
 
@@ -178,9 +178,9 @@ class FichaProyectoController extends Controller
             );
         } else
         {
-			$roles = $user->getRoles();
-            return $roles[0];
-            //return $this->redirect($this->generateUrl('fichaproyecto_show', array('id' => $id)));
+			//$roles = $user->getRoles();
+            //return $roles[0];
+            return $this->redirect($this->generateUrl('fichaproyecto_show', array('id' => $id)));
         }
     }
 
@@ -194,60 +194,69 @@ class FichaProyectoController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $roles = $user->getRoles();
+        if($roles[0] == "ROLE_SUPER_ADMIN" or $roles[0] == "ROLE_ADMIN" or $roles[0] == "ROLE_PLANIFICADOR")
+        {
+            $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('chanppEvImBundle:FichaProyecto')->find($id);
+            $entity = $em->getRepository('chanppEvImBundle:FichaProyecto')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find FichaProyecto entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new FichaProyectoType(), $entity);
-        $editForm->bind($request);
-
-        if ($editForm->isValid()) {
-
-           $originalTags = array();
-
-            // Create an array of the current Tag objects in the database
-            foreach ($entity->getActivities() as $tag) {
-                $originalTags[] = $tag;
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find FichaProyecto entity.');
             }
 
+            $deleteForm = $this->createDeleteForm($id);
+            $editForm = $this->createForm(new FichaProyectoType(), $entity);
+            $editForm->bind($request);
 
-            // filter $originalTags to contain tags no longer present
-            foreach ($entity->getActivities() as $tag) {
-                foreach ($originalTags as $key => $toDel) {
-                    if ($toDel->getId() === $tag->getId()) {
-                        unset($originalTags[$key]);
+            if ($editForm->isValid()) {
+
+               $originalTags = array();
+
+                // Create an array of the current Tag objects in the database
+                foreach ($entity->getActivities() as $tag) {
+                    $originalTags[] = $tag;
+                }
+
+
+                // filter $originalTags to contain tags no longer present
+                foreach ($entity->getActivities() as $tag) {
+                    foreach ($originalTags as $key => $toDel) {
+                        if ($toDel->getId() === $tag->getId()) {
+                            unset($originalTags[$key]);
+                        }
                     }
                 }
+
+                // remove the relationship between the tag and the Task
+                foreach ($originalTags as $tag) {
+                    // remove the Task from the Tag
+                    //$tag->getTasks()->removeElement($task);
+
+                    // if it were a ManyToOne relationship, remove the relationship like this
+                     $tag->setFichaProyecto(null);
+
+                    $em->persist($tag);
+
+                    // if you wanted to delete the Tag entirely, you can also do that
+                    $em->remove($tag);
+                }
+
+                $entity->setNombreEditor($this->container->get('security.context')->getToken()->getUser());
+                $em->persist($entity);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('fichaproyecto_show', array('id' => $id)));
             }
-
-            // remove the relationship between the tag and the Task
-            foreach ($originalTags as $tag) {
-                // remove the Task from the Tag
-                //$tag->getTasks()->removeElement($task);
-
-                // if it were a ManyToOne relationship, remove the relationship like this
-                 $tag->setFichaProyecto(null);
-
-                $em->persist($tag);
-
-                // if you wanted to delete the Tag entirely, you can also do that
-                $em->remove($tag);
-            }
-
-            $entity->setNombreEditor($this->container->get('security.context')->getToken()->getUser());
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('fichaproyecto_show', array('id' => $id)));
+            else
+            {
+                return $form->getErrorsAsString();
+            }       
         }
         else
         {
-            return $form->getErrorsAsString();
+            return $this->redirect($this->generateUrl('fichaproyecto_show', array('id' => $id)));
         }
 
         return array(
@@ -265,22 +274,25 @@ class FichaProyectoController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        if($roles[0] == "ROLE_SUPER_ADMIN" or $roles[0] == "ROLE_ADMIN" or $roles[0] == "ROLE_PLANIFICADOR")
+        {
+            $form = $this->createDeleteForm($id);
+            $form->bind($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('chanppEvImBundle:FichaProyecto')->find($id);
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $entity = $em->getRepository('chanppEvImBundle:FichaProyecto')->find($id);
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find FichaProyecto entity.');
+                if (!$entity) {
+                    throw $this->createNotFoundException('Unable to find FichaProyecto entity.');
+                }
+
+                
+
+
+                $em->remove($entity);
+                $em->flush();
             }
-
-            
-
-
-            $em->remove($entity);
-            $em->flush();
         }
 
         return $this->redirect($this->generateUrl('fichaproyecto'));

@@ -80,12 +80,18 @@ class PlanEvaluacionController extends Controller
      */
     public function newAction()
     {
-        $entity = new PlanEvaluacion();
-        $form   = $this->createForm(new PlanEvaluacionType(), $entity);
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $roles = $user->getRoles();
+        if($roles[0] == "ROLE_SUPER_ADMIN" or $roles[0] == "ROLE_ADMIN" or $roles[0] == "ROLE_PLANIFICADOR")
+        {
+            $entity = new PlanEvaluacion();
+            $form   = $this->createForm(new PlanEvaluacionType(), $entity);
+            return array(
+                'entity' => $entity,
+                'form'   => $form->createView(),
+            );
+        }
+        return $this->redirect($this->generateUrl('fichaproyecto'));
     }
 
     /**
@@ -125,22 +131,29 @@ class PlanEvaluacionController extends Controller
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $roles = $user->getRoles();
+        if($roles[0] == "ROLE_SUPER_ADMIN" or $roles[0] == "ROLE_ADMIN" or $roles[0] == "ROLE_PLANIFICADOR")
+        {
+            $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('chanppEvImBundle:PlanEvaluacion')->find($id);
+            $entity = $em->getRepository('chanppEvImBundle:PlanEvaluacion')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find PlanEvaluacion entity.');
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find PlanEvaluacion entity.');
+            }
+
+            $editForm = $this->createForm(new PlanEvaluacionType(), $entity);
+            $deleteForm = $this->createDeleteForm($id);
+
+            return array(
+                'entity'      => $entity,
+                'edit_form'   => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+            );
         }
+        return $this->redirect($this->generateUrl('fichaproyecto'));
 
-        $editForm = $this->createForm(new PlanEvaluacionType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
     }
 
     /**
@@ -152,40 +165,46 @@ class PlanEvaluacionController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $roles = $user->getRoles();
+        if($roles[0] == "ROLE_SUPER_ADMIN" or $roles[0] == "ROLE_ADMIN" or $roles[0] == "ROLE_PLANIFICADOR")
+        {
+            $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('chanppEvImBundle:PlanEvaluacion')->find($id);
+            $entity = $em->getRepository('chanppEvImBundle:PlanEvaluacion')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find PlanEvaluacion entity.');
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find PlanEvaluacion entity.');
+            }
+
+            $deleteForm = $this->createDeleteForm($id);
+            $editForm = $this->createForm(new PlanEvaluacionType(), $entity);
+            $editForm->bind($request);
+
+            if ($editForm->isValid()) {
+                #We store the changes made
+                $comentario = $request->get('comentarioedit');
+                $cambio = new CambiosPlanEvaluacion();
+                $cambio->setComentario($comentario);
+                $cambio->setPlanevaluacion($entity);
+                $name = $this->container->get('security.context')->getToken()->getUser();
+                $cambio->setUsername($name);
+                $cambio->setFechahoracambio(new \DateTime(date('Y-m-d H:i:s')));
+                $entity->addCambio($cambio);
+                $em->persist($cambio);
+                $em->persist($entity);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('planevaluacion_show', array('id' => $id)));
+            }
+
+            return array(
+                'entity'      => $entity,
+                'edit_form'   => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+            );
         }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new PlanEvaluacionType(), $entity);
-        $editForm->bind($request);
-
-        if ($editForm->isValid()) {
-            #We store the changes made
-            $comentario = $request->get('comentarioedit');
-            $cambio = new CambiosPlanEvaluacion();
-            $cambio->setComentario($comentario);
-            $cambio->setPlanevaluacion($entity);
-            $name = $this->container->get('security.context')->getToken()->getUser();
-            $cambio->setUsername($name);
-            $cambio->setFechahoracambio(new \DateTime(date('Y-m-d H:i:s')));
-            $entity->addCambio($cambio);
-            $em->persist($cambio);
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('planevaluacion_show', array('id' => $id)));
-        }
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        return $this->redirect($this->generateUrl('fichaproyecto'));
     }
 
     /**

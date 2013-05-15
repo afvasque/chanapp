@@ -25,11 +25,13 @@
 onclick="return confirm('¿Seguro que desea marcar la evaluación como lista? Esta acción es irreversible.')">
      Marcar como lista
     </a><br><br>{% if entity.getDone() == false%}
+        {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
         <form action="{{ path('evaluacion_delete', { 'id': entity.id }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
             <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminar?')">Eliminar Evaluación</button>
         </form>
+        {% endif%}
      {% endif %}
     {% endif %}
     <table class="table table-striped">
@@ -77,7 +79,9 @@ onclick="return confirm('¿Seguro que desea marcar la evaluación como lista? Es
                     <td>{{ entity2.duracion }}</td>
                     <td>
                             <a href="{{ path('activity_show', { 'id': entity2.id }) }}" class="btn btn-primary">Ver</a>
+                            {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN"))%}
                             <a href="{{ path('activity_edit', { 'id': entity2.id }) }}" class="btn btn-warning">Editar</a>
+                            {% endif %}
                     </td>
                 </tr>
             {% endfor %}

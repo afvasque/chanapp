@@ -126,22 +126,27 @@ class EvaluacionController extends Controller
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $roles = $user->getRoles();
+        if($roles[0] == "ROLE_SUPER_ADMIN" or $roles[0] == "ROLE_ADMIN" or $roles[0] == "ROLE_PLANIFICADOR")
+        {
+            $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('chanppEvImBundle:Evaluacion')->find($id);
+            $entity = $em->getRepository('chanppEvImBundle:Evaluacion')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Evaluacion entity.');
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Evaluacion entity.');
+            }
+
+            $editForm = $this->createForm(new EvaluacionType(), $entity);
+            $deleteForm = $this->createDeleteForm($id);
+
+            return array(
+                'entity'      => $entity,
+                'edit_form'   => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+            );
         }
-
-        $editForm = $this->createForm(new EvaluacionType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
     }
 
     /**

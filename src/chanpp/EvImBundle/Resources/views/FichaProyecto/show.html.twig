@@ -5,14 +5,18 @@
     <a href="{{ path('fichaproyecto') }}" class="btn" >
             Volver a Fichas de Proyectos
     </a>
+    {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
     <a href="{{ path('fichaproyecto_edit', { 'id': entity.id }) }}" class="btn btn-warning">
             Editar Ficha Proyecto
-    </a><br><br>       
+    </a>{% endif %}
+    <br><br>       
+    {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
     <form action="{{ path('fichaproyecto_delete', { 'id': entity.id }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
             <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminar?')">Eliminar</button>
         </form>
+    {% endif %}
     <table class="table">
         <tbody>
             <tr>
@@ -129,7 +133,9 @@
                 <ul>
                     <a href="{{ path('planevaluacion_show', { 'id': entity.id }) }}" 
 class="btn btn-primary">Ver</a>
+                 {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
                      <a href="{{ path('planevaluacion_edit', { 'id': entity.id }) }}" class="btn btn-warning">Editar</a>
+                {% endif %}
                 </ul>
                 </td>
             </tr>
@@ -137,9 +143,11 @@ class="btn btn-primary">Ver</a>
         </tbody>
     </table>
     {% else %}
-    <a href="{{ path('planevaluacion_new', { 'fichaproyecto_id': entity.id }) }}" class="btn btn-success">
-                Agregar Plan de Evaluación
-    </a>
+    {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
+        <a href="{{ path('planevaluacion_new', { 'fichaproyecto_id': entity.id }) }}" class="btn btn-success">
+                    Agregar Plan de Evaluación
+        </a>
+    {% endif %}
     {% endif %}
     {% if entity.getNombreEditor %}
     <p><i>Editado por {{entity.getNombreEditor}}</i></p>

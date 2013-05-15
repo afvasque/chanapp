@@ -3,10 +3,12 @@
 {% block body -%}
     <h1>Viendo Fichas de Proyectos</h1>
     <a href="{{ path('index_show')}}" class="btn">
-            Volver a la página de inicio
-        </a><a href="{{ path('fichaproyecto_new') }}" class="btn btn-success">
+            Volver a la página de inicio</a>
+    {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
+        <a href="{{ path('fichaproyecto_new') }}" class="btn btn-success">
                 Crear Ficha Proyecto
     </a>
+    {% endif %}
     <table class="table table-striped">
         <thead>
             <tr>
@@ -40,8 +42,10 @@
                 <td>
                 <ul>
                         <a href="{{ path('fichaproyecto_show', { 'id': entity.id }) }}" class="btn btn-primary"  >Ver</a><br><br>
+                {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
                         <a href="{{ path('fichaproyecto_edit', { 'id': entity.id }) }}" class="btn btn-warning">Editar</a>
                 </ul>
+                {% endif %}
                 </td>
             </tr>
         {% endfor %}
