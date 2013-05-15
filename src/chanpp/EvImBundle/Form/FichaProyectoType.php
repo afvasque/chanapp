@@ -13,12 +13,14 @@ class FichaProyectoType extends AbstractType
     {
         $builder
             ->add('area_accion','choice', array(
+                'empty_value' => 'Elegir un área de acción',
                 'label' => 'Área de acción',
                 'choices' => FichaProyecto::getAreasAccion(),
                 'label_attr' => array(
                         'class'=>'control-label')))
-            ->add('linea_accion','text', array(
+            ->add('linea_accion','choice', array(
                 'label' => 'Línea de acción',
+                'choices' => FichaProyecto::getLineasAccion(),
                 'label_attr' => array(
                         'class'=>'control-label')))
             ->add('nombre','text', array(

@@ -3,6 +3,7 @@
 namespace chanpp\EvImBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -38,6 +39,72 @@ class FichaProyectoController extends Controller
     }
 
     /**
+     * Agregar linea accion dinamicamente
+     *
+     * @Route("/updateLinea", name="fichaproyecto_add_linea")
+     * @Method("POST")
+     */
+    public function UpdateLineaAction(Request $request)
+    {
+        $area = $request->request->get('data1');
+        $results = array("hola");
+        
+        if($area == 'Edificación')
+        {
+            $results = array(
+                "Edificación nueva",
+                "Edificación existente",
+                "Formación de capacidades",
+                );
+        }
+        else if($area == 'Educación y Capacitación')
+        {
+            $results = array(
+                "Educación Parvularia",
+                "Educación Básica",
+                "Educación Media",
+                "Educación Superior",
+                "Educación Ciudadana",
+                );
+        }
+        else if($area == 'Transporte')
+        {
+            $results = array(
+                "Transporte privado",
+                "Transporte público",
+                "Transporte de carga",
+                );
+        }
+        else if($area == 'Industria y Minería')
+        {
+            $results = array(
+                "Formación de capacidades",
+                "Diagnósticos Energéticos",
+                "Recambio Tecnológico",
+                );
+
+        }
+        else if($area == 'Medición y Verificación')
+        {
+            $results = array(
+                "Medición y Verificación de proyectos",                
+                );
+        }
+        else if($area == 'Desarrollo de Negocios')
+        {
+            $results = array(
+                "Articulación e implementar iniciativas con Organismos Nacionales e Internacionales",
+                "Articulación e implementar iniciativas con  entidades Privadas",
+                "Posicionamiento y Proyección de Marca",
+                );
+        }
+
+
+        $response = array("code" => $results , "success" => true);
+        //you can return result as JSON
+        return new Response(json_encode($response)); 
+    }
+    /**
      * Creates a new FichaProyecto entity.
      *
      * @Route("/", name="fichaproyecto_create")
@@ -64,15 +131,9 @@ class FichaProyectoController extends Controller
                     array('ficha_proyecto_id' => $entity->getId()));
 
                 //return $this->redirect($this->generateUrl('fichaproyecto_show', array('id' => $entity->getId())));
-            } else        {
-                /**
-                 * @var \Symfony\Component\Form\FormError $error
-                 */
-                foreach ($form->getErrors() as $key => $error) {
-                    $errors[] = $error->getMessage();
-                }
             }
-        } else
+        } 
+         else
         {
             return $this->redirect($this->generateUrl('fichaproyecto'));
         }            

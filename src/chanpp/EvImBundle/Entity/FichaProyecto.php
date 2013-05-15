@@ -492,7 +492,7 @@ class FichaProyecto
     public static function getAreasAccion()
     {
         return array(
-            self::Edificacion => 'Edificacion',
+            self::Edificacion => 'Edificación',
             self::Educacion_y_Capacitacion => 'Educación y Capacitación',
             self::Transporte => 'Transporte',
             self::Industria_y_Minería => 'Industria y Minería',
@@ -501,6 +501,29 @@ class FichaProyecto
             );
     }
 
+        public static function getLineasAccion()
+    {
+        return array(
+            "Edificación nueva"=>"Edificación nueva",
+                "Edificación existente"=>"Edificación existente",
+                "Formación de capacidades"=>"Formación de capacidades",
+            "Educación Parvularia"=>"Educación Parvularia",
+                "Educación Básica"=>"Educación Básica",
+                "Educación Media"=>"Educación Media",
+                "Educación Superior"=>"Educación Superior",
+                "Educación Ciudadana"=>"Educación Ciudadana",
+            "Transporte privado"=>"Transporte privado",
+                "Transporte público"=>"Transporte público",
+                "Transporte de carga"=>"Transporte de carga",
+            "Formación de capacidades"=>"Formación de capacidades",
+                "Diagnósticos Energéticos"=>"Diagnósticos Energéticos",
+                "Recambio Tecnológico"=>"Recambio Tecnológico",
+            "Medición y Verificación de proyectos"=>"Medición y Verificación de proyectos",
+            "Articulación e implementar iniciativas con Organismos Nacionales e Internacionales"=>"Articulación e implementar iniciativas con Organismos Nacionales e Internacionales",
+                "Articulación e implementar iniciativas con  entidades Privadas"=>"Articulación e implementar iniciativas con  entidades Privadas",
+                "Posicionamiento y Proyección de Marca"=>"Posicionamiento y Proyección de Marca",
+            );
+    }
 
     /**
      * Set nombre_editor

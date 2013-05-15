@@ -55,6 +55,33 @@
     </form>
 {% block javascript %}
 
+
+        <script type="text/javascript">
+            function aButtonPressed(){
+            $.post('{{path('fichaproyecto_add_linea')}}',               
+                {data1: $('#chanpp_evimbundle_fichaproyectotype_area_accion').val()}, 
+                    function(response){
+                        if(response.success)
+                        {
+                            $("[id='chanpp_evimbundle_fichaproyectotype_linea_accion']").html('');
+                            $.each(response.code, function(val, text) {
+                                   $("[id='chanpp_evimbundle_fichaproyectotype_linea_accion']").append(
+                                   $('<option></option>').val(text).html(text)
+                                );
+                            });
+                        }
+
+                        
+
+            }, "json");}
+
+                    $(document).ready(function() { 
+                    $("[id='chanpp_evimbundle_fichaproyectotype_linea_accion']").html('');    
+          $('#chanpp_evimbundle_fichaproyectotype_area_accion').change(function(){aButtonPressed();});
+        });
+        </script>
+
+        </script>
         <script type="text/javascript">
             var collectionHolder = $('div#chanpp_evimbundle_fichaproyectotype_activities');
             var $addTagLink = $('<a href="#" class="add_tag_link" class="btn btn-success">Agregar una actividad</a>');
