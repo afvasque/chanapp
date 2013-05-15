@@ -14,7 +14,30 @@
     </li></ul>
     <form action="{{ path('recurso_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
-        {{ form_widget(edit_form) }}
+        {% for fields in edit_form %}
+         <div class="{{ cycle(["even","odds"], loop.index) }}">
+          {%  if fields.vars.name != '_token' %}
+          {% if fields.vars.name == 'tipo' %}
+          {{ form_label(fields) }}
+          {{ form_widget(fields) }}<p title="Los recursos disponibles para evaluar pueden ser de los siguientes tipos:
+-Monetarios  
+-Humanos: Funciones y responsabilidades.  
+-Tiempo  
+-Capacidades  
+-Otros" id="formhelp">?</p>
+          {{ form_errors(fields) }}
+          {% elseif fields.vars.name == 'cantidad' %}
+           {{ form_label(fields) }}
+          {{ form_widget(fields) }}<p title="Los recursos se miden en unidades de dinero ($), horas hombre (HH), tiempo (meses), entre otros. En este punto se debe cuantificar en $, HH, etc, el recurso que se está creando." id="formhelp">?</p>
+          {{ form_errors(fields) }}
+          {% else%}
+              {{ form_label(fields) }}
+              {{ form_widget(fields) }}
+              {{ form_errors(fields) }}
+          {% endif %}
+          </div>
+        {% endif %}
+        {% endfor %}
         <p>
             <button type="submit" class="btn btn-success">Guardar Cambios</button>
         </p>

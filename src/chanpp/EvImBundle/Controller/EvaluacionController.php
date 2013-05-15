@@ -168,7 +168,6 @@ class EvaluacionController extends Controller
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
-
             return $this->redirect($this->generateUrl('evaluacion_show', array('id' => $id)));
         }
 

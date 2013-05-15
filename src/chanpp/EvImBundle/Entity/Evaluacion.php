@@ -48,13 +48,6 @@ class Evaluacion
     private $duracion;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="confiabilidad", type="text")
-     */
-    private $confiabilidad;
-
-    /**
      * @ORM\OneToMany(targetEntity="EvaluacionIndirecta", mappedBy="evaluacion")
      */
     protected $evaluacionesindirectas;
@@ -144,29 +137,6 @@ class Evaluacion
     public function getDuracion()
     {
         return $this->duracion;
-    }
-
-    /**
-     * Set confiabilidad
-     *
-     * @param string $confiabilidad
-     * @return Evaluacion
-     */
-    public function setConfiabilidad($confiabilidad)
-    {
-        $this->confiabilidad = $confiabilidad;
-    
-        return $this;
-    }
-
-    /**
-     * Get confiabilidad
-     *
-     * @return string 
-     */
-    public function getConfiabilidad()
-    {
-        return $this->confiabilidad;
     }
 
     /**

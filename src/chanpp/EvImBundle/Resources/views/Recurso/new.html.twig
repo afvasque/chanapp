@@ -1,12 +1,36 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>Creación de Recurso</h1>
+    <h1>Creación de nuevo Recurso disponible para evaluar el programa/proyecto<p title="En este punto se puede agregar un nuevo recurso disponible para la evaluación, el que puede ser del tipo monetario, recursos humanos, tiempo, capacidades, etc. En el caso de los recursos humanos disponibles para la evaluación, se debe definir las funciones y responsabilidades de cada uno de los involucrados. 
+Se deberá especificar el nombre y la descripción del recurso, incluyendo la cantidad o monto disponible del mismo." id="formhelpshowtitle">?</p></h1>
     <a href="{{ path('planevaluacion_show', { 'id': app.request.get('planevaluacion_id')}) }}" class="btn">
             Volver al plan de evaluación
         </a>
     <form action="{{ path('recurso_create', { 'planevaluacion_id':app.request.get('planevaluacion_id') }) }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
+        {% for fields in form %}
+         <div class="{{ cycle(["even","odds"], loop.index) }}">
+          {%  if fields.vars.name != '_token' %}
+          {% if fields.vars.name == 'tipo' %}
+          {{ form_label(fields) }}
+          {{ form_widget(fields) }}<p title="Los recursos disponibles para evaluar pueden ser de los siguientes tipos:
+-Monetarios  
+-Humanos: Funciones y responsabilidades.  
+-Tiempo  
+-Capacidades  
+-Otros" id="formhelp">?</p>
+          {{ form_errors(fields) }}
+          {% elseif fields.vars.name == 'cantidad' %}
+           {{ form_label(fields) }}
+          {{ form_widget(fields) }}<p title="Los recursos se miden en unidades de dinero ($), horas hombre (HH), tiempo (meses), entre otros. En este punto se debe cuantificar en $, HH, etc, el recurso que se está creando." id="formhelp">?</p>
+          {{ form_errors(fields) }}
+          {% else%}
+              {{ form_label(fields) }}
+              {{ form_widget(fields) }}
+              {{ form_errors(fields) }}
+          {% endif %}
+          </div>
+        {% endif %}
+        {% endfor %}
         <br>
         <p>
             <button type="submit" class="btn btn-success">Crear</button>
