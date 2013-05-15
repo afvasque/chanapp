@@ -12,18 +12,45 @@
         {{ form_row(form.nombre) }}
         {{ form_row(form.jefe) }}
         {{ form_row(form.duracion) }}
-        {{ form_row(form.diagnostico_previo) }}
+
+        {{ form_label(form.diagnostico_previo) }}
+        {{ form_widget(form.diagnostico_previo) }} 
+    <p title="Describir brevemente la situación actual, sin proyecto, relacionada al mismo" id="formhelpshow">?</p>
+        {{ form_errors(form.diagnostico_previo) }}
+
         {{ form_row(form.obj_general) }}
-        {{ form_row(form.objs_especificos) }}
-        {{ form_row(form.descripcion) }}
-        {{ form_row(form.desc_causales) }}
-        {{ form_row(form.variables_causales) }}
+
+        {{ form_label(form.objs_especificos) }}
+        {{ form_widget(form.objs_especificos) }} 
+    <p title="Indicar cuáles son los objetivos a obtener a la finalización del proyecto" id="formhelpshow">?</p>
+        {{ form_errors(form.objs_especificos) }}
+
+        {{ form_label(form.descripcion) }}
+        {{ form_widget(form.descripcion) }} 
+    <p title="Presentar los rasgos sobresalientes del proyecto, actividades y toda otra información relevante que permita tener una idea acabada del proyecto y el impacto del mismo" id="formhelpshow">?</p>
+        {{ form_errors(form.descripcion) }}
+
+
+        {{ form_label(form.desc_causales) }}
+        {{ form_widget(form.desc_causales) }} 
+    <p title="Descripción de las relaciones causales que dieron origen al proyecto y que determinó las actividades a desarrollar dentro del mismo para la obtención de los objetivos buscados" id="formhelpshow">?</p>
+        {{ form_errors(form.desc_causales) }}
+
+
+        {{ form_label(form.variables_causales) }}
+        {{ form_widget(form.variables_causales) }} 
+    <p title="Variables relevantes del proyecto que afectan las relaciones causales establecidas anteriormente" id="formhelpshow">?</p>
+        {{ form_errors(form.variables_causales) }}
+        
+        <p>
+        El siguiente cuadro contiene las actividades del proyecto, las que son descritas mediante el llenado de 4 campos: nombre, duración, descripción de la actividad y resultados esperados de la misma.</p>
+
         {{ form_row(form.activities) }}
 
         {{ form_rest(form) }}   
 
         <p>
-            <button type="submit" class="btn btn-success">Crear</button>
+            <button type="submit" class="btn btn-success">Crear Ficha de Proyecto</button>
         </p>
     </form>
 {% block javascript %}

@@ -11,11 +11,13 @@ class IndGestionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombre')
+            ->add('nombre', null, array(
+                'label' => "Nombre del Indicador de Gestión"))
             ->add('anoDeadline')
             ->add('mesDeadline')
-            ->add('variables_obstaculo')
-            ->add('ficha_proyecto')
+            ->add('variables_obstaculo', null, array(
+                'label' => "Variables obstaculo"))
+            ->add('ficha_proyecto', null, array('label'=>'Ficha de Proyecto'))
         ;
         $builder
             ->add('metas','collection',array(

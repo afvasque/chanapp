@@ -79,6 +79,45 @@ class IndGestionController extends Controller
     }
 
     /**
+     * Creates a new IndGestion entity.
+     *
+     * @Route("/addIndgest", name="indgestion_create_add")
+     * @Template("chanppEvImBundle:IndGestion:new.html.twig")
+     */
+    public function createAddAction(Request $request)
+    {
+        $entity  = new IndGestion();
+
+        $form = $this->createForm(new IndGestionType(), $entity);
+        $form->bind($request);
+        $id_proyecto = 2;
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+
+            //Guardar metas asociadas
+
+            //Asociar Ind Gestion a Ficha de Proyecto
+            $ficha_proyecto = $entity->getFichaProyecto();
+            $id_proyecto = $ficha_proyecto->getId();
+            $ficha_proyecto->addIndGestion($entity);
+            $em->persist($ficha_proyecto);
+
+            $em->flush();
+
+            //return $this->redirect($this->generateUrl('fichaproyecto_show', array('id' => $ficha_proyecto->getId())));
+        }
+        else
+        {
+            //DEBUG ONLI
+            //return $form->getErrorsAsString();
+        }
+
+        return $this->redirect($this->generateUrl('indgestion_new', array('ficha_proyecto_id' => $id_proyecto)));
+    }
+
+    /**
      * Displays a form to create a new IndGestion entity.
      *
      * @Route("/new/{ficha_proyecto_id}", name="indgestion_new")
@@ -235,4 +274,6 @@ class IndGestionController extends Controller
             ->getForm()
         ;
     }
+
+
 }

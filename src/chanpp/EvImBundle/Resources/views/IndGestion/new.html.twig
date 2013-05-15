@@ -2,28 +2,51 @@
 
 {% block body -%}
 
-    <h1>Agregar Indice de Gestión</h1>
+    <h1>Agregar Indice de Gestión Proyecto {{entity.getFichaProyecto.getNombre}}</h1>
 
     <form action="{{ path('indgestion_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
+        {{ form_row(form.nombre) }}
+        {{ form_row(form.anoDeadline) }}
+        {{ form_row(form.mesDeadline) }}
 
+        <p><b>Señale a continuación las variables o circunstancias relevantes que puedan significar un obstáculo a las metas que se espera cumplir</b></p>
+        {{ form_widget(form.variables_obstaculo) }} 
+        {{ form_errors(form.variables_obstaculo) }}
+
+        <h2>Metas</h2>
+  
         <p>
-            <button type="submit">Create</button>
+        Se asociará a cada indicador de gestión una o más metas, de las que se deberá especificar lo siguiente:
+        </p>
+
+
+        <div class="meta" data-prototype="{{ form_widget(form.metas.vars.prototype)|e }}">
+        {% for meta in form.metas%}
+
+            {{ form_row(meta.nombre) }}
+            {{ form_row(meta.descripcion) }}
+            
+            <p><b>Indicar a continuación el plazo en el cual se debe cumplir la meta.<br/> Primero introduzca el mes en el que se cumplirá (mm) y luego el año (aaaa)</b><p/>
+            {{ form_errors(meta.plazoMes) }}
+            {{ form_widget(meta.plazoMes) }}
+
+            {{ form_row(meta.plazoAnio) }}
+
+        {% endfor %}
+        </div>
+
+        {{ form_rest(form) }}   
+        <p>
+            <button type="submit" class="btn btn-success">Crear Indicador de Gestión</button>
+
         </p>
     </form>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('indgestion') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
-
+           {# <a href="{{ path('indgestion_create_add', { 'ficha_proyecto_id': entity.getFichaProyecto.id }) }}" class="btn">Agregar nuevo Indicador de Gestión</a> #}
 {% block javascript %}
 
      <script type="text/javascript">
-            var collectionHolder = $('div#chanpp_evimbundle_indgestiontype_metas');
+            var collectionHolder = $('div.meta');
             var $addTagLink = $('<a href="#" class="add_tag_link">Agregar una meta</a>');
             var indexNo = 4;
             var $newFormDiv = $("<div id=borrar_meta></div>");

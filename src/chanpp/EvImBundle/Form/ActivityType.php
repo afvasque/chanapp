@@ -11,10 +11,14 @@ class ActivityType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombre')
-            ->add('descripcion')
-            ->add('resultadosEsperados')
-            ->add('duracion')
+            ->add('nombre', null, array(
+                'label' => "Nombre"))
+            ->add('descripcion', null, array(
+                'label' => "Descripción de la meta"))
+            ->add('resultadosEsperados', null, array(
+                'label' => "Resutados Esperados"))
+            ->add('duracion', null, array(
+                'label' => "Duración"))
         ;
     }
 

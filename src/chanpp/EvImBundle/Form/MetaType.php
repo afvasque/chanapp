@@ -13,8 +13,11 @@ class MetaType extends AbstractType
         $builder
             ->add('nombre')
             ->add('descripcion')
-            ->add('plazoMes')
-            ->add('plazoAnio')
+            ->add('plazoMes', null, array(
+                'label' => 'Indicar a continuación el plazo en el cual se debe cumplir la meta.
+Primero introduzca el mes en el que se cumplirá (mm) y luego el año (aaaa)'))
+            ->add('plazoAnio', null, array(
+                'label' => 'Plazo de cumplimiento (año)'))
         ;
     }
 

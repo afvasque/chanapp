@@ -273,6 +273,8 @@ class FichaProyectoController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $roles = $user->getRoles();
         if($roles[0] == "ROLE_SUPER_ADMIN" or $roles[0] == "ROLE_ADMIN" or $roles[0] == "ROLE_PLANIFICADOR")
         {
             $form = $this->createDeleteForm($id);
