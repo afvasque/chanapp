@@ -12,7 +12,7 @@ class EvaluacionIndirectaType extends AbstractType
     {
         $builder
             ->add('ambito', 'choice', array('choices'   => array('1' => 'Capacitación/Educación', '2' => 'Información/Difusión', '3' => 'Otras Transformaciones de Mercado',),'required'  => true, 'label' => 'Ámbito del objetivo del programa',))
-            ->add('grupoInteres','textarea',array('label'  => 'Grupos de interés de la evaluación',))
+            ->add('grupoInteres','textarea',array('label'  => 'Grupo de interés de la sub-evaluación',))
             ->add('ejes', 'choice', array(
         'expanded' => true,
         'multiple' => true,
@@ -21,13 +21,13 @@ class EvaluacionIndirectaType extends AbstractType
             '2'  => 'Valoración',
             '3'   => 'Capacidad Movilizadora',),))
             ->add('responsable','text',array('label'  => 'Responsable de la ejecución',))
-            ->add('plazo','text',array('label'  => 'Plazo de la ejecución',))
+            ->add('plazo','text',array('label'  => 'Plazo de la ejecución (meses)',))
             ->add('metodosrecoleccion', 'entity', array(
 'multiple' => true,
 'expanded' => true,
 'class'    => 'chanppEvImBundle:MetodoRecoleccion',
 'property' => 'nombre',
-'label'  => 'Métodos de Recolección'
+'label'  => 'Método de recolección de datos'
 ));
   }
     public function setDefaultOptions(OptionsResolverInterface $resolver)

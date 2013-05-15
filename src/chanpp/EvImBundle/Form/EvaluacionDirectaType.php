@@ -11,8 +11,9 @@ class EvaluacionDirectaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('resultado', 'text', array('required'  => true,))
-            ->add('unidad', 'choice', array('choices'   => array('1' => 'Fuel Oil [ton]',
+            ->add('descripcion', 'textarea', array('label' => 'Descripción de la Evaluación de Impacto Directo realizada:'))
+            ->add('resultado', 'text', array('required'  => true, 'label'  => 'Resultado de la Evaluación'))
+            ->add('unidad', 'choice', array('label'  => 'Unidad de medida','choices'   => array('1' => 'Fuel Oil [ton]',
              '2' => 'Diesel [m3]', 
              '3' => 'Gas Licuado (estado líquido) [m3]', 
              '4' => 'Gas Licuado (estado gaseoso) [m3]',
@@ -22,7 +23,7 @@ class EvaluacionDirectaType extends AbstractType
              '8' => 'Energía Eléctrica Anual [kWh]', 
              '9' => 'Energía Autogenerada [kWh]',  
              '10' => 'Otros [kWh]',),'required'  => true,))
-            ->add('descripcion')
+            
         ;
     }
 

@@ -184,3 +184,18 @@ clear:both;
     margin-bottom:8px;
     color: blue;
 }
+
+#formhelpejes{
+    float:left;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    color: blue;
+}
+
+#unidadedirecta{
+    
+}
+
+#tokenform{
+    visibility:hidden;
+}

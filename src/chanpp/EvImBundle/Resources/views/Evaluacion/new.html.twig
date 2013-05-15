@@ -8,23 +8,27 @@ A su vez, en esta evaluación se puede medir efectos directos y/o indirectos." i
     </a>
     <form action="{{ path('evaluacion_create', { 'planevaluacion_id':app.request.get('planevaluacion_id') }) }}" method="post" {{ form_enctype(form) }}>
         {% for fields in form %}
-         <div class="{{ cycle(["even","odds"], loop.index) }}">
           {%  if fields.vars.name != '_token' %}
-          {% if fields.vars.name == 'alcance' %}
-          {{ form_label(fields) }}
-          {{ form_widget(fields) }}<p title="Identificar en este ítem la(s) pregunta(s) clave(s) que desea responder con la evaluación" id="formhelp">?</p>
-          {{ form_errors(fields) }}
-          {% elseif fields.vars.name == 'actividades' %}
-          <p title="Seleccionar las actividades que serán sometidas a evaluación" id="formhelpactivities">?</p>
-          {{ form_label(fields) }}
-          {{ form_widget(fields) }}
-          {{ form_errors(fields) }}
-          {% else%}
+           <div class="{{ cycle(["even","odds"], loop.index) }}">
+            {% if fields.vars.name == 'alcance' %}
+              {{ form_label(fields) }}
+              {{ form_widget(fields) }}<p title="Identificar en este ítem la(s) pregunta(s) clave(s) que desea responder con la evaluación" id="formhelp">?</p>
+              {{ form_errors(fields) }}
+            {% elseif fields.vars.name == 'actividades' %}
+              <p title="Seleccionar las actividades que serán sometidas a evaluación" id="formhelpactivities">?</p>
               {{ form_label(fields) }}
               {{ form_widget(fields) }}
               {{ form_errors(fields) }}
-          {% endif %}
+            {% else%}
+                {{ form_label(fields) }}
+                {{ form_widget(fields) }}
+                {{ form_errors(fields) }}
+            {% endif %}
           </div>
+        {% else %}
+         <div id="tokenform">{{ form_label(fields) }}
+            {{ form_widget(fields) }}
+            {{ form_errors(fields) }}</div>
         {% endif %}
         {% endfor %}
         <p>

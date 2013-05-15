@@ -8,8 +8,8 @@ Se deberá especificar el nombre y la descripción del recurso, incluyendo la ca
         </a>
     <form action="{{ path('recurso_create', { 'planevaluacion_id':app.request.get('planevaluacion_id') }) }}" method="post" {{ form_enctype(form) }}>
         {% for fields in form %}
-         <div class="{{ cycle(["even","odds"], loop.index) }}">
           {%  if fields.vars.name != '_token' %}
+                   <div class="{{ cycle(["even","odds"], loop.index) }}">
           {% if fields.vars.name == 'tipo' %}
           {{ form_label(fields) }}
           {{ form_widget(fields) }}<p title="Los recursos disponibles para evaluar pueden ser de los siguientes tipos:
@@ -29,6 +29,10 @@ Se deberá especificar el nombre y la descripción del recurso, incluyendo la ca
               {{ form_errors(fields) }}
           {% endif %}
           </div>
+        {% else %}
+         <div id="tokenform">{{ form_label(fields) }}
+            {{ form_widget(fields) }}
+            {{ form_errors(fields) }}</div>
         {% endif %}
         {% endfor %}
         <br>
