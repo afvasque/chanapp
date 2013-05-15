@@ -13,8 +13,7 @@ class EvaluacionType extends AbstractType
         $builder
             ->add('nombre')
             ->add('alcance')
-            ->add('duracion','text',array('label'  => 'Meses de evaluación',))
-            ->add('confiabilidad','textarea',array('label'  => 'Nivel de confiabilidad de los resultados que se requiere',))
+            ->add('duracion','text',array('label'  => 'Duración de la evaluación (meses)',))
             ->add('actividades', 'entity', array(
 'multiple' => true,
 'expanded' => true,

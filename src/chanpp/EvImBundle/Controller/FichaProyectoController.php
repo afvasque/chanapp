@@ -178,7 +178,6 @@ class FichaProyectoController extends Controller
             );
         } else
         {
-			//$roles = $user->getRoles();
             //return $roles[0];
             return $this->redirect($this->generateUrl('fichaproyecto_show', array('id' => $id)));
         }

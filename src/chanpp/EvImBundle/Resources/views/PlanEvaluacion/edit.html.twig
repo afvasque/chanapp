@@ -1,16 +1,47 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>Editar Plan de Evaluación</h1>
+    <h1>Editar Plan de Evaluación<p title="Un plan de evaluación puede tener asociadas múltiples evaluaciones (trimestrales, semestrales, al término del programa/proyecto, entre otras), es decir, evaluaciones de seguimiento o ex post. 
+A su vez, cada una de esas evaluaciones puede medir efectos directos y/o indirectos." id="formhelpshowtitle">?</p></h1>
      <a href="{{ path('planevaluacion_show', { 'id': entity.id }) }}" class="btn">
             Volver a Plan de Evaluación
         </a>
     <form action="{{ path('planevaluacion_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
-        {{ form_widget(edit_form) }}
+        {% for fields in edit_form %}
+          {%  if fields.vars.name != '_token' %}
+          <div class="{{ cycle(["even","odds"], loop.index) }}">
+          {% if fields.vars.name == 'objetivos' %}
+              {{ form_label(fields) }}
+              {{ form_widget(fields) }}<p title="Defina los objetivos de la evaluación, señalando qué pregunta se desea responder con la información que se obtendrá a partir de los resultados de la evaluación. En este caso es de mucha ayuda preguntarse: ¿Para qué se está haciendo la evaluación? ¿Qué tipo de resultado se espera obtener? ¿Cómo se usarán los resultados? ¿Cuál es la relevancia de la información que se espera obtener?" id="formhelp">?</p>
+              {{ form_errors(fields) }}
+          {% elseif fields.vars.name == 'destinatarios' %}
+              {{ form_label(fields) }}
+              {{ form_widget(fields) }}<p title="Detallar a continuación cuáles son los destinatarios de la información. Esto debe incluir sus características principales y sus requerimientos de información, tanto en fondo como en forma. Aquí es preciso preguntarse ¿Para quién se está haciendo la evaluación? ¿Qué información se requiere proporcionar y con qué nivel de detalle? Para estos dos últimos puntos se pueden mencionar los siguientes usos posibles para los resultados de la evaluación:
+    -Respaldar la continuidad y expansión de un programa a través de la verificación de sus impactos, como por ejemplo la disminución del consumo de energía por parte de sus participantes.
+    -Apoyar las decisiones de inversión para producir un mayor ahorro de energía.
+    -Retroalimentar el diseño de los programas o de algunas de sus componentes para aumentar su eficacia.
+    De este modo, se establece con claridad el público objetivo de la evaluación que se llevará a cabo, identificando los actores claves y el sector al cual pertenecen." id="formhelp">?</p>
+              {{ form_errors(fields) }}
+          {% elseif fields.vars.name == 'instanciasNumeroEvaluaciones' %}
+              {{ form_label(fields) }}
+              {{ form_widget(fields) }}<p title="Indique el número de evaluaciones directas e indirectas que involucra este Plan de Evaluación:" id="formhelp">?</p>
+              {{ form_errors(fields) }}
+          {% else%}
+              {{ form_label(fields) }}
+              {{ form_widget(fields) }}
+              {{ form_errors(fields) }}
+          {% endif %}
+          </div>
+        {% else %}
+            <div id="tokenform">{{ form_label(fields) }}
+            {{ form_widget(fields) }}
+            {{ form_errors(fields) }}</div>
+          {% endif %}
+        {% endfor %}
         {#  Extra #}
-        <label for="comentarioedit">Comentario de cambios realizados:</label> 
-        <textarea rows="4" cols="50" name="comentarioedit" required></textarea>
+       <div class="even"> <label for="comentarioedit">Comente a continuación qué ítem editó y por qué:</label> 
+        <textarea rows="4" cols="50" name="comentarioedit" required></textarea><div>
         <p>
             <button type="submit" class="btn btn-success">Guardar Cambios</button>
         </p>

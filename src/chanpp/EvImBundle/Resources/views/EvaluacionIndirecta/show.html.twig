@@ -1,7 +1,7 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>Sub-Evaluación Indirecta</h1>
+    <h1>Sub-Evaluación de Impacto Indirecto</h1>
     {% if entity.getEvaluacion().getDone() == false %}
     <ul class="record_actions">
         <a href="{{ path('evaluacion_show', { 'id': entity.getEvaluacion().id}) }}" class="btn">
@@ -50,7 +50,7 @@
                 <td>{{ entity.responsable }}</td>
             </tr>
             <tr>
-                <th>Plazo de la ejecución</th>
+                <th>Plazo de la ejecución (meses)</th>
                 <td>{{ entity.plazo }}</td>
             </tr>
             <tr>

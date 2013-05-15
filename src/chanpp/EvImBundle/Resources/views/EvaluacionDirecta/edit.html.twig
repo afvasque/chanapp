@@ -2,7 +2,7 @@
 
 {% block body -%}
     {% if entity.getEvaluacion().getDone() == false %}
-    <h1>Editar Evaluación Directa</h1>
+    <h1>Editar Evaluación de Impacto Directo<p title="El objetivo principal de una evaluación de impacto directo, es obtener una estimación de ahorros netos de energía o demanda alcanzado por efecto del programa o proyecto, de la forma más exacta e insesgada posible, dependiendo de la información disponible, el nivel de confiabilidad de la información requerida y de los recursos con que se cuenta para desarrollar la evaluación." id="formhelpshowtitle">?</p></h1>
     <a href="{{ path('evaluacion_show', { 'id': entity.getEvaluacion().id}) }}" class="btn">
             Volver a Evaluación
     </a>
@@ -18,7 +18,29 @@
     </ul>
     <form action="{{ path('evaluaciondirecta_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
-        {{ form_widget(edit_form) }}
+       {% for fields in edit_form %}
+         <div class="{{ cycle(["even","odds"], loop.index) }}">
+          {%  if fields.vars.name != '_token' %}
+          {% if fields.vars.name == 'resultado' %}
+          {{ form_label(fields) }}
+          {{ form_widget(fields) }}<p title="Dependiendo del tipo de energía sobre el que pretende actuar el programa, sus impactos sobre el consumo pueden ser medidos en términos de KWh, galones de combustible, unidades térmicas de gas, etc. En este campo se debe registrar el resultado de la evaluación de impacto directo, especificando en el campo "unidad de medida" el tipo de unidad que se está empleando para registrar dicho resultado. " id="formhelp">?</p>
+          {{ form_errors(fields) }}
+          {% elseif fields.vars.name == 'unidad' %}
+          <div id="unidadedirecta">{{ form_label(fields) }}
+          {{ form_widget(fields) }}<p title="Dependiendo del tipo de energía sobre el que pretende actuar el programa, sus impactos sobre el consumo pueden ser medidos en términos de KWh, galones de combustible, unidades térmicas de gas, etc. En este campo se debe registrar el resultado de la evaluación de impacto directo, especificando en el campo "unidad de medida" el tipo de unidad que se está empleando para registrar dicho resultado. " id="formhelp">?</p>
+          {{ form_errors(fields) }}</div>
+          {% else%}
+              {{ form_label(fields) }}
+              {{ form_widget(fields) }}
+              {{ form_errors(fields) }}
+          {% endif %}
+          </div>
+        {% else %}
+            <div id="tokenform">{{ form_label(fields) }}
+            {{ form_widget(fields) }}
+            {{ form_errors(fields) }}</div>
+        {% endif %}
+        {% endfor %}
         <p>
             <button type="submit" class="btn btn-success">Guardar Cambios</button>
         </p>

@@ -152,3 +152,50 @@ p
     display: block;
     float: none;
 }
+
+#formhelp{
+    float:left;
+    font-size: 12pt;
+    margin-top: 6px;
+    color: blue;
+}
+
+#formcleaning input{
+clear:both;
+}
+
+#formhelpshowtitle{
+    float:left;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    color: blue;
+}
+
+#formhelpshow{
+    float:left;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    color: blue;
+}
+
+#formhelpactivities{
+    float:left;
+    margin-top: 0px;
+    margin-bottom:8px;
+    color: blue;
+}
+
+#formhelpejes{
+    float:left;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    color: blue;
+}
+
+#unidadedirecta{
+    
+}
+
+#tokenform{
+    visibility:hidden;
+}

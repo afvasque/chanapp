@@ -14,7 +14,7 @@ class PlanEvaluacionType extends AbstractType
             ->add('objetivos')
             ->add('destinatarios','text',array('label'  => 'Destinatarios de la información',))
             ->add('instanciasNumeroEvaluaciones','integer',array('label'  => 'Número de evaluaciones asociadas a este Plan de Evaluación','data' => '0'))
-            ->add('instanciasPlazo','text',array('label'  => 'Plazo para las evaluaciones (Ejemplo "12 Meses")',))
+            ->add('instanciasPlazo','text',array('label'  => 'Plazo para la ejecución total del Plan de Evaluación (Ejemplo "12 Meses")',))
         ;
     }
 

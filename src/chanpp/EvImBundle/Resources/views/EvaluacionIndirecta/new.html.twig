@@ -1,7 +1,7 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>Creación de Sub-Evaluación Indirecta</h1>
+    <h1>Creación de Sub-Evaluación de Impacto Indirecto</h1>
      <a href="{{ path('evaluacion_show', { 'id': app.request.get('evaluacion_id')}) }}" class="btn">
             Volver a evaluación
     </a>
@@ -9,7 +9,47 @@
         Ver y Agregar Métodos de Recolección de Datos
     </a><br><br>
     <form action="{{ path('evaluacionindirecta_create', { 'evaluacion_id':app.request.get('evaluacion_id') }) }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
+        {% for fields in  form %}
+          {%  if fields.vars.name != '_token' %}
+          <div class="{{ cycle(["even","odds"], loop.index) }}">
+            {% if fields.vars.name == 'ambito' %}
+              {{ form_label(fields) }}
+              {{ form_widget(fields) }}<p title="Este campo permite seleccionar los ámbitos de acción de un programa que serán evaluados, éstos pueden ser:
+-Capacitación/ Educación
+-Información/Difusión
+-Transformaciones de mercado." id="formhelp">?</p>
+              {{ form_errors(fields) }}
+            {% elseif fields.vars.name == 'grupo_interes' %}
+              <p title="En este campo se debe definir el grupo de personas sobre la cual se hará una sub-evaluación indirecta." id="formhelp">?</p>
+              {{ form_label(fields) }}
+              {{ form_widget(fields) }}
+              {{ form_errors(fields) }}
+            {% elseif fields.vars.name == 'ejes' %}
+              <p title="Una evaluación indirecta mide el impacto del programa en uno o más de tres ejes, correspondientes a macro dimensiones analíticas, las que son:
+-Presencia: El programa debe estar presente en la mente de las personas que conforman los diferentes grupos de interés. 
+-Valoración: El programa debe tener una evaluación positiva y una predisposición favorable entre quienes forman parte de sus grupos de interés. 
+-Capacidad movilizadora: El programa debe contar con la intensidad suficiente para transferirse en las interacciones de los miembros de sus grupos de interés y motivar a estos hacia la acción concreta buscada." id="formhelpejes">?</p>
+              {{ form_label(fields) }}
+              {{ form_widget(fields) }}
+              {{ form_errors(fields) }}
+            {% elseif fields.vars.name == 'metodosrecoleccion' %}
+              <p title="La medición de cada uno de los ejes se realiza a través de diferentes métodos de recolección de datos y mediante preguntas que permitan obtener la información necesaria para cada atributo, según sea el ámbito del objetivo del programa y del grupo de interés, ya sean estos los beneficiarios del programa, instituciones, etc. 
+" id="formhelpejes">?</p>
+              {{ form_label(fields) }}
+              {{ form_widget(fields) }}
+              {{ form_errors(fields) }}
+            {% else%}
+                {{ form_label(fields) }}
+                {{ form_widget(fields) }}
+                {{ form_errors(fields) }}
+            {% endif %}
+            </div>
+          {% else %}
+         <div id="tokenform">{{ form_label(fields) }}
+            {{ form_widget(fields) }}
+            {{ form_errors(fields) }}</div>
+        {% endif %}
+        {% endfor %}
         <p>
             <button type="submit" class="btn btn-success">Crear</button>
         </p>
