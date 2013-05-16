@@ -594,30 +594,6 @@ class FichaProyecto
         return $this->modified_at;
     }
 
-
-    /**
-     * Add activities
-     *
-     * @param \chanpp\EvImBundle\Entity\Activity $activities
-     * @return FichaProyecto
-     */
-    public function addActivity(\chanpp\EvImBundle\Entity\Activity $activities)
-    {
-        $this->activities[] = $activities;
-
-        return $this;
-    }
-
-    /**
-     * Remove activities
-     *
-     * @param \chanpp\EvImBundle\Entity\Activity $activities
-     */
-    public function removeActivity(\chanpp\EvImBundle\Entity\Activity $activities)
-    {
-        $this->activities->removeElement($activities);
-    }
-
     /**
      * Add planevaluaciones
      *

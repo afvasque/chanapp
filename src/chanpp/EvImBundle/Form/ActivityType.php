@@ -16,7 +16,7 @@ class ActivityType extends AbstractType
             ->add('descripcion', null, array(
                 'label' => "Descripción de la meta"))
             ->add('resultadosEsperados', null, array(
-                'label' => "Resutados Esperados"))
+                'label' => "Resultados Esperados"))
             ->add('duracion', null, array(
                 'label' => "Duración"))
         ;

@@ -42,10 +42,19 @@
     <p title="Variables relevantes del proyecto que afectan las relaciones causales establecidas anteriormente" id="formhelpshow">?</p>
         {{ form_errors(form.variables_causales) }}
         
+        <h2> Actividades </h2>
         <p>
         El siguiente cuadro contiene las actividades del proyecto, las que son descritas mediante el llenado de 4 campos: nombre, duración, descripción de la actividad y resultados esperados de la misma.</p>
 
-        {{ form_row(form.activities) }}
+        <div class="chanpp_evimbundle_fichaproyectotype_activities" id="chanpp_evimbundle_fichaproyectotype_activities" data-prototype="{{ form_widget(form.activities.vars.prototype)|e }}">
+            {% for activity in form.activities %}
+
+                {{ form_row(activity.nombre) }}
+                {{ form_row(activity.descripcion) }}
+                {{ form_row(activity.resultadosEsperados) }}
+                {{ form_row(activity.duracion) }}
+            {% endfor %}
+        </div>
 
         {{ form_rest(form) }}   
 
@@ -79,15 +88,12 @@
                     $("[id='chanpp_evimbundle_fichaproyectotype_linea_accion']").html('');    
           $('#chanpp_evimbundle_fichaproyectotype_area_accion').change(function(){aButtonPressed();});
         });
-        </script>
 
-        </script>
-        <script type="text/javascript">
             var collectionHolder = $('div#chanpp_evimbundle_fichaproyectotype_activities');
-            var $addTagLink = $('<a href="#" class="add_tag_link" class="btn btn-success">Agregar una actividad</a>');
+            var $addTagLink = $('<a href="#" class="add_tag_link btn btn-success">Agregar una actividad</a>');
             var indexNo = 4;
             var $newFormDiv = $("<div id=borrar_actividad></div>");
-            var $removeFormA = $('<a href="#" class="btn btn-success">Borrar esta actividad</a>');
+            var $removeFormA = $('<a href="#" class="btn btn-danger">Borrar esta actividad</a>');
         </script>
 
     {% javascripts 
