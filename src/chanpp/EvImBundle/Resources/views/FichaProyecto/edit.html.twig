@@ -18,7 +18,18 @@
         {{ form_row(edit_form.desc_causales) }}
         {{ form_row(edit_form.variables_causales) }}
 
-        {{ form_row(edit_form.activities) }}
+        <h2> Actividades </h2>
+
+        <div class="chanpp_evimbundle_fichaproyectotype_activities" id="chanpp_evimbundle_fichaproyectotype_activities" data-prototype="{{ form_widget(edit_form.activities.vars.prototype)|e }}">
+            {% for activity in edit_form.activities %}
+
+                {{ form_row(activity.nombre) }}
+                {{ form_row(activity.descripcion) }}
+                {{ form_row(activity.resultadosEsperados) }}
+                {{ form_row(activity.duracion) }}
+            {% endfor %}
+        </div>
+
 
         {{ form_rest(edit_form) }}   
 
@@ -43,7 +54,7 @@
                 </tr>
             </table>
         {% endif %}
-        <a href="{{ path('indgestion_new',{ 'ficha_proyecto_id': entity.id }) }}">
+        <a href="{{ path('indgestion_new',{ 'ficha_proyecto_id': entity.id }) }}" class="btn btn-success">
                 Agregar Indicador de gestión
         </a>
 
@@ -67,7 +78,7 @@
 
    <script type="text/javascript">
         var collectionHolder = $('div#chanpp_evimbundle_fichaproyectotype_activities');
-        var $addTagLink = $('<a href="#" class="add_tag_link">Agregar una actividad</a>');
+        var $addTagLink = $('<a href="#" class="add_tag_link btn btn-success">Agregar una actividad</a>');
         var indexNo = 4;
         var $newFormDiv = $("<div id=borrar_actividad></div>");
         var $removeFormA = $('<a href="#">Borrar esta actividad</a>');
