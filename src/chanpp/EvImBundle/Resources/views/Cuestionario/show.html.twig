@@ -9,20 +9,21 @@
         <a href="{{ path('evaluacionindirecta_show', {'id' : entity.getEvaluacionindirecta().getId() }) }}" class="btn">
             Volver a evaluación indirecta
         </a>
+    {% if entity.getEvaluacionindirecta().getEvaluacion().getDone() == false%}
+        {% if entity.getDone() == true%}<a href="{{ path('cuestionario_answer', {'id': entity.id}) }}" class="btn btn-primary">
+    Link Público
+    </a>{% endif %}
+    {% if entity.getDone() == false%}
         <a href="{{ path('cuestionario_preview', {'id': entity.id, 'editoption': 1}) }}" class="btn btn-primary">
     Vista Previa
     </a>
-         {% if entity.getDone() == false%}<a href="{{ path('cuestionario_answer', {'id': entity.id}) }}" class="btn btn-primary">
-    Link Público
-    </a>{% endif %}
-    {% if entity.getEvaluacionindirecta().getEvaluacion().getDone() == false%}
         <br><br><a href="{{ path('cuestionario_preview', {'id': entity.id, 'editoption': 2}) }}" class="btn btn-warning">
     Ver y editar preguntas
     </a>
         <a href="{{ path('cuestionario_preview', {'id': entity.id, 'editoption': 3}) }}" class="btn btn-warning">
     Cambiar orden de las preguntas
     </a>
-        {% if entity.getDone() == false%}
+        
             <a href="{{ path('cuestionario_edit', { 'id': entity.id }) }}" class="btn btn-warning">
                 Cambiar Nombre Cuestionario
             </a>
