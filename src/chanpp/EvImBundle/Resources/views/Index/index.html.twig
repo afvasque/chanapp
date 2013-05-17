@@ -1,8 +1,57 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
+    <div id="breadcrumb-bar"></div>
+    <div id="navigation-sidebar">
+    <div class="nav-buttons"> 
+    {% if app.user %}   
+            <div class="btn-group">
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                Ficha de Programas
+                <span class="caret"></span>
+                 </a>
+                 <ul class="dropdown-menu">
+                <!-- dropdown menu links -->
+                <li><a href="{{ path('fichaproyecto') }}">
+        Ver Fichas de Programas
+    </a></li>
+    <li><a href="{{ path('fichaproyecto_new') }}">
+        Crear Ficha de Proyecto
+    </a></li>
+                </ul>
+            </div>
+            <br><br>
+            <a href="{{ path('resultados_all_show') }}" class="btn">
+        Resultado de Evaluaciones
+    </a>
+    {% else %}
+    <a href="{{ path('fos_user_security_login') }}" class="btn">
+        Ingresar
+    </a>
+    {% endif %}
+        </div>
+    </div>
+    <div id="main-content"> <h2>Bienvenido(a)</h2>
+    <p>Estas en la Plataforma de Gestión de la Metodología para la medición
+    y evaluación de impacto de programas de la AChEE.</p>
 
-    <h2> Bienvenido(a) a la Plataforma de Gestión de la Metodología para la medición y evaluación de impacto de programas de la AChEE </h2>
+    <strong>Esta plataforma te permite:</strong>
+    <br>
+    <p>Efectuar el seguimiento de programas de la AChEE<br>
+    Facilitar la evaluación de los programas de la AChEE.</p>
+
+    <strong>Funcionamiento de la plataforma</strong><br>
+    <br>
+    El sistema se compone de 3 etapas principales para la evaluación del
+    impacto de los programas de Eficiencia Energética:
+    <br>
+    <br>
+    Ficha del programa<br>
+    Plan de Evaluación<br>
+    Resultados<br><br>
+    Puede ingresar a éstos módulos registrándose <a href="#">aquí</a></div>
+    <!-- 
+    <h2> Bienvenido(a) a la Plataforma de Gestión de la Metodología para la medición y evaluación de impacto de programas de la AChEE</h2>
     <p>
         Esta plataforma permite:
     </p>
@@ -55,6 +104,6 @@
  	<a href="{{ path('fichaproyecto') }}" class="btn btn-primary">
         Ver Fichas de Proyecto
     </a>
-    {% endif %}
+    {% endif %}-->
  {% endblock %}
 

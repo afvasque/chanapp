@@ -10,6 +10,9 @@ root {
     display: block;
 }
 
+body{
+    color: #f3f3f4;
+}
 h1
 {
     font-size: 27px;
@@ -37,53 +40,6 @@ ul, li
     margin: 0px;
 }
 
-#header
-{
-    font-size: 30px;
-    text-align: center;
-    color: #414042;
-    border-bottom: 1px #414042 solid;
-    padding: 10px;
-    background-color: white;
-}
-
-#header a:hover
-{
-    text-decoration: none;
-    color: #F68F1E;
-}
-
-#header h1
-{
-    color: #F68F1E;
-    margin-left: 130px;
-}
-
-#logo-achee
-{
-    height: 60px;
-    float: right;
-}
-
-#footer
-{
-    text-align: center;
-    padding: 5px;
-    border-top: 1px #414042 solid;
-    background-color: white;
-}
-
-#footer p
-{
-    margin: 0px;
-}
-
-.content
-{
-    margin-bottom: 65px;
-    margin-top: 80px;
-    padding: 10px 0px;
-}
 
 #hidestupiderrors ul{
     visibility:hidden;
@@ -198,4 +154,234 @@ clear:both;
 
 #tokenform{
     visibility:hidden;
+}
+
+
+
+/* Index-Specific*/
+ #header
+{
+    font-size: 30px;
+    text-align: center;
+    color: #414042;
+    border-right: 1px #c3c3c6 solid;
+    border-left: 1px #c3c3c6 solid;
+    border-bottom: 1px #c3c3c6 solid;
+    width: 100%;
+    background-color: #0e76bc;
+    border-radius: 0px 0px 15px 15px;
+    right: 0;
+    left: 0 ;
+    position: static;
+    height: 30%;
+    box-shadow: 2px 2px 1px rgba(195, 195, 195, 0.6);
+}
+
+#header a:hover
+{
+    text-decoration: none;
+    color: #F68F1E;
+}
+
+#header h1
+{
+    color: white;
+    margin-left: 30px;
+    text-align: left;
+}
+
+#titlestrong{
+    font-weight: bold;
+    font-size: 35px;
+}
+#titleweak{
+    font-weight: normal;
+}
+
+#logo-achee
+{
+    height: 80px;
+    float: right;
+    padding-right: 40px;
+    padding-top: 10px;
+}
+
+#header-color-bars{
+
+}
+
+#footer-color-bars{
+    padding-left: 0px;
+    padding-top: 10px;
+}
+
+.footer-colorbar{
+    
+}
+.header-colorbar{
+    padding-top: 0px;
+     vertical-align: baseline;
+}
+#link_bar_header{
+    background-color: white;
+    text-align: right;
+    font-size: 35px;
+    height: 30px;
+    border-radius: 0px 0px 13px 13px;
+}
+
+.linkheader{
+    color: #0e76bc;
+    font-size: 15px;
+    float: right;
+    padding-right: 40px;
+    padding-top: 3px;
+
+}
+#footer{
+    background-color: #0e76bc;
+    text-align: left;
+    border-right: 1px #c3c3c6 solid;
+    border-left: 1px #c3c3c6 solid;
+    border-top: 1px #c3c3c6 solid;
+    border-radius: 15px 15px 0px 0px;
+    position: fixed;
+    bottom: 0;
+    width: 61%;
+    box-shadow: 3px 0px 0px rgba(195, 195, 195, 0.6);
+    margin-bottom: 0;
+}
+
+#footer-text{
+    padding-top: 10px;
+    padding-left: 20px;
+}
+
+#footer-text a{
+    text-decoration: none;
+    color: white;
+}
+
+#footer-text p
+{
+    margin: 0px;
+}
+
+/* Application-wide*/
+
+.content
+{
+    background-color: white;
+    margin-bottom: 65px;
+    margin-top: 30px;
+    padding: 0px 0px;
+    border-right: 1px #c3c3c6 solid;
+    border-left: 1px #c3c3c6 solid;
+    border-bottom: 1px #c3c3c6 solid;
+    border-top: 1px #c3c3c6 solid;
+    border-radius: 15px 15px 15px 15px;
+    color: black;
+    box-shadow: 2px -2px 2px rgba(195, 195, 195, 0.6);
+    display: block;
+    height: 100%;
+    overflow: hidden;
+    padding-bottom: 100px;
+
+}
+
+#breadcrumb-bar{
+    background-color: #d1d2d4;
+    text-align: right;
+    font-size: 35px;
+    height: 30px;
+    border-radius: 14px 14px 0px 0px;
+}
+
+#navigation-sidebar{
+    position: relative;
+    float: left;
+    padding-left: 22px;
+    padding-top: 32px;
+    width: 20%;
+}
+
+#main-content{
+    position: relative;
+    float: left;
+    width: 60%;
+    padding-left: 22px;
+    padding-top: 32px;
+
+
+}
+
+.nav-buttons{
+    padding-top: 28px;
+    padding-left: 21px;
+}
+
+/* Color bar!*/
+.colorbar-yellow{
+    width: 3.125%;
+    height: 9px;
+    background-color: #f6ee34;
+    float:left;
+     position: relative;
+}
+
+.colorbar-orange{
+    width: 3.125%;
+    height: 9px;
+    background-color: #ffc628;
+     float:left;
+     position: relative;
+}
+
+.colorbar-lightred{
+    width: 3.125%;
+    height: 9px;
+    background-color: #f04e30;
+    float:left;
+     position: relative;
+}
+
+.colorbar-red
+{
+    width: 3.125%;
+    height: 9px;
+    background-color: #ea2126;
+    float:left;
+     position: relative;
+}
+
+.colorbar-lightgreen{
+    width: 3.125%;
+    height: 9px;
+    background-color: #8cc43f;
+    float:left;
+     position: relative;
+}
+
+.colorbar-green{
+    width: 3.125%;
+    height: 9px;
+    background-color: #38b44b;
+    float:left;
+     position: relative;
+}
+
+.colorbar-blue{
+    width: 3.125%;
+    height: 9px;
+    background-color: #0e75ba;
+    float:left;
+     position: relative;
+}
+
+.colorbar-purple{
+    width: 3.125%;
+    height: 9px;
+    background-color: #28388e;
+    float:left;
+     position: relative;
 }
