@@ -2,52 +2,7 @@
 
 {% block body -%}
     <div id="breadcrumb-bar"></div>
-    <div id="navigation-sidebar">
-    <div class="nav-buttons"> 
-    {% if app.user %}
-        {% if is_granted("ROLE_ADMIN") %}
-         <div class="btn-group">
-                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                Administración
-                <span class="caret"></span>
-                 </a>
-                 <ul class="dropdown-menu">
-                    <!-- dropdown menu links -->
-                    <li><a href="{{ path('fos_user_registration_register') }}" class="btn btn-primary">
-                      Agregar Usuario
-                     </a></li>
-                </ul>
-        </div> <br><br>
-        {% endif %}
-        {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_PLANIFICADOR") or is_granted("ROLE_EVALUADOR") or is_granted("ROLE_PLANIFICADOR")%}
-            <div class="btn-group">
-                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                Ficha de Programas
-                <span class="caret"></span>
-                 </a>
-                 <ul class="dropdown-menu">
-                <!-- dropdown menu links -->
-                <li><a href="{{ path('fichaproyecto') }}">
-        Ver Fichas de Programas
-        </a></li>
-        {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_PLANIFICADOR") %}
-            <li><a href="{{ path('fichaproyecto_new') }}">
-                Crear Ficha de Proyecto
-            </a></li>
-        {% endif %}
-                    </ul>
-                </div>
-                <br><br>{% endif %}
-        <a href="{{ path('resultados_all_show') }}" class="btn">
-            Resultado de Evaluaciones
-        </a>
-    {% else %}
-    <a href="{{ path('fos_user_security_login') }}" class="btn">
-        Ingresar
-    </a>
-    {% endif %}
-        </div>
-    </div>
+    {% include 'navbar.html.twig' %}
     <div id="main-content"><div class="main-content-title"><h2>Bienvenido(a)</h2></div>
     <p>Estas en la Plataforma de Gestión de la Metodología para la medición
     y evaluación de impacto de programas de la AChEE.</p>
@@ -67,13 +22,5 @@
     Plan de Evaluación<br>
     Resultados<br><br>
     Puede ingresar a éstos módulos registrándose <a href="#">aquí</a></div>
-
-    
- 	{% if is_granted("ROLE_ADMIN") or is_granted("ROLE_PLANIFICADOR") or is_granted("ROLE_EVALUADOR") or is_granted("ROLE_PLANIFICADOR")%}
-     <h2> Área de Evaluación </h2>
- 	<a href="{{ path('fichaproyecto') }}" class="btn btn-primary">
-        Ver Fichas de Proyecto
-    </a>
-    {% endif %}
  {% endblock %}
 

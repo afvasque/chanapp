@@ -1,6 +1,16 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
+<div id="breadcrumb-bar"></div>
+    <div id="navigation-sidebar">
+      <div class="nav-buttons"></div>
+    </div>
+    <div id="main-content">
+      <div class="main-content-title">
+        <h2>Bienvenido(a)</h2>
+      </div>
+    </div> 
+
     <h1>Editar Plan de Evaluación<p title="Un plan de evaluación puede tener asociadas múltiples evaluaciones (trimestrales, semestrales, al término del programa/proyecto, entre otras), es decir, evaluaciones de seguimiento o ex post. 
 A su vez, cada una de esas evaluaciones puede medir efectos directos y/o indirectos." id="formhelpshowtitle">?</p></h1>
      <a href="{{ path('planevaluacion_show', { 'id': entity.id }) }}" class="btn">

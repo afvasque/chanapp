@@ -1,0 +1,54 @@
+<div id="navigation-sidebar">
+    <div class="nav-buttons"> 
+      {% if app.user %}
+          <div class="accordion" id="accordion2">
+              {% if is_granted("ROLE_ADMIN") %}
+                 <div class="accordion-group">
+                    <div class="accordion-heading">
+                      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                        <i class="icon-chevron-down"></i> Administración
+                      </a>
+                    </div>
+                    <div id="collapseOne" class="accordion-body collapse">
+                      <div class="accordion-inner">
+                       <a href="{{ path('fos_user_registration_register') }}">Agregar Usuario</a>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+              {% endif %}
+              {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_PLANIFICADOR") or is_granted("ROLE_EVALUADOR") or is_granted("ROLE_PLANIFICADOR")%}
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                        <i class="icon-chevron-down"></i> Ficha de Programas</a>
+                    </div>
+                    <div id="collapseTwo" class="accordion-body collapse">
+                      <div class="accordion-inner">
+                        <a href="{{ path('fichaproyecto') }}">Ver Fichas</a>
+                        {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_PLANIFICADOR") %}
+                          <hr>
+                          <a href="{{ path('fichaproyecto_new') }}">Crear Ficha</a>
+                    {% endif %}
+                      </div>
+                  </div>
+                </div>
+              {% endif %}
+              <br>
+              <div class="accordion-group">
+                  <div class="accordion-heading">
+                    <a class="accordion-toggle"  href="{{ path('resultados_all_show') }}">
+                       Resultado de Evaluaciones</a>
+                    </div>
+              </div>
+            {% else %}
+            <div class="accordion-group">
+                  <div class="accordion-heading">
+                       <a class="accordion-toggle" href="{{ path('fos_user_security_login') }}" class="btn">Ingresar</a>
+                    </div>
+            </div>
+            
+            {% endif %}
+            </div>
+</div>
+</div>

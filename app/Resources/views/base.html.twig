@@ -59,7 +59,7 @@
                              <div class="linkheader"><a href="{{ path('fos_user_security_logout') }}">Desconectarse</a></div>
                              {% else %}
                              <div class="linkheader"><a href="{{ path('fos_user_security_login') }}">Ingresar</a></div>
-                            <div class="linkheader"><a href="{{ app.request.getBaseURL() }}/register">Registrarse</a></div>
+                            <div class="linkheader"><a href="{{ path('fos_user_registration_register') }}">Registrarse</a></div>
                              {% endif %}
                         </div>
                     </div>
