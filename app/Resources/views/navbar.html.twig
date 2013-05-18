@@ -41,14 +41,13 @@
                        Resultado de Evaluaciones</a>
                     </div>
               </div>
-            {% else %}
-            <div class="accordion-group">
-                  <div class="accordion-heading">
-                       <a class="accordion-toggle" href="{{ path('fos_user_security_login') }}" class="btn">Ingresar</a>
-                    </div>
-            </div>
-            
-            {% endif %}
-            </div>
-</div>
+      </div>
+      {% else %}
+      <div class="accordion-group">
+          <div class="accordion-heading">
+               <a class="accordion-toggle" href="{{ path('fos_user_security_login') }}" class="btn">Ingresar</a>
+          </div>
+      </div> 
+      {% endif %}
+    </div>
 </div>
