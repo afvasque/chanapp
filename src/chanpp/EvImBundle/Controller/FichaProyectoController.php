@@ -29,13 +29,18 @@ class FichaProyectoController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        //Chequeamos que tenga al menos un rol (no puede acceder gente con el link de evaluacion)
+        if(is_object($this->container->get('security.context')->getToken()->getUser()))
+        {
+            $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('chanppEvImBundle:FichaProyecto')->findAll();
+            $entities = $em->getRepository('chanppEvImBundle:FichaProyecto')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+            return array(
+                'entities' => $entities,
+            );
+        }
+        return $this->redirect($this->generateUrl('chanpp_index'));
     }
 
     /**
@@ -191,21 +196,28 @@ class FichaProyectoController extends Controller
      */
     public function showAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        if(is_object($this->container->get('security.context')->getToken()->getUser()))
+        {
+            $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('chanppEvImBundle:FichaProyecto')->find($id);
+            $entity = $em->getRepository('chanppEvImBundle:FichaProyecto')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find FichaProyecto entity.');
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find FichaProyecto entity.');
+            }
+            $planevaluaciones =  $entity->getPlanevaluaciones();
+            $deleteForm = $this->createDeleteForm($id);
+
+            return array(
+                'entity'      => $entity,
+                'delete_form' => $deleteForm->createView(),
+                'planevaluaciones' => $planevaluaciones,
+            );
         }
-        $planevaluaciones =  $entity->getPlanevaluaciones();
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-            'planevaluaciones' => $planevaluaciones,
-        );
+        else
+        {
+            return $this->redirect($this->generateUrl('chanpp_index'));
+        }
     }
 
     /**
@@ -219,7 +231,7 @@ class FichaProyectoController extends Controller
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
 		$roles = $user->getRoles();
-        if($roles[0] == "ROLE_SUPER_ADMIN" or $roles[0] == "ROLE_ADMIN" or $roles[0] == "ROLE_ADMIN")
+        if($roles[0] == "ROLE_SUPER_ADMIN" or $roles[0] == "ROLE_ADMIN" or $roles[0] == "ROLE_PLANIFICADOR")
         {
             $em = $this->getDoctrine()->getManager();
 

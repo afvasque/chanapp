@@ -26,13 +26,19 @@ class MetaController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        //Chequeamos que tenga al menos un rol (no puede acceder gente con el link de evaluacion)
+        if(is_object($this->container->get('security.context')->getToken()->getUser()))
+        {
+            $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('chanppEvImBundle:Meta')->findAll();
+            $entities = $em->getRepository('chanppEvImBundle:Meta')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+            return array(
+                'entities' => $entities,
+            );
+        }
+        else
+            return $this->redirect($this->generateUrl('fichaproyecto'));
     }
 
     /**

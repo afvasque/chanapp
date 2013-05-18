@@ -27,13 +27,18 @@ class IndGestionController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        //Chequeamos que tenga al menos un rol (no puede acceder gente con el link de evaluacion)
+        if(is_object($this->container->get('security.context')->getToken()->getUser()))
+        {
+            $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('chanppEvImBundle:IndGestion')->findAll();
+            $entities = $em->getRepository('chanppEvImBundle:IndGestion')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+            return array(
+                'entities' => $entities,
+            );
+        }
+            return $this->redirect($this->generateUrl('chanpp_index'));
     }
 
     /**

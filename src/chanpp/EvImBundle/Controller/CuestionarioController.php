@@ -32,13 +32,18 @@ class CuestionarioController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        //Chequeamos que tenga al menos un rol (no puede acceder gente con el link de evaluacion)
+        if(is_object($this->container->get('security.context')->getToken()->getUser()))
+        {
+            $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('chanppEvImBundle:Cuestionario')->findAll();
+            $entities = $em->getRepository('chanppEvImBundle:Cuestionario')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+            return array(
+                'entities' => $entities,
+            );
+        }
+        return $this->redirect($this->generateUrl('chanpp_index'));
     }
 
     /**
@@ -50,34 +55,44 @@ class CuestionarioController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity  = new Cuestionario();
-        $form = $this->createForm(new CuestionarioType(), $entity);
-        $form->bind($request);
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $roles = $user->getRoles();
+        if($roles[0] == "ROLE_SUPER_ADMIN" or $roles[0] == "ROLE_ADMIN" or $roles[0] == "ROLE_PLANIFICADOR" or 
+            $roles[0] == "ROLE_EVALUADOR")
+        {
+            $entity  = new Cuestionario();
+            $form = $this->createForm(new CuestionarioType(), $entity);
+            $form->bind($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            #Get Evaluación Indirecta
-            $evaluacionid =  $request->query->get('evaluacion_id');
-            $evaluacion  = $em->getRepository('chanppEvImBundle:EvaluacionIndirecta')->find($evaluacionid);
-            if($evaluacion->getCuestionario())
-            {
-                #Evaluación already has a cuestionario
-                return $this->redirect($this->generateUrl('evaluacionindirecta_show', array('id' => $evaluacion->getId())));
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                #Get Evaluación Indirecta
+                $evaluacionid =  $request->query->get('evaluacion_id');
+                $evaluacion  = $em->getRepository('chanppEvImBundle:EvaluacionIndirecta')->find($evaluacionid);
+                if($evaluacion->getCuestionario())
+                {
+                    #Evaluación already has a cuestionario
+                    return $this->redirect($this->generateUrl('evaluacionindirecta_show', array('id' => $evaluacion->getId())));
+                }
+                $entity->setEvaluacionindirecta($evaluacion);
+                $evaluacion->setCuestionario($entity);
+                $entity->setDone(false);
+                $em->persist($evaluacion);
+                $em->persist($entity);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('cuestionario_show', array('id' => $entity->getId())));
             }
-            $entity->setEvaluacionindirecta($evaluacion);
-            $evaluacion->setCuestionario($entity);
-            $entity->setDone(false);
-            $em->persist($evaluacion);
-            $em->persist($entity);
-            $em->flush();
 
-            return $this->redirect($this->generateUrl('cuestionario_show', array('id' => $entity->getId())));
+            return array(
+                'entity' => $entity,
+                'form'   => $form->createView(),
+            );
         }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        else
+        {
+            return $this->redirect($this->generateUrl('cuestionario'));
+        }
     }
 
     /**
@@ -89,13 +104,21 @@ class CuestionarioController extends Controller
      */
     public function newAction()
     {
-        $entity = new Cuestionario();
-        $form   = $this->createForm(new CuestionarioType(), $entity);
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $roles = $user->getRoles();
+        if($roles[0] == "ROLE_SUPER_ADMIN" or $roles[0] == "ROLE_ADMIN" or $roles[0] == "ROLE_PLANIFICADOR" or 
+            $roles[0] == "ROLE_EVALUADOR")
+        {
+            $entity = new Cuestionario();
+            $form   = $this->createForm(new CuestionarioType(), $entity);
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+            return array(
+                'entity' => $entity,
+                'form'   => $form->createView(),
+            );
+        }
+        else
+            return $this->redirect($this->generateUrl('cuestionario'));
     }
 
     /**
@@ -107,28 +130,33 @@ class CuestionarioController extends Controller
      */
     public function showAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        if(is_object($this->container->get('security.context')->getToken()->getUser()))
+        {
+            $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('chanppEvImBundle:Cuestionario')->find($id);
+            $entity = $em->getRepository('chanppEvImBundle:Cuestionario')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Cuestionario entity.');
-        }
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Cuestionario entity.');
+            }
 
-        $deleteForm = $this->createDeleteForm($id);
-        #We get the current question number (which means, the number the next question will have)
-        $question_number = count($entity->getPreguntasdesarrollo()) + count($entity->getPreguntasalternativa()) +1;
-        $preguntasdesarrollo = $entity->getPreguntasdesarrollo();
-        $preguntasalternativa = $entity->getPreguntasalternativa();
-        $respuestas = $entity->getRespuestas();
-        return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-            'pregunta_numero' => $question_number,
-            'preguntasdesarrollo' => $preguntasdesarrollo,
-            'preguntasalternativa' => $preguntasalternativa,
-            'respuestas' => $respuestas,
-        );
+            $deleteForm = $this->createDeleteForm($id);
+            #We get the current question number (which means, the number the next question will have)
+            $question_number = count($entity->getPreguntasdesarrollo()) + count($entity->getPreguntasalternativa()) +1;
+            $preguntasdesarrollo = $entity->getPreguntasdesarrollo();
+            $preguntasalternativa = $entity->getPreguntasalternativa();
+            $respuestas = $entity->getRespuestas();
+            return array(
+                'entity'      => $entity,
+                'delete_form' => $deleteForm->createView(),
+                'pregunta_numero' => $question_number,
+                'preguntasdesarrollo' => $preguntasdesarrollo,
+                'preguntasalternativa' => $preguntasalternativa,
+                'respuestas' => $respuestas,
+            );
+        }    
+        else
+            return $this->redirect($this->generateUrl('chanpp_index'));
     }
     
     /**
@@ -140,22 +168,28 @@ class CuestionarioController extends Controller
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        if($roles[0] == "ROLE_SUPER_ADMIN" or $roles[0] == "ROLE_ADMIN" or $roles[0] == "ROLE_PLANIFICADOR" or 
+            $roles[0] == "ROLE_EVALUADOR")
+        {
+            $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('chanppEvImBundle:Cuestionario')->find($id);
+            $entity = $em->getRepository('chanppEvImBundle:Cuestionario')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Cuestionario entity.');
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Cuestionario entity.');
+            }
+
+            $editForm = $this->createForm(new CuestionarioType(), $entity);
+            $deleteForm = $this->createDeleteForm($id);
+
+            return array(
+                'entity'      => $entity,
+                'edit_form'   => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+            );
         }
-
-        $editForm = $this->createForm(new CuestionarioType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        else 
+            return $this->redirect($this->generateUrl('cuestionario'));
     }
 
     /**
@@ -167,30 +201,36 @@ class CuestionarioController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
+        if($roles[0] == "ROLE_SUPER_ADMIN" or $roles[0] == "ROLE_ADMIN" or $roles[0] == "ROLE_PLANIFICADOR" or 
+            $roles[0] == "ROLE_EVALUADOR")
+        {
+            $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('chanppEvImBundle:Cuestionario')->find($id);
+            $entity = $em->getRepository('chanppEvImBundle:Cuestionario')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Cuestionario entity.');
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Cuestionario entity.');
+            }
+
+            $deleteForm = $this->createDeleteForm($id);
+            $editForm = $this->createForm(new CuestionarioType(), $entity);
+            $editForm->bind($request);
+
+            if ($editForm->isValid()) {
+                $em->persist($entity);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('cuestionario_show', array('id' => $id)));
+            }
+
+            return array(
+                'entity'      => $entity,
+                'edit_form'   => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+            );
         }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new CuestionarioType(), $entity);
-        $editForm->bind($request);
-
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('cuestionario_show', array('id' => $id)));
-        }
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        else
+            return $this->redirect($this->generateUrl('cuestionario'));
     }
 
     /**
@@ -201,22 +241,25 @@ class CuestionarioController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
-        $evaluacionid;
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('chanppEvImBundle:Cuestionario')->find($id);
+        if($roles[0] == "ROLE_SUPER_ADMIN" or $roles[0] == "ROLE_ADMIN" or $roles[0] == "ROLE_PLANIFICADOR" or 
+            $roles[0] == "ROLE_EVALUADOR")
+        {
+            $form = $this->createDeleteForm($id);
+            $form->bind($request);
+            $evaluacionid;
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $entity = $em->getRepository('chanppEvImBundle:Cuestionario')->find($id);
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Cuestionario entity.');
+                if (!$entity) {
+                    throw $this->createNotFoundException('Unable to find Cuestionario entity.');
+                }
+                $evaluacionid = $entity->getEvaluacionindirecta()->getId();
+                $em->remove($entity);
+                $em->flush();
             }
-            $evaluacionid = $entity->getEvaluacionindirecta()->getId();
-            $em->remove($entity);
-            $em->flush();
         }
-
-        return $this->redirect($this->generateUrl('evaluacionindirecta_show', array('id' => $evaluacionid)));
+            return $this->redirect($this->generateUrl('evaluacionindirecta_show', array('id' => $evaluacionid)));
     }
 
     /**

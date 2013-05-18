@@ -9,14 +9,6 @@
                 <th>Nombre</th>
                 <td>{{ entity.nombre }}</td>
             </tr>
-            <tr>
-                <th>Anodeadline</th>
-                <td>{{ entity.anoDeadline }}</td>
-            </tr>
-            <tr>
-                <th>Mesdeadline</th>
-                <td>{{ entity.mesDeadline }}</td>
-            </tr>
              <tr>
                 <th>Ficha Proyecto</th>
                 <td><a href="{{ path('fichaproyecto_show', { 'id': entity.getFichaProyecto.getId }) }}"> Show </a></td>

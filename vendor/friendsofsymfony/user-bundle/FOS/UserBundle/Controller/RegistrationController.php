@@ -33,10 +33,8 @@ class RegistrationController extends ContainerAware
 {
     public function registerAction(Request $request)
     {
-        $current_user = $this->container->get('security.context')->getToken()->getUser();
-        $roles = $current_user->getRoles();
-        if($roles[0] == "ROLE_SUPER_ADMIN" or $roles[0] == "ROLE_ADMIN" or $roles[0] == "ROLE_PLANIFICADOR")
-            {
+        if(is_object($this->container->get('security.context')->getToken()->getUser()))
+        {
             /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
             $formFactory = $this->container->get('fos_user.registration.form.factory');
             /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
