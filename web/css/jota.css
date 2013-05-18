@@ -1,9 +1,12 @@
 .title-actions{
 	float: right;
 	position: relative;
+	display: inline-block;
+	 padding-top: 12px; 
 }
 
 #main-content{
+	display: block;
 }
 
 #main-content h2{
@@ -11,10 +14,14 @@
 
 #main-content-title
 {
-	position: relative;
-	float: left;
+	display: block;
 }
 
 .accordion-group{
 	text-align: center;
+}
+
+.title-text{
+	position: relative;
+	float: left;
 }
