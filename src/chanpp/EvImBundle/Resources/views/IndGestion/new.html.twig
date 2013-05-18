@@ -6,8 +6,6 @@
 
     <form action="{{ path('indgestion_create') }}" method="post" {{ form_enctype(form) }}>
         {{ form_row(form.nombre) }}
-        {{ form_row(form.anoDeadline) }}
-        {{ form_row(form.mesDeadline) }}
 
         <p><b>Señale a continuación las variables o circunstancias relevantes que puedan significar un obstáculo a las metas que se espera cumplir</b></p>
         {{ form_widget(form.variables_obstaculo) }} 
@@ -42,20 +40,29 @@
         </p>
     </form>
 
-           {# <a href="{{ path('indgestion_create_add', { 'ficha_proyecto_id': entity.getFichaProyecto.id }) }}" class="btn">Agregar nuevo Indicador de Gestión</a> #}
+           
 {% block javascript %}
 
      <script type="text/javascript">
             var collectionHolder = $('div.meta');
-            var $addTagLink = $('<a href="#" class="add_tag_link btn btn-success">Agregar un Indicador de Gestión</a>');
+            var $addTagLink = $('<a href="#" class="add_tag_link btn btn-success">Agregar meta</a>');
             var indexNo = 4;
             var $newFormDiv = $("<div id=borrar_meta></div>");
-            var $removeFormA = $('<a href="#" class="btn btn-danger">Borrar este Indicador de Gestión</a>');
+            var $removeFormA = $('<a href="#" class="btn btn-danger">Borrar esta meta</a>');
+
+            $(document).ready(function() { 
+                    $("label[for='chanpp_evimbundle_indgestiontype_ficha_proyecto']").hide();
+                    $("[id='chanpp_evimbundle_indgestiontype_ficha_proyecto']").hide();     
+          
+        });
+
         </script>
 
     {% javascripts 
         '@chanppEvImBundle/Resources/public/js/addActividades.js'
     %}
+   
+
    
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}

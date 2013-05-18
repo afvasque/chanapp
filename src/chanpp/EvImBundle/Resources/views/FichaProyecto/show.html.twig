@@ -90,7 +90,7 @@
     <table class="table table-striped">
         <tr>
             <th>Indicador</th>
-            <th>{{indgest.mesDeadline}} {{indgest.anoDeadline}} </th>
+            <th>Metas</th>
             <th>Plazos (mes, año) </th>
         </tr>
         <tr>
@@ -99,7 +99,7 @@
             </td>
             <td>
                 {% for meta in indgest.metas %}
-                    {{meta.descripcion}}<br />
+                    <a href="{{ path('meta_show', { 'id': meta.id })}}">{{meta.descripcion}}</a><br />
                 {% endfor %}
             </td>
             <td>

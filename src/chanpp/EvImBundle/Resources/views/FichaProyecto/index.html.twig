@@ -9,20 +9,13 @@
                 Crear Ficha Proyecto
     </a>
     {% endif %}
+
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>Área de acción</th>
                 <th>Línea de acción</th>
-                <th>Nombre</th>
-                <th>Jefe</th>
-                <th>Duración</th>
-                <th>Diágnostico previo</th>
-                <th>Objetivo general</th>
-                <th>Objetivos específicos</th>
-                <th>Descripción</th>
-                <th>Descripción de las relaciones causales</th>
-                <th>Variables relevantes de las relaciones causales</th>
+                <th>Nombre</th>                
                 <th></th>
             </tr>
         </thead>
@@ -31,14 +24,7 @@
                 <td>{{ entity.areaaccion }}</td>
                 <td>{{ entity.lineaaccion }}</td>
                 <td>{{ entity.nombre }}</td>
-                <td>{{ entity.jefe }}</td>
-                <td>{{ entity.duracion }}</td>
-                <td>{{ entity.diagnosticoprevio }}</td>
-                <td>{{ entity.objgeneral }}</td>
-                <td>{{ entity.objsespecificos }}</td>
-                <td>{{ entity.descripcion }}</td>
-                <td>{{ entity.desccausales }}</td>
-                <td>{{ entity.variablescausales }}</td>
+                
                 <td>
                 <ul>
                         <a href="{{ path('fichaproyecto_show', { 'id': entity.id }) }}" class="btn btn-primary"  >Ver</a><br><br>

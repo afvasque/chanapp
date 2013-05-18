@@ -6,8 +6,6 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Anodeadline</th>
-                <th>Mesdeadline</th>
                 <th>Actions</th>
                 <th>Variables obstaculo</th>
             </tr>
@@ -16,8 +14,6 @@
         {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('indgestion_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.anoDeadline }}</td>
-                <td>{{ entity.mesDeadline }}</td>
                 <td>{{ entity.variablesobstaculo }}</td>
                 <td>
                 <ul>

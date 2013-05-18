@@ -46,20 +46,6 @@ class IndGestion
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="ano_deadline", type="integer")
-     */
-    private $anoDeadline;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="mes_deadline", type="string", length=10)
-     */
-    private $mesDeadline;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="variables_obstaculo", type="text")
@@ -77,51 +63,6 @@ class IndGestion
         return $this->id;
     }
 
-    /**
-     * Set anoDeadline
-     *
-     * @param integer $anoDeadline
-     * @return IndGestion
-     */
-    public function setAnoDeadline($anoDeadline)
-    {
-        $this->anoDeadline = $anoDeadline;
-    
-        return $this;
-    }
-
-    /**
-     * Get anoDeadline
-     *
-     * @return integer 
-     */
-    public function getAnoDeadline()
-    {
-        return $this->anoDeadline;
-    }
-
-    /**
-     * Set mesDeadline
-     *
-     * @param string $mesDeadline
-     * @return IndGestion
-     */
-    public function setMesDeadline($mesDeadline)
-    {
-        $this->mesDeadline = $mesDeadline;
-    
-        return $this;
-    }
-
-    /**
-     * Get mesDeadline
-     *
-     * @return string 
-     */
-    public function getMesDeadline()
-    {
-        return $this->mesDeadline;
-    }
 
     /**
      * Add metas
