@@ -2,56 +2,30 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Sistema de Evaluación de Programas AChEE{% endblock %}</title>
-        {% block stylesheets %}
-        {% stylesheets
-        filter='cssrewrite' debug=false 
-        'css/bootstrap.css'
-        'css/bootstrap-responsive.css'
-        'css/general.css'
-         -%}
-                <link href="{{asset_url}}" rel="stylesheet" type="text/css"/>
-         {% endstylesheets %}
-         {% endblock %}
     </head>
     <body>
-        {% block header %}
-            <div id="header" class="navbar navbar-fixed-top">
-                <div class="container">
-                    <a href="http://www.acee.cl"><img id="logo-achee" src="{{ asset('img/logo.png') }}" alt="logo"/></a>
-                    <a href="{{ app.request.getBaseURL() }}"><h1>Sistema de evaluación de programas AChEE</h1></a>
-                </div>
-            </div>
-        {% endblock %}
-        <div class="content login-centered">
-            <div>
-                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-                    <a href="{{ path('fos_user_security_logout') }}">
-                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                    </a>
-                {% else %}
-                    <!--<a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>-->
-                {% endif %}
-            </div>
-            {% for type, messages in app.session.flashbag.all() %}
-                {% for message in messages %}
-                    <div class="flash-{{ type }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endfor %}
-
-            <div>
-                {% block fos_user_content %}
-                {% endblock fos_user_content %}
-            </div>
+        <div>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
         </div>
-        {% block footer %}
-            <div id="footer" class="navbar navbar-fixed-bottom">
-                <strong>Agencia Chilena de Eficiencia Energética (AChEE)</strong>
-                <p>Monseñor Sótero Sanz n.°221. Providencia. Santiago - Chile. Email: <a href="mailto:info@acee.cl">info@acee.cl</a> / Teléfono: (56 2) 2571 2200</p>
-            </div>
-        {% endblock %}
+
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="flash-{{ type }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        <div>
+            {% block fos_user_content %}
+            {% endblock fos_user_content %}
+        </div>
     </body>
 </html>
