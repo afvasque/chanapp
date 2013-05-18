@@ -2,13 +2,26 @@
 {% block body -%}
     <div id="breadcrumb-bar">
         <div class="breadcrumb-text">
-            <a href="#">Home</a><i class="icon-chevron-right"></i><a href="#">Library</a> <span class="divider">/</span>
+            <a href="#">Ficha de Programa "{{ entity.getFichaproyecto().nombre }}"</a>
+            <i class="icon-chevron-right"></i>
+            Ver Plan de Evaluación
         </div>
     </div>
-    {% include 'navbar.html' %}
+    {% include 'navbar.html.twig' %}
     <div id="main-content">
         <div class="main-content-title">
-            <h2>Bienvenido(a)</h2>
+            <h2>Plan de Evaluación</h2>
+            <div class="title-actions">
+                <div class="btn-group">
+                      <button class="btn">Elegir una Acción</button>
+                      <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <!-- dropdown menu links -->
+                      </ul>
+                </div>
+            </div>
         </div>
     </div>
 

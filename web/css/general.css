@@ -320,7 +320,12 @@ clear:both;
 }
 .breadcrumb-text
 {
-    float:left;
+     padding-top: 5px; 
+     padding-left: 30px; 
+}
+
+.breadcrumb-text a{
+    color: black;
 }
 
 #navigation-sidebar{
