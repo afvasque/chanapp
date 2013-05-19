@@ -56,7 +56,7 @@ onclick="return confirm('¿Seguro que desea marcar la evaluación como lista? Es
                             {% if entity.getDone() == false%}
                                 <li>
                                     <a href="{{ path('evaluaciondirecta_new', { 'evaluacion_id': entity.id }) }}">
-                                        Agregar Evaluación Directa
+                                        Agregar<br>Evaluación Directa
                                     </a>
                                 </li>
                             {% endif %}
@@ -64,16 +64,10 @@ onclick="return confirm('¿Seguro que desea marcar la evaluación como lista? Es
                         {% if entity.getDone() == false%}
                         <li>
                             <a href="{{ path('evaluacionindirecta_new', { 'evaluacion_id': entity.id }) }}">
-                                Agregar Sub-Evaluación de Impacto Indirecto
+                                Agregar<br>Sub-Evaluación de<br>Impacto Indirecto
                             </a>
                         </li>
                         {% endif %}
-                        <li>
-                             <a href="{{ path('recurso_new', { 'planevaluacion_id': entity.id }) }}" >Agregar Recurso</a>   
-                        </li>
-                        <li>
-                            <a href="{{ path('evaluacion_new', { 'planevaluacion_id': entity.id }) }}" >Agregar Evaluación</a>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -81,81 +75,42 @@ onclick="return confirm('¿Seguro que desea marcar la evaluación como lista? Es
     {% if app.request.get('error') is defined %}
     <h2>{{ app.request.get('error') }}</h2>
     {% endif%}
+        {% if entity.getDone()%}
+        <div class="alert alert-error">
+         <strong>Alerta :</strong> Esta Evaluación ha sido cerrada y no puede ser modificada.
         </div>
-        <!-- Final Div -->
-    </div>
-
-    {% if entity.getDone() == false%}
-    <a href="{{ path('evaluacion_mark_done', { 'id': entity.id }) }}" class="btn btn-warning" 
-onclick="return confirm('¿Seguro que desea marcar la evaluación como lista? Esta acción es irreversible.')">
-     Marcar como lista
-    </a><br><br>
-    {% if entity.getDone() == false%}
-        {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
-        <form action="{{ path('evaluacion_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminar?')">Eliminar Evaluación</button>
-        </form>
-        {% endif%}
-     {% endif %}
-    {% endif %}
+        {% endif %}
+        </div>
 
 
-
-
- <h1>Evaluación "{{ entity.nombre }}"<p title="Un plan de evaluación puede tener asociadas múltiples evaluaciones (trimestrales, semestrales, al término del programa/proyecto, entre otras), es decir, evaluaciones de seguimiento o ex post. A continuación se detallan todas las evaluaciones asociadas a este Plan de Evaluación." id="formhelpshowtitle">?</p></h1>
-     <a href="{{ path('planevaluacion_show', { 'id': planevaluacion.getId()}) }}" class="btn">
-         Volver al Plan de Evaluación
-    </a>
-    {# Poner if hay resultados #}
-    <a href="{{ path('evaluacion_resultados_show', { 'id': entity.id}) }}" class="btn btn-primary">
-        Ver Resultados
-    </a>
-   <br><br>
-    {% if entity.getDone() == false%}
-    <a href="{{ path('evaluacion_edit', { 'id': entity.id }) }}" class="btn btn-warning">
-        Editar Evaluación
-    </a>
-    {% endif %}
-    
-    {% if entity.getDone() == false%}
-    <a href="{{ path('evaluacion_mark_done', { 'id': entity.id }) }}" class="btn btn-warning" 
-onclick="return confirm('¿Seguro que desea marcar la evaluación como lista? Esta acción es irreversible.')">
-     Marcar como lista
-    </a><br><br>{% if entity.getDone() == false%}
-        {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
-        <form action="{{ path('evaluacion_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminar?')">Eliminar Evaluación</button>
-        </form>
-        {% endif%}
-     {% endif %}
-    {% endif %}
-    <table class="table table-striped">
+        <!-- Info table -->
+        <table class="table table-bordered infotable">
         <tbody>
-             <tr>
-                <th>Nombre</th>
+            <tr>
+                <th class="tableinfohead">Nombre</th>
                 <td>{{ entity.nombre }}</td>
             </tr>
             <tr>
-                <th>Alcance<p title="En este ítem se especifican la(s) pregunta(s) clave(s) que se desea responder con la evaluación." id="formhelpshow">?</p></th>
+                <th class="tableinfohead">Alcance<a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>En este ítem se especifican la(s) pregunta(s) clave(s) que se desea responder con la evaluación.</span></a></th>
                 <td>{{ entity.alcance }}</td>
             </tr>
             <tr>
-                <th>Duración</th>
+                <th class="tableinfohead">Duración</th>
                 <td>{{ entity.duracion }}</td>
+            </tr>
             </tr>
         </tbody>
     </table>
-    <hr>
-    {# Actividades#}
-    <h4>Actividades a evaluar</h4>
+
+     {# Actividades#}
+    <h3>Actividades a evaluar</h3>
         {% if actividades is empty%}
-        <br>No hay actividades
+            No hay actividades asociadas a esta Evaluación.
+            {% if entity.getDone() == false%}
+                             Puede agregar una <a href="{{ path('evaluacion_edit', { 'id': entity.id }) }}">aquí.</a>
+                        {% endif %}
           {% else %}
-         <table class="table table-striped">
+         <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed sortable">
             <thead>
                 <tr>
                     <th>Nombre</th>
@@ -183,14 +138,12 @@ onclick="return confirm('¿Seguro que desea marcar la evaluación como lista? Es
             </tbody>
         </table>
     {% endif %}
-    
 
-    {# Fin Aspectos#}
     <hr>
     {#Evaluación Directa#}
-    <h4>Evaluación de Impacto Directo<p title="El objetivo principal de una evaluación de impacto directo, es obtener una estimación de ahorros netos de energía o demanda alcanzado por efecto del programa o proyecto, de la forma más exacta e insesgada posible, dependiendo de la información disponible, el nivel de confiabilidad de la información requerida y de los recursos con que se cuenta para desarrollar la evaluación." id="formhelpshowtitle">?</p></h4>
+    <h3>Evaluación de Impacto Directo<a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>El objetivo principal de una evaluación de impacto directo, es obtener una estimación de ahorros netos de energía o demanda alcanzado por efecto del programa o proyecto, de la forma más exacta e insesgada posible, dependiendo de la información disponible, el nivel de confiabilidad de la información requerida y de los recursos con que se cuenta para desarrollar la evaluación.</span></a></h3>
     {% if evaluaciondirecta %}
-                  <table class="table table-striped">
+        <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed sortable">
         <thead>
             <tr>
                 <th>Resultado</th>
@@ -219,6 +172,18 @@ onclick="return confirm('¿Seguro que desea marcar la evaluación como lista? Es
     {% endif %}
     {% endif %}
     {#Fin Evaluación Directa#}
+
+
+
+    <!-- Final Div -->
+    </div>
+
+  
+   
+    
+
+    {# Fin Aspectos#}
+    
     <hr>
     {#Evaluaciones Indirectas#}
     <h4>Sub-Evaluaciones de Impacto Indirecto<p title="Si lo que se requiere es medir los efectos indirectos de un programa, es decir, medir los efectos que no pueden ser directamente traducidos en energía ahorrada, corresponde realizar una evaluación de impacto indirecto. 
