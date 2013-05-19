@@ -1,38 +1,46 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-
+{% block title %}Nueva Evaluación{% endblock %}
 {% block body -%}
-    <h1>Creación de Evaluación <p title="Esta evaluación puede ser de seguimiento (trimestral, semestral, entre otras) o ex post (al término del programa/proyecto). 
-A su vez, en esta evaluación se puede medir efectos directos y/o indirectos." id="formhelpshowtitle">?</p></h1>
-    <a href="{{ path('planevaluacion_show', { 'id': app.request.get('planevaluacion_id')}) }}" class="btn">
-         Volver al plan de evaluación
-    </a>
+
+  <div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('planevaluacion_show', { 'id': app.request.get('planevaluacion_id')}) }}">Plan de Evaluación</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Crear Evaluación
+        </div>
+    </div>
+    {% include 'navbar.html.twig' %}
+    <div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Crear Evaluación</h2>
+            </div>
+            <a href="#" class="htooltip"><img id="icon-help" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Esta evaluación puede ser de seguimiento (trimestral, semestral, entre otras) o ex post (al término del programa/proyecto).<br>
+A su vez, en esta evaluación se puede medir efectos directos y/o indirectos.</span></a>
+        </div>
+
+        <div class="createedit-form">
     <form action="{{ path('evaluacion_create', { 'planevaluacion_id':app.request.get('planevaluacion_id') }) }}" method="post" {{ form_enctype(form) }}>
-        {% for fields in form %}
-          {%  if fields.vars.name != '_token' %}
-           <div class="{{ cycle(["even","odds"], loop.index) }}">
-            {% if fields.vars.name == 'alcance' %}
-              {{ form_label(fields) }}
-              {{ form_widget(fields) }}<p title="Identificar en este ítem la(s) pregunta(s) clave(s) que desea responder con la evaluación" id="formhelp">?</p>
-              {{ form_errors(fields) }}
-            {% elseif fields.vars.name == 'actividades' %}
-              <p title="Seleccionar las actividades que serán sometidas a evaluación" id="formhelpactivities">?</p>
-              {{ form_label(fields) }}
-              {{ form_widget(fields) }}
-              {{ form_errors(fields) }}
-            {% else%}
-                {{ form_label(fields) }}
-                {{ form_widget(fields) }}
-                {{ form_errors(fields) }}
-            {% endif %}
-          </div>
-        {% else %}
-         <div id="tokenform">{{ form_label(fields) }}
-            {{ form_widget(fields) }}
-            {{ form_errors(fields) }}</div>
-        {% endif %}
-        {% endfor %}
-        <p>
+
+      {{ form_row(form.nombre) }}
+
+      {{ form_label(form.alcance) }}
+      {{ form_widget(form.alcance) }} <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Identificar en este ítem la(s) pregunta(s) clave(s) que desea responder con la evaluación.</span></a>
+      {{ form_errors(form.alcance) }}
+
+      {{ form_row(form.duracion) }}
+
+      {{ form_label(form.actividades) }}<a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Seleccionar las actividades que serán sometidas a evaluación.</span></a>
+      {{ form_widget(form.actividades) }} 
+      {{ form_errors(form.actividades) }}
+
+      {{ form_rest(form) }}  
+      <p>
             <button type="submit" class="btn btn-success">Crear</button>
         </p>
-    </form>
+       </form>
+
+
+
+    </div>
 {% endblock %}

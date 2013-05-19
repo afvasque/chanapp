@@ -133,7 +133,7 @@ De este modo, se establece con claridad el público objetivo de la evaluación q
         <thead>
             <tr class="tableinfohead">
                  <th>Nombre</th>
-                <th>Alcance<a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>En este ítem se especifican la(s) pregunta(s) clave(s) que se desea responder con la evaluación</span></a><!-- <p title="" id="formhelpshow">?</p>--></th>
+                <th>Alcance<a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>En este ítem se especifican la(s) pregunta(s) clave(s) que se desea responder con la evaluación</span></a></th>
                 <th>Duración</th>
                 <th></th>
             </tr>
@@ -165,5 +165,15 @@ De este modo, se establece con claridad el público objetivo de la evaluación q
     {% endif %}
     <!-- Final Div-->
 </div>
+    {% block javascript %}
+        <script type="text/javascript">
+            function confirmDelete() {
+                if(confirm('¿Seguro que desea eliminar?'))
+                {
+                    document.getElementById('delete-form').submit();
+                }
+            }
+        </script>
+    {% endblock %}
 {% endblock %}
 

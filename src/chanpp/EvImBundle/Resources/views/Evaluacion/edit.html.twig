@@ -1,52 +1,95 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-
+{% block title %}Editar Evaluación {{ entity.nombre }}{% endblock %}
 {% block body -%}
-    {% if entity.done == false%}
-    <h1>Editar Evaluación : {{entity.nombre}} <p title="Esta evaluación puede ser de seguimiento (trimestral, semestral, entre otras) o ex post (al término del programa/proyecto). 
-A su vez, en esta evaluación se puede medir efectos directos y/o indirectos." id="formhelpshowtitle">?</p></h1>
-    <a href="{{ path('evaluacion_show', { 'id': entity.id }) }}" class="btn">
-            Volver a Evaluación
-        </a><br><br>
-     <ul class="record_actions">
-        <li>
-            <form action="{{ path('evaluacion_delete', { 'id': entity.id }) }}" method="post">
-                <input type="hidden" name="_method" value="DELETE" />
-                {{ form_widget(delete_form) }}
-                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminar?')">Eliminar</button>
-            </form>
-        </li>
-    </ul>
-    <form action="{{ path('evaluacion_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-        <input type="hidden" name="_method" value="PUT" />
-        {% for fields in edit_form %}
-          {%  if fields.vars.name != '_token' %}
-          <div class="{{ cycle(["even","odds"], loop.index) }}">
-            {% if fields.vars.name == 'alcance' %}
-              {{ form_label(fields) }}
-              {{ form_widget(fields) }}<p title="Identificar en este ítem la(s) pregunta(s) clave(s) que desea responder con la evaluación" id="formhelp">?</p>
-              {{ form_errors(fields) }}
-            {% elseif fields.vars.name == 'actividades' %}
-              <p title="Seleccionar las actividades que serán sometidas a evaluación" id="formhelpactivities">?</p>
-              {{ form_label(fields) }}
-              {{ form_widget(fields) }}
-              {{ form_errors(fields) }}
-            {% else%}
-                {{ form_label(fields) }}
-                {{ form_widget(fields) }}
-                {{ form_errors(fields) }}
-            {% endif %}
+
+    <div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('fichaproyecto_show', { 'id': entity.getPlanevaluacion().getFichaproyecto().id }) }}">Ficha de Programa</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            <a href="{{ path('planevaluacion_show', { 'id': entity.getPlanevaluacion().id  }) }}">Plan de Evaluación</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            <a href="{{ path('evaluacion_show', { 'id': entity.id }) }}">Evaluación</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Editar Evaluación
+        </div>
+    </div>
+    {% include 'navbar.html.twig' %}
+    <div id="main-content">
+      {% if entity.done == false%}
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Editar Evaluación</h2>
             </div>
-        {% else %}
-         <div id="tokenform">{{ form_label(fields) }}
-            {{ form_widget(fields) }}
-            {{ form_errors(fields) }}</div>
-        {% endif %}
-        {% endfor %}
-        <p>
+            <a href="#" class="htooltip"><img id="icon-help" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Esta evaluación puede ser de seguimiento (trimestral, semestral, entre otras) o ex post (al término del programa/proyecto).<br> 
+A su vez, en esta evaluación se puede medir efectos directos y/o indirectos.</span></a>
+        <div class="title-actions">
+               {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
+                <div class="btn-group">
+                    <button class="btn">Elegir una Acción</button>
+                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <!-- dropdown menu links -->
+                        <li>
+                          <form action="{{ path('evaluacion_delete', { 'id': entity.id }) }}" method="post" class="dropdown-menu-form" id="delete-form">
+                              <input type="hidden" name="_method" value="DELETE" />
+                              {{ form_widget(delete_form) }}
+                              <a type="submit" onclick="confirmDelete()" class="dropdown-menu-link">Eliminar</a>
+                          </form>
+                      </li>
+                    </ul>
+                </div>
+                {% endif%}
+            </div>
+        </div>
+        <div class="createedit-form">
+    <form action="{{ path('evaluacion_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+      <input type="hidden" name="_method" value="PUT" />
+
+      {{ form_row(form.nombre) }}
+
+      {{ form_label(form.alcance) }}
+      {{ form_widget(form.alcance) }} <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Identificar en este ítem la(s) pregunta(s) clave(s) que desea responder con la evaluación.</span></a>
+      {{ form_errors(form.alcance) }}
+
+      {{ form_row(form.duracion) }}
+
+      {{ form_label(form.actividades) }}<a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Seleccionar las actividades que serán sometidas a evaluación.</span></a>
+      {{ form_widget(form.actividades) }} 
+      {{ form_errors(form.actividades) }}
+
+
+
+
+      {{ form_rest(form) }}  
+      <p>
             <button type="submit" class="btn btn-success">Guardar Cambios</button>
         </p>
-    </form>
-{% else %}
-<h1>Error, la evaluación {{entity.nombre}} ha sido cerrada y no puede ser editada.</h1>
-{% endif %}
+       </form>
+       {% else %}
+       <div class="main-content-title">
+            <div class="title-text">
+                <h2>Error, la evaluación {{entity.nombre}} ha sido cerrada y no puede ser editada</h2>
+            </div>
+      </div>
+    {% endif %}
+        <!--FDiv -->
+    </div>
+
+     <ul class="record_actions">
+        
+    </ul>
+
+
+ {% block javascript %}
+        <script type="text/javascript">
+            function confirmDelete() {
+                if(confirm('¿Seguro que desea eliminar?'))
+                {
+                    document.getElementById('delete-form').submit();
+                }
+            }
+        </script>
+    {% endblock %}
 {% endblock %}

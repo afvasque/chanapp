@@ -57,6 +57,27 @@
 	 height: 15px;
 }
 
+.icon-help-sub-title{
+	float: left;
+	display: block;
+}
+
+.sub-title-align{
+	float: left;
+	display: block;
+}
+
+.sub-title-align a{
+	float: left;
+	display: block;
+	 margin-top: 20px; 
+}
+
+.sub-title-align h3{
+	float: left;
+	display: block;
+}
+
 .tablesubelements th{
 	text-align: center;
 }
@@ -301,3 +322,9 @@ td.tablesorter-pager {
 	 margin-bottom: 0px; 
 }
 
+
+
+/* Fixes*/
+.no-element-error{
+	margin-top: 90px;
+}

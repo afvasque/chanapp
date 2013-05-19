@@ -12,7 +12,7 @@ class EvaluacionDirectaType extends AbstractType
     {
         $builder
             ->add('descripcion', 'textarea', array('label' => 'Descripción de la Evaluación de Impacto Directo realizada:'))
-            ->add('resultado', 'text', array('required'  => true, 'label'  => 'Resultado de la Evaluación'))
+            ->add('resultado', 'number', array('required'  => true, 'label'  => 'Resultado de la Evaluación'))
             ->add('unidad', 'choice', array('label'  => 'Unidad de medida','choices'   => array('1' => 'Fuel Oil [ton]',
              '2' => 'Diesel [m3]', 
              '3' => 'Gas Licuado (estado líquido) [m3]', 

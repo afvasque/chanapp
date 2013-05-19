@@ -143,7 +143,7 @@ class EvaluacionController extends Controller
 
             return array(
                 'entity'      => $entity,
-                'edit_form'   => $editForm->createView(),
+                'form'   => $editForm->createView(),
                 'delete_form' => $deleteForm->createView(),
             );
         }
@@ -193,7 +193,7 @@ class EvaluacionController extends Controller
     {
         $form = $this->createDeleteForm($id);
         $form->bind($request);
-
+        $planid;
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('chanppEvImBundle:Evaluacion')->find($id);
@@ -201,12 +201,12 @@ class EvaluacionController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Evaluacion entity.');
             }
-
+            $plaind = $entity->getPlanevaluacion()->getId();
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('evaluacion'));
+        return $this->redirect($this->generateUrl('planevaluacion_show', array('id' => $plaind)));
     }
 
     /**
