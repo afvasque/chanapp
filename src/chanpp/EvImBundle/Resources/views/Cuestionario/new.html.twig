@@ -1,12 +1,31 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
+{% block title %}Creación de Cuestionario{% endblock %}
 
 {% block body -%}
-    <h1>Creando Cuestionario</h1>
 
-    <form action="{{ path('cuestionario_create', { 'evaluacion_id':app.request.get('evaluacion_id') }) }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
+
+<div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('evaluacionindirecta_show', { 'id':  app.request.get('evaluacion_id')}) }}">Sub-Evaluación de Impacto Indirecto</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Crear Cuestionario
+        </div>
+    </div>
+    {% include 'navbar.html.twig' %}
+    <div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Creando Cuestionario</h2>
+            </div>
+        </div>
+
+    <div class="createedit-form3">
+    	<form action="{{ path('cuestionario_create', { 'evaluacion_id':app.request.get('evaluacion_id') }) }}" method="post" {{ form_enctype(form) }}>
+    		{{ form_row(form.nombre) }}
+    		 {{ form_rest(form) }}
+    		  <p>
             <button type="submit" class="btn btn-success">Crear</button>
-        </p>
-    </form>
+        </p> 
+    	</form>
+    </div>    
 {% endblock %}

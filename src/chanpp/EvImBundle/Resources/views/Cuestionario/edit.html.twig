@@ -1,5 +1,5 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-
+{% block title %}Editar Cuestionario "{{entity.nombre}}"{% endblock %}
 {% block body -%}
 {% if entity.getEvaluacionindirecta().getEvaluacion().getDone() == false%}
     <h1>Editar Cuestionario</h1>
