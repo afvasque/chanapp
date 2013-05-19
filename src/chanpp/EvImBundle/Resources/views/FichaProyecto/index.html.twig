@@ -1,40 +1,74 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>Viendo Fichas de Proyectos</h1>
-    <a href="{{ path('index_show')}}" class="btn">
-            Volver a la página de inicio</a>
-    {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
-        <a href="{{ path('fichaproyecto_new') }}" class="btn btn-success">
-                Crear Ficha Proyecto
-    </a>
-    {% endif %}
-
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Área de acción</th>
-                <th>Línea de acción</th>
-                <th>Nombre</th>                
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-                <td>{{ entity.areaaccion }}</td>
-                <td>{{ entity.lineaaccion }}</td>
-                <td>{{ entity.nombre }}</td>
-                
-                <td>
-                <ul>
-                        <a href="{{ path('fichaproyecto_show', { 'id': entity.id }) }}" class="btn btn-primary"  >Ver</a><br><br>
+    <div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="#">Ficha de Programas</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Ver fichas existentes
+        </div>
+    </div>
+    {% include 'navbar.html.twig' %}
+    <div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Fichas de Programas</h2>
+            </div>
+            <a href="#"><img id="icon-help" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/></a>
+            <div class="title-actions">
                 {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
-                        <a href="{{ path('fichaproyecto_edit', { 'id': entity.id }) }}" class="btn btn-warning">Editar</a>
-                </ul>
+                    <div class="btn-group">
+                        <button class="btn">Elegir una Acción</button>
+                        <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <!-- dropdown menu links -->
+
+                            
+                            <li>
+                                <a href="{{ path('fichaproyecto_new') }}">Crear Ficha</a>
+                            </li>
+                        </ul>
+                    </div>
                 {% endif %}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </div>
+        </div>
+
+        <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed tablesorter">
+            <thead>
+                <tr class="tableinfohead">
+                    <th>Área de acción</th>
+                    <th>Línea de acción</th>
+                    <th>Nombre</th>                
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entity in entities %}
+                    <tr>
+                        <td>{{ entity.areaaccion }}</td>
+                        <td>{{ entity.lineaaccion }}</td>
+                        <td>{{ entity.nombre }}</td>
+                        <td>
+                            <ul>
+                                <a href="{{ path('fichaproyecto_show', { 'id': entity.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-ver-(lupa).png') }}" alt="logo"/></a>
+                                
+                                {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
+                                    <a href="{{ path('fichaproyecto_edit', { 'id': entity.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-editar-(lapiz).png') }}" alt="logo"/></a>
+                                    {#
+                                    <form action="{{ path('fichaproyecto_delete', { 'id': entity.id }) }}" method="post">
+                                        <input type="hidden" name="_method" value="DELETE" />
+                                        {{ form_widget(delete_form) }}
+                                        <button type="submit" style="border: 0; background: transparent" onclick="return confirm('¿Seguro que desea eliminar?')"><img class="icon-action-table2" src="{{ asset('img/icono-eliminar-(cruz).png') }}" alt="logo"/></button>
+                                    </form>
+                                    #}
+                                {% endif %}
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     {% endblock %}

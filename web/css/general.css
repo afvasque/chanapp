@@ -334,7 +334,7 @@ p {
 #main-content {
     position: relative;
     float: left;
-    width: 60%;
+    width: 75%;
     padding-left: 22px;
     padding-top: 32px;
 }
@@ -364,15 +364,15 @@ p {
     height: 9px;
     background-color: #f6ee34;
     float:left;
-     position: relative;
+    position: relative;
 }
 
 .colorbar-orange {
     width: 3.125%;
     height: 9px;
     background-color: #ffc628;
-     float:left;
-     position: relative;
+    float:left;
+    position: relative;
 }
 
 .colorbar-lightred {
@@ -380,7 +380,7 @@ p {
     height: 9px;
     background-color: #f04e30;
     float:left;
-     position: relative;
+    position: relative;
 }
 
 .colorbar-red
@@ -389,7 +389,7 @@ p {
     height: 9px;
     background-color: #ea2126;
     float:left;
-     position: relative;
+    position: relative;
 }
 
 .colorbar-lightgreen {
@@ -397,7 +397,7 @@ p {
     height: 9px;
     background-color: #8cc43f;
     float:left;
-     position: relative;
+    position: relative;
 }
 
 .colorbar-green {
@@ -413,7 +413,7 @@ p {
     height: 9px;
     background-color: #0e75ba;
     float:left;
-     position: relative;
+    position: relative;
 }
 
 .colorbar-purple {
@@ -421,5 +421,5 @@ p {
     height: 9px;
     background-color: #28388e;
     float:left;
-     position: relative;
+    position: relative;
 }
