@@ -25,7 +25,7 @@
                     </div>
                     <div id="collapseTwo" class="accordion-body collapse">
                       <div class="accordion-inner">
-                        <a href="{{ path('fichaproyecto') }}">Ver Fichas</a>
+                        <a href="{{ path('fichaproyecto') }}">Ver Fichas Existentes</a>
                         {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_PLANIFICADOR") %}
                           <hr>
                           <a href="{{ path('fichaproyecto_new') }}">Crear Ficha</a>

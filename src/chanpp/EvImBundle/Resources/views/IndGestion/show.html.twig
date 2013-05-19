@@ -1,36 +1,72 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-
+{% block title %}Indicadores de gestión asociados{% endblock %}
 {% block body -%}
-    <h1>IndGestion</h1>
+    <div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('fichaproyecto_show', { 'id':entity.getFichaProyecto.getId }) }}">Ficha de Programa "{{entity.getFichaProyecto.getNombre}}"</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Viendo Indicadores de Gestión Asociados
+        </div>
+    </div>
+    {% include 'navbar.html.twig' %}
+    <div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Indicadores de gestión asociados</h2>
+            </div>
+            
+            {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Nombre</th>
-                <td>{{ entity.nombre }}</td>
-            </tr>
-             <tr>
-                <th>Ficha Proyecto</th>
-                <td><a href="{{ path('fichaproyecto_show', { 'id': entity.getFichaProyecto.getId }) }}"> Show </a></td>
-            </tr>
+                <div class="title-actions">
+                    <div class="btn-group">
+                        <button class="btn">Elegir una Acción</button>
+                        <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <!-- dropdown menu links -->
+                            <li>
+                                 <a href="{{ path('indgestion_edit', { 'id': entity.id }) }}">Editar</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
 
-            <tr>
-                <th>Metas asociadas</th>
-            </tr>
+        <table class="table table-bordered infotable">
+            <tbody>
+                <tr>
+                    <th>Nombre</th>
+                    <td>{{ entity.nombre }}</td>
+                </tr>
+                <tr>
+                    <th>Ficha Proyecto</th>
+                    <td><a href="{{ path('fichaproyecto_show', { 'id': entity.getFichaProyecto.getId }) }}"> Show </a></td>
+                </tr>
+                <tr>
+                    <th>Metas asociadas</th>
+                    <td></td>
+                </tr>
+
                 {% for meta in entity.metas %}
-            <tr>
-                    <td>{{meta.nombre}}</td>
-                    <td><a href="{{ path('meta_show', { 'id': meta.id }) }}"> Show </a></td>
-            </tr>
+                    <tr>
+                        <td>{{meta.nombre}}</td>
+                        <td><a href="{{ path('meta_show', { 'id': meta.id }) }}"> Show </a></td>
+                    </tr>
                 {% endfor %}
 
-            <tr>
-                <th>Variables_obstaculo</th>
-                <td>{{ entity.variablesobstaculo }}</td>
-            </tr>
-            
-        </tbody>
-    </table>
+                <tr>
+                    <th>Variables_obstaculo</th>
+                    <td>{{ entity.variablesobstaculo }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+   
 
         <ul class="record_actions">
     <li>
@@ -38,11 +74,7 @@
             Back to the list
         </a>
     </li>
-    <li>
-        <a href="{{ path('indgestion_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
+
     <li>
         <form action="{{ path('indgestion_delete', { 'id': entity.id }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
