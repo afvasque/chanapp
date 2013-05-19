@@ -148,7 +148,7 @@ class PlanEvaluacion
     /**
      * Get instanciasNumeroEvaluaciones
      *
-     * @return integer 
+     * @return integer
      */
     public function getInstanciasNumeroEvaluaciones()
     {

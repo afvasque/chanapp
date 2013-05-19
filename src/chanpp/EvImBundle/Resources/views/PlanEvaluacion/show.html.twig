@@ -57,7 +57,12 @@ De este modo, se establece con claridad el público objetivo de la evaluación q
             </tr>
             <tr>
                 <th class="tableinfohead">Número de Evaluaciones</th>
-                <td>{{ entity.instanciasNumeroEvaluaciones }} evaluaciones</td>
+                <td>{% if entity.instanciasNumeroEvaluaciones == 1%}
+                        {{ entity.instanciasNumeroEvaluaciones }} evaluación
+                    {% else %}
+                        {{ entity.instanciasNumeroEvaluaciones }} evaluaciones
+                    {% endif %}
+                    </td>
             </tr>
             <tr>
                 <th class="tableinfohead">Plazo para la ejecución total del Plan de Evaluación </th>

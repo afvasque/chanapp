@@ -178,7 +178,36 @@ table.fixed td { overflow: hidden; }
 			visibility: visible;
 		}
 
+/* Pager de Tablesorter*/ 
+
+/* pager wrapper, div */
+.tablesorter-pager {
+  padding: 5px;
+}
+/* pager wrapper, in thead/tfoot */
+td.tablesorter-pager {
+  background-color: #e6eeee;
+  margin: 0; /* needed for bootstrap .pager gets a 18px bottom margin */
+}
+/* pager navigation arrows */
+.tablesorter-pager img {
+  vertical-align: middle;
+  margin-right: 2px;
+  cursor: pointer;
+}
 
 
+/* Create Form*/
+.createedit-form
+{
+	padding-top: 50px;
+}
+
+.createedit-form textarea
+{
+	height: 30%;
+}
+
+.createedit-form .htooltip{
 	
-	
+}

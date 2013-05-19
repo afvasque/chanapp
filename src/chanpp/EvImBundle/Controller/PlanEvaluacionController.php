@@ -148,7 +148,7 @@ class PlanEvaluacionController extends Controller
 
             return array(
                 'entity'      => $entity,
-                'edit_form'   => $editForm->createView(),
+                'form'   => $editForm->createView(),
                 'delete_form' => $deleteForm->createView(),
             );
         }
