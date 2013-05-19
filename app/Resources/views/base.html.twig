@@ -58,6 +58,7 @@
                             <div id="link_bar_header">
                                  {% if app.user %} 
                                  <div class="linkheader"><a href="{{ path('fos_user_security_logout') }}">Desconectarse</a></div>
+                                 <div class="linkheader">{{ app.user.username }} ({{ app.user.email }})</div>
                                  {% else %}
                                  <div class="linkheader"><a href="{{ path('fos_user_security_login') }}">Ingresar</a></div>
                                  {% endif %}

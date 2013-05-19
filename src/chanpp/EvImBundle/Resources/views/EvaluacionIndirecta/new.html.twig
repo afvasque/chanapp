@@ -1,57 +1,75 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
+{% block title %}Crear Sub-Evaluación de Impacto Indirecto{% endblock %}
 
 {% block body -%}
-    <h1>Creación de Sub-Evaluación de Impacto Indirecto</h1>
-     <a href="{{ path('evaluacion_show', { 'id': app.request.get('evaluacion_id')}) }}" class="btn">
-            Volver a evaluación
-    </a>
-    <a href="{{ path('metodorecoleccion' , { 'original_redirect': 1 , 'original_id': app.request.get('evaluacion_id')}) }}" class="btn btn-primary">
-        Ver y Agregar Métodos de Recolección de Datos
-    </a><br><br>
-    <form action="{{ path('evaluacionindirecta_create', { 'evaluacion_id':app.request.get('evaluacion_id') }) }}" method="post" {{ form_enctype(form) }}>
-        {% for fields in  form %}
-          {%  if fields.vars.name != '_token' %}
-          <div class="{{ cycle(["even","odds"], loop.index) }}">
-            {% if fields.vars.name == 'ambito' %}
-              {{ form_label(fields) }}
-              {{ form_widget(fields) }}<p title="Este campo permite seleccionar los ámbitos de acción de un programa que serán evaluados, éstos pueden ser:
--Capacitación/ Educación
--Información/Difusión
--Transformaciones de mercado." id="formhelp">?</p>
-              {{ form_errors(fields) }}
-            {% elseif fields.vars.name == 'grupo_interes' %}
-              <p title="En este campo se debe definir el grupo de personas sobre la cual se hará una sub-evaluación indirecta." id="formhelp">?</p>
-              {{ form_label(fields) }}
-              {{ form_widget(fields) }}
-              {{ form_errors(fields) }}
-            {% elseif fields.vars.name == 'ejes' %}
-              <p title="Una evaluación indirecta mide el impacto del programa en uno o más de tres ejes, correspondientes a macro dimensiones analíticas, las que son:
--Presencia: El programa debe estar presente en la mente de las personas que conforman los diferentes grupos de interés. 
--Valoración: El programa debe tener una evaluación positiva y una predisposición favorable entre quienes forman parte de sus grupos de interés. 
--Capacidad movilizadora: El programa debe contar con la intensidad suficiente para transferirse en las interacciones de los miembros de sus grupos de interés y motivar a estos hacia la acción concreta buscada." id="formhelpejes">?</p>
-              {{ form_label(fields) }}
-              {{ form_widget(fields) }}
-              {{ form_errors(fields) }}
-            {% elseif fields.vars.name == 'metodosrecoleccion' %}
-              <p title="La medición de cada uno de los ejes se realiza a través de diferentes métodos de recolección de datos y mediante preguntas que permitan obtener la información necesaria para cada atributo, según sea el ámbito del objetivo del programa y del grupo de interés, ya sean estos los beneficiarios del programa, instituciones, etc. 
-" id="formhelpejes">?</p>
-              {{ form_label(fields) }}
-              {{ form_widget(fields) }}
-              {{ form_errors(fields) }}
-            {% else%}
-                {{ form_label(fields) }}
-                {{ form_widget(fields) }}
-                {{ form_errors(fields) }}
-            {% endif %}
+<div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('evaluacion_show', { 'id': app.request.get('evaluacion_id')}) }}">Evaluación </a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Crear Sub-Evaluación de Impacto Indirecto
+        </div>
+    </div>
+ {% include 'navbar.html.twig' %}
+ <div id="main-content">
+<div class="main-content-title">
+            <div class="title-text">
+                <h2>Crear Sub-Evaluación de Impacto Indirecto</h2>
             </div>
-          {% else %}
-         <div id="tokenform">{{ form_label(fields) }}
-            {{ form_widget(fields) }}
-            {{ form_errors(fields) }}</div>
-        {% endif %}
-        {% endfor %}
-        <p>
-            <button type="submit" class="btn btn-success">Crear</button>
-        </p>
-    </form>
+        <div class="title-actions">
+                <div class="btn-group">
+                    <button class="btn">Elegir una Acción</button>
+                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <!-- dropdown menu links -->
+                        <li>
+                           <a href="{{ path('metodorecoleccion' , { 'original_redirect': 1 , 'original_id': app.request.get('evaluacion_id')}) }}">Ver y Agregar<br>Métodos de Recolección<br>de Datos</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+          </div>
+
+          <div class="createedit-form2"><form action="{{ path('evaluacionindirecta_create', { 'evaluacion_id':app.request.get('evaluacion_id') }) }}" method="post" {{ form_enctype(form) }}>
+
+              {{ form_row(form.responsable) }}
+              {{ form_row(form.plazo) }}
+
+
+              {{ form_label(form.ambito) }}
+            {{ form_widget(form.ambito) }} <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Este campo permite seleccionar los ámbitos de acción de un programa que serán evaluados, éstos pueden ser:<br>
+      -Capacitación/ Educación<br>
+      -Información/Difusión<br>
+      -Transformaciones de mercado.</span></a>
+            {{ form_errors(form.ambito) }}
+
+             {{ form_label(form.grupoInteres) }}
+            {{ form_widget(form.grupoInteres) }} <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>En este campo se debe definir el grupo de personas sobre la cual se hará una sub-evaluación indirecta.</span></a>
+            {{ form_errors(form.grupoInteres) }}
+
+            <br>
+             {{ form_label(form.ejes) }}
+             <a href="#" class="htooltip"><img class="icon-help-edit-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Una evaluación indirecta mide el impacto del programa en uno o más de tres ejes, correspondientes a macro dimensiones analíticas, las que son:<br>
+      -Presencia: El programa debe estar presente en la mente de las personas que conforman los diferentes grupos de interés.<br>
+      -Valoración: El programa debe tener una evaluación positiva y una predisposición favorable entre quienes forman parte de sus grupos de interés. <br>
+      -Capacidad movilizadora: El programa debe contar con la intensidad suficiente para transferirse en las interacciones de los miembros de sus grupos de interés y motivar a estos hacia la acción concreta buscada.</span></a><br>
+            {{ form_widget(form.ejes) }} 
+            {{ form_errors(form.ejes) }}
+
+            <br>
+              {{ form_label(form.metodosrecoleccion) }}<a href="#" class="htooltip"><img class="icon-help-edit-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>La medición de cada uno de los ejes se realiza a través de diferentes métodos de recolección de datos y mediante preguntas que permitan obtener la información necesaria para cada atributo, según sea el ámbito del objetivo del programa y del grupo de interés, ya sean estos los beneficiarios del programa, instituciones, etc.</span></a><br>
+            {{ form_widget(form.metodosrecoleccion) }} 
+            {{ form_errors(form.metodosrecoleccion) }}
+              <br>
+               {{ form_rest(form) }}
+              <p>
+                  <button type="submit" class="btn btn-success">Crear</button>
+              </p>
+
+               
+          </form>
+        </div>
+
+      </div>
 {% endblock %}

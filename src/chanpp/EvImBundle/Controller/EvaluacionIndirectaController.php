@@ -140,7 +140,7 @@ class EvaluacionIndirectaController extends Controller
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -174,7 +174,7 @@ class EvaluacionIndirectaController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('evaluacion_show', array('id' => $entity->getEvaluacion()->getId() )));
+            return $this->redirect($this->generateUrl('evaluacionindirecta_show', array('id' => $entity->getId() )));
 
         }
 

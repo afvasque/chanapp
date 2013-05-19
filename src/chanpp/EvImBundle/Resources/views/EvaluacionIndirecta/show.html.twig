@@ -1,27 +1,84 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-
+{% block title %}Ver Sub-Evaluación de Impacto Indirecto{% endblock %}
 {% block body -%}
-    <h1>Sub-Evaluación de Impacto Indirecto</h1>
-    {% if entity.getEvaluacion().getDone() == false %}
-    <ul class="record_actions">
-        <a href="{{ path('evaluacion_show', { 'id': entity.getEvaluacion().id}) }}" class="btn">
-            Volver a evaluación
-        </a>
-        <a href="{{ path('evaluacionindirecta_edit', { 'id': entity.id }) }}" class="btn btn-warning">
-            Editar
-        </a>
-        <br><br><form action="{{ path('evaluacionindirecta_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminar?')">Eliminar</button>
-        </form>
-</ul>{% endif %}
-    <table class="table table-striped">
+
+
+
+<div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('fichaproyecto_show', { 'id':entity.getEvaluacion().getPlanevaluacion().getFichaproyecto().id }) }}">Ficha de Programa </a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            <a href="{{ path('planevaluacion_show', { 'id':entity.getEvaluacion().getPlanevaluacion().id }) }}">Plan de Evaluación </a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            <a href="{{ path('evaluacion_show', { 'id':entity.getEvaluacion().id }) }}">Evaluación </a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Ver Evaluación de Impacto Indirecto
+        </div>
+    </div>
+    {% include 'navbar.html.twig' %}
+    <div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Sub-Evaluación de Impacto Indirecto</h2>
+            </div>
+            <div class="title-actions">
+                 {% if entity.getEvaluacion().getDone() == false %}
+                        <div class="btn-group">
+                            <button class="btn">Elegir una Acción</button>
+                            <button class="btn dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <!-- dropdown menu links -->
+                                <li>
+                                     <a href="{{ path('evaluacionindirecta_edit', { 'id': entity.id }) }}">Editar</a>
+                                </li>
+                                {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
+                                <li>
+                                    <form action="{{ path('evaluacionindirecta_delete', { 'id': entity.id }) }}" method="post" class="dropdown-menu-form" id="delete-form">
+                                        <input type="hidden" name="_method" value="DELETE" />
+                                                {{ form_widget(delete_form) }}
+                                            <a type="submit" onclick="confirmDelete()" class="dropdown-menu-link">Eliminar</a>
+                                    </form>
+                                </li>
+                                {% endif%}
+                                <li>
+                                    {% if entity.hasCuestionarioOnMetodo() %}
+                                    {% if entity.getCuestionario()  == false%}
+                                    <a href="{{ path('cuestionario_new', { 'evaluacion_id': entity.getId() }) }}">Crear Cuestionario</a>
+                                    {% endif %}
+                                {% endif%}
+                                </li>
+                                {% if document %}
+                                    <li>
+                                       <a href="{{ asset(document.getWebPath())}}">Descargar Archivo</a>
+                                    </li>
+                                 {% endif %}
+                                 {% if document %}
+                                    {% if entity.getEvaluacion().getDone() == false %}<li>
+                                    <a href="{{ path('uploadindirecta', { 'evaluacionindirecta_id': entity.id}) }}">Cambiar Archivo</a> </li>{% endif %}
+                                {% else %}
+                                    {% if entity.getEvaluacion().getDone() == false %}  
+                                    <li><a href="{{ path('uploadindirecta', { 'evaluacionindirecta_id': entity.id}) }}">Subir Archivo</a> </li>
+                                    {% endif %}
+                                 {% endif %} 
+                            </ul>
+                        </div>
+                {% endif %}
+            </div>
+        {% if entity.getEvaluacion().getDone() %}
+        <div class="alert alert-error">
+         <strong>Alerta :</strong> Esta Evaluación ha sido cerrada y no puede ser modificada.
+        </div>
+        {% endif %}
+        </div>
+
+     <!-- Info table -->
+        <table class="table table-bordered infotable">
         <tbody>
             <tr>
-                <th>Ámbito del objetivo del proyecto</th>
-                <td>
-                {% if entity.ambito == 1 %}
+                <th class="tableinfohead">Ámbito del objetivo del proyecto</th>
+                <td>{% if entity.ambito == 1 %}
                         Capacitación/Educación
                      {% elseif entity.ambito == 2 %}
                         Información/Difusión
@@ -30,11 +87,11 @@
                 {% endif %}</td>
             </tr>
             <tr>
-                <th>Grupo de interés de la evaluación</th>
+                <th class="tableinfohead">Grupo de interés de la evaluación</th>
                 <td>{{ entity.grupoInteres }}</td>
             </tr>
             <tr>
-                <th>Ejes</th>
+                <th class="tableinfohead">Ejes</th>
                 <td>{% for eje in entity.ejes %}
                      {% if eje == 1 %}
                         Presencia 
@@ -46,15 +103,15 @@
                 {% endfor %}</td>
             </tr>
             <tr>
-                <th>Responsable de la ejecución</th>
+                <th class="tableinfohead">Responsable de la ejecución</th>
                 <td>{{ entity.responsable }}</td>
             </tr>
             <tr>
-                <th>Plazo de la ejecución (meses)</th>
+                <th class="tableinfohead">Plazo de la ejecución (meses)</th>
                 <td>{{ entity.plazo }}</td>
             </tr>
             <tr>
-                <th>Archivo</th>
+                <th class="tableinfohead">Archivo</th>
                 {% if document %}
                     <td><a href="{{ asset(document.getWebPath())}}" class="btn btn-primary">Descargar Archivo</a>{% if entity.getEvaluacion().getDone() == false %}  <a href="{{ path('uploadindirecta', { 'evaluacionindirecta_id': entity.id}) }}" class="btn btn-warning">Cambiar Archivo</a>{% endif %}</td>
                 {% else %}
@@ -62,7 +119,7 @@
                 {% endif %}     
             </tr>
             <tr>
-                <th>Métodos de recolección de datos a usar</th>
+                <th class="tableinfohead">Métodos de recolección de datos a usar</th>
                 <td>{% if metodos%}
                     {% for m in metodos %}
                     {{ m.getNombre() }}
@@ -70,35 +127,53 @@
             </tr>
         </tbody>
     </table>
-    {% if entity.hasCuestionarioOnMetodo() %}
-    {% if entity.getCuestionario() %}
-    <h3>Cuestionario Asociado</h3>
-    <table class="table table-striped">
-        <tbody>
-            <tr>
-                <th>Nombre</th>
-                <td>
-                {{ entity.getCuestionario().getNombre() }}</td>
-            </tr>
-            <tr>
-                <th>Preguntas Alternativa</th>
-                <td>{{ entity.getCuestionario().getPreguntasalternativa()|length }}</td>
-            </tr>
-            <tr>
-                <th>Preguntas Desarrollo</th>
-                <td>{{ entity.getCuestionario().getPreguntasdesarrollo()|length }}</td>
-            </tr>
-            <tr>
-                <th></th>
-                <td><a href="{{ path('cuestionario_show', { 'id': entity.getCuestionario().getId() }) }}" class="btn btn-success">Ver Cuestionario</a>
-                </ul></td>
-            </tr>
-             
-        </tbody>
-    </table>
-    {% else %}
-    <h3>No hay cuestionario asociado</h3>
-    <a href="{{ path('cuestionario_new', { 'evaluacion_id': entity.getId() }) }}" class="btn btn-primary">Crear Cuestionario</a>
-    {% endif %}
-    {% endif%}
+
+            {% if entity.hasCuestionarioOnMetodo() %}
+            <h3>Cuestionario Asociado</h3>
+                {% if entity.getCuestionario() %}
+                   <table class="table table-bordered infotable">
+                        <tbody>
+                            <tr>
+                                <th class="tableinfohead">Nombre</th>
+                                <td>
+                                {{ entity.getCuestionario().getNombre() }}</td>
+                            </tr>
+                            <tr>
+                                <th class="tableinfohead">Preguntas Alternativa</th>
+                                <td>{{ entity.getCuestionario().getPreguntasalternativa()|length }}</td>
+                            </tr>
+                            <tr>
+                                <th class="tableinfohead">Preguntas Desarrollo</th>
+                                <td>{{ entity.getCuestionario().getPreguntasdesarrollo()|length }}</td>
+                            </tr>
+                            <tr>
+                                <th class="tableinfohead"></th>
+                                <td><a href="{{ path('cuestionario_show', { 'id': entity.getCuestionario().getId() }) }}" class="btn btn-success">Ver Cuestionario</a>
+                                </ul></td>
+                            </tr>
+                             
+                        </tbody>
+                    </table>
+                {% else %}
+
+                <div>No hay cuestionario asociado.
+                {% if entity.getEvaluacion().getDone() == false%}
+                        Puede agregar uno 
+                         <a href="{{ path('cuestionario_new', { 'evaluacion_id': entity.getId() }) }}" >aqui.</a></div>
+                {% endif %}
+                  
+                {% endif %}
+            {% endif%}
+<!--fd-->
+</div>
+     {% block javascript %}
+        <script type="text/javascript">
+            function confirmDelete() {
+                if(confirm('¿Seguro que desea eliminar?'))
+                {
+                    document.getElementById('delete-form').submit();
+                }
+            }
+        </script>
+    {% endblock %}
 {% endblock %}

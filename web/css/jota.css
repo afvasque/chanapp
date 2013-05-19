@@ -57,6 +57,9 @@
 	 height: 15px;
 }
 
+.icon-help-edit-table{
+}
+
 .icon-help-sub-title{
 	float: left;
 	display: block;
@@ -237,8 +240,17 @@ td.tablesorter-pager {
 .createedit-form .htooltip{
 	
 }
+/* Alternative */
+.createedit-form2
+{
+	padding-top: 50px;
+    margin-top: 20px;
 
-
+}
+.createedit-form2 textarea
+{
+	height: 30%;
+}
 
 /* Login Stuff */
 .login-islogged-header{
