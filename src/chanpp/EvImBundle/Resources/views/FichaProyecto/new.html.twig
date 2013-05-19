@@ -30,6 +30,10 @@
     <p title="Presentar los rasgos sobresalientes del proyecto, actividades y toda otra información relevante que permita tener una idea acabada del proyecto y el impacto del mismo" id="formhelpshow">?</p>
         {{ form_errors(form.descripcion) }}
 
+        {{ form_label(form.resumen_descripcion) }}
+        {{ form_widget(form.resumen_descripcion) }} 
+        {{ form_errors(form.resumen_descripcion) }}
+
 
         {{ form_label(form.desc_causales) }}
         {{ form_widget(form.desc_causales) }} 

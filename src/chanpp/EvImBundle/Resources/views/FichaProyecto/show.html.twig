@@ -57,6 +57,14 @@
                 <td>{{ entity.descripcion }}</td>
             </tr>
             <tr>
+                <th>Resumen de la descripción</th>
+                {% if entity.getResumenDescripcion %}
+                    <td>{{ entity.getResumenDescripcion }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+            </tr>
+            <tr>
                 <th>Justificación del proyecto</th>
                 <td>{{ entity.desccausales }}</td>
             </tr>

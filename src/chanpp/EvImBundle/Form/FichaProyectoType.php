@@ -51,6 +51,10 @@ class FichaProyectoType extends AbstractType
                 'label' => 'Descripción del Proyecto',
                 'label_attr' => array(
                         'class'=>'control-label')))
+            ->add('resumen_descripcion','textarea', array(
+                'label' => 'Resumen de la descripción',
+                'label_attr' => array(
+                        'class'=>'control-label')))
             ->add('desc_causales','text', array(
                 'label' => 'Justificación del Proyecto',
                 'label_attr' => array(
