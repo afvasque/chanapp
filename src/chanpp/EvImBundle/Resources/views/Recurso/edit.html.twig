@@ -1,54 +1,107 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-
+{% block title %}Editar Recurso {{ entity.titulo }}{% endblock %}
 {% block body -%}
-    <h1>Editar Recurso : {{entity.titulo}}</h1>
-    <a href="{{ path('planevaluacion_show', { 'id': entity.getPlanevaluacion().id}) }}" class="btn">
-            Volver al plan de evaluación
-    </a><br><br>
-     <ul class="record_actions"><li>
-        <form action="{{ path('recurso_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminar?')">Eliminar</button>
-        </form>
-    </li></ul>
-    <form action="{{ path('recurso_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-        <input type="hidden" name="_method" value="PUT" />
-        {% for fields in edit_form %}
-          {%  if fields.vars.name != '_token' %}
-            <div class="{{ cycle(["even","odds"], loop.index) }}">
-            {% if fields.vars.name == 'tipo' %}
-            {{ form_label(fields) }}
-            {{ form_widget(fields) }}<p title="Los recursos disponibles para evaluar pueden ser de los siguientes tipos:
-  -Monetarios  
-  -Humanos: Funciones y responsabilidades.  
-  -Tiempo  
-  -Capacidades  
-  -Otros" id="formhelp">?</p>
-            {{ form_errors(fields) }}
-            {% elseif fields.vars.name == 'cantidad' %}
-             {{ form_label(fields) }}
-            {{ form_widget(fields) }}<p title="Los recursos se miden en unidades de dinero ($), horas hombre (HH), tiempo (meses), entre otros. En este punto se debe cuantificar en $, HH, etc, el recurso que se está creando." id="formhelp">?</p>
-            {{ form_errors(fields) }}
-            {% else%}
-                {{ form_label(fields) }}
-                {{ form_widget(fields) }}
-                {{ form_errors(fields) }}
-          {% endif %}
-          </div>
-        {% else%}
-          <div id="tokenform">{{ form_label(fields) }}
-            {{ form_widget(fields) }}
-            {{ form_errors(fields) }}</div>
-        {% endif %}
-        {% endfor %}
-        <p>
-            <button type="submit" class="btn btn-success">Guardar Cambios</button>
-        </p>
-    </form>
-        <ul class="record_actions">
-   <li>
-      
-    </li>
-</ul>
+  <div id="breadcrumb-bar">
+    <div class="breadcrumb-text">
+      <a href="{{ path('fichaproyecto_show', {'id':entity.getPlanevaluacion.getFichaproyecto.getId()} ) }}">Ficha de Programa "{{ entity.getPlanevaluacion.getFichaproyecto.getNombre() }}"</a>
+      <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+      <a href="{{ path('planevaluacion_show', {'id':entity.getPlanevaluacion.getId()} ) }}">Ficha de Programa</a>
+      <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+      Editando Ficha de Programa
+    </div>
+  </div>
+  {% include 'navbar.html.twig' %}
+
+  <div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Editar Recurso: {{entity.titulo}}</h2>
+            </div>
+
+            {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
+
+                <div class="title-actions">
+                    <div class="btn-group">
+                        <button class="btn">Elegir una Acción</button>
+                        <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <!-- dropdown menu links -->
+                            <li>
+                                <form action="{{ path('recurso_delete', { 'id': entity.id }) }}" method="post" class="dropdown-menu-form" id="delete-form">
+                                    <input type="hidden" name="_method" value="DELETE" />
+                                    {{ form_widget(delete_form) }}
+                                    <a type="submit" onclick="confirmDelete()" class="dropdown-menu-link">Eliminar</a>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            {% endif %}
+        </div>
+
+        <br />
+        <br />
+        <br />
+
+        <div class="form-content">
+          <form action="{{ path('recurso_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+              <input type="hidden" name="_method" value="PUT" />
+
+              <div class="row-fluid">
+                    <div class="span5">
+                        {{ form_row(edit_form.titulo) }}
+                    </div>
+                        
+                    <div class="span5">
+                        {{ form_label(edit_form.tipo) }}
+                        {{ form_widget(edit_form.tipo) }}
+                        <a href="#" class="htooltip"><img id="icon-help" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Los recursos disponibles para<br />evaluar pueden ser de los<br />siguientes tipos:
+                        <br />- Monetarios  
+                        <br />- Humanos: Funciones y<br />responsabilidades.  
+                        <br />- Tiempo  
+                        <br />- Capacidades  
+                        <br />- Otros</span></a>
+                        {{ form_errors(edit_form.tipo) }}             
+                    </div>
+                </div>
+
+                <div class="row-fluid">
+                    <div class="span10">
+                        {{ form_row(edit_form.descripcion) }}
+                    </div>
+                </div>
+                
+                <div class="row-fluid">
+                    <div class="span10">
+                        {{ form_label(edit_form.cantidad) }}
+                        {{ form_widget(edit_form.cantidad) }}
+                        <a href="#" class="htooltip"><img id="icon-help" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Los recursos se miden en unidades<br />de dinero ($), horas hombre (HH),<br />tiempo (meses), entre otros.<br />En este punto se debe cuantificar<br />en $, HH, etc, el recurso que se<br />está creando.</span></a>
+                        {{ form_errors(edit_form.cantidad) }}
+                    </div>
+                </div>
+
+
+
+              
+
+              <button type="submit" class="btn btn-success">Guardar Cambios</button>
+
+          </form>
+        </div>
+
+  </div>
+
+  {% block javascript %}
+        <script type="text/javascript">
+            function confirmDelete() {
+                if(confirm('¿Seguro que desea eliminar?'))
+                {
+                    document.getElementById('delete-form').submit();
+                }
+            }
+        </script>
+  {% endblock %}
 {% endblock %}
