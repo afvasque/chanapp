@@ -264,3 +264,20 @@ td.tablesorter-pager {
 	margin-left: 5px;
 	margin-right: 5px;
 }
+
+/* Dropdown Form Button Fixes*/
+
+.dropdown-menu-link{
+	display: block;
+	padding: 3px 20px;
+	clear: both;
+	font-weight: normal;
+	line-height: 20px;
+	color: #333333;
+	white-space: nowrap;
+	text-decoration: none;
+}
+
+.dropdown-menu-form{
+	 margin-bottom: 0px; 
+}
