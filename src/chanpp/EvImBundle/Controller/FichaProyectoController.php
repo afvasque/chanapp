@@ -280,10 +280,10 @@ class FichaProyectoController extends Controller
 
             $originalTags = array();
 
-                // Create an array of the current Tag objects in the database
-                foreach ($entity->getActivities() as $tag) {
-                    $originalTags[] = $tag;
-                }
+            // Create an array of the current Tag objects in the database
+            foreach ($entity->getActivities() as $tag) {
+                $originalTags[] = $tag;
+            }
 
 
             $deleteForm = $this->createDeleteForm($id);

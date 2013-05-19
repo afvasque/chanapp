@@ -52,13 +52,15 @@
 
         <div class="chanpp_evimbundle_fichaproyectotype_activities" id="chanpp_evimbundle_fichaproyectotype_activities" data-prototype="{{ form_widget(form.activities.vars.prototype)|e }}">
             {% for activity in form.activities %}
-
+            <div>
                 {{ form_row(activity.nombre) }}
                 {{ form_row(activity.descripcion) }}
                 {{ form_row(activity.resultadosEsperados) }}
                 {{ form_row(activity.duracion) }}
+            </div>
             {% endfor %}
         </div>
+        <a href="#" class="add_tag_link btn btn-success" id="agregar_actividad">Agregar una actividad</a> <br/> <br />
 
         {{ form_rest(form) }}   
 
@@ -97,7 +99,7 @@
             var $addTagLink = $('<a href="#" class="add_tag_link btn btn-success">Agregar una actividad</a>');
             var indexNo = 4;
             var $newFormDiv = $("<div id=borrar_actividad></div>");
-            var $removeFormA = $('<a href="#" class="btn btn-danger">Borrar esta actividad</a>');
+            var $removeFormA = $('<a href="#" class="btn btn-danger">Borrar esta actividad</a><br /><br />');
         </script>
 
     {% javascripts 

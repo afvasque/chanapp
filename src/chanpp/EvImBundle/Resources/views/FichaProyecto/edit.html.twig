@@ -33,7 +33,7 @@
             </div>
             {% endfor %}
         </div>
-
+        <a href="#" class="add_tag_link btn btn-success" id="agregar_actividad">Agregar una actividad</a> <br/> <br />
 
         {{ form_rest(edit_form) }}   
 
@@ -82,10 +82,9 @@
 
    <script type="text/javascript">
         var collectionHolder = $('div#chanpp_evimbundle_fichaproyectotype_activities');
-        var $addTagLink = $('<a href="#" class="add_tag_link btn btn-success">Agregar una actividad</a>');
         var indexNo = 4;
         var $newFormDiv = $("<div id=borrar_actividad></div>");
-        var $removeFormA = $('<a href="#">Borrar esta actividad</a>');
+        var $removeFormA = $('<a href="#" class="btn btn-danger">Borrar esta actividad</a><br /> <br/>');
     </script>
     {% javascripts 
         '@chanppEvImBundle/Resources/public/js/addActividades.js'
