@@ -54,7 +54,7 @@ class PlanEvaluacionController extends Controller
              #Get the FichaProyecto and link it
             $ficha  = $em->getRepository('chanppEvImBundle:FichaProyecto')->find($fichaproyectoid);
             #If the ficha already has a PlanEvaluación, redirect to showficha
-            if($ficha->getPlanevaluaciones())
+            if(count($ficha->getPlanevaluaciones()) >= 1) 
             {
                 return $this->redirect($this->generateUrl('fichaproyecto_show', array('id' => $ficha->getId())));
             }
