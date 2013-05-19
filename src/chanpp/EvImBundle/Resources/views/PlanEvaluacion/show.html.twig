@@ -3,7 +3,7 @@
     <div id="breadcrumb-bar">
         <div class="breadcrumb-text">
             <a href="#">Ficha de Programa "{{ entity.getFichaproyecto().nombre }}"</a>
-            <i class="icon-chevron-right"></i>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
             Ver Plan de Evaluación
         </div>
     </div>
@@ -13,6 +13,7 @@
             <div class="title-text">
                 <h2>Plan de Evaluación</h2>
             </div>
+            <a href="#"><img id="icon-help" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/></a>
             <div class="title-actions">
                 <div class="btn-group">
                     <button class="btn">Elegir una Acción</button>
@@ -21,52 +22,141 @@
                     </button>
                     <ul class="dropdown-menu">
                         <!-- dropdown menu links -->
+                        <li>
+                             <a href="{{ path('planevaluacion_edit', { 'id': entity.id }) }}">Editar</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('planevaluacion_resultados_show', { 'id': entity.id}) }}" >Ver Resultados</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('cambiosplanevaluacion_show', { 'id': entity.id}) }}" >Registro de modificaciones</a>
+                        </li>
+                        <li>
+                             <a href="{{ path('recurso_new', { 'planevaluacion_id': entity.id }) }}" >Agregar Recurso</a>   
+                        </li>
+                        <li>
+                            <a href="{{ path('evaluacion_new', { 'planevaluacion_id': entity.id }) }}" >Agregar Evaluación</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
-    </div>
-
-
-
-
-    <h1>Plan de Evaluación <p title="Un plan de evaluación puede tener asociadas múltiples evaluaciones (trimestrales, semestrales, al término del programa/proyecto, entre otras), es decir, evaluaciones de seguimiento o ex post. 
-A su vez, cada una de esas evaluaciones puede medir efectos directos y/o indirectos." id="formhelpshowtitle">?</p></h1>
-    <a href="{{ path('fichaproyecto_show', { 'id': entity.getFichaproyecto().id}) }}" class="btn" >Volver a la Ficha de Proyecto
-    </a>
-    {# Poner if hay resultados #}
-    <a href="{{ path('planevaluacion_resultados_show', { 'id': entity.id}) }}" class="btn btn-primary">
-        Ver Resultados
-    </a>
-    <a href="{{ path('cambiosplanevaluacion_show', { 'id': entity.id}) }}" class="btn btn-primary">
-        Ver el registro histórico de modificaciones
-    </a>
-    {#Opciones de Plan#}
-        <a href="{{ path('planevaluacion_edit', { 'id': entity.id }) }}" class="btn btn-warning">
-            Editar
-        </a>
-        <br><br>
-    <table class="table table-striped">
+        <!-- Info table -->
+        <table class="table table-bordered infotable">
         <tbody>
             <tr>
-                <th>Objetivos<p title="En este campo se definen los objetivos de la evaluación, señalando qué pregunta se desea responder con la información que se obtendrá a partir de los resultados de la evaluación." id="formhelpshow">?</p></th>
+                <th class="tableinfohead">Objetivos<a href="#"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/></a><!--<p title="En este campo se definen los objetivos de la evaluación, señalando qué pregunta se desea responder con la información que se obtendrá a partir de los resultados de la evaluación." id="formhelpshow">?</p>--></th>
                 <td>{{ entity.objetivos }}</td>
             </tr>
             <tr>
-                <th>Destinatarios de la información<p title="En este campo se establecen los destinatarios de la información, detallando sus características principales y sus requerimientos de información, tanto en fondo como en forma. 
-De este modo, se establece con claridad el público objetivo de la evaluación que se llevará a cabo, identificando los actores claves y el sector al cual pertenecen." id="formhelpshow">?</p></th>
+                <th class="tableinfohead">Destinatarios de la información<a href="#"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/></a><!-- <p title="En este campo se establecen los destinatarios de la información, detallando sus características principales y sus requerimientos de información, tanto en fondo como en forma. 
+De este modo, se establece con claridad el público objetivo de la evaluación que se llevará a cabo, identificando los actores claves y el sector al cual pertenecen." id="formhelpshow">?</p>--></th>
                 <td>{{ entity.destinatarios }}</td>
             </tr>
             <tr>
-                <th>Número de Evaluaciones</th>
+                <th class="tableinfohead">Número de Evaluaciones</th>
                 <td>{{ entity.instanciasNumeroEvaluaciones }} evaluaciones</td>
             </tr>
             <tr>
-                <th>Plazo para la ejecución total del Plan de Evaluación </th>
+                <th class="tableinfohead">Plazo para la ejecución total del Plan de Evaluación </th>
                 <td>{{ entity.instanciasPlazo }}</td>
             </tr>
         </tbody>
     </table>
+    <!-- Recursos -->
+    <h3>Recursos</h3>
+    <table class="table table-striped table-bordered table-condensed table-striped tablesubelements">
+        <thead>
+            <tr class="tableinfohead">
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Tipo <a href="#"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/></a><!--<p title="Los recursos disponibles para evaluar pueden ser de los siguientes tipos:
+-Monetarios  
+-Humanos: Funciones y responsabilidades.  
+-Tiempo  
+-Capacidades  
+-Otros" id="formhelpshow">?</p>--></th>
+                <th>Cantidad<a href="#"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/></a><!-- <p title="Los recursos se miden en unidades de dinero ($), horas hombre (HH), tiempo (meses), entre otros." id="formhelpshow">?</p>--></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for recurso in recursos %}
+            <tr>
+                <td>{{ recurso.titulo }}</td>
+                <td>{{ recurso.descripcion }}</td>
+                {% if recurso.tipo == 1 %}
+                   <td>Monetario</td>
+                {% elseif recurso.tipo == 2 %}
+                    <td>Humano</td>
+                {% elseif recurso.tipo == 3 %}
+                    <td>Tiempo</td>
+                {% elseif recurso.tipo == 4 %}
+                    <td>Capacidad</td>
+                {% elseif recurso.tipo == 5 %}
+                    <td>Otro</td>
+                {% endif %}
+                
+                <td>{{ recurso.cantidad }}</td>
+                <td class="table-actions">
+                <ul>
+                    <a href="{{ path('recurso_show', { 'id': recurso.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-ver-(lupa).png') }}" alt="logo"/></a>
+                    <a href="{{ path('recurso_edit', { 'id': recurso.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-editar-(lapiz).png') }}" alt="logo"/></a>
+                    <form action="{{ path('recurso_delete', { 'id': recurso.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit" style="border: 0; background: transparent" onclick="return confirm('¿Seguro que desea eliminar?')"><img class="icon-action-table2" src="{{ asset('img/icono-eliminar-(cruz).png') }}" alt="logo"/></button>
+        </form>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <!-- Evaluaciones -->
+    <h3>Evaluaciones</h3>
+    <table class="table table-striped table-bordered table-condensed table-striped tablesubelements">
+        <thead>
+            <tr class="tableinfohead">
+                 <th>Nombre</th>
+                <th>Alcance<a href="#"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/></a><!-- <p title="En este ítem se especifican la(s) pregunta(s) clave(s) que se desea responder con la evaluación" id="formhelpshow">?</p>--></th>
+                <th>Duración</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in evaluaciones %}
+            <tr>
+                <td>{{ entity.nombre }}</td>
+                <td>{{ entity.alcance }}</td>
+                <td>{{ entity.duracion }}</td>
+                <td class="table-actions">
+                <ul>
+                         <a href="{{ path('evaluacion_show', { 'id': entity.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-ver-(lupa).png') }}" alt="logo"/></a>
+                    <a href="{{ path('evaluacion_edit', { 'id': entity.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-editar-(lapiz).png') }}" alt="logo"/></a>
+
+
+                    <form action="{{ path('evaluacion_delete', { 'id': entity.id }) }}" method="post">
+                <input type="hidden" name="_method" value="DELETE" />
+                {{ form_widget(delete_form) }}
+                <button type="submit" style="border: 0; background: transparent" onclick="return confirm('¿Seguro que desea eliminar?')">
+                    <img class="icon-action-table2" src="{{ asset('img/icono-eliminar-(cruz).png') }}" alt="logo"/>
+                </button>
+            </form>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <!-- Final Div-->
+    </div>
+<!-- 
+
+    
+    <h1>Plan de Evaluación <p title="Un plan de evaluación puede tener asociadas múltiples evaluaciones (trimestrales, semestrales, al término del programa/proyecto, entre otras), es decir, evaluaciones de seguimiento o ex post. 
+A su vez, cada una de esas evaluaciones puede medir efectos directos y/o indirectos." id="formhelpshowtitle">?</p></h1>
+    
 
     <hr>
         {# Ahora agregamos los recursos #}
@@ -161,5 +251,7 @@ En estos campos se detalla la suma de todos los recursos disponibles para evalua
         {% endfor %}
         </tbody>
     </table>
-    {# Fin evaluaciones#}
+    {# Fin evaluaciones#}-->
+
 {% endblock %}
+

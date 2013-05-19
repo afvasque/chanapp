@@ -12,9 +12,15 @@
 #main-content h2{
 }
 
+#main-content h3{
+	color: #0e75ba;
+    font-size: 20px;
+}
+
 #main-content-title
 {
 	display: block;
+	overflow: hidden;
 }
 
 .accordion-group{
@@ -24,4 +30,49 @@
 .title-text{
 	position: relative;
 	float: left;
+}
+
+.title-text a{
+	float: left;
+}
+
+.infotable th
+{
+	
+}
+
+/* Tables */ 
+.tableinfohead{
+	background-color: #d1d2d4;
+	width: 50%;
+	text-align: center;
+}
+
+.icon-help-table{
+	 height: 15px;
+}
+
+.tablesubelements th{
+	text-align: center;
+}
+
+.tablesubelements td
+{
+	text-align: center;
+}
+
+.icon-action-table2{
+	height: 30px;
+	width: 35px;
+	float: left;
+	background-image: none;
+}
+
+.table-actions{
+	text-align: left;
+}
+
+.tablesubelements td 
+{
+	text-align: left;
 }
