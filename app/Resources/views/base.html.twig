@@ -8,80 +8,81 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     </head>
     <body>
-        <div class="container">
-            {% block header %}
-                <div id="header" class="navbar">
-                    <div class="container">
-                        <a href="http://www.acee.cl"><img id="logo-achee" src="{{ asset('img/logo.png') }}" alt="logo"/></a>
-                        <a href="{{ app.request.getBaseURL() }}">
-                            <h1>
-                            <div id="titlestrong">Sistema de evaluación</div>
-                            <div id="titleweak">de programas AChEE</div>
-                            </h1>
-                        </a>
-                         <div id="header-color-bars">
-                            <div class="colorbar-yellow"></div>
-                            <div class="colorbar-orange"></div>
-                            <div class="colorbar-lightred"></div>
-                            <div class="colorbar-red"></div>
-                            <div class="colorbar-lightgreen"></div>
-                            <div class="colorbar-green"></div>
-                            <div class="colorbar-blue"></div>
-                            <div class="colorbar-purple"></div>
-                            <div class="colorbar-yellow"></div>
-                            <div class="colorbar-orange"></div>
-                            <div class="colorbar-lightred"></div>
-                            <div class="colorbar-red"></div>
-                            <div class="colorbar-lightgreen"></div>
-                            <div class="colorbar-green"></div>
-                            <div class="colorbar-blue"></div>
-                            <div class="colorbar-purple"></div>
-                            <div class="colorbar-yellow"></div>
-                            <div class="colorbar-orange"></div>
-                            <div class="colorbar-lightred"></div>
-                            <div class="colorbar-red"></div>
-                            <div class="colorbar-lightgreen"></div>
-                            <div class="colorbar-green"></div>
-                            <div class="colorbar-blue"></div>
-                            <div class="colorbar-purple"></div>
-                            <div class="colorbar-yellow"></div>
-                            <div class="colorbar-orange"></div>
-                            <div class="colorbar-lightred"></div>
-                            <div class="colorbar-red"></div>
-                            <div class="colorbar-lightgreen"></div>
-                            <div class="colorbar-green"></div>
-                            <div class="colorbar-blue"></div>
-                            <div class="colorbar-purple"></div>
-                            
-                     </div>
-                        <div id="link_bar_header">
-                             {% if app.user %} 
-                             <div class="linkheader"><a href="{{ path('fos_user_security_logout') }}">Desconectarse</a></div>
-                             {% else %}
-                             <div class="linkheader"><a href="{{ path('fos_user_security_login') }}">Ingresar</a></div>
-                            <div class="linkheader"><a href="{{ path('fos_user_registration_register') }}">Registrarse</a></div>
-                             {% endif %}
+        <div class="super container">
+            <div class="wrapper">
+                {% block header %}
+                    <div id="header" class="navbar">
+                        <div class="container">
+                            <a href="http://www.acee.cl"><img id="logo-achee" src="{{ asset('img/logo.png') }}" alt="logo"/></a>
+                            <a href="{{ app.request.getBaseURL() }}">
+                                <h1>
+                                <div id="titlestrong">Sistema de evaluación</div>
+                                <div id="titleweak">de programas AChEE</div>
+                                </h1>
+                            </a>
+                             <div id="header-color-bars">
+                                <div class="colorbar-yellow"></div>
+                                <div class="colorbar-orange"></div>
+                                <div class="colorbar-lightred"></div>
+                                <div class="colorbar-red"></div>
+                                <div class="colorbar-lightgreen"></div>
+                                <div class="colorbar-green"></div>
+                                <div class="colorbar-blue"></div>
+                                <div class="colorbar-purple"></div>
+                                <div class="colorbar-yellow"></div>
+                                <div class="colorbar-orange"></div>
+                                <div class="colorbar-lightred"></div>
+                                <div class="colorbar-red"></div>
+                                <div class="colorbar-lightgreen"></div>
+                                <div class="colorbar-green"></div>
+                                <div class="colorbar-blue"></div>
+                                <div class="colorbar-purple"></div>
+                                <div class="colorbar-yellow"></div>
+                                <div class="colorbar-orange"></div>
+                                <div class="colorbar-lightred"></div>
+                                <div class="colorbar-red"></div>
+                                <div class="colorbar-lightgreen"></div>
+                                <div class="colorbar-green"></div>
+                                <div class="colorbar-blue"></div>
+                                <div class="colorbar-purple"></div>
+                                <div class="colorbar-yellow"></div>
+                                <div class="colorbar-orange"></div>
+                                <div class="colorbar-lightred"></div>
+                                <div class="colorbar-red"></div>
+                                <div class="colorbar-lightgreen"></div>
+                                <div class="colorbar-green"></div>
+                                <div class="colorbar-blue"></div>
+                                <div class="colorbar-purple"></div>
+                                
+                         </div>
+                            <div id="link_bar_header">
+                                 {% if app.user %} 
+                                 <div class="linkheader"><a href="{{ path('fos_user_security_logout') }}">Desconectarse</a></div>
+                                 {% else %}
+                                 <div class="linkheader"><a href="{{ path('fos_user_security_login') }}">Ingresar</a></div>
+                                <div class="linkheader"><a href="{{ path('fos_user_registration_register') }}">Registrarse</a></div>
+                                 {% endif %}
+                            </div>
                         </div>
                     </div>
-            </div>
-            {% endblock %}
+                {% endblock %}
                 <div class="content">
-            {% block body %}{% endblock %}
+                    {% block body %}{% endblock %}
                 </div>
+
+                 <div class="push"></div>
+            </div>
+
+
             {% block footer %}
-                <div id="footer" class="navbar">
+                <div id="footer">
                     <div class="container">
-                        <div id="footer-text"><p>Agencia Chilena de Eficiencia Energética (AChEE)</p>
-                        <p>Monseñor Sótero Sanz n.°221. Providencia. Santiago - Chile. </p><p>Email: <a href="mailto:info@acee.cl">info@acee.cl</a> / Teléfono: (56 2) 2571 2200</p>
+                        <div id="footer-text">
+                            <p>Agencia Chilena de Eficiencia Energética (AChEE)</p>
+                            <p>Monseñor Sótero Sanz n.°221. Providencia. Santiago - Chile. </p>
+                            <p>Email: <a href="mailto:info@acee.cl">info@acee.cl</a> / Teléfono: (56 2) 2571 2200</p>
                         </div>
-                        <div id="footer-color-bars"><div class="colorbar-yellow"></div>
-                            <div class="colorbar-orange"></div>
-                            <div class="colorbar-lightred"></div>
-                            <div class="colorbar-red"></div>
-                            <div class="colorbar-lightgreen"></div>
-                            <div class="colorbar-green"></div>
-                            <div class="colorbar-blue"></div>
-                            <div class="colorbar-purple"></div>
+                        <div id="footer-color-bars">
                             <div class="colorbar-yellow"></div>
                             <div class="colorbar-orange"></div>
                             <div class="colorbar-lightred"></div>
@@ -105,10 +106,20 @@
                             <div class="colorbar-lightgreen"></div>
                             <div class="colorbar-green"></div>
                             <div class="colorbar-blue"></div>
-                            <div class="colorbar-purple"></div></div>
-                     </div>
+                            <div class="colorbar-purple"></div>
+                            <div class="colorbar-yellow"></div>
+                            <div class="colorbar-orange"></div>
+                            <div class="colorbar-lightred"></div>
+                            <div class="colorbar-red"></div>
+                            <div class="colorbar-lightgreen"></div>
+                            <div class="colorbar-green"></div>
+                            <div class="colorbar-blue"></div>
+                            <div class="colorbar-purple"></div>
+                        </div>
+                    </div>
                 </div>
-             {% endblock %}
+            
+            {% endblock %}
             {% block javascripts %}{% endblock %}
         </div>
     </body>
