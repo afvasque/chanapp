@@ -1,99 +1,176 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-
+{% block title %}Crear Ficha de Programa{% endblock %}
 {% block body -%}
-
-    <h1>Crear Ficha de Proyecto</h1>
-    <a href="{{ path('fichaproyecto') }}" class="btn">
-            Volver a Fichas de Proyectos
-    </a>
-    <form action="{{ path('fichaproyecto_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_row(form.area_accion) }}
-        {{ form_row(form.linea_accion) }}
-        {{ form_row(form.nombre) }}
-        {{ form_row(form.jefe) }}
-        {{ form_row(form.duracion) }}
-
-        {{ form_label(form.diagnostico_previo) }}
-        {{ form_widget(form.diagnostico_previo) }} 
-    <p title="Describir brevemente la situación actual, sin proyecto, relacionada al mismo" id="formhelpshow">?</p>
-        {{ form_errors(form.diagnostico_previo) }}
-
-        {{ form_row(form.obj_general) }}
-
-        {{ form_label(form.objs_especificos) }}
-        {{ form_widget(form.objs_especificos) }} 
-    <p title="Indicar cuáles son los objetivos a obtener a la finalización del proyecto" id="formhelpshow">?</p>
-        {{ form_errors(form.objs_especificos) }}
-
-        {{ form_label(form.descripcion) }}
-        {{ form_widget(form.descripcion) }} 
-    <p title="Presentar los rasgos sobresalientes del proyecto, actividades y toda otra información relevante que permita tener una idea acabada del proyecto y el impacto del mismo" id="formhelpshow">?</p>
-        {{ form_errors(form.descripcion) }}
-
-        {{ form_label(form.resumen_descripcion) }}
-        {{ form_widget(form.resumen_descripcion) }} 
-        {{ form_errors(form.resumen_descripcion) }}
-
-
-        {{ form_label(form.desc_causales) }}
-        {{ form_widget(form.desc_causales) }} 
-    <p title="Descripción de las relaciones causales que dieron origen al proyecto y que determinó las actividades a desarrollar dentro del mismo para la obtención de los objetivos buscados" id="formhelpshow">?</p>
-        {{ form_errors(form.desc_causales) }}
-
-
-        {{ form_label(form.variables_causales) }}
-        {{ form_widget(form.variables_causales) }} 
-    <p title="Variables relevantes del proyecto que afectan las relaciones causales establecidas anteriormente" id="formhelpshow">?</p>
-        {{ form_errors(form.variables_causales) }}
-        
-        <h2> Actividades </h2>
-        <p>
-        El siguiente cuadro contiene las actividades del proyecto, las que son descritas mediante el llenado de 4 campos: nombre, duración, descripción de la actividad y resultados esperados de la misma.</p>
-
-        <div class="chanpp_evimbundle_fichaproyectotype_activities" id="chanpp_evimbundle_fichaproyectotype_activities" data-prototype="{{ form_widget(form.activities.vars.prototype)|e }}">
-            {% for activity in form.activities %}
-            <div>
-                {{ form_row(activity.nombre) }}
-                {{ form_row(activity.descripcion) }}
-                {{ form_row(activity.resultadosEsperados) }}
-                {{ form_row(activity.duracion) }}
-            </div>
-            {% endfor %}
+    <div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('fichaproyecto') }}">Ficha de Programas</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Creando Ficha de Programa
         </div>
-        <a href="#" class="add_tag_link btn btn-success" id="agregar_actividad">Agregar una actividad</a> <br/> <br />
+    </div>
+    {% include 'navbar.html.twig' %}
+    
+    <div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Crear Ficha de Programa</h2>
+            </div>
+            <a href="#" class="htooltip"><img id="icon-help" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>help text</span></a>
+        </div>
 
-        {{ form_rest(form) }}   
+        <br />
+        <br />
 
-        <p>
-            <button type="submit" class="btn btn-success">Crear Ficha de Proyecto</button>
-        </p>
-    </form>
-{% block javascript %}
+        <div class="form-content">
+            <form action="{{ path('fichaproyecto_create') }}" method="post" {{ form_enctype(form) }}>
+
+                <div class="row-fluid">
+                    <div class="span5">
+                        {{ form_row(form.area_accion) }}
+                        {{ form_row(form.linea_accion) }}
+                        {{ form_row(form.nombre) }}
+                        {{ form_row(form.jefe) }}
+                    </div>
+                        
+                    <div class="span5">
+                        {{ form_row(form.duracion) }}
+
+                        {{ form_label(form.diagnostico_previo) }}
+                        {{ form_widget(form.diagnostico_previo) }}
+                        <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Describir brevemente la situación<br />actual, sin proyecto, relacionada al<br />mismo</span></a>
+                        {{ form_errors(form.diagnostico_previo) }}
+
+                        {{ form_row(form.obj_general) }}
+
+                        {{ form_label(form.objs_especificos) }}
+                        {{ form_widget(form.objs_especificos) }} 
+                        <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Indicar cuáles son los objetivos a<br />obtener a la finalización del proyecto</span></a>
+                        {{ form_errors(form.objs_especificos) }} 
+                                   
+                    </div>
+                </div>
+
+                <div class="row-fluid">
+                    <div class="span10">
+                        {{ form_label(form.descripcion) }}
+                        {{ form_widget(form.descripcion) }}
+                        <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Presentar los rasgos sobresalientes<br />del proyecto, actividades y toda otra<br />información relevante que permita<br />tener una idea acabada del proyecto<br />y el impacto del mismo</span></a>
+                        {{ form_errors(form.descripcion) }}
+                    </div>
+                </div>
+
+
+                <div class="row-fluid">
+                    <div class="span10">
+                        {{ form_label(form.resumen_descripcion) }}
+                        {{ form_widget(form.resumen_descripcion) }} 
+                        {{ form_errors(form.resumen_descripcion) }}
+                    </div>
+                </div>
+
+                <div class="row-fluid">
+                    <div class="span5">
+                        {{ form_label(form.desc_causales) }}
+                        {{ form_widget(form.desc_causales) }}
+                        <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Descripción de las relaciones causales que dieron origen al proyecto y que determinó las actividades a desarrollar dentro del mismo para la obtención de los objetivos buscados</span></a>
+                        {{ form_errors(form.desc_causales) }}
+                    </div>
+                        
+                    <div class="span5">
+                        {{ form_label(form.variables_causales) }}
+                        {{ form_widget(form.variables_causales) }}
+                        <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Variables relevantes del proyecto<br />que afectan las relaciones causales<br />establecidas anteriormente</span></a>
+                        {{ form_errors(form.variables_causales) }}           
+                    </div>
+                </div>
+
+                <br />
+                <br />
+
+                <div class="title-text">
+                    <h3>Actividades</h3>
+                </div>
+                <a href="#" class="htooltip"><img id="icon-help" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>El siguiente cuadro contiene las actividades del proyecto, las que son descritas mediante el llenado de 4 campos: nombre, duración, descripción de la actividad y resultados esperados de la misma.</span></a>
+
+                {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
+
+                    <div class="title-actions">
+                        <div class="btn-group">
+                            <button class="btn">Elegir una Acción</button>
+                            <button class="btn dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <!-- dropdown menu links -->
+                                <li>
+                                    <a href="#" id="agregar_actividad">Agregar una actividad</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                {% endif %}
+
+                <br />
+                <br />
+                <br />
+
+                <div class="chanpp_evimbundle_fichaproyectotype_activities" id="chanpp_evimbundle_fichaproyectotype_activities" data-prototype="{{ form_widget(form.activities.vars.prototype)|e }}">
+                
+                    {% for activity in form.activities %}
+
+                        <div class="row-fluid">
+                            <div class="span10">
+                                {{ form_row(activity.nombre) }}
+                                {{ form_row(activity.descripcion) }}
+                                {{ form_row(activity.resultadosEsperados) }}
+                                {{ form_row(activity.duracion) }}
+                            </div>
+
+                            <a href="" class="btn btn-danger" id="boton_borrar">Borrar esta actividad</a>
+                            
+                            <br />
+                            <br />
+                        
+                        </div>
+
+                    {% endfor %}
+                </div>
+
+                <br/> <br />
+
+                {{ form_rest(form) }}   
+
+                <p><button type="submit" class="btn btn-success">Crear Ficha de Programa</button></p>
+            </form>
+        </div>
+    </div>
+      
+    {% block javascript %}
 
 
         <script type="text/javascript">
-            function aButtonPressed(){
-            $.post('{{path('fichaproyecto_add_linea')}}',               
-                {data1: $('#chanpp_evimbundle_fichaproyectotype_area_accion').val()}, 
-                    function(response){
-                        if(response.success)
-                        {
-                            $("[id='chanpp_evimbundle_fichaproyectotype_linea_accion']").html('');
-                            $.each(response.code, function(val, text) {
-                                   $("[id='chanpp_evimbundle_fichaproyectotype_linea_accion']").append(
-                                   $('<option></option>').val(text).html(text)
-                                );
-                            });
-                        }
+            function aButtonPressed() {
+                $.post('{{path('fichaproyecto_add_linea')}}',               
+                    {
+                        data1: $('#chanpp_evimbundle_fichaproyectotype_area_accion').val()}, 
+                            function(response) {
+                                if(response.success) {
+                                    $("[id='chanpp_evimbundle_fichaproyectotype_linea_accion']").html('');
+                                    $.each(response.code, function(val, text) {
+                                           $("[id='chanpp_evimbundle_fichaproyectotype_linea_accion']").append(
+                                           $('<option></option>').val(text).html(text)
+                                        );
+                                    });
+                                }
+                            },
+                "json");
+            }
 
-                        
-
-            }, "json");}
-
-                    $(document).ready(function() { 
-                    $("[id='chanpp_evimbundle_fichaproyectotype_linea_accion']").html('');    
-          $('#chanpp_evimbundle_fichaproyectotype_area_accion').change(function(){aButtonPressed();});
-        });
+            $(document).ready(function() { 
+                $("[id='chanpp_evimbundle_fichaproyectotype_linea_accion']").html('');    
+                $('#chanpp_evimbundle_fichaproyectotype_area_accion').change(function(){aButtonPressed();});
+            });
 
             var collectionHolder = $('div#chanpp_evimbundle_fichaproyectotype_activities');
             var $addTagLink = $('<a href="#" class="add_tag_link btn btn-success">Agregar una actividad</a>');
@@ -102,12 +179,14 @@
             var $removeFormA = $('<a href="#" class="btn btn-danger">Borrar esta actividad</a><br /><br />');
         </script>
 
-    {% javascripts 
-        '@chanppEvImBundle/Resources/public/js/addActividades.js'
-    %}
-        <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-{% endblock %}
+        {% javascripts 
+            '@chanppEvImBundle/Resources/public/js/addActividades.js'
+        %}
+        
+            <script src="{{ asset_url }}"></script>
+    
+        {% endjavascripts %}
+    {% endblock %}
 
 {% endblock %}
 

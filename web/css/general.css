@@ -433,6 +433,15 @@ p {
     width: 98%;
 }
 
+.span10 textarea {
+    width: 80%;
+    height: 120px;
+}
+
+.span10 input {
+    width: 98%;
+}
+
 .span6 input {
     width: 96%;
 }

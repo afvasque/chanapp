@@ -32,10 +32,10 @@
 
                             {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
                                 <li>
-                                    <form class="dropdown-menu-form" id="delete-form" action="{{ path('fichaproyecto_delete', { 'id': entity.id }) }}" method="post">
+                                    <form action="{{ path('fichaproyecto_delete', { 'id': entity.id }) }}" method="post" class="dropdown-menu-form" id="delete-form">
                                         <input type="hidden" name="_method" value="DELETE" />
                                         {{ form_widget(delete_form) }}
-                                        <a class="dropdown-menu-link" type="submit" style="border: 0; background: transparent" onclick="confirmDelete()">Borrar Ficha<br />de Programa</a>
+                                        <a type="submit" onclick="confirmDelete()" class="dropdown-menu-link">Borrar Ficha<br />de Programa</a>
                                     </form>
                                 </li>
                             {% endif %}
@@ -189,10 +189,11 @@
                             <td>{{ entity.instanciasPlazo }}</td>
                             <td>
                                 <ul>
-                                    <a href="{{ path('planevaluacion_show', { 'id': entity.id }) }}" class="btn btn-primary">Ver</a>
+                                    <a href="{{ path('planevaluacion_show', { 'id': entity.id }) }}" ><img class="icon-action-table2" src="{{ asset('img/icono-ver-(lupa).png') }}" alt="logo"/></a>
                                     
                                     {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
-                                        <a href="{{ path('planevaluacion_edit', { 'id': entity.id }) }}" class="btn btn-warning">Editar</a>
+                                    <a href="{{ path('fichaproyecto_edit', { 'id': entity.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-editar-(lapiz).png') }}" alt="logo"/></a>
+                                        <a href="{{ path('planevaluacion_edit', { 'id': entity.id }) }}" ></a>
                                     {% endif %}
                                 </ul>
                             </td>
