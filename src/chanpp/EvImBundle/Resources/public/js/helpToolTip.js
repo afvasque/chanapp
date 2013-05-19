@@ -1,3 +1,6 @@
- $(function ()
-{ $("#example").popover();
+(function ($) {
+
+    $(function ()
+{ $("#example").popover();});
+
 });
