@@ -1,28 +1,129 @@
-{% extends '::base.html.twig' %}
-
+{% extends 'chanppEvImBundle::layout.html.twig' %}
+{% block title %}Editar Indice de Gestión Proyecto {{entity.getFichaProyecto.getNombre}}{% endblock %}
 {% block body -%}
-    <h1>IndGestion edit</h1>
+    <div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('fichaproyecto_show', { 'id':entity.getFichaProyecto.getId }) }}">Ficha de Programa "{{entity.getFichaProyecto.getNombre}}"</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Editando Indicadores de Gestión Asociados
+        </div>
+    </div>
+    {% include 'navbar.html.twig' %}
 
-    <form action="{{ path('indgestion_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-        <input type="hidden" name="_method" value="PUT" />
-        {{ form_widget(edit_form) }}
-        <p>
-            <button type="submit">Edit</button>
-        </p>
-    </form>
+    <div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Editar Indice de Gestión Proyecto "{{entity.getFichaProyecto.getNombre}}"</h2>
+            </div>
+            
+            {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('indgestion') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('indgestion_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+                <div class="title-actions">
+                    <div class="btn-group">
+                        <button class="btn">Elegir una Acción</button>
+                        <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <!-- dropdown menu links -->
+                            <li>
+                                <form action="{{ path('indgestion_delete', { 'id': entity.id }) }}" method="post" class="dropdown-menu-form" id="delete-form">
+                                    <input type="hidden" name="_method" value="DELETE" />
+                                    {{ form_widget(delete_form) }}
+                                    <a type="submit" onclick="confirmDelete()" class="dropdown-menu-link">Eliminar</a>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-content">
+
+
+
+            <form action="{{ path('indgestion_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+                <input type="hidden" name="_method" value="PUT" />
+                <div class="row-fluid">
+                    <div class="span12">
+                        {{ form_row(edit_form.nombre) }}
+                    </div>
+                </div>
+
+                <p><b>Señale a continuación las variables o circunstancias relevantes que puedan significar un obstáculo a las metas que se espera cumplir</b></p>
+
+                <div class="row-fluid">
+                    <div class="span12"> 
+                        {{ form_widget(edit_form.variables_obstaculo) }} 
+                        {{ form_errors(edit_form.variables_obstaculo) }}
+                    </div>
+                </div>
+
+                
+
+                
+
+                <h3>Metas</h3>
+          
+                <p>
+                Se asociará a cada indicador de gestión una o más metas, de las que se deberá especificar lo siguiente:
+                </p>
+
+
+                <div class="meta" data-prototype="{{ form_widget(edit_form.metas.vars.prototype)|e }}">
+                    {% for meta in edit_form.metas%}
+
+                        <div class="row-fluid">
+                            <div class="span12">
+                                {{ form_row(meta.nombre) }}
+                                {{ form_row(meta.descripcion) }}
+                            </div>
+                        </div>
+
+                        
+                        
+                        
+
+                        <div class="row-fluid">
+                            <div class="span6">
+                                <p><b>Indicar a continuación el plazo en el cual se debe cumplir la meta. Primero introduzca el mes en el que se cumplirá (mm) y luego el año (aaaa)</b><p/>
+                                {{ form_errors(meta.plazoMes) }}
+                                {{ form_widget(meta.plazoMes) }}
+                            </div>
+
+                            <div class="span6">
+                                <br/>
+                                <br/>
+                                <br/>
+                                {{ form_row(meta.plazoAnio) }}
+                            </div>
+                        </div>
+                        
+
+                        
+
+                    {% endfor %}
+                </div>
+
+                <p>
+                    <button type="submit" class="btn btn-success">Guardar Indicador de Gestión</button>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    {% block javascript %}
+
+        <script type="text/javascript">
+            function confirmDelete() {
+                if(confirm('¿Seguro que desea eliminar?'))
+                {
+                    document.getElementById('delete-form').submit();
+                }
+            }
+        </script>
+    
+        
+    {% endblock %}
 {% endblock %}
