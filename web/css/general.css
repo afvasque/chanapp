@@ -423,3 +423,21 @@ p {
     float:left;
     position: relative;
 }
+
+.span12 textarea {
+    width: 98%;
+    height: 120px;
+}
+
+.span12 input {
+    width: 98%;
+}
+
+.span6 input {
+    width: 96%;
+}
+
+.span6 select {
+    width: 99%;
+}
+

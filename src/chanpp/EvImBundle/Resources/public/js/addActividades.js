@@ -28,7 +28,7 @@ function addTagForm(collectionHolder) {
     // instead be a number based on how many items we have
     var newForm = prototype.replace(/__name__/g, index);
     //var $newFormDiv = $("<div id=borrar_actividad></div>");
-    collectionHolder.append("<div>" + newForm + "</div>");
+    collectionHolder.append("<div class=" + "row-fluid" + ">" + "<div class=" + "span12" + ">" + newForm + "</div>");
     // increase the index with one for the next item
     collectionHolder.data('index', index + 1);
     //$addTagLink.before($newFormDiv);

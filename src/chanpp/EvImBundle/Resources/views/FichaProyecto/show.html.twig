@@ -1,165 +1,216 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-
+{% block title %}Ver Ficha de Programa {{ entity.nombre }}{% endblock %}
 {% block body -%}
-    <h1>Ficha Proyecto {{entity.id}}</h1>
-    <a href="{{ path('fichaproyecto') }}" class="btn" >
-            Volver a Fichas de Proyectos
-    </a>
-    {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
-    <a href="{{ path('fichaproyecto_edit', { 'id': entity.id }) }}" class="btn btn-warning">
-            Editar Ficha Proyecto
-    </a>{% endif %}
-    <br><br>       
-    {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
-    <form action="{{ path('fichaproyecto_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminar?')">Eliminar</button>
-        </form>
-    {% endif %}
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Área de acción</th>
-                <td>{{ entity.areaaccion }}</td>
-            </tr>
-            <tr>
-                <th>Línea de acción</th>
-                <td>{{ entity.lineaaccion }}</td>
-            </tr>
-            <tr>
-                <th>Nombre del Programa</th>
-                <td>{{ entity.nombre }}</td>
-            </tr>
-            <tr>
-                <th>Jefe de Proyecto</th>
-                <td>{{ entity.jefe }}</td>
-            </tr>
-            <tr>
-                <th>Duración del Proyecto</th>
-                <td>{{ entity.duracion }}</td>
-            </tr>
-            <tr>
-                <th>Diagnóstico previo a aplicación del proyecto
-                    </th>
-                <td>{{ entity.diagnosticoprevio }}</td>
-            </tr>
-            <tr>
-                <th>Objetivo general</th>
-                <td>{{ entity.objgeneral }}</td>
-            </tr>
-            <tr>
-                <th>Objetivos específicos</th>
-                <td>{{ entity.objsespecificos }}</td>
-            </tr>
-            <tr>
-                <th>Descripción del Proyecto</th>
-                <td>{{ entity.descripcion }}</td>
-            </tr>
-            <tr>
-                <th>Resumen de la descripción</th>
-                {% if entity.getResumenDescripcion %}
-                    <td>{{ entity.getResumenDescripcion }}</td>
-                {% else %}
-                    <td></td>
-                {% endif %}
-            </tr>
-            <tr>
-                <th>Justificación del proyecto</th>
-                <td>{{ entity.desccausales }}</td>
-            </tr>
-            <tr>
-                <th>Variables relevantes</th>
-                <td>{{ entity.variablescausales }}</td>
-            </tr>            
-        </tbody>
-    </table>
+    <div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('fichaproyecto_show', { 'id':entity.id }) }}">Ficha de Programa "{{ entity.nombre }}"</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Viendo Ficha de Progama
+        </div>
+    </div>
+    {% include 'navbar.html.twig' %}
+    <div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Ficha de Programa {{ entity.nombre }}</h2>
+            </div>
+            <a href="#" class="htooltip"><img id="icon-help" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>help text</span></a>
 
-    <h4>Actividades</h4>
+            {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
 
-    <table class="table table-condensed">
-        <tr>
-            <th>Nombre</th>
-            <th>Descripción</th>
+                <div class="title-actions">
+                    <div class="btn-group">
+                        <button class="btn">Elegir una Acción</button>
+                        <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <!-- dropdown menu links -->
+                            <li>
+                                 <a href="{{ path('fichaproyecto_edit', { 'id': entity.id }) }}">Editar</a>
+                            </li>
 
-        </tr>
-    {% for actividad in entity.activities %}
-        <tr>
-            <td> {{actividad.nombre}} </a></td>
-            <td>{{actividad.descripcion}}</td>
-            
-        </tr>
-    {% endfor %}
+                            {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
+                                <li>
+                                    <form class="dropdown-menu-form" action="{{ path('fichaproyecto_delete', { 'id': entity.id }) }}" method="post">
+                                        <input type="hidden" name="_method" value="DELETE" />
+                                        {{ form_widget(delete_form) }}
+                                        <a class="dropdown-menu-link" type="submit" style="border: 0; background: transparent" onclick="return confirm('¿Seguro que desea eliminar?')">Borrar Ficha<br />de Programa</a>
+                                    </form>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <!-- Info table -->
+        
+        <table class="table table-bordered infotable">
+            <tbody>
+                <tr>
+                    <th class="tableinfohead">Área de acción<a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>help text</span></a></th>
+                    <td>{{ entity.areaaccion }}</td>
+                </tr>
+                <tr>
+                    <th class="tableinfohead">Línea de acción<a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>help text</span></a></th>
+                    <td>{{ entity.lineaaccion }}</td>
+                </tr>
+                <tr>
+                    <th class="tableinfohead">Nombre del Programa</th>
+                    <td>{{ entity.nombre }}</td>
+                </tr>
+                <tr>
+                    <th class="tableinfohead">Jefe de Proyecto</th>
+                    <td>{{ entity.jefe }}</td>
+                </tr>
+                <tr>
+                    <th class="tableinfohead">Duración del Proyecto</th>
+                    <td>{{ entity.duracion }}</td>
+                </tr>
+                <tr>
+                    <th class="tableinfohead">Diagnóstico previo a aplicación del proyecto
+                        </th>
+                    <td>{{ entity.diagnosticoprevio }}</td>
+                </tr>
+                <tr>
+                    <th class="tableinfohead">Objetivo general</th>
+                    <td>{{ entity.objgeneral }}</td>
+                </tr>
+                <tr>
+                    <th class="tableinfohead">Objetivos específicos</th>
+                    <td>{{ entity.objsespecificos }}</td>
+                </tr>
+                <tr>
+                    <th class="tableinfohead">Descripción del Proyecto</th>
+                    <td>{{ entity.descripcion }}</td>
+                </tr>
+                <tr>
+                    <th class="tableinfohead">Resumen de la descripción</th>
+                    {% if entity.getResumenDescripcion %}
+                        <td>{{ entity.getResumenDescripcion }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <th class="tableinfohead">Justificación del proyecto</th>
+                    <td>{{ entity.desccausales }}</td>
+                </tr>
+                <tr>
+                    <th class="tableinfohead">Variables relevantes</th>
+                    <td>{{ entity.variablescausales }}</td>
+                </tr> 
+            </tbody>
         </table>
 
-    <h4>Indicadores de gestión asociados</h4>        
-    
-        {% for indgest in entity.getIndGestions %}
-    <table class="table table-striped">
-        <tr>
-            <th>Indicador</th>
-            <th>Metas</th>
-            <th>Plazos (mes, año) </th>
-        </tr>
-        <tr>
-            <td>
-                <a href="{{ path('indgestion_show', { 'id': indgest.id }) }}">{{indgest.nombre}}</a>
-            </td>
-            <td>
-                {% for meta in indgest.metas %}
-                    <a href="{{ path('meta_show', { 'id': meta.id })}}">{{meta.descripcion}}</a><br />
-                {% endfor %}
-            </td>
-            <td>
-                {% for meta in indgest.metas %}
-                    {{meta.plazoMes}} {{meta.plazoAnio}}<br />
-                {% endfor %}
-            </td>
-        </tr>
-    </table>
-        {% endfor %}
-        <hr>
-    <h4>Plan de Evaluación</h4>
-    {% if planevaluaciones|length > 0 %}
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Objetivos</th>
-                <th>Destinatarios</th>
-                <th>Número de Evaluaciones</th>
-                <th>Plazo</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in planevaluaciones %}
-            <tr>
-                <td>{{ entity.objetivos }}</td>
-                <td>{{ entity.destinatarios }}</td>
-                <td>{{ entity.instanciasNumeroEvaluaciones }}</td>
-                <td>{{ entity.instanciasPlazo }}</td>
-                <td>
-                <ul>
-                    <a href="{{ path('planevaluacion_show', { 'id': entity.id }) }}" 
-class="btn btn-primary">Ver</a>
-                 {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
-                     <a href="{{ path('planevaluacion_edit', { 'id': entity.id }) }}" class="btn btn-warning">Editar</a>
-                {% endif %}
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-    {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
-        <a href="{{ path('planevaluacion_new', { 'fichaproyecto_id': entity.id }) }}" class="btn btn-success">
-                    Agregar Plan de Evaluación
-        </a>
-    {% endif %}
-    {% endif %}
-    {% if entity.getNombreEditor %}
-    <p><i>Editado por {{entity.getNombreEditor}}</i></p>
-    {% endif %}
+        <br />     
+        
+        <!-- Actividades -->
+        <h3>Actividades</h3>
+        {% if entity.activities is empty%}
+            No hay actividades asociadas a esta ficha de programa.
+        {% else %}
+            <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed sortable">
+                <thead>
+                    <tr class="tableinfohead">
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for actividad in entity.activities %}
+                        <tr>
+                            <td> {{actividad.nombre}} </a></td>
+                            <td>{{actividad.descripcion}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
 
+
+        <!-- Indicadores de gestión asociados -->
+        <h3>Indicadores de gestión asociados</h3>
+        {% if entity.getIndGestions is empty%}
+            No hay indicadores de gestión asociados a esta ficha de programa.
+        {% else %}
+            <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed sortable">
+                <thead>
+                    <tr class="tableinfohead">
+                        <th>Indicador</th>
+                        <th>Metas</th>
+                        <th>Plazos (mes, año) </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for indgest in entity.getIndGestions %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('indgestion_show', { 'id': indgest.id }) }}">{{indgest.nombre}}</a>
+                            </td>
+                            <td>
+                                {% for meta in indgest.metas %}
+                                    <a href="{{ path('meta_show', { 'id': meta.id })}}">{{meta.descripcion}}</a><br />
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {% for meta in indgest.metas %}
+                                    {{meta.plazoMes}} {{meta.plazoAnio}}<br />
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+
+
+        <!-- Plan de Evaluación -->
+        <h3>Plan de Evaluación</h3>
+        {% if planevaluaciones|length > 0 %}
+            <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed sortable">
+                <thead>
+                    <tr class="tableinfohead">
+                        <th>Objetivos</th>
+                        <th>Destinatarios</th>
+                        <th>Número de Evaluaciones</th>
+                        <th>Plazo</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entity in planevaluaciones %}
+                        <tr>
+                            <td>{{ entity.objetivos }}</td>
+                            <td>{{ entity.destinatarios }}</td>
+                            <td>{{ entity.instanciasNumeroEvaluaciones }}</td>
+                            <td>{{ entity.instanciasPlazo }}</td>
+                            <td>
+                                <ul>
+                                    <a href="{{ path('planevaluacion_show', { 'id': entity.id }) }}" class="btn btn-primary">Ver</a>
+                                    
+                                    {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
+                                        <a href="{{ path('planevaluacion_edit', { 'id': entity.id }) }}" class="btn btn-warning">Editar</a>
+                                    {% endif %}
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
+                <a href="{{ path('planevaluacion_new', { 'fichaproyecto_id': entity.id }) }}" class="btn btn-success">Agregar Plan de Evaluación</a>
+            {% endif %}
+        {% endif %}
+
+        <br />
+        
+        {% if entity.getNombreEditor %}
+        <p><i>Editado por {{entity.getNombreEditor}}</i></p>
+        {% endif %}
+
+    </div>
 {% endblock %}
