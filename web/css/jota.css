@@ -77,6 +77,12 @@
 	text-align: center;
 }
 
+table.fixed { table-layout:fixed; }
+table.fixed td { overflow: hidden; }
+
+.action-icons{
+	text-align: left;
+}
 
 /* ToolTip*/
 .tooltip {
@@ -133,6 +139,7 @@
 			padding: 10px 10px 10px 40px;
 			position: absolute;
 			text-decoration: none;
+			text-align: left;
 			visibility: hidden;
 			width: 350px;
 			z-index: 10;
