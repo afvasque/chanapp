@@ -1,46 +1,81 @@
-{% extends '::base.html.twig' %}
-
+{% extends 'chanppEvImBundle::layout.html.twig' %}
+{% block title %}Metas Asociadas{% endblock %}
 {% block body -%}
-    <h1>Meta</h1>
+    <div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('fichaproyecto_show', { 'id':entity.getIndGestion.getFichaProyecto.getId }) }}">Ficha de Programa "{{entity.getIndGestion.getFichaProyecto.getNombre}}"</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            <a href="{{ path('indgestion_show', { 'id':entity.getIndGestion.getId }) }}">Indicador de Gestión "{{entity.getIndGestion.getNombre}}"</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Viendo Metas Asociadas
+        </div>
+    </div>
+    {% include 'navbar.html.twig' %}
+    <div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Metas Asociadas</h2>
+            </div>
+            
+            {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Descripcion</th>
-                <td>{{ entity.descripcion }}</td>
-            </tr>
-            <tr>
-                <th>Mes deadline</th>
-                <td>{{ entity.plazoMes }}</td>
-            </tr>
-            <tr>
-                <th>Año deadline</th>
-                <td>{{ entity.plazoAnio }}</td>
-            </tr>
-        </tbody>
-    </table>
+                <div class="title-actions">
+                    <div class="btn-group">
+                        <button class="btn">Elegir una Acción</button>
+                        <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <!-- dropdown menu links -->
+                            <li>
+                                 <a href="{{ path('meta_edit', { 'id': entity.id }) }}">Editar</a>
+                            </li>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('meta') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('meta_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('meta_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+                            {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
+                                <li>
+                                    <form action="{{ path('meta_delete', { 'id': entity.id }) }}" method="post" class="dropdown-menu-form" id="delete-form">
+                                        <input type="hidden" name="_method" value="DELETE" />
+                                        {{ form_widget(delete_form) }}
+                                        <a type="submit" onclick="confirmDelete()" class="dropdown-menu-link">Eliminar</a>
+                                    </form>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <table class="table table-bordered infotable">
+            <tbody>
+                <tr>
+                    <th class="tableinfohead">Descripcion</th>
+                    <td>{{ entity.descripcion }}</td>
+                </tr>
+                <tr>
+                    <th class="tableinfohead">Mes deadline</th>
+                    <td>{{ entity.plazoMes }}</td>
+                </tr>
+                <tr>
+                    <th class="tableinfohead">Año deadline</th>
+                    <td>{{ entity.plazoAnio }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    {% block javascript %}
+
+        <script type="text/javascript">
+            function confirmDelete() {
+                if(confirm('¿Seguro que desea eliminar?'))
+                {
+                    document.getElementById('delete-form').submit();
+                }
+            }
+        </script>
+    
+        
+    {% endblock %}
+
 {% endblock %}

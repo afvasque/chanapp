@@ -1,28 +1,87 @@
-{% extends '::base.html.twig' %}
-
+{% extends 'chanppEvImBundle::layout.html.twig' %}
+{% block title %}Editar Metas Asociadas{% endblock %}
 {% block body -%}
-    <h1>Meta edit</h1>
+    <div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('fichaproyecto_show', { 'id':entity.getIndGestion.getFichaProyecto.getId }) }}">Ficha de Programa "{{entity.getIndGestion.getFichaProyecto.getNombre}}"</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            <a href="{{ path('indgestion_show', { 'id':entity.getIndGestion.getId }) }}">Indicador de Gestión "{{entity.getIndGestion.getNombre}}"</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Editando Metas Asociadas
+        </div>
+    </div>
+    {% include 'navbar.html.twig' %}
+    <div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Editar Metas Asociadas</h2>
+            </div>
+            
+            {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
 
-    <form action="{{ path('meta_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-        <input type="hidden" name="_method" value="PUT" />
-        {{ form_widget(edit_form) }}
-        <p>
-            <button type="submit">Edit</button>
-        </p>
-    </form>
+                <div class="title-actions">
+                    <div class="btn-group">
+                        <button class="btn">Elegir una Acción</button>
+                        <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                 <form action="{{ path('meta_delete', { 'id': entity.id }) }}" method="post" class="dropdown-menu-form" id="delete-form">
+                                    <input type="hidden" name="_method" value="DELETE" />
+                                    {{ form_widget(delete_form) }}
+                                    <a type="submit" onclick="confirmDelete()" class="dropdown-menu-link">Eliminar</a>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('meta') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('meta_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+        <div class="form-content">
+            <form action="{{ path('meta_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+                <input type="hidden" name="_method" value="PUT" />
+
+                <div class="row-fluid">
+                    <div class="span12">
+                        {{ form_row(edit_form.nombre) }}
+                        {{ form_row(edit_form.descripcion) }}
+                    </div>
+                </div>
+
+                <div class="row-fluid">
+                    <div class="span6">
+                        <p><b>Indicar a continuación el plazo en el cual se debe cumplir la meta. Primero introduzca el mes en el que se cumplirá (mm) y luego el año (aaaa)</b><p/>
+                        {{ form_errors(edit_form.plazoMes) }}
+                        {{ form_widget(edit_form.plazoMes) }}
+                    </div>
+
+                    <div class="span6">
+                        <br/>
+                        <br/>
+                        <br/>
+                        {{ form_row(edit_form.plazoAnio) }}
+                    </div>
+                </div>
+        
+                <p>
+                    <button type="submit" class="btn btn-success">Guardar Meta</button>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    {% block javascript %}
+
+        <script type="text/javascript">
+            function confirmDelete() {
+                if(confirm('¿Seguro que desea eliminar?'))
+                {
+                    document.getElementById('delete-form').submit();
+                }
+            }
+        </script>
+    
+    {% endblock %}
 {% endblock %}
