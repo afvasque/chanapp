@@ -1,5 +1,5 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-{% block title %}Viendo Plan de Evaluación{% endblock %}
+{% block title %}Ver Plan de Evaluación {{ entity.getFichaproyecto().nombre }}{% endblock %}
 {% block body -%}
     <div id="breadcrumb-bar">
         <div class="breadcrumb-text">
@@ -159,5 +159,6 @@ De este modo, se establece con claridad el público objetivo de la evaluación q
     </table>
     {% endif %}
     <!-- Final Div-->
+</div>
 {% endblock %}
 

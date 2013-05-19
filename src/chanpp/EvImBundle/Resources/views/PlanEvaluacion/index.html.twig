@@ -1,7 +1,51 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-{% block title %}Viendo Planes de Evaluación{% endblock title %}
+{% block title %}Ver Planes de Evaluación{% endblock title %}
 {% block body -%}
     <h1>Planes de Evaluación</h1>
+    <div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('fichaproyecto_show', { 'id':entity.getFichaproyecto().id }) }}">Ficha de Programa "{{ entity.getFichaproyecto().nombre }}"</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Ver Plan de Evaluación
+        </div>
+    </div>
+    {% include 'navbar.html.twig' %}
+    <div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Plan de Evaluación</h2>
+            </div>
+    <div class="title-actions">
+                <div class="btn-group">
+                    <button class="btn">Elegir una Acción</button>
+                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <!-- dropdown menu links -->
+                        <li>
+                             <a href="{{ path('planevaluacion_edit', { 'id': entity.id }) }}">Editar</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('planevaluacion_resultados_show', { 'id': entity.id}) }}" >Ver Resultados</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('cambiosplanevaluacion_show', { 'id': entity.id}) }}" >Registro de modificaciones</a>
+                        </li>
+                        <li>
+                             <a href="{{ path('recurso_new', { 'planevaluacion_id': entity.id }) }}" >Agregar Recurso</a>   
+                        </li>
+                        <li>
+                            <a href="{{ path('evaluacion_new', { 'planevaluacion_id': entity.id }) }}" >Agregar Evaluación</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+
+
     <ul>
         <li>
             <a href="{{ path('planevaluacion_new') }}">
