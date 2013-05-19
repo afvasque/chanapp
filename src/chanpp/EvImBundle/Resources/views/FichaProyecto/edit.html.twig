@@ -23,11 +23,14 @@
 
         <div class="chanpp_evimbundle_fichaproyectotype_activities" id="chanpp_evimbundle_fichaproyectotype_activities" data-prototype="{{ form_widget(edit_form.activities.vars.prototype)|e }}">
             {% for activity in edit_form.activities %}
-
+            <div>
                 {{ form_row(activity.nombre) }}
                 {{ form_row(activity.descripcion) }}
                 {{ form_row(activity.resultadosEsperados) }}
                 {{ form_row(activity.duracion) }}
+                <a href="" class="btn btn-danger" id="boton_borrar">Borrar esta actividad</a>
+                <br /> <br />
+            </div>
             {% endfor %}
         </div>
 
@@ -86,6 +89,7 @@
     </script>
     {% javascripts 
         '@chanppEvImBundle/Resources/public/js/addActividades.js'
+        '@chanppEvImBundle/Resources/public/js/borrar_actividades.js'
         %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}

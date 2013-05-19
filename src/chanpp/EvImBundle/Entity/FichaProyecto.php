@@ -122,12 +122,20 @@ class FichaProyecto
      */
     private $descripcion;
 
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="resumen_descripcion", type="text", length=350)
+     */
+    private $resumen_descripcion;
+
     /**
      * @var string
      *
      * @ORM\Column(name="desc_causales", type="text")
      */
     private $desc_causales;
+
 
     /**
      * @var string
@@ -648,5 +656,51 @@ class FichaProyecto
     public function getDuracion()
     {
         return $this->duracion;
+    }
+
+    /**
+     * Set resumen_descripcion
+     *
+     * @param string $resumenDescripcion
+     * @return FichaProyecto
+     */
+    public function setResumenDescripcion($resumenDescripcion)
+    {
+        $this->resumen_descripcion = $resumenDescripcion;
+
+        return $this;
+    }
+
+    /**
+     * Get resumen_descripcion
+     *
+     * @return string 
+     */
+    public function getResumenDescripcion()
+    {
+        return $this->resumen_descripcion;
+    }
+
+    /**
+     * Add activities
+     *
+     * @param \chanpp\EvImBundle\Entity\Activity $activities
+     * @return FichaProyecto
+     */
+    public function addActivity(\chanpp\EvImBundle\Entity\Activity $activities)
+    {
+        $this->activities[] = $activities;
+
+        return $this;
+    }
+
+    /**
+     * Remove activities
+     *
+     * @param \chanpp\EvImBundle\Entity\Activity $activities
+     */
+    public function removeActivity(\chanpp\EvImBundle\Entity\Activity $activities)
+    {
+        $this->activities->removeElement($activities);
     }
 }

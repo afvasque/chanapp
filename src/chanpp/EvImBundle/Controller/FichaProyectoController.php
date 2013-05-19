@@ -278,18 +278,20 @@ class FichaProyectoController extends Controller
                 throw $this->createNotFoundException('Unable to find FichaProyecto entity.');
             }
 
-            $deleteForm = $this->createDeleteForm($id);
-            $editForm = $this->createForm(new FichaProyectoType(), $entity);
-            $editForm->bind($request);
-
-            if ($editForm->isValid()) {
-
-               $originalTags = array();
+            $originalTags = array();
 
                 // Create an array of the current Tag objects in the database
                 foreach ($entity->getActivities() as $tag) {
                     $originalTags[] = $tag;
                 }
+
+
+            $deleteForm = $this->createDeleteForm($id);
+            $editForm = $this->createForm(new FichaProyectoType(), $entity);
+            $editForm->bind($request);
+
+
+            if ($editForm->isValid()) {               
 
 
                 // filter $originalTags to contain tags no longer present

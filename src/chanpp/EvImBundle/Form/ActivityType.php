@@ -12,9 +12,9 @@ class ActivityType extends AbstractType
     {
         $builder
             ->add('nombre', null, array(
-                'label' => "Nombre"))
+                'label' => "Nombre de la actividad"))
             ->add('descripcion', null, array(
-                'label' => "Descripción de la meta"))
+                'label' => "Descripción de la actividad"))
             ->add('resultadosEsperados', null, array(
                 'label' => "Resultados Esperados"))
             ->add('duracion', null, array(
