@@ -1,0 +1,14 @@
+.super {
+	height: 100%;
+}
+
+.wrapper {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -90px;
+}
+
+.push {
+	height: 90px;
+}

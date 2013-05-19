@@ -9,49 +9,149 @@
         'css/bootstrap.css'
         'css/bootstrap-responsive.css'
         'css/general.css'
+        'css/carmach.css'
+        'css/jota.css'
          -%}
                 <link href="{{asset_url}}" rel="stylesheet" type="text/css"/>
          {% endstylesheets %}
          {% endblock %}
     </head>
     <body>
-        {% block header %}
-            <div id="header" class="navbar navbar-fixed-top">
-                <div class="container">
-                    <a href="http://www.acee.cl"><img id="logo-achee" src="{{ asset('img/logo.png') }}" alt="logo"/></a>
-                    <a href="{{ app.request.getBaseURL() }}"><h1>Sistema de evaluación de programas AChEE</h1></a>
-                </div>
-            </div>
-        {% endblock %}
-        <div class="content login-centered">
-            <div>
-                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-                    <a href="{{ path('fos_user_security_logout') }}">
-                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                    </a>
-                {% else %}
-                    <!--<a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>-->
-                {% endif %}
-            </div>
-            {% for type, messages in app.session.flashbag.all() %}
-                {% for message in messages %}
-                    <div class="flash-{{ type }}">
-                        {{ message }}
+        <div class="super container">
+            <div class="wrapper">
+                {% block header %}
+                    <div id="header" class="navbar">
+                        <div class="container">
+                            <a href="http://www.acee.cl"><img id="logo-achee" src="{{ asset('img/logo.png') }}" alt="logo"/></a>
+                            <a href="{{ app.request.getBaseURL() }}">
+                                <h1>
+                                <div id="titlestrong">Sistema de evaluación</div>
+                                <div id="titleweak">de programas AChEE</div>
+                                </h1>
+                            </a>
+                             <div id="header-color-bars">
+                                <div class="colorbar-yellow"></div>
+                                <div class="colorbar-orange"></div>
+                                <div class="colorbar-lightred"></div>
+                                <div class="colorbar-red"></div>
+                                <div class="colorbar-lightgreen"></div>
+                                <div class="colorbar-green"></div>
+                                <div class="colorbar-blue"></div>
+                                <div class="colorbar-purple"></div>
+                                <div class="colorbar-yellow"></div>
+                                <div class="colorbar-orange"></div>
+                                <div class="colorbar-lightred"></div>
+                                <div class="colorbar-red"></div>
+                                <div class="colorbar-lightgreen"></div>
+                                <div class="colorbar-green"></div>
+                                <div class="colorbar-blue"></div>
+                                <div class="colorbar-purple"></div>
+                                <div class="colorbar-yellow"></div>
+                                <div class="colorbar-orange"></div>
+                                <div class="colorbar-lightred"></div>
+                                <div class="colorbar-red"></div>
+                                <div class="colorbar-lightgreen"></div>
+                                <div class="colorbar-green"></div>
+                                <div class="colorbar-blue"></div>
+                                <div class="colorbar-purple"></div>
+                                <div class="colorbar-yellow"></div>
+                                <div class="colorbar-orange"></div>
+                                <div class="colorbar-lightred"></div>
+                                <div class="colorbar-red"></div>
+                                <div class="colorbar-lightgreen"></div>
+                                <div class="colorbar-green"></div>
+                                <div class="colorbar-blue"></div>
+                                <div class="colorbar-purple"></div>
+                                
+                         </div>
+                            <div id="link_bar_header">
+                                 {% if app.user %} 
+                                 <div class="linkheader"><a href="{{ path('fos_user_security_logout') }}">Desconectarse</a></div>
+                                 {% else %}
+                                 <div class="linkheader"><a href="{{ path('fos_user_security_login') }}">Ingresar</a></div>
+                                <div class="linkheader"><a href="{{ path('fos_user_registration_register') }}">Registrarse</a></div>
+                                 {% endif %}
+                            </div>
+                        </div>
                     </div>
-                {% endfor %}
-            {% endfor %}
+                {% endblock %}
+                
+                <div class="content login-centered">
+                    <div>
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                            <a href="{{ path('fos_user_security_logout') }}">
+                                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                            </a>
+                        {% else %}
+                            <!--<a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>-->
+                        {% endif %}
+                    </div>
+                    {% for type, messages in app.session.flashbag.all() %}
+                        {% for message in messages %}
+                            <div class="flash-{{ type }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
 
-            <div>
-                {% block fos_user_content %}
-                {% endblock fos_user_content %}
+                    <div>
+                        {% block fos_user_content %}
+                        {% endblock fos_user_content %}
+                    </div>
+                </div>
+
+                <div class="push"></div>
             </div>
+
+
+            {% block footer %}
+                <div id="footer">
+                    <div class="container">
+                        <div id="footer-text">
+                            <p>Agencia Chilena de Eficiencia Energética (AChEE)</p>
+                            <p>Monseñor Sótero Sanz n.°221. Providencia. Santiago - Chile. </p>
+                            <p>Email: <a href="mailto:info@acee.cl">info@acee.cl</a> / Teléfono: (56 2) 2571 2200</p>
+                        </div>
+                        <div id="footer-color-bars">
+                            <div class="colorbar-yellow"></div>
+                            <div class="colorbar-orange"></div>
+                            <div class="colorbar-lightred"></div>
+                            <div class="colorbar-red"></div>
+                            <div class="colorbar-lightgreen"></div>
+                            <div class="colorbar-green"></div>
+                            <div class="colorbar-blue"></div>
+                            <div class="colorbar-purple"></div>
+                            <div class="colorbar-yellow"></div>
+                            <div class="colorbar-orange"></div>
+                            <div class="colorbar-lightred"></div>
+                            <div class="colorbar-red"></div>
+                            <div class="colorbar-lightgreen"></div>
+                            <div class="colorbar-green"></div>
+                            <div class="colorbar-blue"></div>
+                            <div class="colorbar-purple"></div>
+                            <div class="colorbar-yellow"></div>
+                            <div class="colorbar-orange"></div>
+                            <div class="colorbar-lightred"></div>
+                            <div class="colorbar-red"></div>
+                            <div class="colorbar-lightgreen"></div>
+                            <div class="colorbar-green"></div>
+                            <div class="colorbar-blue"></div>
+                            <div class="colorbar-purple"></div>
+                            <div class="colorbar-yellow"></div>
+                            <div class="colorbar-orange"></div>
+                            <div class="colorbar-lightred"></div>
+                            <div class="colorbar-red"></div>
+                            <div class="colorbar-lightgreen"></div>
+                            <div class="colorbar-green"></div>
+                            <div class="colorbar-blue"></div>
+                            <div class="colorbar-purple"></div>
+                        </div>
+                    </div>
+                </div>
+            
+            {% endblock %}
+            {% block javascripts %}{% endblock %}
         </div>
-        {% block footer %}
-            <div id="footer" class="navbar navbar-fixed-bottom">
-                <strong>Agencia Chilena de Eficiencia Energética (AChEE)</strong>
-                <p>Monseñor Sótero Sanz n.°221. Providencia. Santiago - Chile. Email: <a href="mailto:info@acee.cl">info@acee.cl</a> / Teléfono: (56 2) 2571 2200</p>
-            </div>
-        {% endblock %}
     </body>
 </html>

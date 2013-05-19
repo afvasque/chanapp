@@ -180,7 +180,7 @@ class RecursoController extends Controller
     {
         $form = $this->createDeleteForm($id);
         $form->bind($request);
-
+        $planevaluacionid;
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('chanppEvImBundle:Recurso')->find($id);
@@ -188,12 +188,11 @@ class RecursoController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Recurso entity.');
             }
-
+            $planevaluacionid = $entity->getPlanevaluacion()->getId();
             $em->remove($entity);
             $em->flush();
         }
-
-        return $this->redirect($this->generateUrl('recurso'));
+        return $this->redirect($this->generateUrl('planevaluacion_show', array('id' => $planevaluacionid)));
     }
 
     /**
