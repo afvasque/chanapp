@@ -1,15 +1,42 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-
+{% block title %}Crear Método de Recolección{% endblock %}
 {% block body -%}
-    <h1>Crear Método de Recolección</h1>
-     <a href="{{ path('metodorecoleccion' , { 'original_redirect': app.request.get('original_redirect') , 'original_id': app.request.get('original_id')} ) }}" class="btn">
-            Volver a lista de métodos de recolección de datos
-        </a>
-    <form action="{{ path('metodorecoleccion_create', {'original_redirect': app.request.get('original_redirect') , 'original_id': app.request.get('original_id')}) }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
-            <button type="submit" class="btn btn-success">Crear</button>
-        </p>
-    </form>
+
+    <div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('metodorecoleccion' , { 'original_redirect': app.request.get('original_redirect') , 'original_id': app.request.get('original_id')} ) }}">Métodos de Recolección</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Crear Método de Recolección
+        </div>
+    </div>
+    {% include 'navbar.html.twig' %}
+    
+    <div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Crear Método de Recolección</h2>
+            </div>
+            
+        </div>
+
+        <br />
+        <br />
+        <br />
+
+        <div class="form-content">
+            <form action="{{ path('metodorecoleccion_create', {'original_redirect': app.request.get('original_redirect') , 'original_id': app.request.get('original_id')}) }}" method="post" {{ form_enctype(form) }}>
+                
+                <div class="row-fluid">
+                    <div class="span6">
+                        {{ form_widget(form) }}
+                    </div>
+                </div>
+
+                <p>
+                    <button type="submit" class="btn btn-success">Crear</button>
+                </p>
+            </form>
+        </div>
+    </div>
 
 {% endblock %}
