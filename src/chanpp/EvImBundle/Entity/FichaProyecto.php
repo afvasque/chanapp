@@ -509,10 +509,9 @@ class FichaProyecto
             );
     }
 
-        public static function getLineasAccion()
+    public static function getLineasAccion()
     {
         return array(
-            "Edificación nueva"=>"Edificación nueva",
                 "Edificación existente"=>"Edificación existente",
                 "Formación de capacidades"=>"Formación de capacidades",
             "Educación Parvularia"=>"Educación Parvularia",
@@ -531,6 +530,7 @@ class FichaProyecto
                 "Articulación e implementar iniciativas con  entidades Privadas"=>"Articulación e implementar iniciativas con  entidades Privadas",
                 "Posicionamiento y Proyección de Marca"=>"Posicionamiento y Proyección de Marca",
             );
+        
     }
 
     /**
@@ -681,26 +681,4 @@ class FichaProyecto
         return $this->resumen_descripcion;
     }
 
-    /**
-     * Add activities
-     *
-     * @param \chanpp\EvImBundle\Entity\Activity $activities
-     * @return FichaProyecto
-     */
-    public function addActivity(\chanpp\EvImBundle\Entity\Activity $activities)
-    {
-        $this->activities[] = $activities;
-
-        return $this;
-    }
-
-    /**
-     * Remove activities
-     *
-     * @param \chanpp\EvImBundle\Entity\Activity $activities
-     */
-    public function removeActivity(\chanpp\EvImBundle\Entity\Activity $activities)
-    {
-        $this->activities->removeElement($activities);
-    }
 }
