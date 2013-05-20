@@ -1,33 +1,49 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-
+{% block title %}Ver Respuesta Específica{% endblock %}
 {% block body -%}
-    <h1>Viendo respuesta específica</h1>
 
-    <table class="table table-striped">
+
+<div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('cuestionario_show', { 'id': entity.getCuestionario().id }) }}">Cuestionario </a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Ver Respuesta Específica
+        </div>
+    </div>
+    {% include 'navbar.html.twig' %}
+
+<div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Viendo respuesta específica</h2>
+            </div>
+        </div>
+
+    <table class="table table-bordered infotable">
         <tbody>
             <tr>
-                <th>Nombre</th>
+                <th class="tableinfohead">Nombre</th>
                 <td>{{ entity.nombre }}</td>
             </tr>
             <tr>
-                <th>Empresa</th>
+                <th class="tableinfohead">Empresa</th>
                 <td>{{ entity.empresa }}</td>
             </tr>
             <tr>
-                <th>Mail</th>
+                <th class="tableinfohead">Mail</th>
                 <td>{{ entity.mail }}</td>
             </tr>
             <tr>
-                <th>Telefono</th>
+                <th class="tableinfohead">Teléfono</th>
                 <td>{{ entity.telefono }}</td>
             </tr>
         </tbody>
     </table>
 
-    <h1>Respuestas a Preguntas</h1>
-    <table class="table table-striped">
+    <h3>Respuestas a Preguntas</h3>
+    <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed sortable">
         <thead>
-            <tr>
+            <tr class="tableinfohead">
                 <th>Número de pregunta</th>
                 <th>Pregunta</th>
                 <th>Respuesta</th>
@@ -56,10 +72,5 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <ul class="record_actions">
-     <li>
-        <a href="{{ path('cuestionario_show', { 'id': entity.getCuestionario().id }) }}">Volver a cuestionario</a>
-     </li>
-    </ul>
+    </div>
 {% endblock %}

@@ -68,12 +68,14 @@
                         </div>
                 {% endif %}
             </div>
-        {% if entity.getEvaluacion().getDone() %}
-        <div class="alert alert-error">
+        </div>
+         {% if entity.getEvaluacion().getDone() %}
+        <div class="alert alert-error" style="
+    margin-top: 60px;
+">
          <strong>Alerta :</strong> Esta Evaluación ha sido cerrada y no puede ser modificada.
         </div>
         {% endif %}
-        </div>
 
      <!-- Info table -->
         <table class="table table-bordered infotable">
