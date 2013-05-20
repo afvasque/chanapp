@@ -342,7 +342,7 @@ td.tablesorter-pager {
 
 /* Fixes*/
 .no-element-error{
-	margin-top: 90px;
+	float: left;
 }
 
 .display-respuestas{
@@ -412,7 +412,7 @@ margin-bottom: 10px;
 }
 
 .no-element-error2{
-	margin-top: 70px;	
+	float: left;	
 }
     
 
