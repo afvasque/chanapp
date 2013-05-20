@@ -25,49 +25,57 @@
                     <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
-                        <!-- dropdown menu links -->
-                        {% if entity.getDone() == false%}
-                        <li>
-                             <a href="{{ path('evaluacion_edit', { 'id': entity.id }) }}">Editar</a>
-                        </li>
-                        {% endif %}
-                        <li>
-                            <a href="{{ path('evaluacion_resultados_show', { 'id': entity.id}) }}" >Ver Resultados</a>
-                        </li>
-                        {% if entity.getDone() == false%}
+                        {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
+                            <!-- dropdown menu links -->
                             <li>
-                                <a href="{{ path('evaluacion_mark_done', { 'id': entity.id }) }}" 
-onclick="return confirm('¿Seguro que desea marcar la evaluación como lista? Esta acción es irreversible.')">Marcar como lista</a>
+                                <a href="{{ path('evaluacion_resultados_show', { 'id': entity.id}) }}" >Ver Resultados</a>
                             </li>
-                            {% if entity.getDone() == false%}
-                                {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
-                                <li>
-                                    <form action="{{ path('evaluacion_delete', { 'id': entity.id }) }}" method="post" class="dropdown-menu-form" id="delete-form">
-                                        <input type="hidden" name="_method" value="DELETE" />
-                                        {{ form_widget(delete_form) }}
-                                        <a type="submit" onclick="confirmDelete()" class="dropdown-menu-link">Eliminar</a>
-                                    </form>
-                                </li>
-                                {% endif%}
-                            {% endif%}
-                        {% endif%}
-                        {% if evaluaciondirecta %}
-                        {% else %}
+
                             {% if entity.getDone() == false%}
                                 <li>
-                                    <a href="{{ path('evaluaciondirecta_new', { 'evaluacion_id': entity.id }) }}">
-                                        Agregar<br>Evaluación Directa
-                                    </a>
+                                     <a href="{{ path('evaluacion_edit', { 'id': entity.id }) }}">Editar</a>
                                 </li>
                             {% endif %}
+                            {% if entity.getDone() == false%}
+                                <li>
+                                    <a href="{{ path('evaluacion_mark_done', { 'id': entity.id }) }}" onclick="return confirm('¿Seguro que desea marcar la evaluación como lista? Esta acción es irreversible.')">Marcar como lista</a>
+                                </li>
+
+                                {% if evaluaciondirecta %}
+                                {% else %}
+                                    {% if entity.getDone() == false%}
+                                        <li>
+                                            <a href="{{ path('evaluaciondirecta_new', { 'evaluacion_id': entity.id }) }}">
+                                                Agregar<br>Evaluación Directa
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endif %}
+                                {% if entity.getDone() == false%}
+                                <li>
+                                    <a href="{{ path('evaluacionindirecta_new', { 'evaluacion_id': entity.id }) }}">
+                                        Agregar<br>Sub-Evaluación de<br>Impacto Indirecto
+                                    </a>
+                                </li>
+                                {% endif %}
+
+
+                                {% if entity.getDone() == false%}
+                                    {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
+                                    <li>
+                                        <form action="{{ path('evaluacion_delete', { 'id': entity.id }) }}" method="post" class="dropdown-menu-form" id="delete-form">
+                                            <input type="hidden" name="_method" value="DELETE" />
+                                            {{ form_widget(delete_form) }}
+                                            <a type="submit" onclick="confirmDelete()" class="dropdown-menu-link">Eliminar</a>
+                                        </form>
+                                    </li>
+                                    {% endif%}
+                                {% endif%}
+                            {% endif%}
+                            
                         {% endif %}
-                        {% if entity.getDone() == false%}
-                        <li>
-                            <a href="{{ path('evaluacionindirecta_new', { 'evaluacion_id': entity.id }) }}">
-                                Agregar<br>Sub-Evaluación de<br>Impacto Indirecto
-                            </a>
-                        </li>
-                        {% endif %}
+                        
+
                     </ul>
                 </div>
             </div>
@@ -102,7 +110,7 @@ onclick="return confirm('¿Seguro que desea marcar la evaluación como lista? Es
         </tbody>
     </table>
 
-     {# Actividades#}
+    {# Actividades#}
     <h3>Actividades a evaluar</h3>
         {% if actividades is empty%}
             No hay actividades asociadas a esta Evaluación.
@@ -130,15 +138,26 @@ onclick="return confirm('¿Seguro que desea marcar la evaluación como lista? Es
                     <td class="table-actions">
                     <ul>
                         <div class="action-icons">
-                             <a href="{{ path('activity_show', { 'id': entity2.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-ver-(lupa).png') }}" alt="logo"/></a>
+                            <a href="{{ path('activity_show', { 'id': entity2.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-ver-(lupa).png') }}" alt="logo"/></a>
+                            
+                            {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
+
                                 <a href="{{ path('activity_edit', { 'id': entity2.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-editar-(lapiz).png') }}" alt="logo"/></a>
-                                <form action="{{ path('activity_delete', { 'id': entity2.id }) }}" method="post">
-                            <input type="hidden" name="_method" value="DELETE" />
-                            {{ form_widget(delete_form) }}
-                            <button type="submit" style="border: 0; background: transparent" onclick="return confirm('¿Seguro que desea eliminar?')">
-                                <img class="icon-action-table2" src="{{ asset('img/icono-eliminar-(cruz).png') }}" alt="logo"/>
-                            </button>
-                        </form></div>
+
+                                {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
+                                
+                                    <form action="{{ path('activity_delete', { 'id': entity2.id }) }}" method="post">
+                                        <input type="hidden" name="_method" value="DELETE" />
+                                        {{ form_widget(delete_form) }}
+                                        <button type="submit" style="border: 0; background: transparent" onclick="return confirm('¿Seguro que desea eliminar?')">
+                                            <img class="icon-action-table2" src="{{ asset('img/icono-eliminar-(cruz).png') }}" alt="logo"/>
+                                        </button>
+                                    </form>
+
+                                {% endif %}
+                                
+                            {% endif %}
+                        </div>
                     </ul>
                     </td>
                 </tr>
