@@ -134,7 +134,7 @@ class IndGestionController extends Controller
         $entity = new IndGestion();
 
         $meta = new Meta();
-        $meta->setNombre('meta 1');
+        $meta->setNombre('Meta 1');
         $entity->getMetas()->add($meta);
 
        // $ficha_proyecto_id = 3;//$this->getRequest()->getParameter('ficha_proyecto_id');

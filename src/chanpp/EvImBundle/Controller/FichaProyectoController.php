@@ -167,7 +167,7 @@ class FichaProyectoController extends Controller
             $entity = new FichaProyecto();
 
             $activity = new Activity();
-            $activity->setNombre("acitividad");
+            $activity->setNombre("Actividad 1");
             $entity->getActivities()->add($activity);
 
             $indGestion = new IndGestion();
