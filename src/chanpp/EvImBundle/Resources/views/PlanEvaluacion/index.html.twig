@@ -34,9 +34,14 @@
                 <td>{{ entity.instanciasPlazo }}</td>
                 <td>
                 <ul>
-                     <div class="action-icons">
-                         <a href="{{ path('planevaluacion_show', { 'id': entity.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-ver-(lupa).png') }}" alt="logo"/></a>
-                    <a href="{{ path('planevaluacion_edit', { 'id': entity.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-editar-(lapiz).png') }}" alt="logo"/></a>
+                    <div class="action-icons">
+                        <a href="{{ path('planevaluacion_show', { 'id': entity.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-ver-(lupa).png') }}" alt="logo"/></a>
+
+                        {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
+                        
+                            <a href="{{ path('planevaluacion_edit', { 'id': entity.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-editar-(lapiz).png') }}" alt="logo"/></a>
+
+                        {% endif %}
                     </div>
                 </ul>
                 </td>

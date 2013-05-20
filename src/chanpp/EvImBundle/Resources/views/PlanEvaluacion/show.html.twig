@@ -24,21 +24,25 @@ A su vez, cada una de esas evaluaciones puede medir efectos directos y/o indirec
                     </button>
                     <ul class="dropdown-menu">
                         <!-- dropdown menu links -->
-                        <li>
-                             <a href="{{ path('planevaluacion_edit', { 'id': entity.id }) }}">Editar</a>
-                        </li>
+                        {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
+                            <li>
+                                 <a href="{{ path('planevaluacion_edit', { 'id': entity.id }) }}">Editar</a>
+                            </li>
+                            <li>
+                                 <a href="{{ path('recurso_new', { 'planevaluacion_id': entity.id }) }}" >Agregar Recurso</a>   
+                            </li>
+                            <li>
+                                <a href="{{ path('evaluacion_new', { 'planevaluacion_id': entity.id }) }}" >Agregar Evaluación</a>
+                            </li>
+                        {% endif %}
+
                         <li>
                             <a href="{{ path('planevaluacion_resultados_show', { 'id': entity.id}) }}" >Ver Resultados</a>
                         </li>
                         <li>
                             <a href="{{ path('cambiosplanevaluacion_show', { 'id': entity.id}) }}" >Registro<br>de modificaciones</a>
                         </li>
-                        <li>
-                             <a href="{{ path('recurso_new', { 'planevaluacion_id': entity.id }) }}" >Agregar Recurso</a>   
-                        </li>
-                        <li>
-                            <a href="{{ path('evaluacion_new', { 'planevaluacion_id': entity.id }) }}" >Agregar Evaluación</a>
-                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -109,14 +113,27 @@ De este modo, se establece con claridad el público objetivo de la evaluación q
                 
                 <td>{{ recurso.cantidad }}</td>
                 <td class="table-actions">
-                <ul><div class="action-icons">
-                    <a href="{{ path('recurso_show', { 'id': recurso.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-ver-(lupa).png') }}" alt="logo"/></a>
-                    <a href="{{ path('recurso_edit', { 'id': recurso.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-editar-(lapiz).png') }}" alt="logo"/></a>
-                    <form action="{{ path('recurso_delete', { 'id': recurso.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit" style="border: 0; background: transparent" onclick="return confirm('¿Seguro que desea eliminar?')"><img class="icon-action-table2" src="{{ asset('img/icono-eliminar-(cruz).png') }}" alt="logo"/></button>
-        </form></div>
+                <ul>
+                    <div class="action-icons">
+                        <a href="{{ path('recurso_show', { 'id': recurso.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-ver-(lupa).png') }}" alt="logo"/></a>
+
+                        {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
+                        
+                            <a href="{{ path('recurso_edit', { 'id': recurso.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-editar-(lapiz).png') }}" alt="logo"/></a>
+                            
+                            {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
+                            
+                                <form action="{{ path('recurso_delete', { 'id': recurso.id }) }}" method="post">
+                                    <input type="hidden" name="_method" value="DELETE" />
+                                    {{ form_widget(delete_form) }}
+                                    <button type="submit" style="border: 0; background: transparent" onclick="return confirm('¿Seguro que desea eliminar?')"><img class="icon-action-table2" src="{{ asset('img/icono-eliminar-(cruz).png') }}" alt="logo"/></button>
+                                </form>
+
+                            {% endif %}
+
+                        {% endif %}
+
+                    </div>
                 </ul>
                 </td>
             </tr>
@@ -147,15 +164,28 @@ De este modo, se establece con claridad el público objetivo de la evaluación q
                 <td class="table-actions">
                 <ul>
                     <div class="action-icons">
-                         <a href="{{ path('evaluacion_show', { 'id': entity.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-ver-(lupa).png') }}" alt="logo"/></a>
-                    <a href="{{ path('evaluacion_edit', { 'id': entity.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-editar-(lapiz).png') }}" alt="logo"/></a>
-                    <form action="{{ path('evaluacion_delete', { 'id': entity.id }) }}" method="post">
-                <input type="hidden" name="_method" value="DELETE" />
-                {{ form_widget(delete_form) }}
-                <button type="submit" style="border: 0; background: transparent" onclick="return confirm('¿Seguro que desea eliminar?')">
-                    <img class="icon-action-table2" src="{{ asset('img/icono-eliminar-(cruz).png') }}" alt="logo"/>
-                </button>
-            </form></div>
+
+                        <a href="{{ path('evaluacion_show', { 'id': entity.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-ver-(lupa).png') }}" alt="logo"/></a>
+
+                        {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
+                        
+                            <a href="{{ path('evaluacion_edit', { 'id': entity.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-editar-(lapiz).png') }}" alt="logo"/></a>
+
+                            {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
+                        
+                                <form action="{{ path('evaluacion_delete', { 'id': entity.id }) }}" method="post">
+                                    <input type="hidden" name="_method" value="DELETE" />
+                                    {{ form_widget(delete_form) }}
+                                    <button type="submit" style="border: 0; background: transparent" onclick="return confirm('¿Seguro que desea eliminar?')">
+                                        <img class="icon-action-table2" src="{{ asset('img/icono-eliminar-(cruz).png') }}" alt="logo"/>
+                                    </button>
+                                </form>
+
+                            {% endif %}
+
+                        {% endif %}
+
+                    </div>
                 </ul>
                 </td>
             </tr>
