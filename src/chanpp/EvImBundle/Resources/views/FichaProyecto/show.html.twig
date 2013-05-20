@@ -13,7 +13,7 @@
         <div class="main-content-title">
             <div class="title-text">
                 <h2>Ficha de Programa "{{ entity.nombre }}"</h2>
-            </div>
+            </div>ol
             {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
 
                 <div class="title-actions">
@@ -47,11 +47,11 @@
         <table class="table table-bordered infotable">
             <tbody>
                 <tr>
-                    <th class="tableinfohead">Área de acción<a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>help text</span></a></th>
+                    <th class="tableinfohead">Área de acción</th>
                     <td>{{ entity.areaaccion }}</td>
                 </tr>
                 <tr>
-                    <th class="tableinfohead">Línea de acción<a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>help text</span></a></th>
+                    <th class="tableinfohead">Línea de acción</th>
                     <td>{{ entity.lineaaccion }}</td>
                 </tr>
                 <tr>
