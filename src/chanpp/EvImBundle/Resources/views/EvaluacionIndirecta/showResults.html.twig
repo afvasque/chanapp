@@ -1,0 +1,117 @@
+
+{% extends 'chanppEvImBundle::layout.html.twig' %}
+{% block title %}Resultados Sub-Evaluación de Impacto Indirecto{% endblock %}
+{% block body -%}
+
+
+{% if entity.hasCuestionarioOnMetodo() %}
+            <h3>Cuestionario Asociado</h3>
+                {% if entity.getCuestionario() %}
+                   <table class="table table-bordered infotable">
+                        <tbody>
+                            <tr>
+                                <th class="tableinfohead">Nombre</th>
+                                <td>
+                                {{ entity.getCuestionario().getNombre() }}</td>
+                            </tr>
+                            <tr>
+                                <th class="tableinfohead">Preguntas Alternativa</th>
+                                <td>{{ entity.getCuestionario().getPreguntasalternativa()|length }}</td>
+                            </tr> 
+                            <tr>
+                                <th class="tableinfohead">Preguntas Desarrollo</th>
+                                <td>{{ entity.getCuestionario().getPreguntasdesarrollo()|length }}</td>
+                            </tr>
+                            <tr>
+                                <th class="tableinfohead"></th>
+                                <td><a href="{{ path('cuestionario_show', { 'id': entity.getCuestionario().getId() }) }}" class="btn btn-success">Ver Cuestionario</a>
+                                </ul></td>
+                            </tr>
+                             
+                        </tbody>
+                    </table>
+
+                        {% for preg_alt in entity.getCuestionario.getPreguntasalternativa %}
+                        <table class="table table-bordered infotable">
+                        <tbody>
+                             <tr>
+                                <th class="tableinfohead">Pregunta</th>
+                                <td>{{preg_alt.getEnunciado}}</td>
+                            </tr>
+                            <tr>
+                                <th class="tableinfohead">Eje</th>
+                                <td>
+                                {% if preg_alt.geteje == 1 %}
+                                    Presencia 
+                                 {% elseif preg_alt.geteje == 2 %}
+                                    Valoración 
+                                 {% elseif preg_alt.geteje == 3 %}
+                                    Capacidad Movilizadora 
+                                {% endif %}
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                        <div id="chart_{{loop.index}}" style="width:600px;height:300px"></div>
+                       
+                        
+
+
+                        {% block javascript %}
+
+                        <script type="text/javascript">
+
+                      
+                            google.load("visualization", "1", {packages:["corechart"]});
+                            google.setOnLoadCallback(drawChart);
+                      
+                            function drawChart() {
+                                var data = google.visualization.arrayToDataTable([
+                                ['Pregunta', 'Cantidad'],
+                                {% for key,value in preg_alt.getRespuestasResumen() %}
+
+                                  ['{{key}}', {{value}}],
+                                  
+                                {% endfor %}  
+
+                                ]);
+
+                                var options = {
+                                    
+                                };
+
+                                {% if preg_alt.getTipo() == 1 %}
+                                    var chart = new google.visualization.PieChart(document.getElementById('chart_{{loop.index}}'));
+                                {% else %}
+                                     var chart = new google.visualization.BarChart(document.getElementById('chart_{{loop.index}}'));
+                                {% endif %}
+                                chart.draw(data, options);
+                            }
+                        </script>
+
+                    {% endblock %}
+
+
+
+
+                        {% endfor %}
+                        
+
+
+                {% else %}
+
+                <div>No hay cuestionario asociado.
+                {% if entity.getEvaluacion().getDone() == false%}
+                        Puede agregar uno 
+                         <a href="{{ path('cuestionario_new', { 'evaluacion_id': entity.getId() }) }}" >aqui.</a></div>
+                {% endif %}
+                  
+                {% endif %}
+            {% endif%}
+
+
+
+   
+
+
+{% endblock %}

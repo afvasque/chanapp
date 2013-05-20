@@ -265,6 +265,42 @@ class PreguntaAlternativa
         return $this->respuestas;
     }
 
+    /**
+     * Get respuestas resumen
+     *
+     * @return array
+     */
+    public function getRespuestasResumen(){
+
+        $data = array();
+        foreach ($this->respuestas as $r_alt) {
+            $data[] = $r_alt->getRespuesta();
+        }
+
+        $resumen = array_count_values($data);
+        //$resumen = asort($resumen);
+
+        if($this->tipo == 1){
+            $resumen["Si"] = $resumen[1];
+            $resumen["No"] = $resumen[2];
+            unset($resumen[1]);
+            unset($resumen[2]);
+        }
+        else if($this->tipo == 2){
+            krsort($resumen);
+        } 
+        else if($this->tipo == 3){
+            krsort($resumen);
+
+            foreach ($resumen as $key => $value) {
+                $resumen[$this->getAlternativas()[$key]] = $resumen[$key];
+                unset($resumen[$key]);
+            }
+
+        }
+
+        return $resumen;
+    }
 
     /**
      * Add preguntashijas

@@ -36,6 +36,29 @@ class EvaluacionIndirectaController extends Controller
         );
     }
 
+
+    /**
+     * Get cuetionario for entity
+     *
+     * @Route("/{id}/results", name="evaluacionindirecta_results")
+     * @Method("GET")
+     * @Template()
+     */
+    public function showResultsAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('chanppEvImBundle:EvaluacionIndirecta')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find EvaluacionIndirecta entity.');
+        }
+
+        return array(
+            'entity'      => $entity,
+            );
+    }
+
     /**
      * Creates a new EvaluacionIndirecta entity.
      *

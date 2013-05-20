@@ -6,15 +6,15 @@
 
     <h2> Datos evaluación </h2>
 
-    <p>Área: {{proyecto.getAreaAccion}}</p>
+    <p>Área de acción: {{proyecto.getAreaAccion}}</p>
     <p>Programa: {{proyecto.getNombre}}</p>
 
     <h2>Impacto directo</h2>
     {% if entity.getEvaluaciondirecta %}
     <table>
         <thead>
-            <th>Resultado</th>
-            <th>Descripcion</th>
+            <th>Resultado de la Evaluación</th>
+            <th>Descripción de la Evaluación de Impacto Directo realizada</th>
         </thead>
         <tr>
             <td>{{entity.getEvaluaciondirecta.getTotal}} mW/h</td>
@@ -32,6 +32,7 @@
             <th>Presencia</th>
             <th>Valorización</th>
             <th>Capacidad movilizadora</th>
+            <th></th>
         </theader>
         {% for ev in entity.getEvaluacionesindirectas%}
         <tr>
@@ -39,11 +40,11 @@
             <td>{{ev.getImpactosejes()[0]}}</td>
             <td>{{ev.getImpactosejes()[1]}}</td>
             <td>{{ev.getImpactosejes()[2]}}</td>
+            <td><a href="{{ path('evaluacionindirecta_results', { 'id': ev.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-ver-(lupa).png') }}" alt="logo"/></a></td>
         <tr>
         {% endfor %}
     </table>
 
-    
     <div class="form-actions">
         <a href="{{ path('evaluacion_show', { 'id': entity.id}) }}" class="btn btn-main">
             Volver a la evaluación
