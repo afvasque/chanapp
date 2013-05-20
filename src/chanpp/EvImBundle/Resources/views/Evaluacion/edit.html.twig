@@ -4,7 +4,7 @@
 
     <div id="breadcrumb-bar">
         <div class="breadcrumb-text">
-            <a href="{{ path('fichaproyecto_show', { 'id': entity.getPlanevaluacion().getFichaproyecto().id }) }}">Ficha de Programa</a>
+            <a href="{{ path('fichaproyecto_show', { 'id': entity.getPlanevaluacion().getFichaproyecto().id }) }}">Ficha de Programa "{{ entity.getPlanevaluacion().getFichaproyecto().getNombre() }}"</a>
             <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
             <a href="{{ path('planevaluacion_show', { 'id': entity.getPlanevaluacion().id  }) }}">Plan de Evaluación</a>
             <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>

@@ -1,12 +1,40 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-
+{% block title %}Subir Archivo a Evaluación Indirecta{% endblock %}
 {% block body -%}
-    <h1>Subir Archivo a Evaluación Indirecta</h1>
-    <div id="hidestupiderrors">
-    <form action="{{ path('uploadindirecta' , { 'evaluacionindirecta_id': app.request.get('evaluacionindirecta_id')}) }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
-            <button type="submit" class="btn btn-success">Subir Archivo</button>
-        </p>
-    </form></div>
+
+	<div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('fichaproyecto') }}">Ficha de Programa</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            <a href="{{ path('planevaluacion') }}">Plan de Evaluación</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            <a href="{{ path('evaluacion') }}">Evaluación</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            <a href="{{ path('evaluacionindirecta_show', {'id':app.request.get('evaluacionindirecta_id')} ) }}">Evaluación Directa</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+			Subir Archivo a Evaluación Indirecta
+        </div>
+    </div>
+    {% include 'navbar.html.twig' %}
+
+    <div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Subir Archivo a Evaluación Indirecta</h2>
+            </div>
+        </div>
+
+        <br />
+        <br />
+
+		<div id="hidestupiderrors">
+    		<form action="{{ path('uploadindirecta' , { 'evaluacionindirecta_id': app.request.get('evaluacionindirecta_id')}) }}" method="post" {{ form_enctype(form) }}>
+        		{{ form_widget(form) }}
+	        	<p>
+	            	<button type="submit" class="btn btn-success">Subir Archivo</button>
+	        	</p>
+    		</form>
+    	</div>
+    </div>
+
 {% endblock %}
