@@ -76,10 +76,15 @@ class EvaluacionController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
         $entity = new Evaluacion();
-        $form   = $this->createForm(new EvaluacionType(), $entity);
+        $planevaluacionid =  $request->query->get('planevaluacion_id');
+        $em = $this->getDoctrine()->getManager();
+        $plan  = $em->getRepository('chanppEvImBundle:PlanEvaluacion')->find($planevaluacionid);
+        $fichaid =  $plan->getFichaproyecto()->getId();
+        $options = array('fichaid' => $fichaid);
+        $form   = $this->createForm(new EvaluacionType($options), $entity);
 
         return array(
             'entity' => $entity,
