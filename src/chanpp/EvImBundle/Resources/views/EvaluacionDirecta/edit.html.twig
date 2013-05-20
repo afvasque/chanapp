@@ -1,51 +1,110 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-
+{% block title %}Creación de Evaluación de Impacto Directo{% endblock %}
 {% block body -%}
-    {% if entity.getEvaluacion().getDone() == false %}
-    <h1>Editar Evaluación de Impacto Directo<p title="El objetivo principal de una evaluación de impacto directo, es obtener una estimación de ahorros netos de energía o demanda alcanzado por efecto del programa o proyecto, de la forma más exacta e insesgada posible, dependiendo de la información disponible, el nivel de confiabilidad de la información requerida y de los recursos con que se cuenta para desarrollar la evaluación." id="formhelpshowtitle">?</p></h1>
-    <a href="{{ path('evaluacion_show', { 'id': entity.getEvaluacion().id}) }}" class="btn">
-            Volver a Evaluación
-    </a>
-    <br><br>
-    <ul class="record_actions">
-    <li>
-        <form action="{{ path('evaluaciondirecta_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminar?')">Eliminar</button>
-        </form>
-    </li>
-    </ul>
-    <form action="{{ path('evaluaciondirecta_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-        <input type="hidden" name="_method" value="PUT" />
-       {% for fields in edit_form %}
-         <div class="{{ cycle(["even","odds"], loop.index) }}">
-          {%  if fields.vars.name != '_token' %}
-          {% if fields.vars.name == 'resultado' %}
-          {{ form_label(fields) }}
-          {{ form_widget(fields) }}<p title="Dependiendo del tipo de energía sobre el que pretende actuar el programa, sus impactos sobre el consumo pueden ser medidos en términos de KWh, galones de combustible, unidades térmicas de gas, etc. En este campo se debe registrar el resultado de la evaluación de impacto directo, especificando en el campo "unidad de medida" el tipo de unidad que se está empleando para registrar dicho resultado. " id="formhelp">?</p>
-          {{ form_errors(fields) }}
-          {% elseif fields.vars.name == 'unidad' %}
-          <div id="unidadedirecta">{{ form_label(fields) }}
-          {{ form_widget(fields) }}<p title="Dependiendo del tipo de energía sobre el que pretende actuar el programa, sus impactos sobre el consumo pueden ser medidos en términos de KWh, galones de combustible, unidades térmicas de gas, etc. En este campo se debe registrar el resultado de la evaluación de impacto directo, especificando en el campo "unidad de medida" el tipo de unidad que se está empleando para registrar dicho resultado. " id="formhelp">?</p>
-          {{ form_errors(fields) }}</div>
-          {% else%}
-              {{ form_label(fields) }}
-              {{ form_widget(fields) }}
-              {{ form_errors(fields) }}
-          {% endif %}
-          </div>
-        {% else %}
-            <div id="tokenform">{{ form_label(fields) }}
-            {{ form_widget(fields) }}
-            {{ form_errors(fields) }}</div>
-        {% endif %}
-        {% endfor %}
-        <p>
-            <button type="submit" class="btn btn-success">Guardar Cambios</button>
-        </p>
-    </form>
-{% else %}
-<h1>Error, la evaluación padre ({{entity.getEvaluacion.getNombre()}}) ha sido cerrada y sus sub-evaluaciones no pueden ser editadas.</h1>
-{% endif %}
+    <div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('fichaproyecto_show', { 'id':entity.getEvaluacion().getPlanevaluacion().getFichaproyecto.id }) }}">Ficha de Programa</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            <a href="{{ path('planevaluacion_show', { 'id':entity.getEvaluacion().getPlanevaluacion().id }) }}">Plan de Evaluación</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            <a href="{{ path('evaluacion_show', { 'id':entity.getEvaluacion().id }) }}">Evaluación</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Ver Evaluación de Impacto Directo
+        </div>
+    </div>
+    {% include 'navbar.html.twig' %}
+
+    <div id="main-content">
+      {% if entity.getEvaluacion().getDone() == false %}
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Creación de Evaluación de Impacto Directo</h2>
+            </div>
+            <a href="#" class="htooltip"><img id="icon-help" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>El objetivo principal de una<br />evaluación de impacto directo,<br />es obtener una estimación de<br />ahorros netos de energía o<br />demanda alcanzado por efecto<br />del programa o proyecto, de la<br />forma más exacta e insesgada<br />posible, dependiendo de la<br />información disponible, el nivel<br />de confiabilidad de la información<br />requerida y de los recursos con<br />que se cuenta para desarrollar<br />la evaluación.</span></a>
+
+            {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
+
+                <div class="title-actions">
+                    <div class="btn-group">
+                        <button class="btn">Elegir una Acción</button>
+                        <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <!-- dropdown menu links -->
+                            <li>
+                                <form action="{{ path('evaluaciondirecta_delete', { 'id': entity.id }) }}"method="post" class="dropdown-menu-form" id="delete-form">
+                                    <input type="hidden" name="_method" value="DELETE" />
+                                    {{ form_widget(delete_form) }}
+                                    <a type="submit" onclick="confirmDelete()" class="dropdown-menu-link">Eliminar</a>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            {% endif %}
+
+        </div>
+
+        <br />
+        <br />
+        <br />
+
+        <div class="form-content">
+           <form action="{{ path('evaluaciondirecta_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+                <input type="hidden" name="_method" value="PUT" />
+              
+                <div class="row-fluid">
+                    <div class="span12">
+                        {{ form_row(edit_form.descripcion) }}
+                    </div>
+                </div>
+
+                <div class="row-fluid">
+                    <div class="span5">
+                        {{ form_label(edit_form.resultado) }}
+                        {{ form_widget(edit_form.resultado) }}
+                        <a href="#" class="htooltip"><img id="icon-help" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Dependiendo del tipo de energía sobre el que pretende actuar el programa, sus impactos sobre el consumo pueden ser medidos en términos de KWh, galones de combustible, unidades térmicas de gas, etc. En este campo se debe registrar el resultado de la evaluación de impacto directo, especificando en el campo "unidad de medida" el tipo de unidad que se está empleando para registrar dicho resultado.</span></a>
+                        {{ form_errors(edit_form.resultado) }}  
+                    </div>
+                        
+                    <div class="span5">
+                        {{ form_label(edit_form.unidad) }}
+                        {{ form_widget(edit_form.unidad) }}
+                        <a href="#" class="htooltip"><img id="icon-help" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Dependiendo del tipo de energía<br />sobre el que pretende actuar el<br />programa, sus impactos sobre el<br />consumo pueden ser medidos en<br />términos de KWh, galones de<br />combustible, unidades térmicas de<br />gas, etc. En este campo se debe<br />registrar el resultado de la<br />evaluación de impacto directo,<br />especificando en el campo "unidad<br />de medida" el tipo de unidad que<br />se está empleando para registrar<br />dicho resultado.</span></a>
+                        {{ form_errors(edit_form.unidad) }}  
+                    </div>
+                </div>
+
+
+
+              {{ form_rest(edit_form) }}
+
+              <br />
+              <br />
+
+
+              <button type="submit" class="btn btn-success">Crear</button>
+
+          </form>
+        </div>
+
+      {% else %}
+        <h1>Error, la evaluación padre ({{entity.getEvaluacion.getNombre()}}) ha sido cerrada y sus sub-evaluaciones no pueden ser editadas.</h1>
+      {% endif %}
+
+    </div>
+
+    {% block javascript %}
+        <script type="text/javascript">
+            function confirmDelete() {
+                if(confirm('¿Seguro que desea eliminar?'))
+                {
+                    document.getElementById('delete-form').submit();
+                }
+            }
+        </script>
+    {% endblock %}
+  
 {% endblock %}

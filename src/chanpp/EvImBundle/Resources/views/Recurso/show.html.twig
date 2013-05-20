@@ -1,43 +1,85 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-
+{% block title %}Ver Recurso {{ entity.titulo }}{% endblock %}
 {% block body -%}
-    <h1>Recurso: {{ entity.titulo }}</h1>
-     <a href="{{ path('planevaluacion_show', { 'id': entity.getPlanevaluacion().id}) }}" class="btn">
-            Volver al plan de evaluación
-     </a>
-        <a href="{{ path('recurso_edit', { 'id': entity.id }) }}" class="btn btn-warning">
-            Editar
-        </a><br><br>
-        <form action="{{ path('recurso_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminar?')">Eliminar</button>
-        </form>
-    <table class="table table-striped">
-        <tbody>
-            <tr>
-                <th>Título</th>
-                <td>{{ entity.titulo }}</td>
-            </tr>
-            <tr>
-                <th>Descripción</th>
-                <td>{{ entity.descripcion }}</td>
-            </tr>
-            <tr>
-                <th>Tipo</th>
-                <td>{{ entity.tipo }}</td>
-            </tr>
-            <tr>
-                <th>Cantidad</th>
-                <td>{{ entity.cantidad }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+        <a href="{{ path('fichaproyecto_show', {'id':entity.getPlanevaluacion.getFichaproyecto.getId()} ) }}">Ficha de Programa "{{ entity.getPlanevaluacion.getFichaproyecto.getNombre() }}"</a>
+        <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+        <a href="{{ path('planevaluacion_show', {'id':entity.getPlanevaluacion.getId()} ) }}">Plan de Evaluación</a>
+        <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+        Viendo Recurso "{{entity.titulo}}"
+        </div>
+    </div>
+    {% include 'navbar.html.twig' %}
 
-        <ul class="record_actions">
-    <li>
-     
-    </li>
-</ul>
+    <div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Ver Recurso: {{entity.titulo}}</h2>
+            </div>
+
+            {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
+                <div class="title-actions">
+                    <div class="btn-group">
+                        <button class="btn">Elegir una Acción</button>
+                        <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <!-- dropdown menu links -->
+                            <li>
+                                 <a href="{{ path('recurso_edit', { 'id': entity.id }) }}">Editar</a>
+                            </li>
+
+                            {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
+                                <li>
+                                    <form action="{{ path('recurso_delete', { 'id': entity.id }) }}" method="post" class="dropdown-menu-form" id="delete-form">
+                                        <input type="hidden" name="_method" value="DELETE" />
+                                        {{ form_widget(delete_form) }}
+                                        <a type="submit" onclick="confirmDelete()" class="dropdown-menu-link">Eliminar</a>
+                                    </form>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <table class="table table-bordered infotable">
+            <tbody>
+                <tr>
+                    <th class="tableinfohead">Título</th>
+                    <td>{{ entity.titulo }}</td>
+                </tr>
+                <tr>
+                    <th class="tableinfohead">Descripción</th>
+                    <td>{{ entity.descripcion }}</td>
+                </tr>
+                <tr>
+                    <th class="tableinfohead">Tipo</th>
+                    <td>{{ entity.tipo }}</td>
+                </tr>
+                <tr>
+                    <th class="tableinfohead">Cantidad</th>
+                    <td>{{ entity.cantidad }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    {% block javascript %}
+
+        <script type="text/javascript">
+            function confirmDelete() {
+                if(confirm('¿Seguro que desea eliminar?'))
+                {
+                    document.getElementById('delete-form').submit();
+                }
+            }
+        </script>
+    
+        
+    {% endblock %}
 
 {% endblock %}

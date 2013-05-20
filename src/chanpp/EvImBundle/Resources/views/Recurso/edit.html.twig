@@ -1,18 +1,18 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
 {% block title %}Editar Recurso {{ entity.titulo }}{% endblock %}
 {% block body -%}
-  <div id="breadcrumb-bar">
-    <div class="breadcrumb-text">
-      <a href="{{ path('fichaproyecto_show', {'id':entity.getPlanevaluacion.getFichaproyecto.getId()} ) }}">Ficha de Programa "{{ entity.getPlanevaluacion.getFichaproyecto.getNombre() }}"</a>
-      <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
-      <a href="{{ path('planevaluacion_show', {'id':entity.getPlanevaluacion.getId()} ) }}">Ficha de Programa</a>
-      <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
-      Editando Ficha de Programa
+    <div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('fichaproyecto_show', {'id':entity.getPlanevaluacion.getFichaproyecto.getId()} ) }}">Ficha de Programa "{{ entity.getPlanevaluacion.getFichaproyecto.getNombre() }}"</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            <a href="{{ path('planevaluacion_show', {'id':entity.getPlanevaluacion.getId()} ) }}">Plan de Evaluación</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Editando Recurso "{{entity.titulo}}"
+        </div>
     </div>
-  </div>
-  {% include 'navbar.html.twig' %}
+    {% include 'navbar.html.twig' %}
 
-  <div id="main-content">
+    <div id="main-content">
         <div class="main-content-title">
             <div class="title-text">
                 <h2>Editar Recurso: {{entity.titulo}}</h2>

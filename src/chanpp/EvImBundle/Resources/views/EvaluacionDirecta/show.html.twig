@@ -1,68 +1,121 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-
+{% block title %}Ver Evaluación Directa{% endblock %}
 {% block body -%}
-    <h1>Evaluación Directa</h1>
-     <a href="{{ path('evaluacion_show', { 'id': entity.getEvaluacion().id}) }}" class="btn">
-            Volver a evaluación
-    </a>
-    {% if entity.getEvaluacion().getDone() == false %}
-        <a href="{{ path('evaluaciondirecta_edit', { 'id': entity.id }) }}" class="btn btn-warning">
-            Editar
-        </a><br><br>
-        <form action="{{ path('evaluaciondirecta_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminar?')">Eliminar</button>
-        </form>{% endif %}
-    <table class="table table-striped">
-        <tbody>
-            <tr>
-                <th>Valor Original</th>
-                <td>{{ entity.resultado }} 
-                {% if entity.unidad == 1 %}
-                ton
-                {% elseif entity.unidad == 2 %}
-                m3
-                {% elseif entity.unidad == 3 %}
-                m3
-                {% elseif entity.unidad == 4 %}
-                m3
-                {% elseif entity.unidad == 5 %}
-                m3
-                {% elseif entity.unidad == 6 %}
-                ton
-                {% elseif entity.unidad == 7 %}
-                m3
-                {% elseif entity.unidad == 8 %}
-                kW/h
-                {% elseif entity.unidad == 9 %}
-                kW/h
-                {% elseif entity.unidad == 10%}
-                kW/h
-                {% endif %}
-                </td>
-            </tr>
-            <tr>
-                <th>Valor Convertido</th>
+    <div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('fichaproyecto_show', { 'id':entity.getEvaluacion().getPlanevaluacion().getFichaproyecto.id }) }}">Ficha de Programa</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            <a href="{{ path('planevaluacion_show', { 'id':entity.getEvaluacion().getPlanevaluacion().id }) }}">Plan de Evaluación</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            <a href="{{ path('evaluacion_show', { 'id':entity.getEvaluacion().id }) }}">Evaluación</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Ver Evaluación de Impacto Directo
+        </div>
+    </div>
+    {% include 'navbar.html.twig' %}
+
+    <div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Evaluación Directa</h2>
+            </div>
+            
+            {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
+
+                <div class="title-actions">
+                    <div class="btn-group">
+                        <button class="btn">Elegir una Acción</button>
+                        <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <!-- dropdown menu links -->
+                            <li>
+                                 <a href="{{ path('evaluaciondirecta_edit', { 'id': entity.id }) }}">Editar</a>
+                            </li>
+
+                            {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
+                                <li>
+                                    <form action="{{ path('evaluaciondirecta_delete', { 'id': entity.id }) }}" method="post" class="dropdown-menu-form" id="delete-form">
+                                        <input type="hidden" name="_method" value="DELETE" />
+                                        {{ form_widget(delete_form) }}
+                                        <a type="submit" onclick="confirmDelete()" class="dropdown-menu-link">Eliminar</a>
+                                    </form>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <!-- Info table -->
+        
+        <table class="table table-bordered infotable">
+            <tbody>
+                <tr>
+                    <th class="tableinfohead">Valor Original</th>
+                    <td>{{ entity.resultado }} 
+                        {% if entity.unidad == 1 %}
+                            ton
+                        {% elseif entity.unidad == 2 %}
+                            m3
+                        {% elseif entity.unidad == 3 %}
+                            m3
+                        {% elseif entity.unidad == 4 %}
+                            m3
+                        {% elseif entity.unidad == 5 %}
+                            m3
+                        {% elseif entity.unidad == 6 %}
+                            ton
+                        {% elseif entity.unidad == 7 %}
+                            m3
+                        {% elseif entity.unidad == 8 %}
+                            kW/h
+                        {% elseif entity.unidad == 9 %}
+                            kW/h
+                        {% elseif entity.unidad == 10%}
+                            kW/h
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="tableinfohead">Valor Convertido</th>
                 <td>{{ entity.getTotal() }} MW/h</td>
-            </tr>
-            <tr>
-                <th>Descripcion</th>
+                </tr>
+                <tr>
+                    <th class="tableinfohead">Descripcion</th>
                 <td>{{ entity.descripcion }}</td>
-            </tr>
-             <tr>
-                <th>Archivo</th>
-                {% if document %}
-                    <td><a href="{{ asset(document.getWebPath())}}" class="btn btn-primary" >Descargar Archivo</a>
-                    {% if entity.getEvaluacion().getDone() == false %}
-                      <a href="{{ path('uploaddirecta', { 'evaluaciondirecta_id': entity.id}) }}" class="btn btn-warning">Cambiar Archivo</a>{% endif %}</td>
-                {% else %}
-                    <td>No hay archivo
-                    {% if entity.getEvaluacion().getDone() == false %}
-                      <a href="{{ path('uploaddirecta', { 'evaluaciondirecta_id': entity.id}) }}" class="btn btn-warning">Subir Archivo</a>{% endif %}</td>
-                {% endif %}
-               
-            </tr>
-        </tbody>
-    </table>
+                </tr>
+                <tr>
+                    <th class="tableinfohead">Archivo</th>
+                    {% if document %}
+                        <td><a href="{{ asset(document.getWebPath())}}" class="btn btn-primary" >Descargar Archivo</a>
+                        {% if entity.getEvaluacion().getDone() == false %}
+                          <a href="{{ path('uploaddirecta', { 'evaluaciondirecta_id': entity.id}) }}" class="btn btn-warning">Cambiar Archivo</a>{% endif %}</td>
+                    {% else %}
+                        <td>No hay archivo
+                        {% if entity.getEvaluacion().getDone() == false %}
+                          <a href="{{ path('uploaddirecta', { 'evaluaciondirecta_id': entity.id}) }}" class="btn btn-warning">Subir Archivo</a>{% endif %}</td>
+                    {% endif %}
+                   
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+
+
+    {% block javascript %}
+
+        <script type="text/javascript">
+            function confirmDelete() {
+                if(confirm('¿Seguro que desea eliminar?'))
+                {
+                    document.getElementById('delete-form').submit();
+                }
+            }
+        </script>
+    
+        
+    {% endblock %}
 {% endblock %}

@@ -1,43 +1,74 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-
+{% block title %}Crear Recurso{% endblock %}
 {% block body -%}
-    <h1>Creación de nuevo Recurso disponible para evaluar el programa/proyecto<p title="En este punto se puede agregar un nuevo recurso disponible para la evaluación, el que puede ser del tipo monetario, recursos humanos, tiempo, capacidades, etc. En el caso de los recursos humanos disponibles para la evaluación, se debe definir las funciones y responsabilidades de cada uno de los involucrados. 
-Se deberá especificar el nombre y la descripción del recurso, incluyendo la cantidad o monto disponible del mismo." id="formhelpshowtitle">?</p></h1>
-    <a href="{{ path('planevaluacion_show', { 'id': app.request.get('planevaluacion_id')}) }}" class="btn">
-            Volver al plan de evaluación
-        </a>
-    <form action="{{ path('recurso_create', { 'planevaluacion_id':app.request.get('planevaluacion_id') }) }}" method="post" {{ form_enctype(form) }}>
-        {% for fields in form %}
-          {%  if fields.vars.name != '_token' %}
-                   <div class="{{ cycle(["even","odds"], loop.index) }}">
-          {% if fields.vars.name == 'tipo' %}
-          {{ form_label(fields) }}
-          {{ form_widget(fields) }}<p title="Los recursos disponibles para evaluar pueden ser de los siguientes tipos:
--Monetarios  
--Humanos: Funciones y responsabilidades.  
--Tiempo  
--Capacidades  
--Otros" id="formhelp">?</p>
-          {{ form_errors(fields) }}
-          {% elseif fields.vars.name == 'cantidad' %}
-           {{ form_label(fields) }}
-          {{ form_widget(fields) }}<p title="Los recursos se miden en unidades de dinero ($), horas hombre (HH), tiempo (meses), entre otros. En este punto se debe cuantificar en $, HH, etc, el recurso que se está creando." id="formhelp">?</p>
-          {{ form_errors(fields) }}
-          {% else%}
-              {{ form_label(fields) }}
-              {{ form_widget(fields) }}
-              {{ form_errors(fields) }}
-          {% endif %}
-          </div>
-        {% else %}
-         <div id="tokenform">{{ form_label(fields) }}
-            {{ form_widget(fields) }}
-            {{ form_errors(fields) }}</div>
-        {% endif %}
-        {% endfor %}
-        <br>
-        <p>
-            <button type="submit" class="btn btn-success">Crear</button>
-        </p>
-    </form>
+    <div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('fichaproyecto') }}">Ficha de Programa"</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            <a href="{{ path('planevaluacion_show', {'id':app.request.get('planevaluacion_id')} ) }}">Plan de Evaluación</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Creando Recurso
+        </div>
+    </div>
+    {% include 'navbar.html.twig' %}
+
+    <div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Creación de nuevo Recurso disponible para evaluar el programa/proyecto</h2>
+                <a href="#" class="htooltip"><img id="icon-help" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>En este punto se puede agregar un nuevo recurso disponible para la evaluación, el que puede ser del tipo monetario, recursos humanos, tiempo, capacidades, etc. En el caso de los recursos humanos disponibles para la evaluación, se debe definir las funciones y responsabilidades de cada uno de los involucrados. Se deberá especificar el nombre y la descripción del recurso, incluyendo la cantidad o monto disponible del mismo.</span></a>
+            </div>
+
+        </div>
+
+        <br />
+        <br />
+        <br />
+
+        <div class="form-content">
+           <form action="{{ path('recurso_create', { 'planevaluacion_id':app.request.get('planevaluacion_id') }) }}" method="post" {{ form_enctype(form) }}>
+              <div class="row-fluid">
+                    <div class="span5">
+                        {{ form_row(form.titulo) }}
+                    </div>
+                        
+                    <div class="span5">
+                        {{ form_label(form.tipo) }}
+                        {{ form_widget(form.tipo) }}
+                        <a href="#" class="htooltip"><img id="icon-help" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Los recursos disponibles para<br />evaluar pueden ser de los<br />siguientes tipos:
+                        <br />- Monetarios  
+                        <br />- Humanos: Funciones y<br />responsabilidades.  
+                        <br />- Tiempo  
+                        <br />- Capacidades  
+                        <br />- Otros</span></a>
+                        {{ form_errors(form.tipo) }}             
+                    </div>
+                </div>
+
+                <div class="row-fluid">
+                    <div class="span10">
+                        {{ form_row(form.descripcion) }}
+                    </div>
+                </div>
+                
+                <div class="row-fluid">
+                    <div class="span10">
+                        {{ form_label(form.cantidad) }}
+                        {{ form_widget(form.cantidad) }}
+                        <a href="#" class="htooltip"><img id="icon-help" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Los recursos se miden en unidades<br />de dinero ($), horas hombre (HH),<br />tiempo (meses), entre otros.<br />En este punto se debe cuantificar<br />en $, HH, etc, el recurso que se<br />está creando.</span></a>
+                        {{ form_errors(form.cantidad) }}
+                    </div>
+                </div>
+
+
+
+              {{ form_rest(form) }}
+
+              <button type="submit" class="btn btn-success">Crear</button>
+
+          </form>
+        </div>
+
+    </div>
+
 {% endblock %}
