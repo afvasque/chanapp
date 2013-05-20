@@ -408,7 +408,7 @@ class CuestionarioController extends Controller
         #Persist EVERYTHING
         $temprespuesta->setCuestionario($entity);
         $em->persist($temprespuesta);
-        $entity->addRespuestas($temprespuesta);
+        $entity->addRespuesta($temprespuesta);
         $em->persist($entity);
         $em->flush();
         $result = "El cuestionario ha sido guardado con éxito.";
