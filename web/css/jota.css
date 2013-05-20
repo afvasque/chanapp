@@ -406,3 +406,7 @@ display: block;
 	color: #0e75ba;
 font-size: 30px;
 }
+
+.accordion-group{
+margin-bottom: 10px;
+}
