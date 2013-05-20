@@ -168,6 +168,8 @@ class CuestionarioController extends Controller
      */
     public function editAction($id)
     {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $roles = $user->getRoles();
         if($roles[0] == "ROLE_SUPER_ADMIN" or $roles[0] == "ROLE_ADMIN" or $roles[0] == "ROLE_PLANIFICADOR" or 
             $roles[0] == "ROLE_EVALUADOR")
         {
@@ -201,6 +203,8 @@ class CuestionarioController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $roles = $user->getRoles();
         if($roles[0] == "ROLE_SUPER_ADMIN" or $roles[0] == "ROLE_ADMIN" or $roles[0] == "ROLE_PLANIFICADOR" or 
             $roles[0] == "ROLE_EVALUADOR")
         {
@@ -241,6 +245,8 @@ class CuestionarioController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $roles = $user->getRoles();
         if($roles[0] == "ROLE_SUPER_ADMIN" or $roles[0] == "ROLE_ADMIN" or $roles[0] == "ROLE_PLANIFICADOR" or 
             $roles[0] == "ROLE_EVALUADOR")
         {
@@ -395,7 +401,7 @@ class CuestionarioController extends Controller
                 $temprespuesta2->setPregunta($p);
                 $temprespuesta2->setRespuestaParent($temprespuesta);
                 $em->persist($temprespuesta2);
-                $temprespuesta->addRespuestasalternativas($temprespuesta2);
+                $temprespuesta->addRespuestasalternativa($temprespuesta2);
             }
             
         }
