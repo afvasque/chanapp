@@ -32,6 +32,7 @@
                 <h2>Cuestionario : {{ entity.nombre }}</h2>
             </div>
             <div class="title-actions">
+                 {% if entity.getEvaluacionindirecta().getEvaluacion().getDone() == false %}
                 <div class="btn-group">
                     <button class="btn">Elegir una Acción</button>
                     <button class="btn dropdown-toggle" data-toggle="dropdown">
@@ -39,8 +40,7 @@
                     </button>
                     <ul class="dropdown-menu">
                         <!-- dropdown menu links -->
-                        {% if entity.getEvaluacionindirecta().getEvaluacion().getDone() == false %}
-                            
+                       
                             {% if entity.getDone() == false %}
                             {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
                             <li>
@@ -130,9 +130,8 @@
                                 </li>
                                 {% endif %}
                             {% endif %}
-                        {% endif %}
                     </ul>
-                </div>
+                </div>{% endif %}
             </div>
         </div>
         {# Errors go here#}

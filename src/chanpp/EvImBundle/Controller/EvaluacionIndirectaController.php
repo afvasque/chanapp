@@ -218,14 +218,13 @@ class EvaluacionIndirectaController extends Controller
     {
         $form = $this->createDeleteForm($id);
         $form->bind($request);
-        $evaluacionid;
-        if ($form->isValid()) {
+        $evaluacionid = 0;
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('chanppEvImBundle:EvaluacionIndirecta')->find($id);
-
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find EvaluacionIndirecta entity.');
             }
+            
             if($entity->getEvaluacion()->getDone())
             {
                  return $this->redirect($this->generateUrl('evaluacion_show', array('id' => $entity->getEvaluacion()->getId(), 'error' => 'La evaluación padre ya ha sido cerrada, por lo que no se pueden agregar sub-evaluaciones.')));
@@ -241,9 +240,7 @@ class EvaluacionIndirectaController extends Controller
             #Delete cuestionario
             $em->remove($entity);
             $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('evaluacion_show', array('id' => $evaluacionid)));
+            return $this->redirect($this->generateUrl('evaluacion_show', array('id' => $evaluacionid)));
     }
 
     /**

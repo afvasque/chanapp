@@ -200,7 +200,6 @@ class EvaluacionDirectaController extends Controller
         $form = $this->createDeleteForm($id);
         $form->bind($request);
         $evaluacionid = 0;
-        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('chanppEvImBundle:EvaluacionDirecta')->find($id);
 
@@ -220,7 +219,6 @@ class EvaluacionDirectaController extends Controller
             $entity->getEvaluacion()->setEvaluaciondirecta(null);
             $em->remove($entity);
             $em->flush();
-        }
 
         return $this->redirect($this->generateUrl('evaluacion_show', array('id' => $evaluacionid)));
     }

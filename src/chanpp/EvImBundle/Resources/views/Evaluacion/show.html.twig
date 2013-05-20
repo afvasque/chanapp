@@ -275,13 +275,11 @@ Una Sub-Evaluación de Impacto Indirecto corresponde a una evaluación de impact
                              </a>
                               {% if entity.getDone() == false %}
                                 <a href="{{ path('evaluacionindirecta_edit', { 'id': entity2.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-editar-(lapiz).png') }}" alt="logo"/></a>
-                              <form action="{{ path('evaluacionindirecta_delete', { 'id': entity2.id }) }}" method="post">
-                                <input type="hidden" name="_method" value="DELETE" />
-                                {{ form_widget(delete_form) }}
-                                <button type="submit" style="border: 0; background: transparent" onclick="return confirm('¿Seguro que desea eliminar?')">
-                                    <img class="icon-action-table2" src="{{ asset('img/icono-eliminar-(cruz).png') }}" alt="logo"/>
-                                </button>
-                            </form>
+                                <form action="{{ path('evaluacionindirecta_delete', { 'id': entity2.id }) }}" method="post">
+                                    <input type="hidden" name="_method" value="DELETE" />
+                                    {{ form_widget(delete_form) }}
+                                    <button type="submit" style="border: 0; background: transparent" onclick="return confirm('¿Seguro que desea eliminar?')"><img class="icon-action-table2" src="{{ asset('img/icono-eliminar-(cruz).png') }}" alt="logo"/></button>
+                                </form>
                             {% endif %}
                         </div>
                     </ul>
