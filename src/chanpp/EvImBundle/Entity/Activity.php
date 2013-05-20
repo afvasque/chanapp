@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Activity
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="chanpp\EvImBundle\Entity\ActivityRepository")
  */
 class Activity
 {

@@ -25,9 +25,9 @@ class EvaluacionType extends AbstractType
   //                      return $er->createQueryBuilder('u')               
     //                      ->where('u.ficha_proyecto_id = '. $options['fichaid'] );
       //                }     
-'query_builder' => function(EntityRepository $er) {
-        return $er->createQueryBuilder('u')
-            ->orderBy('u.username', 'ASC');
+'query_builder' => function($repository) { $options = $this->options;
+        return $repository->createQueryBuilder('u')
+        ->where('u.ficha_proyecto = '. $options['fichaid'] );
     },
 ));
     }
