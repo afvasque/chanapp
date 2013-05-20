@@ -41,8 +41,8 @@
             <input type="radio" name="respuesta[{{numero_pregunta}}]" value="3" required>3<br>
             <input type="radio" name="respuesta[{{numero_pregunta}}]" value="4" required>4<br>
             <input type="radio" name="respuesta[{{numero_pregunta}}]" value="5" required>5<br>
-        {% set numero_alternativa = 0 %}
         {% elseif pregunta.getTipo() == 3 %}
+            {% set numero_alternativa = 0 %}
             {% for alternativa in pregunta.getAlternativas%}
             {% set numero_alternativa = numero_alternativa + 1 %}
             <input type="radio" name="respuesta[{{numero_pregunta}}]" value="{{numero_alternativa}}" required>{{ alternativa}}<br>

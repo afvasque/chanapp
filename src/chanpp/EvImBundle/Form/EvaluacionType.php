@@ -18,7 +18,7 @@ class EvaluacionType extends AbstractType
 'multiple' => true,
 'expanded' => true,
 'class'    => 'chanppEvImBundle:Activity',
-'property' => 'nombre',
+'property' => 'nombre',  
 ));
     }
 

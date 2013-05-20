@@ -15,7 +15,6 @@
                       </div>
                     </div>
                   </div>
-                  <br>
               {% endif %}
               {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_PLANIFICADOR") or is_granted("ROLE_EVALUADOR") or is_granted("ROLE_PLANIFICADOR")%}
                 <div class="accordion-group">
@@ -34,14 +33,12 @@
                   </div>
                 </div>
               {% endif %}
-              <br>
               <div class="accordion-group">
                   <div class="accordion-heading">
                     <a class="accordion-toggle"  href="{{ path('planevaluacion') }}">
                        Planes de Evaluación</a>
                     </div>
               </div>
-              <br>
               <div class="accordion-group">
                   <div class="accordion-heading">
                     <a class="accordion-toggle"  href="{{ path('resultados_all_show') }}">

@@ -450,3 +450,7 @@ p {
     width: 99%;
 }
 
+/*Chanfix*/
+#fos_user_registration_form_roles label {
+display: none !important;
+}
