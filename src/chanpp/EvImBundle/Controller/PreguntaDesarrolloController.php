@@ -193,7 +193,7 @@ class PreguntaDesarrolloController extends Controller
             {
                 return $this->redirect($this->generateUrl('preguntaalternativa', array('cuestionario_redirect_id' => $cuestionario_redirect)));
             }
-            return $this->redirect($this->generateUrl('preguntadesarrollo_show', array('id' => $id)));
+            return $this->redirect($this->generateUrl('cuestionario_preview', array('id' => $entity->getCuestionario()->getId(),'editoption' => 1 )));
         }
 
         return array(

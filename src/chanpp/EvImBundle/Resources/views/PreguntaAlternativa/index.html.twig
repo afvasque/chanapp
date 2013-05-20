@@ -1,19 +1,66 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-
+{% block title %}Preguntas Sugeridas{% endblock title %}
 {% block body -%}
-    <h1>Preguntas Sugeridas</h1>
-    <a href="{{ path('cuestionario_show', { 'id': app.request.get('cuestionario_redirect_id') }) }}" class="btn">Volver al Cuestionario</a>
-    <a href="{{ path('preguntadesarrollo_new', { 'cuestionario_id': 0, 'pregunta_numero': 0,  'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id') }) }}" class="btn btn-success">
-                Agregar Pregunta Desarrollo a las Sugeridas
-            </a>
-            <a href="{{ path('preguntaalternativa_new', { 'cuestionario_id': 0, 'pregunta_tipo': 1 , 'pregunta_numero': 0, 'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id')}) }}" class="btn btn-success">
-                Agregar Pregunta Alternativa Sí o No a las Sugeridas
-            </a><br><br>
-            <a href="{{ path('preguntaalternativa_new', { 'cuestionario_id': 0, 'pregunta_tipo': 2 , 'pregunta_numero': 0, 'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id')}) }}" class="btn btn-success">
-                Agregar Pregunta Alternativa Escala 1 a 5 a las Sugeridas
-            </a>
-            <hr>
-            <form action="{{ path('preguntaalternativa_new') }}" method="get">
+
+
+    <div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('cuestionario_show', { 'id': app.request.get('cuestionario_redirect_id') }) }}">Cuestionario </a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Preguntas Sugeridas
+        </div>
+    </div>
+    {% include 'navbar.html.twig' %}
+    <div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Preguntas Sugeridas</h2>
+            </div>
+
+
+  <div class="title-actions">
+     {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
+                <div class="btn-group">
+                    <button class="btn">Elegir una Acción</button>
+                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <!-- dropdown menu links -->
+                       
+                            <li>
+                                <a href="{{ path('preguntadesarrollo_new', { 'cuestionario_id': 0, 'pregunta_numero': 0,  'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id') }) }}">
+                                 Agregar Pregunta<br>Desarrollo a las Sugeridas
+                                </a>
+                            </li>
+                            <li>
+                                 <a href="{{ path('preguntaalternativa_new', { 'cuestionario_id': 0, 'pregunta_tipo': 1 , 'pregunta_numero': 0, 'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id')}) }}" >
+                Agregar Pregunta<br>Alternativa Sí o No<br>a las Sugeridas
+            </a>  
+                            </li>
+                            <li>
+                               <a href="{{ path('preguntaalternativa_new', { 'cuestionario_id': 0, 'pregunta_tipo': 2 , 'pregunta_numero': 0, 'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id')}) }}" class="btn btn-success">
+                                Agregar Pregunta<br> Alternativa Escala 1 a 5<br> a las Sugeridas
+                                </a>
+                            </li>
+                       
+                    </ul>
+                </div>
+                 {% endif %}
+            </div>
+        </div>
+
+        {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
+      <div class="accordion accordion-fix" id="accordion2">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapsePregunta">
+        Pregunta con alternativas personalizadas
+      </a>
+    </div>
+    <div id="collapsePregunta" class="accordion-body collapse">
+      <div class="accordion-inner">
+       <form action="{{ path('preguntaalternativa_new') }}" method="get">
             <input type="hidden" name="cuestionario_id" value="{{ 0}}">
             <input type="hidden" name="pregunta_tipo" value="3">
             <input type="hidden" name="pregunta_numero" value="{{ 0}}">
@@ -21,14 +68,23 @@
             <label for="numero_alternativas">Número de alternativas:</label> 
             <input type="text" name="numero_alternativas" required>
             <p>
-            <button type="submit" class="btn btn-success">Agregar Pregunta con alternativas personalizadas a las Sugeridas</button>
+            <button type="submit" >Agregar Pregunta con alternativas personalizadas a las Sugeridas</button>
              </p>
-            </form>            
-            <hr>
-    <h3>Preguntas Alternativas Sugeridas</h3>
-    <table class="table table-striped">
-        <thead>
-            <tr>
+            </form>   
+      </div>
+    </div>
+  </div>
+</div>  
+{% endif %}
+
+
+<h3>Preguntas Alternativas Sugeridas</h3>
+    {% if entities is empty%}
+    No hay preguntas de alternativas sugeridas.
+    {% else %}
+    <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed sortable">
+         <thead>
+            <tr class="tableinfohead">
                 <th>Enunciado</th>
                 <th>Tipo</th>
                 <th>Eje</th>
@@ -58,7 +114,9 @@
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('preguntaalternativa_edit', { 'id': entity.id, 'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id') }) }}" class="btn btn-warning">Editar</a>
+                        {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
+                        <a href="{{ path('preguntaalternativa_edit', { 'id': entity.id, 'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id') }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-editar-(lapiz).png') }}" alt="logo"/></a>
+                         {% endif %}
                     </li>
                 </ul>
                 </td>
@@ -66,11 +124,20 @@
         {% endfor %}
         </tbody>
     </table>
-    <br>
+    {% endif %}
+
+
+
+
+
+
     <h3>Preguntas Desarrollo Sugeridas</h3>
-    <table class="table table-striped">
+    {% if desarrollo is empty%}
+    No hay preguntas de alternativas sugeridas.
+    {% else %}
+    <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed sortable">
         <thead>
-            <tr>
+            <tr class="tableinfohead">
                 <th>Enunciado</th>
                 <th>Eje</th>
                 <th></th>
@@ -90,7 +157,9 @@
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('preguntadesarrollo_edit', { 'id': entity.id, 'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id') }) }}" class="btn btn-warning">Editar</a>
+                        {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
+                        <a href="{{ path('preguntadesarrollo_edit', { 'id': entity.id, 'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id') }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-editar-(lapiz).png') }}" alt="logo"/></a>
+                         {% endif %}
                     </li>
                 </ul>
                 </td>
@@ -98,9 +167,9 @@
         {% endfor %}
         </tbody>
     </table>
-        <ul>
-        <li>
-            
-        </li>
-    </ul>
+    {% endif %}
+
+
+
+</div>
     {% endblock %}

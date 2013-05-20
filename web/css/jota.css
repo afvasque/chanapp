@@ -345,3 +345,65 @@ td.tablesorter-pager {
 .no-element-error{
 	margin-top: 90px;
 }
+
+.display-respuestas{
+	margin-top: 30px;
+}
+
+
+#main-content2 {
+    position: relative;
+    float: left;
+    width: 60%;
+    padding-left: 22px;
+    padding-top: 32px;
+}
+
+#main-content2 h2 {
+     color: #0e75ba;
+    font-size: 30px;
+}
+
+.accordion-fix
+{
+
+    margin-top: 20px;
+
+    margin-left: 20px;
+
+    float:right;
+
+}
+
+
+.pregunta-actions-edit{
+float: left;
+display: block;
+}
+
+.alert-fix{
+    margin-top: 55px;
+	 margin-left: 5px; 
+	 margin-right: 5px;
+}
+
+.alternativa-edit{
+
+    margin-top: 110px;
+
+}
+
+.old-select{
+	width: 40%;
+}
+
+.cuestionario{
+
+    margin-top: 50px;
+
+}
+
+.cuestionario-result h2{
+	color: #0e75ba;
+font-size: 30px;
+}

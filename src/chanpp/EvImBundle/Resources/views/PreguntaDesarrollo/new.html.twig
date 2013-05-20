@@ -1,25 +1,55 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
+{% block title %}Nueva Pregunta Desarrollo{% endblock %}
 
 {% block body -%}
-    <h1>Crear Pregunta de Desarrollo</h1>
+{% if app.request.get('cuestionario_id') == 0%}
+<div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('preguntaalternativa', { 'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id')}) }}">Preguntas Sugeridas</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Crear Pregunta Desarrollo
+        </div>
+    </div>
+{% else %}
+<div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('cuestionario_show', { 'id': app.request.get('cuestionario_id') }) }}">Cuestionario</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Crear Pregunta Desarrollo
+        </div>
+    </div>
+{% endif %}
+{% include 'navbar.html.twig' %}
+
+
+    <div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Crear Pregunta de Desarrollo</h2>
+            </div>
+        </div> 
+
     {% if app.request.get('cuestionario_id') == 0%}
-     <a href="{{ path('preguntaalternativa', { 'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id')}) }}" class="btn">
-            Volver a Preguntas Sugeridass
-    </a>
-    {% else %}
-    <a href="{{ path('cuestionario_show', { 'id': app.request.get('cuestionario_id') }) }}" class="btn" >
-            Volver al cuestionario
-        </a>
-    {% endif %}
-    <br><br>
-    {% if app.request.get('cuestionario_id') == 0%}
-    <form action="{{ path('preguntadesarrollo_create', { 'cuestionario_id': app.request.get('cuestionario_id'), 'pregunta_numero': app.request.get('pregunta_numero') , 'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id')}) }}" method="post" {{ form_enctype(form) }}>
-    {% else %}
-    <form action="{{ path('preguntadesarrollo_create', { 'cuestionario_id': app.request.get('cuestionario_id'), 'pregunta_numero': app.request.get('pregunta_numero') }) }}" method="post" {{ form_enctype(form) }}>
-    {% endif %}
-        {{ form_widget(form) }}<br>
+
+    <div class="createedit-form3">
+        <form action="{{ path('preguntadesarrollo_create', { 'cuestionario_id': app.request.get('cuestionario_id'), 'pregunta_numero': app.request.get('pregunta_numero') , 'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id')}) }}" method="post" {{ form_enctype(form) }}>
+           {{ form_widget(form) }}<br>
         <p>
             <button type="submit" class="btn btn-success">Crear</button>
         </p>
-    </form>
+        </form>
+    </div>    
+    {% else %}
+
+    <div class="createedit-form3">
+        <form action="{{ path('preguntadesarrollo_create', { 'cuestionario_id': app.request.get('cuestionario_id'), 'pregunta_numero': app.request.get('pregunta_numero') }) }}" method="post" {{ form_enctype(form) }}>
+           {{ form_widget(form) }}<br>
+        <p>
+            <button type="submit" class="btn btn-success">Crear</button>
+        </p>
+        </form>
+    </div>    
+    {% endif %}
+
+</div>
 {% endblock %}

@@ -1,21 +1,38 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-
+{% block title %}Editar Pregunta Desarrollo{% endblock %}
 {% block body -%}
-    <h1>Editar Pregunta de Desarrollo</h1>
-    {% if entity.getCuestionario()%}
-    <a href="{{ path('cuestionario_show' , {'id' : entity.getCuestionario().getId() }) }}" class="btn">
-            Volver a cuestionario
-        </a>
-    {% else %}
-     <a href="{{ path('preguntaalternativa', {'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id') }) }}" class="btn" class="btn">
-            Volver a Preguntas Sugeridas
-    </a>
-    {% endif %}
-    <form action="{{ path('preguntadesarrollo_delete', { 'id': entity.id,'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id') }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que desea eliminar?')">Eliminar</button>
-        </form>
+
+{% if entity.getCuestionario()%}
+<div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('cuestionario_show', { 'id': entity.getCuestionario().id }) }}">Cuestionario</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Editar Pregunta Desarrollo
+        </div>
+    </div>
+{% else %}
+<div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('preguntaalternativa', { 'cuestionario_redirect_id': app.request.get('cuestionario_redirect_id')}) }}">Preguntas Sugeridas</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Editar Pregunta Desarrollo
+        </div>
+</div>
+{% endif %}
+{% include 'navbar.html.twig' %}
+
+
+    <div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Editar Pregunta de Desarrollo</h2>
+            </div>
+        </div> 
+
+
+    <div class="createedit-form3">
+
+    
           {% if entity.getCuestionario()%}
            <form action="{{ path('preguntadesarrollo_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
           {% else %}
@@ -27,4 +44,7 @@
             <button type="submit" class="btn btn-success" >Guardar Cambios</button>
         </p>
     </form>
+
+    </div>   
+</div>
 {% endblock %}

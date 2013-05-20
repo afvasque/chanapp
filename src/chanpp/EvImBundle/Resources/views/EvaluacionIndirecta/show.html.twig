@@ -41,12 +41,12 @@
                                             <a type="submit" onclick="confirmDelete()" class="dropdown-menu-link">Eliminar</a>
                                     </form>
                                 </li>
-                                {% endif%}
                                 <li>
                                     {% if entity.hasCuestionarioOnMetodo() %}
                                     {% if entity.getCuestionario()  == false%}
                                     <a href="{{ path('cuestionario_new', { 'evaluacion_id': entity.getId() }) }}">Crear Cuestionario</a>
                                     {% endif %}
+                                    {% endif%}
                                 {% endif%}
                                 </li>
                                 {% if document %}
@@ -54,13 +54,15 @@
                                        <a href="{{ asset(document.getWebPath())}}">Descargar Archivo</a>
                                     </li>
                                  {% endif %}
-                                 {% if document %}
-                                    {% if entity.getEvaluacion().getDone() == false %}<li>
-                                    <a href="{{ path('uploadindirecta', { 'evaluacionindirecta_id': entity.id}) }}">Cambiar Archivo</a> </li>{% endif %}
-                                {% else %}
-                                    {% if entity.getEvaluacion().getDone() == false %}  
-                                    <li><a href="{{ path('uploadindirecta', { 'evaluacionindirecta_id': entity.id}) }}">Subir Archivo</a> </li>
-                                    {% endif %}
+                                 {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
+                                     {% if document %}
+                                        {% if entity.getEvaluacion().getDone() == false %}<li>
+                                        <a href="{{ path('uploadindirecta', { 'evaluacionindirecta_id': entity.id}) }}">Cambiar Archivo</a> </li>{% endif %}
+                                    {% else %}
+                                        {% if entity.getEvaluacion().getDone() == false %}  
+                                        <li><a href="{{ path('uploadindirecta', { 'evaluacionindirecta_id': entity.id}) }}">Subir Archivo</a> </li>
+                                        {% endif %}
+                                     {% endif %} 
                                  {% endif %} 
                             </ul>
                         </div>
@@ -113,9 +115,9 @@
             <tr>
                 <th class="tableinfohead">Archivo</th>
                 {% if document %}
-                    <td><a href="{{ asset(document.getWebPath())}}" class="btn btn-primary">Descargar Archivo</a>{% if entity.getEvaluacion().getDone() == false %}  <a href="{{ path('uploadindirecta', { 'evaluacionindirecta_id': entity.id}) }}" class="btn btn-warning">Cambiar Archivo</a>{% endif %}</td>
+                    <td><a href="{{ asset(document.getWebPath())}}" class="btn btn-primary">Descargar Archivo</a>{% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}{% if entity.getEvaluacion().getDone() == false %}  <a href="{{ path('uploadindirecta', { 'evaluacionindirecta_id': entity.id}) }}" class="btn btn-warning">Cambiar Archivo</a>{% endif %}{% endif %}</td>
                 {% else %}
-                    <td>No hay archivo{% if entity.getEvaluacion().getDone() == false %}  <a href="{{ path('uploadindirecta', { 'evaluacionindirecta_id': entity.id}) }}" class="btn btn-warning">Subir Archivo</a>{% endif %}</td>
+                    <td>No hay archivo{% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}{% if entity.getEvaluacion().getDone() == false %}  <a href="{{ path('uploadindirecta', { 'evaluacionindirecta_id': entity.id}) }}" class="btn btn-warning">Subir Archivo</a>{% endif %}{% endif %}</td>
                 {% endif %}     
             </tr>
             <tr>
@@ -157,11 +159,13 @@
                 {% else %}
 
                 <div>No hay cuestionario asociado.
-                {% if entity.getEvaluacion().getDone() == false%}
-                        Puede agregar uno 
-                         <a href="{{ path('cuestionario_new', { 'evaluacion_id': entity.getId() }) }}" >aqui.</a></div>
-                {% endif %}
-                  
+                    {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
+
+                        {% if entity.getEvaluacion().getDone() == false%}
+                                Puede agregar uno 
+                                 <a href="{{ path('cuestionario_new', { 'evaluacion_id': entity.getId() }) }}" >aqui.</a></div>
+                        {% endif %}
+                     {% endif %}
                 {% endif %}
             {% endif%}
 <!--fd-->

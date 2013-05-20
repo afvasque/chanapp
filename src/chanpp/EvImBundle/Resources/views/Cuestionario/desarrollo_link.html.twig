@@ -1,10 +1,27 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-
+{% block title %}Asociar Pregunta de Desarrollo Anterior a Cuestionario{% endblock %}
 {% block body -%}
+
+
+<div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('cuestionario_show', { 'id': entity.id }) }}">Cuestionario</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Asociar Pregunta de Desarollo Anterior a Cuestionario
+        </div>
+    </div>
+{% include 'navbar.html.twig' %}
+
+
 {% if entity.getDone() == false%}
-<form action="{{ path('preguntadesarrollo_link_save', {'id': entity.id}) }}" method="post" {{ form_enctype(delete_form) }}>
-    <h1>Asociar Pregunta de Desarrollo Anterior a Cuestionario</h1>
-    <select name="old_id">
+<div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Asociar Pregunta de Alternativas Anterior a Cuestionario</h2>
+            </div>
+        </div>
+        <form action="{{ path('preguntadesarrollo_link_save', {'id': entity.id}) }}" method="post" {{ form_enctype(delete_form) }}>
+    <select name="old_id" class="old-select">
 	{% for pregunta in preguntas%}
 	<option value="{{ pregunta.getId()}}">{{ pregunta.getEnunciado() }}</option>
 	{% endfor %}
@@ -13,9 +30,17 @@
        <button type="submit" class="btn btn-success">Asociar Pregunta</button>
     </p>
     </form>
+</div>
 {% else %}
-<h1>El cuestionario ha sido cerrado, por lo que no se pueden agregar más preguntas.</h1>
+<div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>El cuestionario ha sido cerrado, por lo que no se pueden agregar más preguntas.</h2>
+            </div>
+        </div>
+</div>
 {% endif %}
+
 {% endblock %}
 
 
