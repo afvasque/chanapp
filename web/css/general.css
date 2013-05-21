@@ -425,12 +425,12 @@ p {
 }
 
 .span12 textarea {
-    width: 98%;
+    width: 95%;
     height: 120px;
 }
 
 .span12 input {
-    width: 98%;
+    width: 95%;
 }
 
 .span10 textarea {
@@ -439,15 +439,15 @@ p {
 }
 
 .span10 input {
-    width: 98%;
+    width: 80%;
 }
 
 .span6 input {
-    width: 96%;
+    width: 90%;
 }
 
 .span6 select {
-    width: 99%;
+    width: 93%;
 }
 
 /*Chanfix*/

@@ -28,6 +28,10 @@
                                  <a href="{{ path('fichaproyecto_edit', { 'id': entity.id }) }}">Editar</a>
                             </li>
 
+                            <li>
+                                 <a href="{{ path('planevaluacion_new', { 'fichaproyecto_id': entity.id }) }}">Agregar Plan de<br />Evaluación</a>
+                            </li>
+
                             {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
                                 <li>
                                     <form action="{{ path('fichaproyecto_delete', { 'id': entity.id }) }}" method="post" class="dropdown-menu-form" id="delete-form">
