@@ -184,7 +184,11 @@
                                             {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
                                                 <a href="{{ path('indgestion_edit',{'id' : ind.getId}) }}"><img class="icon-action-table2" src="{{ asset('img/icono-editar-(lapiz).png') }}" alt="logo"/></a>
 
-                                                <a href="{{ path('indgestion_delete',{'id' : ind.getId}) }}"><img class="icon-action-table2" src="{{ asset('img/icono-eliminar-(cruz).png') }}" alt="logo"/></a>
+                                                {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
+
+                                                    <a href="{{ path('indgestion_delete',{'id' : ind.getId}) }}"><img class="icon-action-table2" src="{{ asset('img/icono-eliminar-(cruz).png') }}" alt="logo"/></a>
+
+                                                {% endif %}
                                                 
                                             {% endif %}
                                         </td>
@@ -194,13 +198,14 @@
                         </tbody>
                     </table>
                 {% endif %}
+
                 <br />
-            <br />
-            <button type="submit" class="btn btn-primary">Guardar Ficha de Programa</button>
+                <br />
+
+                <button type="submit" class="btn btn-primary">Guardar Ficha de Programa</button>
             </form>
 
             
-
         </div>    
 
     </div>
