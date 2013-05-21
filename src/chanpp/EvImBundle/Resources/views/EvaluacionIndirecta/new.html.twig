@@ -61,7 +61,6 @@
                 </div>
 
                 <div class="row-fluid">
-                    <div class="span6">
                         <p><b>Ejes
                         
                         <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Una evaluación indirecta mide el impacto del programa en uno o más de tres ejes, correspondientes a macro dimensiones analíticas, las que son:<br>
@@ -72,16 +71,13 @@
                         </b></p>
                         {{ form_widget(form.ejes) }} 
                         {{ form_errors(form.ejes) }}
-                    </div>
                         
-                    <div class="span6">
                         <p><b>Método de recolección de datos
                           <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>La medición de cada uno de los ejes se realiza a través de diferentes métodos de recolección de datos y mediante preguntas que permitan obtener la información necesaria para cada atributo, según sea el ámbito del objetivo del programa y del grupo de interés, ya sean estos los beneficiarios del programa, instituciones, etc.</span></a>
                         </b></p>
                         {{ form_widget(form.metodosrecoleccion) }} 
                         {{ form_errors(form.metodosrecoleccion) }}
                                    
-                    </div>
                 </div>
               
                {{ form_rest(form) }}
