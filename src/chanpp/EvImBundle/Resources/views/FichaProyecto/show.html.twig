@@ -140,9 +140,12 @@
             <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed sortable">
                 <thead>
                     <tr class="tableinfohead">
-                        <th>Indicador</th>
-                        <th>Metas</th>
-                        <th>Plazos (mes, año) </th>
+                        <th style="width: 30%;">Indicador</th>
+                        <th style="width: 30%;">Metas</th>
+                        <th style="width: 30%;">Plazos (mes, año) </th>
+                        {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
+                            <th></th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -160,6 +163,14 @@
                                 {% for meta in indgest.metas %}
                                     {{meta.plazoMes}} {{meta.plazoAnio}}<br />
                                 {% endfor %}
+                            </td>
+
+                            <td>
+                                {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
+                                                
+                                    <a href="{{ path('indgestion_edit',{'id' : indgest.getId}) }}"><img class="icon-action-table2" src="{{ asset('img/icono-editar-(lapiz).png') }}" alt="logo"/></a>
+                                                
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}

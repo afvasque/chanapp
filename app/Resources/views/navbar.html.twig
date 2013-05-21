@@ -11,7 +11,7 @@
                     </div>
                     <div id="collapseOne" class="accordion-body collapse">
                       <div class="accordion-inner">
-                       <a href="{{ path('fos_user_registration_register') }}">Agregar Usuario</a>
+                       <a href="{{ path('fos_user_registration_register') }}" style="margin-left: -17%;">Agregar Usuario</a>
                       </div>
                     </div>
                   </div>
@@ -27,7 +27,7 @@
                         <a href="{{ path('fichaproyecto') }}">Ver Fichas Existentes</a>
                         {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_PLANIFICADOR") %}
                           <hr>
-                          <a href="{{ path('fichaproyecto_new') }}">Crear Ficha</a>
+                          <a href="{{ path('fichaproyecto_new') }}" style="margin-left: -35%;">Crear Ficha</a>
                     {% endif %}
                       </div>
                   </div>

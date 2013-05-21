@@ -1,71 +1,104 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-
+{% block title %}Resultados evaluaciones{% endblock %}
 {% block body -%}
-
     {# Errors go here#}
-    <h1>Resultados evaluaciones</h1>
 
-    <h2> Datos evaluación </h2>
-
-    <p>Área: {{proyecto.getAreaAccion}}</p>
-    <p>Programa: {{proyecto.getNombre}}</p>
-
-    <h2>Tabla comparativa</h2>
-    <table class="table table-striped" id="demontable">
-        <thead>
-            <th>Nombre</th>
-            <th>Impacto Directo</th>            
-            <th>GI</th>
-            <th>Presencia</th>
-            <th>Valorización</th>
-            <th>Capacidad movilizadora</th>
-        </thead>
-        {% for ev in entity.getEvaluaciones%}
-        <tr>
-            <td>{{ev.getNombre}}</td>
-            {% if ev.getEvaluaciondirecta %}
-                <td>{{ev.getEvaluaciondirecta.getTotal}} mW/h</td>
-            {% else %}
-                <td> N/A </td>
-            {% endif %}
-            {% for ev_in in ev.getEvaluacionesindirectas %}
-                {% if loop.index > 1%}
-                    <tr>
-                        <td></td>
-                        <td></td>
-                {% endif %}
-                <td>{{ev_in.getGrupoInteres}}</td>
-                <td>{{ev_in.getImpactosejes()[0]}}</td>
-                <td>{{ev_in.getImpactosejes()[1]}}</td>
-                <td>{{ev_in.getImpactosejes()[2]}}</td>
-                {% if loop.index > 0%}
-                    </tr>
-                {% endif %}
-            {% endfor %}
-        <tr>
-        {% endfor %}
-    </table>
-
-    
-    <div class="form-actions">
-        <a href="{{ path('evaluacion_show', { 'id': entity.id}) }}" class="btn btn-main">
-            Volver a la evaluación
-        </a>
+    <div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('fichaproyecto_show', { 'id':entity.getFichaproyecto().id }) }}">Ficha de Programa "{{ entity.getFichaproyecto().nombre }}"</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            <a href="{{ path('planevaluacion_show', { 'id':entity.id }) }}">Plan de Evaluación</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Viendo Resultados de Evaluaciones
+        </div>
     </div>
 
-{% block javascript %}
+    {% include 'navbar.html.twig' %}
 
-    {% javascripts 
-        '@chanppEvImBundle/Resources/public/js/picnet.table.filter.min.js'
-    %}
-        <script src="{{ asset_url }}"></script>
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $('#demotable').tableFilter();
-            });
-        </script>
-    {% endjavascripts %}
-{% endblock %}
+    <div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Resultados de Evaluaciones</h2>
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+
+        <h3> Datos evaluación </h3>
+
+        <!-- Info table -->
+        
+        <table class="table table-bordered infotable">
+            <tbody>
+                <tr>
+                    <th class="tableinfohead">Área</th>
+                    <td>{{proyecto.getAreaAccion}}</td>
+                </tr>
+                <tr>
+                    <th class="tableinfohead">Programa</th>
+                    <td>{{proyecto.getNombre}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Tabla comparativa</h3>
+
+        <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed sortable">
+            <thead>
+                <tr class="tableinfohead">
+                    <th>Nombre</th>
+                    <th>Impacto Directo</th>            
+                    <th>GI</th>
+                    <th>Presencia</th>
+                    <th>Valorización</th>
+                    <th>Capacidad movilizadora</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ev in entity.getEvaluaciones%}
+                    <tr>
+                        <td>{{ev.getNombre}}</td>
+                        {% if ev.getEvaluaciondirecta %}
+                            <td>{{ev.getEvaluaciondirecta.getTotal}} mW/h</td>
+                        {% else %}
+                            <td> N/A </td>
+                        {% endif %}
+                        {% for ev_in in ev.getEvaluacionesindirectas %}
+                            {% if loop.index > 1%}
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                            {% endif %}
+                            <td>{{ev_in.getGrupoInteres}}</td>
+                            <td>{{ev_in.getImpactosejes()[0]}}</td>
+                            <td>{{ev_in.getImpactosejes()[1]}}</td>
+                            <td>{{ev_in.getImpactosejes()[2]}}</td>
+                            {% if loop.index > 0%}
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    <tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    {% block javascript %}
+
+        {% javascripts 
+            '@chanppEvImBundle/Resources/public/js/picnet.table.filter.min.js'
+        %}
+            <script src="{{ asset_url }}"></script>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $('#demotable').tableFilter();
+                });
+            </script>
+        {% endjavascripts %}
+    {% endblock %}
 
 
 {% endblock %}
