@@ -22,17 +22,31 @@ A su vez, en esta evaluación se puede medir efectos directos y/o indirectos.</s
         <div class="createedit-form">
     <form action="{{ path('evaluacion_create', { 'planevaluacion_id':app.request.get('planevaluacion_id') }) }}" method="post" {{ form_enctype(form) }}>
 
-      {{ form_row(form.nombre) }}
+        <div class="row-fluid">
+            <div class="span6">
+                {{ form_row(form.nombre) }}   
+            </div>
+                        
+            <div class="span6">
+                {{ form_row(form.duracion) }}                              
+            </div>
+        </div>
 
-      {{ form_label(form.alcance) }}
-      {{ form_widget(form.alcance) }} <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Identificar en este ítem la(s) pregunta(s) clave(s) que desea responder con la evaluación.</span></a>
-      {{ form_errors(form.alcance) }}
+        <div class="row-fluid">
+            <div class="span12">
+                {{ form_label(form.alcance) }}
+                {{ form_widget(form.alcance) }} <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Identificar en este ítem la(s) pregunta(s) clave(s) que desea responder con la evaluación.</span></a>
+                {{ form_errors(form.alcance) }}    
+            </div>
+        </div>
 
-      {{ form_row(form.duracion) }}
 
-      {{ form_label(form.actividades) }}<a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Seleccionar las actividades que serán sometidas a evaluación.</span></a>
-      {{ form_widget(form.actividades) }} 
-      {{ form_errors(form.actividades) }}
+        <p><b>Actividades
+          <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Seleccionar las actividades que serán sometidas a evaluación.</span></a>
+        </b></p>
+        {{ form_widget(form.actividades) }} 
+        {{ form_errors(form.actividades) }} 
+
 
       {{ form_rest(form) }}  
       <p>

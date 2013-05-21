@@ -25,37 +25,53 @@ A su vez, cada una de esas evaluaciones puede medir efectos directos y/o indirec
     <form action="{{ path('planevaluacion_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
       <input type="hidden" name="_method" value="PUT" />
 
-          {{ form_label(form.objetivos) }}
-        {{ form_widget(form.objetivos) }} <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Defina los objetivos de la evaluación, señalando qué pregunta se desea responder con la información que se obtendrá a partir de los resultados de la evaluación. En este caso es de mucha ayuda preguntarse: ¿Para qué se está haciendo la evaluación? ¿Qué tipo de resultado se espera obtener? ¿Cómo se usarán los resultados? ¿Cuál es la relevancia de la información que se espera obtener?</span></a>
-        {{ form_errors(form.objetivos) }}
 
+        <div class="row-fluid">
+            <div class="span12">
+                {{ form_label(form.objetivos) }}
+                {{ form_widget(form.objetivos) }} <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Defina los objetivos de la evaluación, señalando qué pregunta se desea responder con la información que se obtendrá a partir de los resultados de la evaluación. En este caso es de mucha ayuda preguntarse: ¿Para qué se está haciendo la evaluación? ¿Qué tipo de resultado se espera obtener? ¿Cómo se usarán los resultados? ¿Cuál es la relevancia de la información que se espera obtener?</span></a>
+                {{ form_errors(form.objetivos) }}
+                
+            </div>
+        </div>
 
+        <div class="row-fluid">
+            <div class="span6">
+                <br />
+                {{ form_label(form.destinatarios) }}
+                {{ form_widget(form.destinatarios) }} <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Detallar a continuación cuáles son los destinatarios de la información. Esto debe incluir sus características principales y sus requerimientos de información, tanto en fondo como en forma. Aquí es preciso preguntarse ¿Para quién se está haciendo la evaluación? ¿Qué información se requiere proporcionar y con qué nivel de detalle? Para estos dos últimos puntos se pueden mencionar los siguientes usos posibles para los resultados de la evaluación:<br>
+                -Respaldar la continuidad y expansión de un programa a través de la verificación de sus impactos, como por ejemplo la disminución del consumo de energía por parte de sus participantes.<br>
+                -Apoyar las decisiones de inversión para producir un mayor ahorro de energía.<br>
+                -Retroalimentar el diseño de los programas o de algunas de sus componentes para aumentar su eficacia.<br>
+                De este modo, se establece con claridad el público objetivo de la evaluación que se llevará a cabo, identificando los actores claves y el sector al cual pertenecen.</span></a>
+                {{ form_errors(form.destinatarios) }}
 
-          {{ form_label(form.destinatarios) }}
-        {{ form_widget(form.destinatarios) }} <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Detallar a continuación cuáles son los destinatarios de la información. Esto debe incluir sus características principales y sus requerimientos de información, tanto en fondo como en forma. Aquí es preciso preguntarse ¿Para quién se está haciendo la evaluación? ¿Qué información se requiere proporcionar y con qué nivel de detalle? Para estos dos últimos puntos se pueden mencionar los siguientes usos posibles para los resultados de la evaluación:<br>
-  -Respaldar la continuidad y expansión de un programa a través de la verificación de sus impactos, como por ejemplo la disminución del consumo de energía por parte de sus participantes.<br>
-  -Apoyar las decisiones de inversión para producir un mayor ahorro de energía.<br>
-  -Retroalimentar el diseño de los programas o de algunas de sus componentes para aumentar su eficacia.<br>
-  De este modo, se establece con claridad el público objetivo de la evaluación que se llevará a cabo, identificando los actores claves y el sector al cual pertenecen.</span></a>
-        {{ form_errors(form.destinatarios) }}
+                    
+                {{ form_label(form.instanciasNumeroEvaluaciones) }}
+                {{ form_widget(form.instanciasNumeroEvaluaciones, {value : entity.getInstanciasNumeroEvaluaciones()}) }}<a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Indique el número de evaluaciones directas e indirectas que involucra este Plan de Evaluación.</span></a>
+                {{ form_errors(form.instanciasNumeroEvaluaciones) }}    
+            </div>
+                        
+            <div class="span6">     
+                {{ form_row(form.instanciasPlazo) }}                
+            </div>
+        </div>
+
+         {{ form_rest(form) }}   
+
+        <div class="row-fluid">
+            <div class="span12">
+                {#  Extra #}
+               <div class="even"> <label for="comentarioedit">Comente a continuación qué ítem editó y por qué:</label> 
+                <textarea rows="4" cols="50" name="comentarioedit" required></textarea></div>
+                <p>
+                    <button type="submit" class="btn btn-success">Guardar Cambios</button>
+                </p>
+            </div>
+        </div>
+
 
         
-        {{ form_label(form.instanciasNumeroEvaluaciones) }}
-        {{ form_widget(form.instanciasNumeroEvaluaciones, {value : entity.getInstanciasNumeroEvaluaciones()}) }}<a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Indique el número de evaluaciones directas e indirectas que involucra este Plan de Evaluación.</span></a>
-        {{ form_errors(form.instanciasNumeroEvaluaciones) }}
-
-          {{ form_row(form.instanciasPlazo) }}
-
-          {{ form_rest(form) }}   
-        {#  Extra #}
-       <div class="even"> <label for="comentarioedit">Comente a continuación qué ítem editó y por qué:</label> 
-        <textarea rows="4" cols="50" name="comentarioedit" required></textarea></div>
-        <p>
-            <button type="submit" class="btn btn-success">Guardar Cambios</button>
-        </p>
-        <br>
-        <br>
-        <br>
     </form>
   </div>
 
