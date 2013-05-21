@@ -53,6 +53,10 @@
 	text-align: center;
 }
 
+#icon-help {
+	margin-top: 16px;
+}
+
 .icon-help-table{
 	 height: 15px;
 }
@@ -413,9 +417,4 @@ margin-bottom: 10px;
 
 .no-element-error2{
 	float: left;	
-}
-    
-
-.span10 input{
-	width: 30%;
 }
