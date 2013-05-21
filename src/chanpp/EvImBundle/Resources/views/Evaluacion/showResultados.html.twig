@@ -45,10 +45,13 @@
         </tr>
     </table>
     {% else %}
-    <p>No hay evaluación directa ingresada </p>
+    <p>No hay evaluación directa ingresada. </p>
     {% endif %}
 
     <h3>Impacto indirecto</h3>
+    {% if entity.getEvaluacionesindirectas is empty %}
+    <p>No hay evaluaciones de impacto indirecto ingresadas. </p>
+     {% else %}
     <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed sortable">
         <theader>            
             <th>GI</th>
@@ -67,5 +70,6 @@
         <tr>
         {% endfor %}
     </table>
+    {% endif %}
 </div>
 {% endblock %}
