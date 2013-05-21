@@ -293,7 +293,11 @@ class PreguntaAlternativa
             krsort($resumen);
 
             foreach ($resumen as $key => $value) {
-                $resumen[$this->getAlternativas()[$key]] = $resumen[$key];
+                $alternativas = $this->getAlternativas();
+                $tempkey = $alternativas[$key];
+                $tempvalue = $resumen[$key];
+                $resumen[$tempkey]= $tempvalue;
+                //$resumen[$this->getAlternativas()[$key]]= $resumen[$key];
                 unset($resumen[$key]);
             }
 

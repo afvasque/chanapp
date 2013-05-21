@@ -19,7 +19,14 @@
             </div>
         </div>
         <!-- Info table -->
-        
+
+        {% if cambios is empty %}
+            <br />
+            <br />
+            <br />
+            Actualmente este plan de evaluación no tiene cambios
+        {% else %}
+
         <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed tablesorter">
             <thead>
                 <tr class="tableinfohead">
@@ -38,5 +45,7 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        {% endif %}
     </div>
 {% endblock %}

@@ -19,8 +19,8 @@
 
         <br />
         <br />
-        <br />
-
+        <br>
+        <br>
         <div class="form-content">
             <form action="{{ path('fichaproyecto_create') }}" method="post" {{ form_enctype(form) }}>
 
@@ -120,18 +120,18 @@
                     {% for activity in form.activities %}
 
                         <div class="row-fluid">
-                            <div class="span12">
+                            <div class="span6">
                                 {{ form_row(activity.nombre) }}
                                 {{ form_row(activity.descripcion) }}
                                 {{ form_row(activity.resultadosEsperados) }}
                                 {{ form_row(activity.duracion) }}
-                            </div>
 
-                            <a href="" class="btn btn-danger" id="boton_borrar">Borrar esta actividad</a>
-                            
-                            <br />
-                            <br />
-                        
+                                <br />
+
+                                <a href="" class="btn btn-danger" id="boton_borrar">Borrar esta actividad</a>
+
+                            </div>                            
+  
                         </div>
 
                     {% endfor %}

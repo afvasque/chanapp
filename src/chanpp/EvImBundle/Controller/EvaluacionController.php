@@ -47,8 +47,13 @@ class EvaluacionController extends Controller
     public function createAction(Request $request)
     {
         $entity  = new Evaluacion();
-        $form = $this->createForm(new EvaluacionType(), $entity);
         $planevaluacionid =  $request->query->get('planevaluacion_id');
+        $em2 = $this->getDoctrine()->getManager();
+        $plan  = $em2->getRepository('chanppEvImBundle:PlanEvaluacion')->find($planevaluacionid);
+        $fichaid =  $plan->getFichaproyecto()->getId();
+        $options = array('fichaid' => $fichaid);
+        $form = $this->createForm(new EvaluacionType($options), $entity);
+       
         $form->bind($request);
 
         if ($form->isValid()) {
