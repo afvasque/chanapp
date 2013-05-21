@@ -122,16 +122,17 @@
                     {% for activity in edit_form.activities %}
 
                         <div class="row-fluid">
-                            <div class="span6">
+                            <div class="span12">
                                 {{ form_row(activity.nombre) }}
                                 {{ form_row(activity.descripcion) }}
                                 {{ form_row(activity.resultadosEsperados) }}
                                 {{ form_row(activity.duracion) }}
-
-                                <br />
-
-                                <a href="" class="btn btn-danger" id="boton_borrar">Borrar esta actividad</a>
                             </div>
+
+                            <a href="" class="btn btn-danger" id="boton_borrar">Borrar esta actividad</a>
+                            
+                            <br />
+                            <br />
                         
                         </div>
 
@@ -183,11 +184,7 @@
                                             {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
                                                 <a href="{{ path('indgestion_edit',{'id' : ind.getId}) }}"><img class="icon-action-table2" src="{{ asset('img/icono-editar-(lapiz).png') }}" alt="logo"/></a>
 
-                                                {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
-
-                                                    <a href="{{ path('indgestion_delete',{'id' : ind.getId}) }}"><img class="icon-action-table2" src="{{ asset('img/icono-eliminar-(cruz).png') }}" alt="logo"/></a>
-
-                                                {% endif %}
+                                                <a href="{{ path('indgestion_delete',{'id' : ind.getId}) }}"><img class="icon-action-table2" src="{{ asset('img/icono-eliminar-(cruz).png') }}" alt="logo"/></a>
                                                 
                                             {% endif %}
                                         </td>
@@ -197,10 +194,9 @@
                         </tbody>
                     </table>
                 {% endif %}
-
                 <br />
-                <br />
-                <button type="submit" class="btn btn-primary">Guardar Ficha de Programa</button>
+            <br />
+            <button type="submit" class="btn btn-primary">Guardar Ficha de Programa</button>
             </form>
 
             

@@ -3,9 +3,9 @@
 {% block body -%}
     <div id="breadcrumb-bar">
         <div class="breadcrumb-text">
-            <a href="#">Ficha de Programas</a>
+            <a href="{{ app.request.getBaseURL() }}">Inicio</a>
             <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
-            Viendo fichas existentes
+            Viendo Fichas de Programas
         </div>
     </div>
     {% include 'navbar.html.twig' %}

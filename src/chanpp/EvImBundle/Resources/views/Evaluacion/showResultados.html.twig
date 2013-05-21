@@ -1,20 +1,43 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-
+{% block title %}Resultados Evaluaciones{% endblock %}
 {% block body -%}
     {# Errors go here#}
-    <h1>Resultados evaluación {{ entity.nombre }}</h1>
 
-    <h2> Datos evaluación </h2>
+    <div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('fichaproyecto_show', { 'id': entity.getPlanevaluacion().getFichaproyecto().id }) }}">Ficha de Programa "{{ entity.getPlanevaluacion().getFichaproyecto().getNombre() }}"</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            <a href="{{ path('planevaluacion_show', { 'id': entity.getPlanevaluacion().id  }) }}">Plan de Evaluación</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            <a href="{{ path('evaluacion_show', { 'id': entity.id }) }}">Evaluación</a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Viendo Resultados de Evaluación
+        </div>
+    </div>
+
+    {% include 'navbar.html.twig' %}
+
+    <div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Resultados Evaluación {{ entity.nombre }}</h2>
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+    <h3> Datos evaluación </h3>
 
     <p>Área de acción: {{proyecto.getAreaAccion}}</p>
     <p>Programa: {{proyecto.getNombre}}</p>
 
-    <h2>Impacto directo</h2>
+    <h3>Impacto directo</h3>
     {% if entity.getEvaluaciondirecta %}
-    <table>
+    <table class="table table-bordered infotable"> 
         <thead>
-            <th>Resultado de la Evaluación</th>
-            <th>Descripción de la Evaluación de Impacto Directo realizada</th>
+            <th class="tableinfohead">Resultado de la Evaluación</th>
+            <th class="tableinfohead">Descripción de la Evaluación de Impacto Directo realizada</th>
         </thead>
         <tr>
             <td>{{entity.getEvaluaciondirecta.getTotal}} mW/h</td>
@@ -25,8 +48,8 @@
     <p>No hay evaluación directa ingresada </p>
     {% endif %}
 
-    <h2>Impacto indirecto</h2>
-    <table class="table table-striped">
+    <h3>Impacto indirecto</h3>
+    <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed sortable">
         <theader>            
             <th>GI</th>
             <th>Presencia</th>
@@ -44,11 +67,5 @@
         <tr>
         {% endfor %}
     </table>
-
-    <div class="form-actions">
-        <a href="{{ path('evaluacion_show', { 'id': entity.id}) }}" class="btn btn-main">
-            Volver a la evaluación
-        </a>
-    </div>
-
+</div>
 {% endblock %}

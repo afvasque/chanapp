@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class EvaluacionType extends AbstractType
 {
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $options = $this->options;
@@ -21,13 +22,10 @@ class EvaluacionType extends AbstractType
 'expanded' => true,
 'class'    => 'chanppEvImBundle:Activity',
 'property' => 'nombre',  
-//'query_builder' => function(EntityRepository $er)  {
-  //                      return $er->createQueryBuilder('u')               
-    //                      ->where('u.ficha_proyecto_id = '. $options['fichaid'] );
-      //                }     
-'query_builder' => function($repository) { $options = $this->options;
+'query_builder' => function($repository) use($options){ //$options = $this->options;
         return $repository->createQueryBuilder('u')
-        ->where('u.ficha_proyecto = '. $options['fichaid'] );
+        ->where('u.ficha_proyecto = :id')
+        ->setParameter('id', $options['fichaid']);
     },
 ));
     }
@@ -45,6 +43,6 @@ class EvaluacionType extends AbstractType
     }
 
     public function __construct($options) {
-    $this->options = $options;
-}
+            $this->options = $options;
+        }
 }
