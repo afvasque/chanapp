@@ -215,9 +215,7 @@
                 </tbody>
             </table>
         {% else %}
-            {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
-                <a href="{{ path('planevaluacion_new', { 'fichaproyecto_id': entity.id }) }}" class="btn btn-success">Agregar Plan de Evaluación</a>
-            {% endif %}
+            No hay un plan de evaluación asociado a esta ficha de programa. Para agregar uno haga clic <a href="{{ path('planevaluacion_new', { 'fichaproyecto_id': entity.id }) }}">aquí</a>
         {% endif %}
 
         <br />
