@@ -68,6 +68,7 @@
                             <div id="link_bar_header">
                                  {% if app.user %} 
                                  <div class="linkheader"><a href="{{ path('fos_user_security_logout') }}">Desconectarse</a></div>
+                                  <div class="linkheader"><a href="{{ path('fos_user_profile_show') }}">{{ app.user.username }} ({{ app.user.email }})</a></div>
                                  {% else %}
                                  <div class="linkheader"><a href="{{ path('fos_user_security_login') }}">Ingresar</a></div>
                                 <div class="linkheader"><a href="{{ path('fos_user_registration_register') }}">Registrarse</a></div>
@@ -92,9 +93,9 @@
                     </div>
                     {% for type, messages in app.session.flashbag.all() %}
                         {% for message in messages %}
-                            <div class="flash-{{ type }}">
+                            <center><div class="alert alert-error2 flash-{{ type }}">
                                 {{ message }}
-                            </div>
+                            </div></center>
                         {% endfor %}
                     {% endfor %}
 
