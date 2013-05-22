@@ -18,16 +18,19 @@
                 <h2>Asociar Pregunta de Alternativas Anterior a Cuestionario</h2>
             </div>
         </div>
-        <form action="{{ path('preguntaalternativa_link_save', {'id': entity.id}) }}" method="post" {{ form_enctype(delete_form) }}>
-    <select name="old_id" class="old-select">
+     <div style="margin-top: 70px;">   
+    <form action="{{ path('preguntaalternativa_link_save', {'id': entity.id}) }}" method="post" {{ form_enctype(delete_form) }}>
+    {# <select name="old_id" class="old-select"> #}
 	{% for pregunta in preguntas%}
-	<option value="{{ pregunta.getId()}}">{{ pregunta.getEnunciado() }}</option>
+    <input type="radio" name="old_id" value="{{ pregunta.getId()}}">{{ pregunta.getEnunciado() }}<br><br>
+	{# <option value="{{ pregunta.getId()}}">{{ pregunta.getEnunciado() }}</option> #}
 	{% endfor %}
-	</select>
+	{#</select> #}
 	<p>
        <button type="submit" class="btn btn-success">Asociar Pregunta</button>
     </p>
     </form>
+    </div>
 </div>
 {% else %}
 <div id="main-content">

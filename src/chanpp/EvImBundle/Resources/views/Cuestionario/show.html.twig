@@ -141,18 +141,24 @@
 
         {% if entity.getEvaluacionindirecta().getEvaluacion().getDone()%}
         <div class="alert alert-error2 alert-fix" style="
-    margin-top: 60px;
-">
+    margin-top: 60px;">
          <strong>Alerta :</strong> La evaluación padre del cuestionario ha sido cerrada, por lo que el cuestionario no puede seguir siendo editado ni respondido.
         </div>
+            {% if entity.getDone()%}
+            <div class="alert alert-error2 alert-fix" style="
+        margin-top: 20px;">
+             <strong>Alerta :</strong> El cuestionario ha sido cerrado y no se pueden agregar más preguntas.
+            </div>
+            {% endif %}
+        {% else %}
+            {% if entity.getDone()%}
+            <div class="alert alert-error2 alert-fix" style="
+        margin-top: 60px;">
+             <strong>Alerta :</strong> El cuestionario ha sido cerrado y no se pueden agregar más preguntas.
+            </div>
+            {% endif %}
         {% endif %}
-        {% if entity.getDone()%}
-        <div class="alert alert-error2 alert-fix" style="
-    margin-top: 20px;
-">
-         <strong>Alerta :</strong> El cuestionario ha sido cerrado y no se pueden agregar más preguntas.
-        </div>
-        {% endif %}
+
         {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
         {% if entity.getDone()  == false %}
       <div class="accordion accordion-fix" id="accordion2">
