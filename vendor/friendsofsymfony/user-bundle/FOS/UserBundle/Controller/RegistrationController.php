@@ -33,44 +33,51 @@ class RegistrationController extends ContainerAware
 {
     public function registerAction(Request $request)
     {
-        /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
-        $formFactory = $this->container->get('fos_user.registration.form.factory');
-        /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
-        $userManager = $this->container->get('fos_user.user_manager');
-        /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
-        $dispatcher = $this->container->get('event_dispatcher');
+        if(is_object($this->container->get('security.context')->getToken()->getUser()))
+        {
+            $current_user = $this->container->get('security.context')->getToken()->getUser();
+            /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
+            $formFactory = $this->container->get('fos_user.registration.form.factory');
+            /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
+            $userManager = $this->container->get('fos_user.user_manager');
+            /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
+            $dispatcher = $this->container->get('event_dispatcher');
 
-        $user = $userManager->createUser();
-        $user->setEnabled(true);
+            $user = $userManager->createUser();
+            $user->setEnabled(true);
 
-        $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, new UserEvent($user, $request));
+            $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, new UserEvent($user, $request));
 
-        $form = $formFactory->createForm();
-        $form->setData($user);
+            $form = $formFactory->createForm();
+            $form->setData($user);
 
-        if ('POST' === $request->getMethod()) {
-            $form->bind($request);
+            if ('POST' === $request->getMethod()) {
+                $form->bind($request);
 
-            if ($form->isValid()) {
-                $event = new FormEvent($form, $request);
-                $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
+                if ($form->isValid()) {
+                    $event = new FormEvent($form, $request);
+                    $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
+                    //$userManager->updateUser($user);
+                    if (null === $response = $event->getResponse()) {
+                        $url = $this->container->get('router')->generate('fos_user_registration_confirmed');
+                        $response = new RedirectResponse($url);
+                    }
+                    $user = $userManager->refreshUser($current_user);
+                    $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
 
-                $userManager->updateUser($user);
-
-                if (null === $response = $event->getResponse()) {
-                    $url = $this->container->get('router')->generate('fos_user_registration_confirmed');
-                    $response = new RedirectResponse($url);
+                    return $response;
                 }
-
-                $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
-
-                return $response;
             }
-        }
 
-        return $this->container->get('templating')->renderResponse('FOSUserBundle:Registration:register.html.'.$this->getEngine(), array(
-            'form' => $form->createView(),
-        ));
+            return $this->container->get('templating')->renderResponse('FOSUserBundle:Registration:register.html.'.$this->getEngine(), array(
+                'form' => $form->createView(),
+            ));
+        
+    }
+        $url = $this->container->get('router')->generate('chanpp_index');
+            $response = new RedirectResponse($url);
+            return $response;
+        
     }
 
     /**
@@ -114,7 +121,7 @@ class RegistrationController extends ContainerAware
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::REGISTRATION_CONFIRM, $event);
 
-        $userManager->updateUser($user);
+        //$userManager->updateUser($user);
 
         if (null === $response = $event->getResponse()) {
             $url = $this->container->get('router')->generate('fos_user_registration_confirmed');
