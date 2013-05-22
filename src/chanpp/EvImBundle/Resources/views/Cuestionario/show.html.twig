@@ -211,7 +211,7 @@
     {# Respuestas#}
     <h3>Respuestas</h3>
     {% if respuestas|length >0 %}
-    <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed sortable">
+    <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed" id="tabla1">
         <thead>
             <tr class="tableinfohead">
                 <th>Nombre</th>
@@ -270,17 +270,35 @@
 <br>
 <!-- fd -->        
 </div>
-{% block javascript %}
-   <script type="text/javascript">
+  {% block javascript %}
+
+        <script type="text/javascript">
             function confirmDelete() {
                 if(confirm('¿Seguro que desea eliminar?'))
                 {
                     document.getElementById('delete-form').submit();
                 }
             }
-        </script>
-{% endblock %}
 
+  $(document).ready(function() {
+$('#tabla1').dataTable( {
+        "oLanguage": {
+            "sLengthMenu": "Mostrar _MENU_ elementos por página",
+            "sZeroRecords": "No se encontraron resultados",
+            "sInfo": "Mostrando desde _START_ a _END_ de _TOTAL_ elementos",
+            "sInfoEmpty": "Mostrando desde 0 a 0 of 0 elementos",
+            "sInfoFiltered": "(filtrados desde _MAX_ elementos)",
+            "sSearch": "Buscar:",
+            "oPaginate": {
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+              }
+        }
+    } );
+} );
+</script>
+
+    {% endblock %}
 
 {% endblock %}
 

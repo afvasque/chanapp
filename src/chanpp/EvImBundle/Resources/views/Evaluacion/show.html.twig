@@ -118,7 +118,7 @@
                              Puede agregar una <a href="{{ path('evaluacion_edit', { 'id': entity.id }) }}">aquí.</a>
                         {% endif %}
           {% else %}
-         <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed sortable">
+         <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed" id="tabla1">
             <thead>
                 <tr class="tableinfohead">
                     <th>Nombre</th>
@@ -163,14 +163,14 @@
                 </tr>
             {% endfor %}
             </tbody>
-        </table>
+        </table><br>
     {% endif %}
 
     <hr>
     {#Evaluación Directa#}
     <div class="sub-title-align"><h3>Evaluación de Impacto Directo</h3><a href="#" class="htooltip"><img class="icon-help-sub-title" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>El objetivo principal de una evaluación de impacto directo, es obtener una estimación de ahorros netos de energía o demanda alcanzado por efecto del programa o proyecto, de la forma más exacta e insesgada posible, dependiendo de la información disponible, el nivel de confiabilidad de la información requerida y de los recursos con que se cuenta para desarrollar la evaluación.</span></a></div>
     {% if evaluaciondirecta %}
-        <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed sortable">
+        <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed">
         <thead>
             <tr class="tableinfohead">
                 <th>Resultado</th>
@@ -230,7 +230,7 @@ Una Sub-Evaluación de Impacto Indirecto corresponde a una evaluación de impact
         {% endif %}
     </div>
     {% else %}
-    <table class="table table-striped table-bordered table-condensed table-striped tablesubelements sortable">
+    <table class="table table-striped table-bordered table-condensed table-striped tablesubelements" id="tabla2">
         <thead>
             <tr class="tableinfohead">
                 <th>Ámbito del objetivo del programa<a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Este campo permite seleccionar los ámbitos de acción de un programa que serán evaluados, éstos pueden ser:<br>
@@ -291,7 +291,7 @@ Una Sub-Evaluación de Impacto Indirecto corresponde a una evaluación de impact
             </tr>
         {% endfor %}
         </tbody>
-    </table>
+    </table><br>
     {% endif %}
     {#Fin Evaluaciones Indirectas#}
    
@@ -306,7 +306,8 @@ Una Sub-Evaluación de Impacto Indirecto corresponde a una evaluación de impact
     <hr>
     
 
-     {% block javascript %}
+  {% block javascript %}
+
         <script type="text/javascript">
             function confirmDelete() {
                 if(confirm('¿Seguro que desea eliminar?'))
@@ -314,6 +315,38 @@ Una Sub-Evaluación de Impacto Indirecto corresponde a una evaluación de impact
                     document.getElementById('delete-form').submit();
                 }
             }
-        </script>
+
+  $(document).ready(function() {
+$('#tabla1').dataTable( {
+        "oLanguage": {
+            "sLengthMenu": "Mostrar _MENU_ elementos por página",
+            "sZeroRecords": "No se encontraron resultados",
+            "sInfo": "Mostrando desde _START_ a _END_ de _TOTAL_ elementos",
+            "sInfoEmpty": "Mostrando desde 0 a 0 of 0 elementos",
+            "sInfoFiltered": "(filtrados desde _MAX_ elementos)",
+            "sSearch": "Buscar:",
+            "oPaginate": {
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+              }
+        }
+    } );
+$('#tabla2').dataTable( {
+        "oLanguage": {
+            "sLengthMenu": "Mostrar _MENU_ elementos por página",
+            "sZeroRecords": "No se encontraron resultados",
+            "sInfo": "Mostrando desde _START_ a _END_ de _TOTAL_ elementos",
+            "sInfoEmpty": "Mostrando desde 0 a 0 of 0 elementos",
+            "sInfoFiltered": "(filtrados desde _MAX_ elementos)",
+            "sSearch": "Buscar:",
+            "oPaginate": {
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+              }
+        }
+    } );
+} );
+</script>
+
     {% endblock %}
 {% endblock %}

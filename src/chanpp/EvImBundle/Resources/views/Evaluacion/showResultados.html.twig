@@ -52,14 +52,17 @@
     {% if entity.getEvaluacionesindirectas is empty %}
     <p>No hay evaluaciones de impacto indirecto ingresadas. </p>
      {% else %}
-    <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed sortable">
-        <theader>            
+    <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed" id="tabla1">
+        <thead>
+        <tr>           
             <th>GI</th>
             <th>Presencia</th>
             <th>Valorización</th>
             <th>Capacidad movilizadora</th>
             <th></th>
-        </theader>
+        </tr>
+        </thead>
+        <tbody>
         {% for ev in entity.getEvaluacionesindirectas%}
         <tr>
             <td>{{ev.getGrupoInteres}}</td>
@@ -67,9 +70,30 @@
             <td>{{ev.getImpactosejes()[1]}}</td>
             <td>{{ev.getImpactosejes()[2]}}</td>
             <td><a href="{{ path('evaluacionindirecta_results', { 'id': ev.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-ver-(lupa).png') }}" alt="logo"/></a></td>
-        <tr>
-        {% endfor %}
+        </tr>
+        {% endfor %}</tbody>
     </table>
     {% endif %}
 </div>
+{% block javascript %}
+
+<script type="text/javascript">
+  $(document).ready(function() {
+$('#tabla1').dataTable( {
+        "oLanguage": {
+            "sLengthMenu": "Mostrar _MENU_ elementos por página",
+            "sZeroRecords": "No se encontraron resultados",
+            "sInfo": "Mostrando desde _START_ a _END_ de _TOTAL_ elementos",
+            "sInfoEmpty": "Mostrando desde 0 a 0 of 0 elementos",
+            "sInfoFiltered": "(filtrados desde _MAX_ elementos)",
+            "sSearch": "Buscar:",
+            "oPaginate": {
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+              }
+        }
+    } );
+} );
+</script>
+ {% endblock %}
 {% endblock %}

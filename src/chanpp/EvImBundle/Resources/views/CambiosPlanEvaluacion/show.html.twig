@@ -27,7 +27,7 @@
             Actualmente este plan de evaluación no tiene cambios
         {% else %}
 
-        <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed tablesorter">
+        <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed tablesorter" id="tabla1">
             <thead>
                 <tr class="tableinfohead">
                     <th>Usuario</th>
@@ -48,4 +48,26 @@
 
         {% endif %}
     </div>
+
+    {% block javascript %}
+
+<script type="text/javascript">
+  $(document).ready(function() {
+$('#tabla1').dataTable( {
+        "oLanguage": {
+            "sLengthMenu": "Mostrar _MENU_ elementos por página",
+            "sZeroRecords": "No se encontraron resultados",
+            "sInfo": "Mostrando desde _START_ a _END_ de _TOTAL_ elementos",
+            "sInfoEmpty": "Mostrando desde 0 a 0 of 0 elementos",
+            "sInfoFiltered": "(filtrados desde _MAX_ elementos)",
+            "sSearch": "Buscar:",
+            "oPaginate": {
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+              }
+        }
+    } );
+} );
+</script>
+ {% endblock %}
 {% endblock %}

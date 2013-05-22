@@ -79,7 +79,7 @@ De este modo, se establece con claridad el público objetivo de la evaluación q
     {% if recursos is empty%}
     No hay recursos asociados a este plan de evaluación. Puede agregar uno <a href="{{ path('recurso_new', { 'planevaluacion_id': entity.id }) }}">aquí</a>.
     {% else %}
-    <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed sortable">
+    <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed" id="tabla1">
         <thead>
             <tr class="tableinfohead">
                 <th>Título</th>
@@ -138,14 +138,14 @@ De este modo, se establece con claridad el público objetivo de la evaluación q
             </tr>
         {% endfor %}
         </tbody>
-    </table>
+    </table><br>
     {% endif %}
     <!-- Evaluaciones -->
     <h3>Evaluaciones</h3>
     {% if evaluaciones is empty%}
     No hay evaluaciones asociadas a este plan de evaluación. Puede agregar una <a href="{{ path('evaluacion_new', { 'planevaluacion_id': entity.id }) }}">aquí</a>.
     {% else %}
-    <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed sortable">
+    <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed" id="tabla2">
         <thead>
             <tr class="tableinfohead">
                  <th>Nombre</th>
@@ -190,7 +190,7 @@ De este modo, se establece con claridad el público objetivo de la evaluación q
             </tr>
         {% endfor %}
         </tbody>
-    </table>
+    </table><br>
     {% endif %}
     <!-- Final Div-->
 </div>
@@ -202,6 +202,36 @@ De este modo, se establece con claridad el público objetivo de la evaluación q
                     document.getElementById('delete-form').submit();
                 }
             }
+ $(document).ready(function() {
+$('#tabla1').dataTable( {
+        "oLanguage": {
+            "sLengthMenu": "Mostrar _MENU_ elementos por página",
+            "sZeroRecords": "No se encontraron resultados",
+            "sInfo": "Mostrando desde _START_ a _END_ de _TOTAL_ elementos",
+            "sInfoEmpty": "Mostrando desde 0 a 0 of 0 elementos",
+            "sInfoFiltered": "(filtrados desde _MAX_ elementos)",
+            "sSearch": "Buscar:",
+            "oPaginate": {
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+              }
+        }
+    } );
+$('#tabla2').dataTable( {
+        "oLanguage": {
+            "sLengthMenu": "Mostrar _MENU_ elementos por página",
+            "sZeroRecords": "No se encontraron resultados",
+            "sInfo": "Mostrando desde _START_ a _END_ de _TOTAL_ elementos",
+            "sInfoEmpty": "Mostrando desde 0 a 0 of 0 elementos",
+            "sInfoFiltered": "(filtrados desde _MAX_ elementos)",
+            "sSearch": "Buscar:",
+            "oPaginate": {
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+              }
+        }
+    } );
+} );
         </script>
     {% endblock %}
 {% endblock %}
