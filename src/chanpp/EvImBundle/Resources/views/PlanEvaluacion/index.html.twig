@@ -19,7 +19,7 @@
     <div style="margin-top: 70px;">
     No hay Planes de Evaluación.</div>
     {% else %}
-    <table class="table table-striped table-bordered table-striped tablesubelements fixed sortable tablesorter">
+    <table class="table table-striped table-bordered table-striped tablesubelements fixed sortable tablesorter" id="tabla1">
         <thead>
             <tr class="tableinfohead">
                 <th>Objetivos</th>
@@ -57,17 +57,26 @@
         <!-- Final div -->
 </div>
 
-
 {% block javascript %}
-    <script type="text/javascript">
-            $(document).ready(function() { 
-    $("table") 
-    .tablesorter({widthFixed: true, widgets: ['zebra']}) 
-    .tablesorterPager({container: $("#pager")}); 
-}); 
 
-        </script>
-{% endblock %}
-
+<script type="text/javascript">
+  $(document).ready(function() {
+$('#tabla1').dataTable( {
+        "oLanguage": {
+            "sLengthMenu": "Mostrar _MENU_ elementos por página",
+            "sZeroRecords": "No se encontraron resultados",
+            "sInfo": "Mostrando desde _START_ a _END_ de _TOTAL_ elementos",
+            "sInfoEmpty": "Mostrando desde 0 a 0 of 0 elementos",
+            "sInfoFiltered": "(filtrados desde _MAX_ elementos)",
+            "sSearch": "Buscar:",
+            "oPaginate": {
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+              }
+        }
+    } );
+} );
+</script>
+ {% endblock %}
 
 {% endblock %}
