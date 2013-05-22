@@ -48,6 +48,22 @@
                                 <td>{{ entity.getCuestionario().getPreguntasdesarrollo()|length }}</td>
                             </tr>
                             <tr>
+                                <th class="tableinfohead"> Grupo interés </th>
+                                <td>{{entity.getGrupoInteres}}</td>
+                            </tr>
+                            <tr>
+                                <th class="tableinfohead"> Presencia </th>
+                                <td>{{entity.getImpactosejes()[0]}}</td>
+                            </tr>
+                            <tr>
+                                <th class="tableinfohead"> Valoración </th>
+                                <td>{{entity.getImpactosejes()[1]}}</td>
+                            </tr>
+                            <tr>
+                                <th class="tableinfohead"> Capacidad movilizadora </th>
+                                <td>{{entity.getImpactosejes()[2]}}</td>
+                            </tr>
+                            <tr>
                                 <th class="tableinfohead"></th>
                                 <td><a href="{{ path('cuestionario_show', { 'id': entity.getCuestionario().getId() }) }}" class="btn btn-success">Ver Cuestionario</a>
                                 </ul></td>
