@@ -30,9 +30,13 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <!-- dropdown menu links -->
+                                <li><a href="{{ path('evaluacionindirecta_results', { 'id': entity.id }) }}">Ver Resultados</a>
+                                </li>
+                                 {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
                                 <li>
                                      <a href="{{ path('evaluacionindirecta_edit', { 'id': entity.id }) }}">Editar</a>
                                 </li>
+                                {% endif%}
                                 {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
                                 <li>
                                     <form action="{{ path('evaluacionindirecta_delete', { 'id': entity.id }) }}" method="post" class="dropdown-menu-form" id="delete-form">

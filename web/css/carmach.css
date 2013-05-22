@@ -12,3 +12,96 @@
 .push {
 	height: 90px;
 }
+
+/* ToolTip*/
+.tooltip2 {
+			border-bottom: 1px dotted #0077AA;
+			cursor: help;
+			color: #0077AA;
+		}
+		
+		.tooltip2:hover {
+			color: #0099CC;
+		}
+		
+		.tooltip2:after {
+			background: rgba(0, 0, 0, 0.8);
+			border-radius: 8px 8px 8px 0px;
+			box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+			color: #FFF;
+			content: attr(data-tooltip);
+			margin-top: -24px;
+			opacity: 0;
+			padding: 3px 7px;
+			position: absolute;
+			visibility: hidden;
+			
+			transition: all 0.4s ease-in-out;
+			-moz-transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+			-ms-transition: all 0.4s ease-in-out;
+			-o-transition: all 0.4s ease-in-out;
+			-webkit-transition: all 0.4s ease-in-out;
+		}
+		
+		.tooltip2:hover:after {
+			opacity: 1;
+			visibility: visible;
+		}
+		
+		.htooltip2, .htooltip2:visited, .tooltip2:active {
+			color: #0077AA;
+			text-decoration: none;
+		}
+		
+		.htooltip2:hover {
+			color: #0099CC;
+		}
+		
+		.htooltip2 span {
+			background-color: rgba(0,0,0, 0.8);
+			border-radius: 15px 15px 15px 0px;
+			box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+			color: #fff;
+			margin-left: 2px;
+			margin-top: -75px;
+			opacity: 0;
+			padding: 10px 10px 10px 40px;
+			position: absolute;
+			text-decoration: none;
+			text-align: justify;
+			visibility: hidden;
+			z-index: 10;
+			
+			-moz-transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+			-webkit-transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+			-o-transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+			-ms-transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+			transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+		}
+		
+		.htooltip2:hover span {
+			position: absolute;
+			opacity: 1;
+			visibility: visible;
+		}
+		
+		.htooltip2 span img {
+			border: 0 none;
+			float: left;
+			margin: -71px 0 0 -234px;
+			opacity: 0;
+			position: absolute;
+			visibility: hidden;
+			z-index: -1;
+			
+			-moz-transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+			-webkit-transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+			-o-transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+			-ms-transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+			transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+		}
+		
+		.htooltip2:hover span img {
+			opacity: 1;
+			visibility: visible;
+		}

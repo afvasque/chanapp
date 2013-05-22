@@ -1,8 +1,33 @@
-
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-{% block title %}Resultados Sub-Evaluación de Impacto Indirecto{% endblock %}
+{% block title %}Editar Sub-Evaluación de Impacto Indirecto{% endblock %}
 {% block body -%}
 
+<div id="breadcrumb-bar">
+        <div class="breadcrumb-text">
+            <a href="{{ path('fichaproyecto_show', { 'id':entity.getEvaluacion().getPlanevaluacion().getFichaproyecto().id }) }}">Ficha de Programa </a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            <a href="{{ path('planevaluacion_show', { 'id':entity.getEvaluacion().getPlanevaluacion().id }) }}">Plan de Evaluación </a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            <a href="{{ path('evaluacion_show', { 'id':entity.getEvaluacion().id }) }}">Evaluación </a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            <a href="{{ path('evaluacionindirecta_show', { 'id':entity.id }) }}">Sub-Evaluación de Impacto Indirecto </a>
+            <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
+            Resultados de Sub-Evaluación de Impacto Indirecto
+        </div>
+    </div>
+
+ {% include 'navbar.html.twig' %}
+
+    <div id="main-content">
+        <div class="main-content-title">
+            <div class="title-text">
+                <h2>Resultados de Sub-Evaluación de Impacto Indirecto</h2>
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
 
 {% if entity.hasCuestionarioOnMetodo() %}
             <h3>Cuestionario Asociado</h3>
@@ -112,6 +137,6 @@
 
 
    
-
+</div>
 
 {% endblock %}
