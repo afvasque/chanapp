@@ -147,8 +147,11 @@ class EvaluacionController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Evaluacion entity.');
             }
+            $plan = $entity->getPlanevaluacion();
+            $fichaid =  $plan->getFichaproyecto()->getId();
+            $options = array('fichaid' => $fichaid);
 
-            $editForm = $this->createForm(new EvaluacionType(), $entity);
+            $editForm = $this->createForm(new EvaluacionType($options), $entity);
             $deleteForm = $this->createDeleteForm($id);
 
             return array(
@@ -175,9 +178,12 @@ class EvaluacionController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Evaluacion entity.');
         }
+        $plan = $entity->getPlanevaluacion();
+        $fichaid =  $plan->getFichaproyecto()->getId();
+        $options = array('fichaid' => $fichaid);
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new EvaluacionType(), $entity);
+        $editForm = $this->createForm(new EvaluacionType($options), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {

@@ -27,11 +27,11 @@
                             <li>
                                  <a href="{{ path('fichaproyecto_edit', { 'id': entity.id }) }}">Editar</a>
                             </li>
-
+                            {% if planevaluaciones|length == 0 %}
                             <li>
                                  <a href="{{ path('planevaluacion_new', { 'fichaproyecto_id': entity.id }) }}">Agregar Plan de<br />Evaluación</a>
                             </li>
-
+                            {% endif %}
                             {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
                                 <li>
                                     <form action="{{ path('fichaproyecto_delete', { 'id': entity.id }) }}" method="post" class="dropdown-menu-form" id="delete-form">
@@ -205,7 +205,7 @@
                                     <a href="{{ path('planevaluacion_show', { 'id': entity.id }) }}" ><img class="icon-action-table2" src="{{ asset('img/icono-ver-(lupa).png') }}" alt="logo"/></a>
                                     
                                     {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
-                                    <a href="{{ path('fichaproyecto_edit', { 'id': entity.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-editar-(lapiz).png') }}" alt="logo"/></a>
+                                    <a href="{{ path('planevaluacion_edit', { 'id': entity.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-editar-(lapiz).png') }}" alt="logo"/></a>
                                         <a href="{{ path('planevaluacion_edit', { 'id': entity.id }) }}" ></a>
                                     {% endif %}
                                 </ul>

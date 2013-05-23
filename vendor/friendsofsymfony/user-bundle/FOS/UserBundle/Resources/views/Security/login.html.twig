@@ -10,10 +10,10 @@
 <center>
 <form action="{{ path("fos_user_security_check") }}" method="post" class="form-signin">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-
-    <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="input-block-level" placeholder="Nombre de Usuario"/>
-
-    <input type="password" id="password" name="_password" required="required" class="input-block-level" placeholder="Contraseña"/>
+   	<label for="_username">Nombre de Usuario</label>
+    <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="input-block-level"/>
+    <label for="_password">Contraseña</label>
+    <input type="password" id="password" name="_password" required="required" class="input-block-level" />
 
     <input type="checkbox" id="remember_me" name="_remember_me" value="on" class="checkbox"/>
     <label for="remember_me">Recordarme</label>
