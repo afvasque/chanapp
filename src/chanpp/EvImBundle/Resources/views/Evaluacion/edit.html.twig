@@ -17,17 +17,17 @@
     <div id="main-content">
       {% if entity.done == false%}
         <div class="main-content-title">
-            <div class="title-text">
-                  <div class="title-accordion">
-                        <div class="help-accordion">
-                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse3"> <h2>Editar Evaluación ?</h2></a>
-                            <div id="collapse3" class="accordion-body collapse" style="height: 0px;">
-                                 Esta evaluación puede ser de seguimiento (trimestral, semestral, entre otras) o ex post (al término del programa/proyecto).<br>
-A su vez, en esta evaluación se puede medir efectos directos y/o indirectos.
-                            </div>
-                        </div>
-                </div>
+          <div class="title-accordion">
+            <div class="help-accordion">
+              <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse3"><h2>Editar Evaluación ?</h2></a>
+                            
+              <div id="collapse3" class="accordion-body collapse" style="height: 0px;">
+                Esta evaluación puede ser de seguimiento (trimestral, semestral, entre otras) o ex post (al término del programa/proyecto).<br>
+              A su vez, en esta evaluación se puede medir efectos directos y/o indirectos.
+              </div>
             </div>
+          </div>
+        </div>
         <div class="title-actions">
                {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
                 <div class="btn-group">
@@ -53,17 +53,40 @@ A su vez, en esta evaluación se puede medir efectos directos y/o indirectos.
     <form action="{{ path('evaluacion_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
       <input type="hidden" name="_method" value="PUT" />
 
-      {{ form_row(form.nombre) }}
+      <div class="row-fluid">
+            <div class="span6">
+                {{ form_row(form.nombre) }}   
+            </div>
+                        
+            <div class="span6">
+                {{ form_row(form.duracion) }}                              
+            </div>
+        </div>
 
-      {{ form_label(form.alcance) }}
-      {{ form_widget(form.alcance) }} <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Identificar en este ítem la(s) pregunta(s) clave(s) que desea responder con la evaluación.</span></a>
-      {{ form_errors(form.alcance) }}
+        <div class="row-fluid">
+            <div class="span12">
+                {{ form_label(form.alcance) }}
+                {{ form_widget(form.alcance) }}<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse5"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}"/></a>
+                        <div class="help-accordion">
+                            <div id="collapse5" class="accordion-body collapse" style="height: 0px;">
+                                Identificar en este ítem la(s) pregunta(s) clave(s) que desea responder con la evaluación.
+                            </div>
+                        </div>
+                {{ form_errors(form.alcance) }}    
+            </div>
+        </div>
 
-      {{ form_row(form.duracion) }}
 
-      {{ form_label(form.actividades) }}<a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Seleccionar las actividades que serán sometidas a evaluación.</span></a>
-      {{ form_widget(form.actividades) }} 
-      {{ form_errors(form.actividades) }}
+        <p><b>Actividades
+          <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse6"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}"/></a></b><div class="help-accordion">
+             <div id="collapse6" class="accordion-body collapse" style="height: 0px;">
+                                Seleccionar las actividades que serán sometidas a evaluación.
+             </div>
+         </div>
+        </b></p>
+        
+        {{ form_widget(form.actividades) }} 
+        {{ form_errors(form.actividades) }} 
 
 
 
