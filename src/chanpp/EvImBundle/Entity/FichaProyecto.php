@@ -525,6 +525,7 @@ class FichaProyecto
             "Formación de capacidades"=>"Formación de capacidades",
                 "Diagnósticos Energéticos"=>"Diagnósticos Energéticos",
                 "Recambio Tecnológico"=>"Recambio Tecnológico",
+                "Sistemas de gestión de la energía"=>"Sistemas de gestión de la energía",
             "Medición y Verificación de proyectos"=>"Medición y Verificación de proyectos",
             "Articulación e implementar iniciativas con Organismos Nacionales e Internacionales"=>"Articulación e implementar iniciativas con Organismos Nacionales e Internacionales",
                 "Articulación e implementar iniciativas con  entidades Privadas"=>"Articulación e implementar iniciativas con  entidades Privadas",

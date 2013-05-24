@@ -86,6 +86,7 @@ class FichaProyectoController extends Controller
                 "Formación de capacidades",
                 "Diagnósticos Energéticos",
                 "Recambio Tecnológico",
+                "Sistemas de gestión de la energía",
                 );
 
         }
