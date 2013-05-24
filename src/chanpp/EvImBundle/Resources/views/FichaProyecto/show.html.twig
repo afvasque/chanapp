@@ -135,7 +135,7 @@
         <!-- Indicadores de gestión asociados -->
         <h3>Indicadores de gestión asociados</h3>
         {% if entity.getIndGestions is empty%}
-            No hay indicadores de gestión asociados a esta ficha de programa.
+            No hay indicadores de gestión asociados a esta ficha de programa. Para agregar uno haga clic <a href="{{ path('indgestion_new', { 'ficha_proyecto_id': entity.id }) }}">aquí</a>
         {% else %}
             <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed" id="tabla2">
                 <thead>
