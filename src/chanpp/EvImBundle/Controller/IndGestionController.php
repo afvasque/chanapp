@@ -221,15 +221,47 @@ class IndGestionController extends Controller
             throw $this->createNotFoundException('Unable to find IndGestion entity.');
         }
 
+            $originalTags = array();
+
+            // Create an array of the current Tag objects in the database
+            foreach ($entity->getMetas() as $tag) {
+                $originalTags[] = $tag;
+            }
+
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new IndGestionType(), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
+
+             // filter $originalTags to contain tags no longer present
+                foreach ($entity->getMetas() as $tag) {
+                    foreach ($originalTags as $key => $toDel) {
+                        if ($toDel->getId() === $tag->getId()) {
+                            unset($originalTags[$key]);
+                        }
+                    }
+                }
+
+                // remove the relationship between the tag and the Task
+                foreach ($originalTags as $tag) {
+                    // remove the Task from the Tag
+                    //$tag->getTasks()->removeElement($task);
+
+                    // if it were a ManyToOne relationship, remove the relationship like this
+                     $tag->setIndGestion(null);
+
+                    $em->persist($tag);
+
+                    // if you wanted to delete the Tag entirely, you can also do that
+                    $em->remove($tag);
+                }
+
+
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('indgestion_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('fichaproyecto_show', array('id' => $entity->getFichaProyecto()->getId())));
         }
 
         return array(
