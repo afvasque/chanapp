@@ -1,12 +1,12 @@
 {% extends 'chanppEvImBundle::layout.html.twig' %}
-{% block title %}Asociar Pregunta de Alternativas Anterior a Cuestionario{% endblock %}
+{% block title %}Asociar Pregunta de Alternativas Sugerida a Cuestionario{% endblock %}
 {% block body -%}
 
  <div id="breadcrumb-bar">
         <div class="breadcrumb-text">
             <a href="{{ path('cuestionario_show', { 'id': entity.id }) }}">Cuestionario</a>
             <img  src="{{ asset('img/sidearrow.png') }}" alt="logo"/>
-            Asociar Pregunta de Alternativas Anterior a Cuestionario
+            Asociar Pregunta de Alternativas Sugerida a Cuestionario
         </div>
     </div>
 {% include 'navbar.html.twig' %}
@@ -15,7 +15,7 @@
 <div id="main-content">
         <div class="main-content-title">
             <div class="title-text">
-                <h2>Asociar Pregunta de Alternativas Anterior a Cuestionario</h2>
+                <h2>Asociar Pregunta de Alternativas Sugerida a Cuestionario</h2>
             </div>
         </div>
      <div style="margin-top: 70px;">   
