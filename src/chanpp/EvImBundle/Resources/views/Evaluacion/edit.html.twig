@@ -18,10 +18,16 @@
       {% if entity.done == false%}
         <div class="main-content-title">
             <div class="title-text">
-                <h2>Editar Evaluación</h2>
+                  <div class="title-accordion">
+                        <div class="help-accordion">
+                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse3"> <h2>Editar Evaluación ?</h2></a>
+                            <div id="collapse3" class="accordion-body collapse" style="height: 0px;">
+                                 Esta evaluación puede ser de seguimiento (trimestral, semestral, entre otras) o ex post (al término del programa/proyecto).<br>
+A su vez, en esta evaluación se puede medir efectos directos y/o indirectos.
+                            </div>
+                        </div>
+                </div>
             </div>
-            <a href="#" class="htooltip"><img id="icon-help" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Esta evaluación puede ser de seguimiento (trimestral, semestral, entre otras) o ex post (al término del programa/proyecto).<br> 
-A su vez, en esta evaluación se puede medir efectos directos y/o indirectos.</span></a>
         <div class="title-actions">
                {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")) %}
                 <div class="btn-group">

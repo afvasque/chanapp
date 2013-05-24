@@ -49,19 +49,18 @@
                         {{ form_row(edit_form.descripcion) }}
                     </div>
                 </div>
-
+                <b>Indicar a continuación el plazo en el cual se debe cumplir la meta. Primero introduzca el mes en el que se cumplirá (mm) y luego el año (aaaa).</b><br>
                 <div class="row-fluid">
                     <div class="span6">
-                        <p><b>Indicar a continuación el plazo en el cual se debe cumplir la meta. Primero introduzca el mes en el que se cumplirá (mm) y luego el año (aaaa)</b><p/>
+                         <p><b>Plazo de Cumplimiento : Mes (MM)</b><p/>
                         {{ form_errors(edit_form.plazoMes) }}
                         {{ form_widget(edit_form.plazoMes) }}
                     </div>
 
                     <div class="span6">
-                        <br/>
-                        <br/>
-                        <br/>
-                        {{ form_row(edit_form.plazoAnio) }}
+                         <p><b>Plazo de Cumplimiento : Año (AAAA)</b><p/>
+                        {{ form_errors(edit_form.plazoAnio) }}
+                        {{ form_widget(edit_form.plazoAnio) }}
                     </div>
                 </div>
         

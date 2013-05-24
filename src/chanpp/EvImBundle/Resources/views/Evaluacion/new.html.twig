@@ -13,10 +13,19 @@
     <div id="main-content">
         <div class="main-content-title">
             <div class="title-text">
-                <h2>Crear Evaluación</h2>
+                    
+                <div class="title-accordion">
+                        <div class="help-accordion">
+                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse3"><h2>Crear Evaluación ?</h2></a>
+                            <div id="collapse3" class="accordion-body collapse" style="height: 0px;">
+                                 Esta evaluación puede ser de seguimiento (trimestral, semestral, entre otras) o ex post (al término del programa/proyecto).<br>
+A su vez, en esta evaluación se puede medir efectos directos y/o indirectos.
+                            </div>
+                        </div>
+                </div>
+
+               
             </div>
-            <a href="#" class="htooltip"><img id="icon-help" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Esta evaluación puede ser de seguimiento (trimestral, semestral, entre otras) o ex post (al término del programa/proyecto).<br>
-A su vez, en esta evaluación se puede medir efectos directos y/o indirectos.</span></a>
         </div>
 
         <div class="createedit-form">
@@ -35,15 +44,25 @@ A su vez, en esta evaluación se puede medir efectos directos y/o indirectos.</s
         <div class="row-fluid">
             <div class="span12">
                 {{ form_label(form.alcance) }}
-                {{ form_widget(form.alcance) }} <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Identificar en este ítem la(s) pregunta(s) clave(s) que desea responder con la evaluación.</span></a>
+                {{ form_widget(form.alcance) }}<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse5"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}"/></a>
+                        <div class="help-accordion">
+                            <div id="collapse5" class="accordion-body collapse" style="height: 0px;">
+                                Identificar en este ítem la(s) pregunta(s) clave(s) que desea responder con la evaluación.
+                            </div>
+                        </div>
                 {{ form_errors(form.alcance) }}    
             </div>
         </div>
 
 
         <p><b>Actividades
-          <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Seleccionar las actividades que serán sometidas a evaluación.</span></a>
+          <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse6"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}"/></a></b><div class="help-accordion">
+             <div id="collapse6" class="accordion-body collapse" style="height: 0px;">
+                                Seleccionar las actividades que serán sometidas a evaluación.
+             </div>
+         </div>
         </b></p>
+        
         {{ form_widget(form.actividades) }} 
         {{ form_errors(form.actividades) }} 
 
