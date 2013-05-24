@@ -22,6 +22,10 @@
 	float: left;
 }
 
+.title-accordion a:hover{
+	text-decoration: none;
+}
+
 .help-accordion {
 	width: 100%;
 }
