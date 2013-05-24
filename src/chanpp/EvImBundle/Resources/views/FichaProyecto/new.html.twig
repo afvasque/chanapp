@@ -16,7 +16,6 @@
                 <h2>Crear Ficha de Programa</h2>
             </div>
         </div>
-
         <br />
         <br />
         <br>
@@ -79,7 +78,12 @@
                     <div class="span6">
                         {{ form_label(form.variables_causales) }}
                         {{ form_widget(form.variables_causales) }}
-                        <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Variables relevantes del proyecto que afectan las relaciones causales establecidas anteriormente</span></a>
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse4"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/></a>
+                        <div class="help-accordion">
+                            <div id="collapse4" class="accordion-body collapse" style="height: 0px;">
+                                Variables relevantes del proyecto que afectan las relaciones causales establecidas anteriormente
+                            </div>
+                        </div>
                         {{ form_errors(form.variables_causales) }}           
                     </div>
                 </div>
@@ -87,10 +91,18 @@
                 <br />
                 <br />
 
-                <div class="title-text">
-                    <h3>Actividades</h3>
+                <div class="title-accordion">
+
+                        <div class="help-accordion">
+                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse3"><h3>Actividades</h3></a>
+                            
+                            <div id="collapse3" class="accordion-body collapse" style="height: 0px;">
+                                El siguiente cuadro contiene las actividades del proyecto, las que son descritas mediante el llenado de 4 campos: nombre, duración, descripción de la actividad y resultados esperados de la misma.
+                            </div>
+                        </div>
                 </div>
-                <a href="#" class="htooltip2"><img id="icon-help" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>El siguiente cuadro contiene las actividades del proyecto, las que son descritas mediante el llenado de 4 campos: nombre, duración, descripción de la actividad y resultados esperados de la misma.</span></a>
+
+
 
                 {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
 

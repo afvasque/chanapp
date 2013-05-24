@@ -13,6 +13,19 @@
 	height: 90px;
 }
 
+#collapse3 {
+	float: left;
+}
+
+.title-accordion {
+	width: 80%;
+	float: left;
+}
+
+.help-accordion {
+	width: 100%;
+}
+
 /* ToolTip*/
 .tooltip2 {
 			border-bottom: 1px dotted #0077AA;
@@ -105,3 +118,4 @@
 			opacity: 1;
 			visibility: visible;
 		}
+

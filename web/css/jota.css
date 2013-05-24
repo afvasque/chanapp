@@ -137,7 +137,7 @@ table.fixed td { overflow: hidden; }
 			margin-top: -24px;
 			opacity: 0;
 			padding: 3px 7px;
-			position: fixed;
+			position: absolute;
 			visibility: hidden;
 			
 			transition: all 0.4s ease-in-out;
@@ -170,7 +170,7 @@ table.fixed td { overflow: hidden; }
 			margin-top: -75px;
 			opacity: 0;
 			padding: 10px 10px 10px 40px;
-			position: fixed;
+			position: absolute;
 			text-decoration: none;
 			text-align: justify;
 			visibility: hidden;
@@ -184,7 +184,7 @@ table.fixed td { overflow: hidden; }
 		}
 		
 		.htooltip:hover span {
-			position: fixed;
+			position: absolute;
 			opacity: 1;
 			visibility: visible;
 		}
@@ -194,7 +194,7 @@ table.fixed td { overflow: hidden; }
 			float: left;
 			margin: -71px 0 0 -234px;
 			opacity: 0;
-			position: fixed;
+			position: absolute;
 			visibility: hidden;
 			z-index: -1;
 			
