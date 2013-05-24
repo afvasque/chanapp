@@ -61,15 +61,42 @@
                         
                     <div class="span6">
                         {{ form_row(edit_form.duracion) }}   
-                        {{ form_row(edit_form.diagnostico_previo) }}
+                        
+                        {{ form_label(edit_form.diagnostico_previo) }}
+                        {{ form_widget(edit_form.diagnostico_previo) }}
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse3"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/></a>
+                        <div class="help-accordion">
+                            <div id="collapse3" class="accordion-body collapse" style="height: 0px;">
+                                Describir brevemente la situación actual, sin proyecto, relacionada al mismo
+                            </div>
+                        </div>
+                        {{ form_errors(edit_form.diagnostico_previo) }}
+
                         {{ form_row(edit_form.obj_general) }}
-                        {{ form_row(edit_form.objs_especificos) }}                     
+                        
+                        {{ form_label(edit_form.objs_especificos) }}
+                        {{ form_widget(edit_form.objs_especificos) }} 
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse4"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/></a>
+                        <div class="help-accordion">
+                            <div id="collapse4" class="accordion-body collapse" style="height: 0px;">
+                                Indicar cuáles son los objetivos a obtener a la finalización del proyecto
+                            </div>
+                        </div>
+                        {{ form_errors(edit_form.objs_especificos) }}                    
                     </div>
                 </div>
 
                 <div class="row-fluid">
                     <div class="span12">
-                        {{ form_row(edit_form.descripcion) }}
+                        {{ form_label(edit_form.descripcion) }}
+                        {{ form_widget(edit_form.descripcion) }}
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse5"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/></a>
+                        <div class="help-accordion">
+                            <div id="collapse5" class="accordion-body collapse" style="height: 0px;">
+                                Presentar los rasgos sobresalientes del proyecto, actividades y toda otra información relevante que permita tener una idea acabada del proyecto y el impacto del mismo
+                            </div>
+                        </div>
+                        {{ form_errors(edit_form.descripcion) }}
                     </div>
                 </div>
                 
@@ -81,11 +108,27 @@
 
                 <div class="row-fluid">
                     <div class="span6">
-                        {{ form_row(edit_form.desc_causales) }}
+                        {{ form_label(edit_form.desc_causales) }}
+                        {{ form_widget(edit_form.desc_causales) }}
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse6"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/></a>
+                        <div class="help-accordion">
+                            <div id="collapse6" class="accordion-body collapse" style="height: 0px;">
+                                Descripción de las relaciones causales que dieron origen al proyecto y que determinó las actividades a desarrollar dentro del mismo para la obtención de los objetivos buscados
+                            </div>
+                        </div>
+                        {{ form_errors(edit_form.desc_causales) }}
                     </div>
                         
                     <div class="span6">
-                        {{ form_row(edit_form.variables_causales) }}                    
+                        {{ form_label(edit_form.variables_causales) }}
+                        {{ form_widget(edit_form.variables_causales) }}
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse7"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/></a>
+                        <div class="help-accordion">
+                            <div id="collapse7" class="accordion-body collapse" style="height: 0px;">
+                                Variables relevantes del proyecto que afectan las relaciones causales establecidas anteriormente
+                            </div>
+                        </div>
+                        {{ form_errors(edit_form.variables_causales) }}                            
                     </div>
                 </div>
                         
@@ -93,8 +136,15 @@
                 <br />
                 <br />
 
-                <div class="title-text">
-                    <h3>Actividades</h3>
+                <div class="title-accordion">
+
+                        <div class="help-accordion">
+                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse8"><h3>Actividades ?</h3></a>
+                            
+                            <div id="collapse8" class="accordion-body collapse" style="height: 0px;">
+                                El siguiente cuadro contiene las actividades del proyecto, las que son descritas mediante el llenado de 4 campos: nombre, duración, descripción de la actividad y resultados esperados de la misma.
+                            </div>
+                        </div>
                 </div>
 
                 {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}

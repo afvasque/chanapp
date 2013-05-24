@@ -36,14 +36,24 @@
 
                         {{ form_label(form.diagnostico_previo) }}
                         {{ form_widget(form.diagnostico_previo) }}
-                        <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Describir brevemente la situación actual, sin proyecto, relacionada al mismo</span></a>
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse3"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/></a>
+                        <div class="help-accordion">
+                            <div id="collapse3" class="accordion-body collapse" style="height: 0px;">
+                                Describir brevemente la situación actual, sin proyecto, relacionada al mismo
+                            </div>
+                        </div>
                         {{ form_errors(form.diagnostico_previo) }}
 
                         {{ form_row(form.obj_general) }}
 
                         {{ form_label(form.objs_especificos) }}
                         {{ form_widget(form.objs_especificos) }} 
-                        <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Indicar cuáles son los objetivos a obtener a la finalización del proyecto</span></a>
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse4"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/></a>
+                        <div class="help-accordion">
+                            <div id="collapse4" class="accordion-body collapse" style="height: 0px;">
+                                Indicar cuáles son los objetivos a obtener a la finalización del proyecto
+                            </div>
+                        </div>
                         {{ form_errors(form.objs_especificos) }} 
                                    
                     </div>
@@ -53,7 +63,12 @@
                     <div class="span12">
                         {{ form_label(form.descripcion) }}
                         {{ form_widget(form.descripcion) }}
-                        <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Presentar los rasgos sobresalientes del proyecto, actividades y toda otra información relevante que permita tener una idea acabada del proyecto y el impacto del mismo</span></a>
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse5"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/></a>
+                        <div class="help-accordion">
+                            <div id="collapse5" class="accordion-body collapse" style="height: 0px;">
+                                Presentar los rasgos sobresalientes del proyecto, actividades y toda otra información relevante que permita tener una idea acabada del proyecto y el impacto del mismo
+                            </div>
+                        </div>
                         {{ form_errors(form.descripcion) }}
                     </div>
                 </div>
@@ -71,16 +86,21 @@
                     <div class="span6">
                         {{ form_label(form.desc_causales) }}
                         {{ form_widget(form.desc_causales) }}
-                        <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Descripción de las relaciones causales que dieron origen al proyecto y que determinó las actividades a desarrollar dentro del mismo para la obtención de los objetivos buscados</span></a>
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse6"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/></a>
+                        <div class="help-accordion">
+                            <div id="collapse6" class="accordion-body collapse" style="height: 0px;">
+                                Descripción de las relaciones causales que dieron origen al proyecto y que determinó las actividades a desarrollar dentro del mismo para la obtención de los objetivos buscados
+                            </div>
+                        </div>
                         {{ form_errors(form.desc_causales) }}
                     </div>
                         
                     <div class="span6">
                         {{ form_label(form.variables_causales) }}
                         {{ form_widget(form.variables_causales) }}
-                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse4"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/></a>
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse7"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/></a>
                         <div class="help-accordion">
-                            <div id="collapse4" class="accordion-body collapse" style="height: 0px;">
+                            <div id="collapse7" class="accordion-body collapse" style="height: 0px;">
                                 Variables relevantes del proyecto que afectan las relaciones causales establecidas anteriormente
                             </div>
                         </div>
@@ -94,9 +114,9 @@
                 <div class="title-accordion">
 
                         <div class="help-accordion">
-                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse3"><h3>Actividades ?</h3></a>
+                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse8"><h3>Actividades ?</h3></a>
                             
-                            <div id="collapse3" class="accordion-body collapse" style="height: 0px;">
+                            <div id="collapse8" class="accordion-body collapse" style="height: 0px;">
                                 El siguiente cuadro contiene las actividades del proyecto, las que son descritas mediante el llenado de 4 campos: nombre, duración, descripción de la actividad y resultados esperados de la misma.
                             </div>
                         </div>
