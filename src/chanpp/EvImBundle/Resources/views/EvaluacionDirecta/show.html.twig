@@ -16,10 +16,15 @@
 
     <div id="main-content">
         <div class="main-content-title">
-            <div class="title-text">
-                <h2>Evaluación Directa</h2>
+             <div class="title-accordion">
+              <div class="help-accordion">
+                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse3"><h2>Evaluación de Impacto Directo ?</h2></a>       
+                <div id="collapse3" class="accordion-body collapse" style="height: 0px;">
+                  El objetivo principal de una evaluación de impacto directo, es obtener una estimación de ahorros netos de energía o demanda alcanzado por efecto del programa o proyecto, de la forma más exacta e insesgada posible, dependiendo de la información disponible, el nivel de confiabilidad de la información requerida y de los recursos con que se cuenta para desarrollar la evaluación.
+                </div>
+              </div>
             </div>
-            
+
             {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
 
                 <div class="title-actions">
@@ -75,15 +80,18 @@
                             kW/h
                         {% elseif entity.unidad == 10%}
                             kW/h
-                        {% endif %}<a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>
-                        Fuel oil [ton] : 12210,99  (kWh/ton)<br>
+                        {% endif %}<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse6"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}"/></a>
+                        <div class="help-accordion">
+                            <div id="collapse6" class="accordion-body collapse" style="height: 0px;">
+                                Fuel oil [ton] : 12210,99  (kWh/ton)<br>
 Diesel [m3] : 10647,99  (kWh/m3)<br>
 Gas licuado (estado líquido) [m3] : 7739,45  (kWh/m3)<br>
 Gas licuado (estado gaseoso) [m3] : 9720,00 (kWh/m3)<br>
 Gas natural [m3] : 10,86 (kWh/m3)<br>
 Carbón [ton] : 8140,66  (kWh/ton)<br>
 Kerosene [m3] : 10456,10  (kWh/m3)
-                    </span></a>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr>

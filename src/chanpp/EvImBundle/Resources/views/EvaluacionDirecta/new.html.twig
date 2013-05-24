@@ -17,11 +17,18 @@
     <div id="main-content">
         <div class="main-content-title">
             <div class="title-text">
-                <h2>Creación de Evaluación de Impacto Directo</h2>
+                    
+                <div class="title-accordion">
+                        <div class="help-accordion">
+                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse3"><h2>Creación de Evaluación de Impacto Directo ?</h2></a>
+                            <div id="collapse3" class="accordion-body collapse" style="height: 0px;">
+                                 El objetivo principal de una evaluación de impacto directo, es obtener una estimación de ahorros netos de energía o demanda alcanzado por efecto del programa o proyecto, de la forma más exacta e insesgada posible, dependiendo de la información disponible, el nivel de confiabilidad de la información requerida y de los recursos con que se cuenta para desarrollar la evaluación.
+                            </div>
+                        </div>
+                </div>
+
+               
             </div>
-
-            <a href="#" class="htooltip"><img id="icon-help" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>El objetivo principal de una evaluación de impacto directo, es obtener una estimación de ahorros netos de energía o demanda alcanzado por efecto del programa o proyecto, de la forma más exacta e insesgada posible, dependiendo de la información disponible, el nivel de confiabilidad de la información requerida y de los recursos con que se cuenta para desarrollar la evaluación.</span></a>
-
         </div>
 
         <br />
@@ -41,14 +48,31 @@
                     <div class="span6">
                         {{ form_label(form.resultado) }}
                         {{ form_widget(form.resultado) }}
-                        <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Dependiendo del tipo de energía sobre el que pretende actuar el programa, sus impactos sobre el consumo pueden ser medidos en términos de KWh, galones de combustible, unidades térmicas de gas, etc. En este campo se debe registrar el resultado de la evaluación de impacto directo, especificando en el campo "unidad de medida" el tipo de unidad que se está empleando para registrar dicho resultado.</span></a>
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse5"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}"/></a>
+                        <div class="help-accordion">
+                            <div id="collapse5" class="accordion-body collapse" style="height: 0px;">
+                                Dependiendo del tipo de energía sobre el que pretende actuar el programa, sus impactos sobre el consumo pueden ser medidos en términos de KWh, galones de combustible, unidades térmicas de gas, etc. En este campo se debe registrar el resultado de la evaluación de impacto directo, especificando en el campo "unidad de medida" el tipo de unidad que se está empleando para registrar dicho resultado.
+                            </div>
+                        </div>
                         {{ form_errors(form.resultado) }}  
                     </div>
                         
                     <div class="span6">
                         {{ form_label(form.unidad) }}
                         {{ form_widget(form.unidad) }}
-                        <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Dependiendo del tipo de energía sobre el que pretende actuar el programa, sus impactos sobre el consumo pueden ser medidos en términos de KWh, galones de combustible, unidades térmicas de gas, etc. En este campo se debe registrar el resultado de la evaluación de impacto directo, especificando en el campo "unidad de medida" el tipo de unidad que se está empleando para registrar dicho resultado.</span></a>
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse6"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}"/></a>
+                        <div class="help-accordion">
+                            <div id="collapse6" class="accordion-body collapse" style="height: 0px;">
+                                Fuel oil [ton] : 12210,99  (kWh/ton)<br>
+Diesel [m3] : 10647,99  (kWh/m3)<br>
+Gas licuado (estado líquido) [m3] : 7739,45  (kWh/m3)<br>
+Gas licuado (estado gaseoso) [m3] : 9720,00 (kWh/m3)<br>
+Gas natural [m3] : 10,86 (kWh/m3)<br>
+Carbón [ton] : 8140,66  (kWh/ton)<br>
+Kerosene [m3] : 10456,10  (kWh/m3)
+                            </div>
+                        </div>
+
                         {{ form_errors(form.unidad) }}  
                     </div>
                 </div>

@@ -207,7 +207,6 @@
                     <div class="action-icons">
 
                         <a href="{{ path('evaluacion_show', { 'id': entity.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-ver-(lupa).png') }}" alt="logo"/></a>
-
                         {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
                         
                             <a href="{{ path('evaluacion_edit', { 'id': entity.id }) }}"><img class="icon-action-table2" src="{{ asset('img/icono-editar-(lapiz).png') }}" alt="logo"/></a>
