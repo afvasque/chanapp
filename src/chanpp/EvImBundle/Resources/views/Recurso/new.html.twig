@@ -14,11 +14,13 @@
 
     <div id="main-content">
         <div class="main-content-title">
-            <div class="title-text">
-                <h2>Crear Recurso para evaluar el programa/proyecto</h2>
+            <div class="help-accordion">
+                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse3"><h2>Crear Recurso para evaluar el programa/proyecto ?</h2></a>
+                            
+                <div id="collapse3" class="accordion-body collapse" style="height: 0px;">
+                    En este punto se puede agregar un nuevo recurso disponible para la evaluación, el que puede ser del tipo monetario, recursos humanos, tiempo, capacidades, etc. En el caso de los recursos humanos disponibles para la evaluación, se debe definir las funciones y responsabilidades de cada uno de los involucrados. Se deberá especificar el nombre y la descripción del recurso, incluyendo la cantidad o monto disponible del mismo.
+                </div>
             </div>
-
-            <a href="#" class="htooltip"><img id="icon-help" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>En este punto se puede agregar un nuevo recurso disponible para la evaluación, el que puede ser del tipo monetario, recursos humanos, tiempo, capacidades, etc. En el caso de los recursos humanos disponibles para la evaluación, se debe definir las funciones y responsabilidades de cada uno de los involucrados. Se deberá especificar el nombre y la descripción del recurso, incluyendo la cantidad o monto disponible del mismo.</span></a>
         </div>
 
         <br />
@@ -55,7 +57,12 @@
                     <div class="span12">
                         {{ form_label(form.cantidad) }}
                         {{ form_widget(form.cantidad) }}
-                        <a href="#" class="htooltip"><img id="icon-help" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Los recursos se miden en unidades de dinero ($), horas hombre (HH), tiempo (meses), entre otros. En este punto se debe cuantificar en $, HH, etc, el recurso que se está creando.</span></a>
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse4"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/></a>
+                        <div class="help-accordion">
+                            <div id="collapse4" class="accordion-body collapse" style="height: 0px;">
+                                Los recursos se miden en unidades de dinero ($), horas hombre (HH), tiempo (meses), entre otros. En este punto se debe cuantificar en $, HH, etc, el recurso que se está creando.
+                            </div>
+                        </div>
                         {{ form_errors(form.cantidad) }}
                     </div>
                 </div>
