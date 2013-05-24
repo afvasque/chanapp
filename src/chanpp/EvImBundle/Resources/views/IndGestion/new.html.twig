@@ -18,6 +18,24 @@
                 <h2>Agregar Índice de Gestión Proyecto "{{entity.getFichaProyecto.getNombre}}"</h2>
             </div>
             
+            {% if (is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_PLANIFICADOR")) %}
+
+                    <div class="title-actions">
+                        <div class="btn-group">
+                            <button class="btn">Elegir una Acción</button>
+                            <button class="btn dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <!-- dropdown menu links -->
+                                <li>
+                                    <a href="#" id="agregar_actividad">Agregar una meta</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                {% endif %}
         </div>
 
         <br />
@@ -81,9 +99,7 @@
                                 {{ form_row(meta.plazoAnio) }}
                             </div>
                         </div>
-                        
-
-                        
+                       
 
                     {% endfor %}
                 </div>
