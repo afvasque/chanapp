@@ -105,13 +105,27 @@
             <tr class="tableinfohead">
                 <th>Título</th>
                 <th>Descripción</th>
-                <th>Tipo <a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Los recursos disponibles para evaluar pueden ser de los siguientes tipos:<br>                
--Monetarios<br>  
--Humanos: Funciones y responsabilidades<br>
--Tiempo  <br>
--Capacidades <br> 
--Otros</span></a></th>
-                <th>Cantidad<a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>Los recursos se miden en:<br> -Unidades de dinero ($)<br>-Horas hombre (HH)<br>-Tiempo (meses)<br>-Otros.</span></a></th>
+                <th>Tipo
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse6"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/></a>
+                    <div class="help-accordion">
+                        <div id="collapse6" class="accordion-body collapse" style="height: 0px;">
+                            Los recursos disponibles para evaluar pueden ser de los siguientes tipos:<br>                
+                            -Monetarios<br>  
+                            -Humanos: Funciones y responsabilidades<br>
+                            -Tiempo  <br>
+                            -Capacidades <br> 
+                            -Otros
+                        </div>
+                    </div>
+
+                </th>
+                <th>Cantidad
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse7"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/></a>
+                    <div class="help-accordion">
+                        <div id="collapse7" class="accordion-body collapse" style="height: 0px;">
+                            Los recursos se miden en:<br> -Unidades de dinero ($)<br>-Horas hombre (HH)<br>-Tiempo (meses)<br>-Otros.
+                        </div>
+                    </div>
                 <th></th>
             </tr>
         </thead>
@@ -170,7 +184,14 @@
         <thead>
             <tr class="tableinfohead">
                  <th>Nombre</th>
-                <th>Alcance<a href="#" class="htooltip"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/><span>En este ítem se especifican la(s) pregunta(s) clave(s) que se desea responder con la evaluación</span></a></th>
+                <th>Alcance
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse8"><img class="icon-help-table" src="{{ asset('img/icono-ayuda.png') }}" alt="logo"/></a>
+                    <div class="help-accordion">
+                        <div id="collapse8" class="accordion-body collapse" style="height: 0px;">
+                            En este ítem se especifican la(s) pregunta(s) clave(s) que se desea responder con la evaluación
+                        </div>
+                    </div>
+
                 <th>Duración</th>
                 <th></th>
             </tr>
