@@ -294,7 +294,7 @@ class IndGestionController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('indgestion'));
+            return $this->redirect($this->generateUrl('fichaproyecto_show', array('id' => $entity->getFichaProyecto()->getId())));
     }
 
     /**
