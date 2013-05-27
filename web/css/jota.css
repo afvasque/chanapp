@@ -418,3 +418,9 @@ margin-bottom: 10px;
 .no-element-error2{
 	float: left;	
 }
+
+#download-button{
+	float:right;
+    margin-top: 1%;
+    margin-right: 2%;
+}
