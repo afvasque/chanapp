@@ -25,60 +25,60 @@
         <br />
 
 
-    <h3>Tabla comparativa</h3>
-    <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed">
-        <thead>
-        <tr>
-            <td></td>
-            <th>Área</th>
-            <th>Programa</th>
-            <th>Año</th>    
-            <th>Impacto Indirecto</th>            
-            <th>GI</th>
-            <th>Presencia</th>
-            <th>Valorización</th>
-            <th>Capacidad movilizadora</th>
-        </tr>
-        </thead><tbody>
-        {% for fc in ficha_proyectos%}
-            {% for pev in fc.getPlanevaluaciones%}
-                {% for ev in pev.getEvaluaciones%}
-                    <tr>
-                        <td><a href="{{ path('fichaproyecto_show', { 'id': fc.id }) }}">
-                            <i class="icon-folder-close"></i></a></td>
-                        <td>{{fc.getAreaAccion}}</td>
-                        <td>{{fc.getNombre}}</td>
-                        <td></td>
-                        {% if ev.getEvaluaciondirecta %}
-                            <td>{{ev.getEvaluaciondirecta.getTotal}} mW/h</td>
-                        {% else %}
-                            <td>N/A</td>
-                        {% endif %}
+        <h3>Tabla comparativa</h3>
+        <table class="table table-striped table-bordered table-condensed table-striped tablesubelements fixed">
+            <thead>
+                <tr>
+                    <td></td>
+                    <th>Área</th>
+                    <th>Programa</th>
+                    <th>Año</th>    
+                    <th>Impacto Indirecto</th>            
+                    <th>GI</th>
+                    <th>Presencia</th>
+                    <th>Valorización</th>
+                    <th>Capacidad movilizadora</th>
+                </tr>
+            </thead><tbody>
+            {% for fc in ficha_proyectos%}
+                {% for pev in fc.getPlanevaluaciones%}
+                    {% for ev in pev.getEvaluaciones%}
+                        <tr>
+                            <td><a href="{{ path('fichaproyecto_show', { 'id': fc.id }) }}">
+                                <i class="icon-folder-close"></i></a></td>
+                            <td>{{fc.getAreaAccion}}</td>
+                            <td>{{fc.getNombre}}</td>
+                            <td></td>
+                            {% if ev.getEvaluaciondirecta %}
+                                <td>{{ev.getEvaluaciondirecta.getTotal}} mW/h</td>
+                            {% else %}
+                                <td>N/A</td>
+                            {% endif %}
 
-                        {% for ev_in in ev.getEvaluacionesindirectas %}
-                            {% if loop.index > 1%}
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                            {% endif %}
-                                    <td>{{ev_in.getGrupoInteres}}</td>
-                                    <td>{{ev_in.getImpactosejes()[0]}}</td>
-                                    <td>{{ev_in.getImpactosejes()[1]}}</td>
-                                    <td>{{ev_in.getImpactosejes()[2]}}</td>
-                            {% if loop.index > 0 %}
-                                </tr>
-                            {% endif %}
+                            {% for ev_in in ev.getEvaluacionesindirectas %}
+                                {% if loop.index > 1%}
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                {% endif %}
+                                        <td>{{ev_in.getGrupoInteres}}</td>
+                                        <td>{{ev_in.getImpactosejes()[0]}}</td>
+                                        <td>{{ev_in.getImpactosejes()[1]}}</td>
+                                        <td>{{ev_in.getImpactosejes()[2]}}</td>
+                                {% if loop.index > 0 %}
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
                         {% endfor %}
-                    {% endfor %}
-                    </tr>
-                    {% endfor %}
-        {% endfor %}</tbody>
-    </table>
+                        </tr>
+                        {% endfor %}
+            {% endfor %}</tbody>
+        </table>
     </div>
-</div>
+
 {% block javascript %}
 
 <script type="text/javascript">
