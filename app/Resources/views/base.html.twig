@@ -59,10 +59,20 @@
                          </div>
                             <div id="link_bar_header">
                                  {% if app.user %} 
-                                 <div class="linkheader"><a href="{{ path('fos_user_security_logout') }}">Desconectarse</a></div>
-                                 <div class="linkheader"><a href="{{ path('fos_user_profile_show') }}">{{ app.user.username }} ({{ app.user.email }})</a></div>
+                                    <div class="linkheader"><a href="{{ path('fos_user_security_logout') }}">Desconectarse</a></div>
+                                    <div class="linkheader"><a href="{{ path('fos_user_profile_show') }}">{{ app.user.username }} -
+                                        {% if app.user.Roles[0] == "ROLE_ADMIN" or app.user.roles[0] == "ROLE_SUPER_ADMIN"%}
+                                            Administrador - 
+                                        {% elseif app.user.roles[0] == "ROLE_PLANIFICADOR"%}
+                                            Planificador - 
+                                        {% elseif app.user.roles[0] == "ROLE_EVALUADOR"%}
+                                            Evaluador - 
+                                        {% elseif app.user.roles[0] == "ROLE_VISITA"%}
+                                            Visita - 
+                                        {% endif %}
+                                        ({{ app.user.email }})</a></div>
                                  {% else %}
-                                 <div class="linkheader"><a href="{{ path('fos_user_security_login') }}">Ingresar</a></div>
+                                    <div class="linkheader"><a href="{{ path('fos_user_security_login') }}">Ingresar</a></div>
                                  {% endif %}
                             </div>
                         </div>
