@@ -38,6 +38,7 @@
                     <th>Presencia</th>
                     <th>Valorización</th>
                     <th>Capacidad movilizadora</th>
+                    <th></th>
                 </tr>
             </thead><tbody>
             {% for fc in ficha_proyectos%}
@@ -68,6 +69,8 @@
                                         <td>{{ev_in.getImpactosejes()[0]}}</td>
                                         <td>{{ev_in.getImpactosejes()[1]}}</td>
                                         <td>{{ev_in.getImpactosejes()[2]}}</td>
+                                        <td><a href="{{ path('evaluacionindirecta_results', { 'id': ev_in.id }) }}">
+                                <img class="icon-action-table2" src="{{ asset('img/icono-ver-(lupa).png') }}" alt="logo"/></a></td>
                                 {% if loop.index > 0 %}
                                     </tr>
                                 {% endif %}
