@@ -41,19 +41,26 @@ class Meta
      */
     private $nombre;
 
-    /**
+/*    /**
      * @var integer
      *
      * @ORM\Column(name="plazo_mes", type="integer")
-     */
+     
     private $plazoMes;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="plazo_anio", type="integer")
+     
+    private $plazoAnio;*/
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="plazo", type="string")
      */
-    private $plazoAnio;
+    private $plazo;    
 
 
     /**
@@ -95,9 +102,9 @@ class Meta
      * @param integer $plazoMes
      * @return Meta
      */
-    public function setPlazoMes($plazoMes)
+    public function setPlazo($plazo)
     {
-        $this->plazoMes = $plazoMes;
+        $this->plazo = $plazo;
     
         return $this;
     }
@@ -107,34 +114,12 @@ class Meta
      *
      * @return integer 
      */
-    public function getPlazoMes()
+    public function getPlazo()
     {
-        return $this->plazoMes;
+        return $this->plazo;
     }
 
-    /**
-     * Set plazoAnio
-     *
-     * @param integer $plazoAnio
-     * @return Meta
-     */
-    public function setPlazoAnio($plazoAnio)
-    {
-        $this->plazoAnio = $plazoAnio;
-    
-        return $this;
-    }
-
-    /**
-     * Get plazoAnio
-     *
-     * @return integer 
-     */
-    public function getPlazoAnio()
-    {
-        return $this->plazoAnio;
-    }
-
+   
     /**
      * Set meta
      *
