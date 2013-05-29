@@ -16,7 +16,7 @@ use chanpp\EvImBundle\Form\FichaProyectoType;
 /**
  * FichaProyecto controller.
  *
- * @Route("/fichaproyecto")
+ * @Route("/fichaprograma")
  */
 class FichaProyectoController extends Controller
 {
