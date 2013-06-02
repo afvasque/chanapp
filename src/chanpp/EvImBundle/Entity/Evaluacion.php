@@ -29,7 +29,7 @@ class Evaluacion
     private $nombre;
 
     /**
-     * @ORM\OneToOne(targetEntity="EvaluacionDirecta", mappedBy="evaluacion")
+     * @ORM\OneToOne(targetEntity="EvaluacionDirecta", mappedBy="evaluacion", cascade={"persist", "remove"})
      */
     protected $evaluaciondirecta;
 
@@ -48,7 +48,7 @@ class Evaluacion
     private $duracion;
 
     /**
-     * @ORM\OneToMany(targetEntity="EvaluacionIndirecta", mappedBy="evaluacion")
+     * @ORM\OneToMany(targetEntity="EvaluacionIndirecta", mappedBy="evaluacion", cascade={"persist", "remove"})
      */
     protected $evaluacionesindirectas;
 

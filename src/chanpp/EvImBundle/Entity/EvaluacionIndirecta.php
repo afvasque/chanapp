@@ -58,7 +58,7 @@ class EvaluacionIndirecta
 
     /**
      * @ORM\ManyToOne(targetEntity="Evaluacion", inversedBy="evaluacionesindirectas")
-     * @ORM\JoinColumn(name="evaluacion_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="evaluacion_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $evaluacion;
 

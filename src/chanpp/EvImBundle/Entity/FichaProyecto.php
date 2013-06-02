@@ -30,7 +30,7 @@ class FichaProyecto
     protected $ind_gestions;
 
     /**
-     * @ORM\OneToMany(targetEntity="PlanEvaluacion", mappedBy="fichaproyecto")
+     * @ORM\OneToMany(targetEntity="PlanEvaluacion", mappedBy="fichaproyecto", cascade={"persist", "remove"})
      */
     protected $planevaluaciones;
     

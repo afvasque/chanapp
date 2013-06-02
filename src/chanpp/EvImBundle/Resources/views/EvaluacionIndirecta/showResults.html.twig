@@ -29,7 +29,7 @@
         <br />
         <br />
 
-{% if entity.hasCuestionarioOnMetodo() %}
+{% if entity.hasCuestionarioOnMetodo()%}
             <h3>Cuestionario Asociado</h3>
                 {% if entity.getCuestionario() %}
                    <table class="table table-bordered infotable">
@@ -72,7 +72,8 @@
                         </tbody>
                     </table>
 
-                        {% for preg_alt in entity.getCuestionario.getPreguntasalternativa %}
+                    {% if entity.getCuestionario.getRespuestas|length > 0 %}
+                    {% for preg_alt in entity.getCuestionario.getPreguntasalternativa %}
                         <table class="table table-bordered infotable">
                         <tbody>
                              <tr>
@@ -135,7 +136,10 @@
 
 
 
-                        {% endfor %}
+                    {% endfor %}
+                    {% else %}
+                    <div> No hay respuestas al cuestionario </div>
+                    {%endif%}
                         
 
 
