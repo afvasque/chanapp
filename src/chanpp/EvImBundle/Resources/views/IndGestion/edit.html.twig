@@ -93,12 +93,11 @@
                                 {{ form_errors(meta.plazo) }}
                                 {{ form_widget(meta.plazo) }}
                             </div>
-
-                    </div>
+                        </div>
 
                         <a href="" class="btn btn-danger" id="boton_borrar">Borrar esta meta</a> 
                     
-
+                    </div>
                     {% endfor %}
                 </div>
 
@@ -136,7 +135,7 @@
         </script>
 
         {% javascripts 
-            '@chanppEvImBundle/Resources/public/js/addActividades.js'
+            '@chanppEvImBundle/Resources/public/js/addMeta.js'
             '@chanppEvImBundle/Resources/public/js/borrar_metas.js'
         %}
         

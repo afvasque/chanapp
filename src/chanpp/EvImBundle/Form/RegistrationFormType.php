@@ -14,16 +14,17 @@ class RegistrationFormType extends BaseType
             ->add('nombre');
         parent::buildForm($builder, $options);
         $builder
-            ->add('roles', 'collection', array(
-                'type'   => 'choice',
-                'options'  => array(
-                    'choices'  => array(
-                    'ROLE_VISITA'    => 'Visita',
-                    'ROLE_EVALUADOR'     => 'Evaluador',
+            ->add('roles', 'choice', array(
+                'expanded'   => true,
+                'multiple' => true,
+                'choices'  => array(
                     'ROLE_PLANIFICADOR' => 'Planificador',
+                    'ROLE_EVALUADOR'     => 'Evaluador',
+                    'ROLE_VISITA'    => 'Visita',
                 ),
-            ),
-        ));
+
+            )
+        );
 
     }
 
